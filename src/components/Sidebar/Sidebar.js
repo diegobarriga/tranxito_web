@@ -11,10 +11,10 @@ const sidebar = () => (
             <div>
                 <h3>Buttons </h3>
                 <ListGroup>
-                    <ListGroupItem tag="a" href="#" action>Dashboard</ListGroupItem>
-                    <ListGroupItem className="nav-button" tag="a" href="#" action>Users</ListGroupItem>
-                    <ListGroupItem tag="a" href="#" action>Trucks</ListGroupItem>
-                    <ListGroupItem tag="a" href="#" action>Logs</ListGroupItem>
+                    <ListGroupItem tag="a" href="/" action>Dashboard</ListGroupItem>
+                    <ListGroupItem tag="a" href="/users" action>Users</ListGroupItem>
+                    <ListGroupItem tag="a" href="/trucks" action>Trucks</ListGroupItem>
+                    <ListGroupItem tag="a" href="/logs" action>Logs</ListGroupItem>
                     <ListGroupItem tag="a" href="#" action>Settings</ListGroupItem>
                 </ListGroup>
             </div>
