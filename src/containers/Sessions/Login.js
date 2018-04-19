@@ -11,21 +11,20 @@ class Login extends React.Component {
         };
 
         return (
-            <Container>
-                <Form>
+            <Container>                
                     <Row>                    
                         <Col sm="12" md={{ size: 5, offset: 3 }}>
                             <h1 style={h1Style}>Login</h1>
-
+                        <Form>
                             <FormGroup>          
                             <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
                             </FormGroup>
                             <FormGroup>          
                             <Input type="password" name="password" id="examplePassword" placeholder="Password" />
                             </FormGroup>
+                         </Form>
                         </Col>
                     </Row>
-                </Form>
             </Container>
 
 
