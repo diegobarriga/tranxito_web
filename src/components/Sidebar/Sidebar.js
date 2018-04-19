@@ -1,7 +1,7 @@
 import React from 'react'
 import Aux from '../../hoc/Aux';
 import styles from './Sidebar.css';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 
 const sidebar = () => (
