@@ -1,0 +1,15 @@
+
+.sidebar {
+  position: fixed;
+  width: 198px;
+  margin-top: 76px;  
+  overflow: hidden;
+  background: #e8eef2;  
+
+  color: #eee;
+  min-height: 700px;
+}
+
+.nav-button:hover{
+  background-color: black;
+}
