@@ -1,4 +1,5 @@
 import React from 'react';
+import Aux from '../../hoc/Aux'
 
 
 import {
@@ -36,13 +37,13 @@ export default class Example extends React.Component {
     }; 
 
     const aStyle = {
-      height: "75px"            
+      height: "75px"
     }; 
 
     
 
     return (        
-      <div>
+      <Aux>
         <Navbar fixed="top" style={aStyle} color="dark" light expand="md">
           <NavbarBrand style={pStyle}  href="/">E2E Group</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
@@ -74,7 +75,7 @@ export default class Example extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
-      </div>
+      </Aux>
     );
   }
 }
