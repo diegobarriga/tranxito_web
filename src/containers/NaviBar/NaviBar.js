@@ -1,5 +1,6 @@
 import React from 'react';
 import Aux from '../../hoc/Aux'
+import { Link } from 'react-router-dom'
 
 
 import {
@@ -15,7 +16,7 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 
-export default class Example extends React.Component {
+class NaviBar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -49,11 +50,12 @@ export default class Example extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink style={pStyle}  href="/">Components</NavLink>
+              <NavItem>                
+                <Link className = "nav-link" style={pStyle} to="/login">Login</Link>                
               </NavItem>
               <NavItem>
-                <NavLink  style={pStyle} href="/">GitHub</NavLink>
+                <Link className = "nav-link" style={pStyle} to="/signup">Signup</Link> 
+                
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle style={pStyle} nav caret>
@@ -79,3 +81,5 @@ export default class Example extends React.Component {
     );
   }
 }
+
+export default NaviBar;
