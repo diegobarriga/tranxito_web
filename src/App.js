@@ -10,8 +10,8 @@ import Dashboard from './containers/Dashboard/Dashboard';
 class App extends Component {
   render() {
     return (
-      
-        <div>  
+
+        <div>
           <Layout>
             <Switch>
               <Route path="/users" component={ Users } />
