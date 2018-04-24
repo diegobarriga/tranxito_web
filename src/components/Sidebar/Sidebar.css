@@ -1,16 +1,10 @@
 
 .sidebar {
-
-
   background: #e8eef2;  
 
   color: #eee;
   min-height: 700px;
   padding: 10px;
   flex: 20%;
-}
-
-.nav-button:hover{
-  background-color: black;
 }
 
