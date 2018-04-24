@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './containers/Layout/Layout';
-import './App.css';
+import './assets/styles/App.css';
 import { Route, Switch } from 'react-router-dom';
 import Users from './containers/Users/Users';
 import Trucks from './containers/Trucks/Trucks';
@@ -15,7 +15,7 @@ import Home from './components/Home/Home';
 class App extends Component {
   render() {
 
-    return (       
+    return (
 
           <Layout>
             <Switch>
