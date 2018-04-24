@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout';
-import './App.css';
+import './assets/styles/App.css';
 import { Route, Switch } from 'react-router-dom';
 import Users from './containers/Users/Users';
 import Trucks from './containers/Trucks/Trucks';
@@ -12,7 +12,7 @@ import Login from './containers/Sessions/Login';
 class App extends Component {
   render() {
 
-    return (       
+    return (
 
           <Layout>
             <Switch>

@@ -2,28 +2,37 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { ListGroup, ListGroupItem, Button, Row, Col, Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
-import UserRow from './User-row'
-
+import UserRow from './User-row';
+import Loader from '../../components/Loader/Loader';
+import usersService from '../../services/users';
+import PropTypes from 'prop-types';
 
 class UsersInfo extends React.Component {
 
-
     constructor(props) {
         super(props);
-        this.state = { users: [] }
+        this.state = {
+          users: [],
+          loading: false,
+          loggedUser: null,
+         }
     }
 
-    componentWillMount() {
-      fetch('https://private-459d3-elde2e.apiary-mock.com/drivers_by_motor_carrier/0').then((response) => {
-        return response.json()
-      }).then((users) => {
-        this.setState({users: users})
-      })
+    componentDidMount() {
+      this.fetchUsers();
+    }
+
+    async fetchUsers() {
+      this.setState({ loading: true });
+      const users = await usersService.getUsers(this.props.motor_carrier_id);
+      this.setState({ loading: false, users });
     }
 
     render() {
-    if (this.state.users.length > 0) {
       return (
+        <div>
+          {this.state.loading && <Loader />}
+
         <ListGroup>
             {
               this.state.users.map((user) => {
@@ -35,11 +44,13 @@ class UsersInfo extends React.Component {
               })
             }
         </ListGroup>
+        </div>
       )
-    } else {
-      return <p className="text-center">Loading Drivers...</p>
-    }
   }
 }
 
 export default UsersInfo;
+
+UsersInfo.propTypes = {
+  motor_carrier_id: PropTypes.number.isRequired,
+};

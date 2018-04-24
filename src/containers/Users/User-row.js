@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Button, Row, Col, Container } from 'reactstrap';
-import styles from './Users.css';
-console.log(styles);
+import styles from '../../assets/styles/users.css';
+import PropTypes from 'prop-types';
+
 
 class UserRow extends React.Component {
 
@@ -34,4 +35,12 @@ class UserRow extends React.Component {
   }
 }
 
-export default UserRow
+export default UserRow;
+
+
+UserRow.propTypes = {
+  first_name:  PropTypes.string.isRequired,
+  last_name:  PropTypes.string.isRequired,
+  username:  PropTypes.string.isRequired,
+  picture:  PropTypes.string.isRequired,
+};
