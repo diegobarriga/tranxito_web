@@ -1,6 +1,6 @@
 import React from 'react'
 import Aux from '../../hoc/Aux';
-import styles from './Sidebar.css';
+import styles from '../../assets/styles/sidebar.css';
 import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 

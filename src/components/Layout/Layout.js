@@ -2,7 +2,7 @@ import React from 'react';
 import Aux from '../../hoc/Aux';
 import Navibar from '../../containers/NaviBar/NaviBar';
 import Sidebar from '../Sidebar/Sidebar';
-import styles from './Layout.css';
+import styles from '../../assets/styles/layout.css';
 
 
 
@@ -16,7 +16,7 @@ const layout = ( props ) => (
             < Sidebar />
             <main className="main">
                 { props.children }
-            </main>        
+            </main>
         </div>
     </Aux>
 );
