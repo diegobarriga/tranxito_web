@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ListGroup, ListGroupItem, Button, Row, Col, Container } from 'reactstrap';
+import { ListGroupItem, Button } from 'reactstrap';
 import styles from '../../assets/styles/users.css';
 import PropTypes from 'prop-types';
 

@@ -9,11 +9,11 @@ class Login extends React.Component {
     state = {
         controls:{
             email: {
-                value: ''
+                value: ''               
             },
 
             password:{
-                value: ''
+                value: ''                
             }
         }
     }
@@ -23,10 +23,12 @@ class Login extends React.Component {
             ...this.state.controls,
             'email': {
                 ...this.state.controls['email'],
-                value: event.target.value
+                value: event.target.value                
             }
         }
         this.setState( { controls: updatedControls } );
+
+        
     }
 
     passwordChangedHandler = ( event ) => {
@@ -38,6 +40,7 @@ class Login extends React.Component {
             }
         }
         this.setState( { controls: updatedControls } );
+
     }
 
 
@@ -62,14 +65,14 @@ class Login extends React.Component {
             }
 
             return (
-                <Container>
-                    { authRedirect }       
+                <Container>                         
                     <Row>                    
                         <Col sm="12" md={{ size: 5, offset: 3 }}>
+                            { authRedirect }  
                             <h1 style={h1Style}>Login</h1>
                             <Form onSubmit={ this.submitHandler }>
                                 <FormGroup>          
-                                <Input type="email" name="email" onChange={ this.emailChangedHandler } placeholder="Email" />
+                                <Input type="email" invalid={this.state.controls.email.valid} name="email" onChange={ this.emailChangedHandler } placeholder="Email" />
                                 </FormGroup>
                                 <FormGroup>          
                                 <Input type="password" name="password" onChange={ this.passwordChangedHandler }  placeholder="Password" />

@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import { ListGroup, ListGroupItem, Button, Row, Col, Container } from 'reactstrap';
-import Aux from '../../hoc/Aux';
+import { ListGroup } from 'reactstrap';
 import UserRow from './User-row';
 import Loader from '../../components/Loader/Loader';
 import usersService from '../../services/users';
