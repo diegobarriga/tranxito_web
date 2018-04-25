@@ -34,28 +34,28 @@ class NaviBar extends React.Component {
 
   render() {
     const pStyle = {
-      color: "white"            
-    }; 
+      color: "white"
+    };
 
     const aStyle = {
       height: "75px"
-    }; 
+    };
 
-    
 
-    return (        
+
+    return (
       <Aux>
         <Navbar fixed="top" style={aStyle} color="dark" light expand="md">
           <NavbarBrand style={pStyle}  href="/">E2E Group</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>                
-                <Link className = "nav-link" style={pStyle} to="/login">Login</Link>                
+              <NavItem>
+                <Link className = "nav-link" style={pStyle} to="/login">Login</Link>
               </NavItem>
               <NavItem>
-                <Link className = "nav-link" style={pStyle} to="/signup">Signup</Link> 
-                
+                <Link className = "nav-link" style={pStyle} to="/signup">Signup</Link>
+
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle style={pStyle} nav caret>

@@ -12,22 +12,22 @@ class Signup extends React.Component {
             textAlign: "center",
             marginBottom: "2rem"
 
-        }; 
-    
+        };
+
         return (
             <Container>
                 <Form>
-                    <Row>                    
+                    <Row>
                         <Col sm="12" md={{ size: 5, offset: 3 }}>
                             <h1 style={h1Style}>SignUp</h1>
 
-                            <FormGroup>          
+                            <FormGroup>
                             <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
                             </FormGroup>
-                            <FormGroup>          
+                            <FormGroup>
                             <Input type="password" name="password" id="examplePassword" placeholder="Password" />
                             </FormGroup>
-                            <FormGroup>          
+                            <FormGroup>
                             <Input type="password" name="password" id="examplePassword" placeholder="Password confirmation" />
                             </FormGroup>
                         </Col>

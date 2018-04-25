@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { ListGroup, ListGroupItem, Button, Row, Col, Container } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import UsersInfo from './Users-info';
 

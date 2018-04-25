@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, Container, Row, Col } 
 
 class Login extends React.Component {
 
-  render() {    
+  render() {
         const h1Style = {
             marginTop: "5rem",
             textAlign: "center",
@@ -11,15 +11,15 @@ class Login extends React.Component {
         };
 
         return (
-            <Container>                
-                    <Row>                    
+            <Container>
+                    <Row>
                         <Col sm="12" md={{ size: 5, offset: 3 }}>
                             <h1 style={h1Style}>Login</h1>
                         <Form>
-                            <FormGroup>          
+                            <FormGroup>
                             <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
                             </FormGroup>
-                            <FormGroup>          
+                            <FormGroup>
                             <Input type="password" name="password" id="examplePassword" placeholder="Password" />
                             </FormGroup>
                          </Form>
