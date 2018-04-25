@@ -3,9 +3,9 @@
 .sidebar {
 
 
-  background: $light-blue;
+  background: lighten($e2e-grey, 45%);
 
-  color: $light-grey;
+  color: lighten($e2e-grey, 50%);
   min-height: 700px;
   padding: 10px;
   flex: 20%;
