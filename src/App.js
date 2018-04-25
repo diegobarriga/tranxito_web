@@ -3,6 +3,7 @@ import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
 import { Route, Switch } from 'react-router-dom';
 import Users from './containers/Users/Users';
+import User from './containers/Users/User';
 import Trucks from './containers/Trucks/Trucks';
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
@@ -19,6 +20,7 @@ class App extends Component {
 
           <Layout>
             <Switch>
+              <Route path="/users/:id" component={ User } />
               <Route path="/users" component={ Users } />
               <Route path="/trucks" component={ Trucks } />
               <Route path="/logs" component={ Logs } />
