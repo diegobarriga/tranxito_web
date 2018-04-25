@@ -1,0 +1,7 @@
+@import './colors.scss';
+
+.navbar{
+  background-color: darken($e2e-grey, 20%);
+  color: white;
+  height: 75px;
+}
