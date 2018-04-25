@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import Navibar from '../../components/NaviBar/NaviBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import styles from './Layout.css';
+import styles from '../../assets/styles/layout.css';
 import { connect } from 'react-redux';
 
 
