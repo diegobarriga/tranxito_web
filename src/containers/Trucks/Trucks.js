@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import { ListGroup, ListGroupItem, Button, Container } from 'reactstrap';
+import { Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import TrucksInfo from './Trucks-info';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class Trucks extends React.Component {
 
@@ -10,16 +11,29 @@ class Trucks extends React.Component {
     }
 
     render(){
-        return (
+
+        let authRedirect = null;
+        if (!this.props.isAuthenticated){
+            authRedirect = <Redirect to="/" />;
+        }
+
+        return (            
             <Aux>
-            <h1> Trucks </h1>
-            <Container>
-               <TrucksInfo motor_carrier_id={ 0 }/>
-            </Container>
+                { authRedirect }
+                <h1> Trucks </h1>
+                <Container>
+                    <TrucksInfo motor_carrier_id={ 0 }/>
+                </Container>
             </Aux>
 
         );
     }
 }
 
-export default Trucks;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.token !== null
+    };
+};
+
+export default connect(mapStateToProps)(Trucks);
