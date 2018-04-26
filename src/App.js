@@ -10,7 +10,16 @@ import Dashboard from './containers/Dashboard/Dashboard';
 import Signup from './containers/Sessions/Signup/Signup';
 import Login from './containers/Sessions/Login/Login';
 import Logout from './containers/Sessions/Logout/Logout';
+import CreateUser from './containers/Forms/users/create_user';
 import Home from './components/Home/Home';
+
+import fontawesome from '@fortawesome/fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faFileExcel from '@fortawesome/fontawesome-free-solid/faFileExcel';
+import faUsers from '@fortawesome/fontawesome-free-solid/faUsers';
+import faUser from '@fortawesome/fontawesome-free-solid/faUser';
+
+fontawesome.library.add(faFileExcel, faUser, faUsers);
 
 
 class App extends Component {
@@ -20,6 +29,7 @@ class App extends Component {
 
           <Layout>
             <Switch>
+              <Route path="/users/new_user" component={ CreateUser } />
               <Route path="/users/:id" component={ User } />
               <Route path="/users" component={ Users } />
               <Route path="/trucks" component={ Trucks } />
@@ -28,7 +38,7 @@ class App extends Component {
               <Route path="/signup" component={ Signup } />
               <Route path="/login" component={ Login } />
               <Route path="/" exact component={ Home } />
-              <Route path="/logout" exact component={ Logout } />
+              <Route path="/logout" component={ Logout } />
             </Switch>
           </Layout>
     );
