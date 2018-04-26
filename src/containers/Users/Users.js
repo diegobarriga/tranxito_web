@@ -24,10 +24,10 @@ class Users extends React.Component {
             <Aux>
                 { authRedirect }
                 <h1> Drivers </h1>
-            <div className="buttons">
-                <Link className="btn btn-sm green spacing" to="/users/new_user"><FontAwesomeIcon icon="user" color='white'/> Create driver</Link>
-            <Link className="btn btn-sm green" to="/users/new_users"><FontAwesomeIcon icon="users" color='white'/> Create multiple driver</Link>
-            </div>
+                <div className="buttons">
+                    <Link className="btn btn-sm green spacing" to="/drivers/new_driver"><FontAwesomeIcon icon="user" color='white'/> Create driver</Link>
+                    <Link className="btn btn-sm green" to="/drivers/new_drivers"><FontAwesomeIcon icon="users" color='white'/> Create multiple drivers</Link>
+                </div>
                 <Container>
                     <UsersInfo motor_carrier_id={ 0 }/>
                 </Container>

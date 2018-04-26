@@ -10,8 +10,10 @@ import Dashboard from './containers/Dashboard/Dashboard';
 import Signup from './containers/Sessions/Signup/Signup';
 import Login from './containers/Sessions/Login/Login';
 import Logout from './containers/Sessions/Logout/Logout';
-import CreateUser from './containers/Forms/users/create_user';
-import CreateUsers from './containers/Forms/users/create_users';
+import CreateDriver from './containers/Forms/drivers/create_driver';
+import CreateDrivers from './containers/Forms/drivers/create_drivers';
+import CreateVehicle from './containers/Forms/vehicles/create_vehicle';
+import CreateVehicles from './containers/Forms/vehicles/create_vehicles';
 import Home from './components/Home/Home';
 
 import fontawesome from '@fortawesome/fontawesome';
@@ -19,8 +21,9 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFileExcel from '@fortawesome/fontawesome-free-solid/faFileExcel';
 import faUsers from '@fortawesome/fontawesome-free-solid/faUsers';
 import faUser from '@fortawesome/fontawesome-free-solid/faUser';
+import faCar from '@fortawesome/fontawesome-free-solid/faCar';
 
-fontawesome.library.add(faFileExcel, faUser, faUsers);
+fontawesome.library.add(faFileExcel, faUser, faUsers, faCar);
 
 
 class App extends Component {
@@ -30,11 +33,13 @@ class App extends Component {
 
           <Layout>
             <Switch>
-              <Route path="/users/new_users" component={ CreateUsers } />
-              <Route path="/users/new_user" component={ CreateUser } />
-              <Route path="/users/:id" component={ User } />
-              <Route path="/users" component={ Users } />
-              <Route path="/trucks" component={ Trucks } />
+              <Route path="/drivers/new_drivers" component={ CreateDrivers } />
+              <Route path="/drivers/new_driver" component={ CreateDriver } />
+              <Route path="/vehicles/new_vehicles" component={ CreateVehicles } />
+              <Route path="/vehicles/new_vehicle" component={ CreateVehicle } />
+              <Route path="/drivers/:id" component={ User } />
+              <Route path="/drivers" component={ Users } />
+              <Route path="/vehicles" component={ Trucks } />
               <Route path="/logs" component={ Logs } />
               <Route path="/dashboard" component={ Dashboard } />
               <Route path="/signup" component={ Signup } />

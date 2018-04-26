@@ -23,7 +23,7 @@ class SimpleReactFileUpload extends React.Component {
       console.log(response.data);
       console.log(response.status);
       if (response.status === 201) {
-        this.setState({ type: 'success', message: 'We have created all the new drivers. You will be able to see them shortly in the application.' });
+        this.setState({ type: 'success', message: `We have created all the new ${this.props.type}. You will be able to see them shortly in the application.` });
       }
       else {
         this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
@@ -34,7 +34,7 @@ class SimpleReactFileUpload extends React.Component {
     this.setState({file:e.target.files[0]})
   }
   fileUpload(file){
-    const url = 'https://private-459d3-elde2e.apiary-mock.com/drivers';
+    const url = `https://private-459d3-elde2e.apiary-mock.com/${this.props.type}`;
     const formData = new FormData();
     formData.append('file',file);
     console.log(formData);
@@ -58,9 +58,9 @@ class SimpleReactFileUpload extends React.Component {
     return (
       <div>{status}
         <div className="aligner">
-          <div className="aligner-item"><h1>Create multiple drivers through a csv file</h1></div>
+          <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>
           <div className="aligner-item"><p>The template below has the structure the csv file must have. You can download it, fill it and then upload it. That simple!</p></div>
-        <div className="aligner-item"><TemplateCSV type="drivers"/></div>
+        <div className="aligner-item"><TemplateCSV type={this.props.type}/></div>
           <div className="aligner-item">
             <div className="upload-form">
               <Form onSubmit={this.onFormSubmit}>
@@ -74,7 +74,5 @@ class SimpleReactFileUpload extends React.Component {
    )
   }
 }
-
-
 
 export default SimpleReactFileUpload
