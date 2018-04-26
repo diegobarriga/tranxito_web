@@ -4,12 +4,15 @@ import Aux from '../../hoc/Aux';
 import UsersInfo from './Users-info';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import styles from '../../assets/styles/forms.css';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 class Users extends React.Component {
 
     onDeleteBtnClick(){
     }
-    
+
     render(){
 
         let authRedirect = null;
@@ -19,8 +22,12 @@ class Users extends React.Component {
 
         return (
             <Aux>
-                { authRedirect }        
+                { authRedirect }
                 <h1> Drivers </h1>
+            <div className="buttons">
+                <Link className="btn btn-sm green spacing" to="/users/new_user"><FontAwesomeIcon icon="user" color='white'/> Create driver</Link>
+            <Link className="btn btn-sm green" to="/users/new_users"><FontAwesomeIcon icon="users" color='white'/> Create multiple driver</Link>
+            </div>
                 <Container>
                     <UsersInfo motor_carrier_id={ 0 }/>
                 </Container>
