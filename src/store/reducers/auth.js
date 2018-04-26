@@ -5,7 +5,8 @@ const initialState = {
     token: null,
     user_id: null,
     error: null,
-    loading: false
+    loading: false,
+    signSuccess: false
 }
 
 const authStart = ( state, action ) => {
@@ -14,12 +15,14 @@ const authStart = ( state, action ) => {
 
 const authSuccess = ( state, action ) => {
     return updateObject( state, {
-        token: action.idToken,
+        token: action.token,
         userId: action.userId,
         error: null,
         loading: false
     });
 }
+
+
 
 const authFail = ( state, action ) => {
     return updateObject( state, {
@@ -38,6 +41,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
         case actionTypes.AUTH_FAIL: return authFail(state, action);
         case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
+        
 
         default:
             return state;                
