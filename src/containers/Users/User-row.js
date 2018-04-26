@@ -27,7 +27,7 @@ class UserRow extends React.Component {
         <figure className="media-left">
           <img className="media-object" width="64px" src={this.props.picture} />
         </figure>
-        <Link to={`/users/${this.props.id}`}>{this.props.first_name} {this.props.last_name} - {this.props.username}</Link>
+        <Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name} - {this.props.username}</Link>
 
         <div style={pStyle}>
           <Link className="btn btn-secondary btn-sm" to={"/"}>Edit</Link>{' '}

@@ -4,7 +4,7 @@ import TemplateCSV from '../templates/template_csv';
 import styles from '../../../assets/styles/forms.css';
 import { Button, Form, FormGroup, Input, Container, Row, Col, } from 'reactstrap';
 
-class CreateNewDriver extends React.Component {
+class CreateDriver extends React.Component {
 
   constructor(props) {
     super(props);
@@ -145,4 +145,4 @@ class CreateNewDriver extends React.Component {
 
 
 
-export default CreateNewDriver
+export default CreateDriver

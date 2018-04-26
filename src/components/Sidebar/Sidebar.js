@@ -9,8 +9,8 @@ const sidebar = () => (
             <div>
                 <ListGroup>
                     <Link className = "list-group-item-action list-group-item" to="/dashboard">Dashboard</Link>
-                    <Link className = "list-group-item-action list-group-item" to="/users">Drivers</Link>
-                    <Link className = "list-group-item-action list-group-item" to="/trucks">Trucks</Link>
+                  <Link className = "list-group-item-action list-group-item" to="/drivers">Drivers</Link>
+                <Link className = "list-group-item-action list-group-item" to="/vehicles">Trucks</Link>
                     <Link className = "list-group-item-action list-group-item" to="/logs">Logs</Link>
                     <ListGroupItem tag="a" href="#" action>Settings</ListGroupItem>
                 </ListGroup>
