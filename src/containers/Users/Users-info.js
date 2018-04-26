@@ -35,6 +35,7 @@ class UsersInfo extends React.Component {
             {
               this.state.users.map((user) => {
                 return <UserRow key={ user.id }
+                                    id={ user.id }
                                     first_name={ user.first_name }
                                     last_name={ user.last_name }
                                     username={ user.username }

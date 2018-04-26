@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { ListGroup, ListGroupItem, Button, Row, Col, Container, Table } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import axios from 'axios';
-import Avatar from '../../components/Avatar'
-import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes'
+import Avatar from '../../components/Avatar';
+import Loader from '../../components/Loader/Loader';
+import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
 
 const styles = {
   userProfile: {
@@ -45,13 +46,14 @@ class Users extends React.Component {
 
 
     render(){
-      if (this.state.loading) return <Aux><h1>Loading</h1></Aux>
+      if (this.state.loading) return <Aux><Loader /></Aux>
       const { user } = this.state
       const { events } = user
-      console.log(this.state, this.props)
+
 
       return (
             <Aux>
+
             <h1>{`${user.first_name} ${user.last_name}`}</h1>
             <Row style={styles.userProfile}>
                 <Avatar src={user.picture} />
