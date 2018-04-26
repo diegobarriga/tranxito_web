@@ -30,7 +30,7 @@ class UserRow extends React.Component {
         <Link to={`/users/${this.props.id}`}>{this.props.first_name} {this.props.last_name} - {this.props.username}</Link>
 
         <div style={pStyle}>
-          <Link className="btn btn-secondary btn-sm" to={`/${this.props.id}`}>Edit</Link>{' '}
+          <Link className="btn btn-secondary btn-sm" to={"/"}>Edit</Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}>Delete</Button>
         </div>
       </ListGroupItem>
