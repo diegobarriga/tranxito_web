@@ -24,6 +24,9 @@ export const authFail = ( error ) => {
     };
 };
 
+
+
+
 export const logout = () => {
     return {
         type: actionTypes.AUTH_LOGOUT
@@ -31,7 +34,37 @@ export const logout = () => {
 };
 
 
-export const auth = ( email, password, isSignup ) => {
+export const signup = ( email, password, first_name, last_name, username, account_type ) => {
+
+    return dispatch => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            first_name: first_name,
+            last_name: last_name,
+            username: username,
+            account_type: account_type,
+            returnSecureToken: true
+        }
+
+        let url = 'https://e2e-eld-test.herokuapp.com/api/People';
+
+
+        axios.post(url, authData)
+            .then(response => {
+                console.log(response);
+                
+        })
+        .catch(err => {
+            console.log(err);
+            
+        });
+    };
+};
+
+
+export const login = ( email, password ) => {
     
     return dispatch => {
         dispatch(authStart());
@@ -41,16 +74,13 @@ export const auth = ( email, password, isSignup ) => {
             returnSecureToken: true
         }        
 
-        let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCzVpGZikA95-cMvFd8HSXoEB-TdeZdO9E';
-
-        if (!isSignup) {            
-            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCzVpGZikA95-cMvFd8HSXoEB-TdeZdO9E';
-        }
+        let url = 'https://e2e-eld-test.herokuapp.com/api/People/login';
+        
 
         axios.post(url, authData)
             .then(response => {
                 console.log(response);
-                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(authSuccess(response.data.id, response.data.userId));
         })
         .catch(err => {
             console.log(err);

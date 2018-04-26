@@ -14,7 +14,8 @@ import styles from '../../assets/styles/navbar.css';
 
 const navibar = ( props ) => (
       <Navbar fixed="top" className="navbar" light expand="md">
-        <NavbarBrand style={pStyle}  href="/">E2E Group</NavbarBrand>
+        <NavbarBrand style={pStyle} >E2E Group</NavbarBrand>
+
 
           <Nav className="ml-auto" navbar>
 
