@@ -4,8 +4,10 @@ import { ListGroup, ListGroupItem, Button, Row, Col, Container, Table } from 're
 import Aux from '../../hoc/Aux';
 import axios from 'axios';
 import Avatar from '../../components/Avatar';
+import Graph from './graph';
 import Loader from '../../components/Loader/Loader';
 import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
+import {Bar, Line, Pie} from 'react-chartjs-2';
 
 const styles = {
   userProfile: {
@@ -24,8 +26,8 @@ const styles = {
 }
 
 class Users extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       user: undefined,
       loading: true,
@@ -44,7 +46,6 @@ class Users extends React.Component {
     }
   }
 
-
     render(){
       if (this.state.loading) return <Aux><Loader /></Aux>
       const { user } = this.state
@@ -62,6 +63,9 @@ class Users extends React.Component {
                   <div>Email: {user.email}</div>
                 </div>
             </Row>
+
+            <Graph/>
+            <br/>
             <Container style={styles.userLogsContainer}>
               <Table striped>
                 <thead>
