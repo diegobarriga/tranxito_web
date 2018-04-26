@@ -1,1 +1,1 @@
-vin (string), CMV_power_unit_number (string),model (string),car_maker (string),plaque (string),state (string),IMEI_ELD (int)
+vin(string),CMV_power_unit_number(string),model(string),car_maker(string),plaque(string),state(string),IMEI_EL(int)

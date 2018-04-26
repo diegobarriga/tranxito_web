@@ -11,6 +11,7 @@ import Signup from './containers/Sessions/Signup/Signup';
 import Login from './containers/Sessions/Login/Login';
 import Logout from './containers/Sessions/Logout/Logout';
 import CreateUser from './containers/Forms/users/create_user';
+import CreateUsers from './containers/Forms/users/create_users';
 import Home from './components/Home/Home';
 
 import fontawesome from '@fortawesome/fontawesome';
@@ -29,6 +30,7 @@ class App extends Component {
 
           <Layout>
             <Switch>
+              <Route path="/users/new_users" component={ CreateUsers } />
               <Route path="/users/new_user" component={ CreateUser } />
               <Route path="/users/:id" component={ User } />
               <Route path="/users" component={ Users } />
