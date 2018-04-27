@@ -6,20 +6,19 @@ import PropTypes from 'prop-types';
 
 
 class TruckRow extends React.Component {
-
   render() {
     const pStyle = {
-      justifyContent: "flex-end"
+      justifyContent: 'flex-end',
     };
 
     const divStyle = {
-      display: "flex",
-      flexDirection: "row",
-    }
+      display: 'flex',
+      flexDirection: 'row',
+    };
 
-    return(
+    return (
       <ListGroupItem style={divStyle} className="justify-content-between">
-        <div className='truck_wrapper'>
+        <div className="truck_wrapper">
           <figure className="left">
             <img className="media-object" width="100px" src={this.props.picture} />
           </figure>
@@ -36,7 +35,7 @@ class TruckRow extends React.Component {
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}>Delete</Button>
         </div>
       </ListGroupItem>
-    )
+    );
   }
 }
 

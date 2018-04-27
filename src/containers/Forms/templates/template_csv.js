@@ -4,12 +4,13 @@ import styles from '../../../assets/styles/forms.css';
 import PropTypes from 'prop-types';
 
 class TemplateCSV extends React.Component {
-render() {
-    var path = `${process.env.PUBLIC_URL}/templates/${this.props.type}.csv`;
-    var name = `${this.props.type}.csv`
+  render() {
+    const path = `${process.env.PUBLIC_URL}/templates/${this.props.type}.csv`;
+    const name = `${this.props.type}.csv`;
     return (
       <a href={path} download={name} className="file">
-      <FontAwesomeIcon icon="file-excel" size='2x'/> Download</a>
+        <FontAwesomeIcon icon="file-excel" size="2x" /> Download
+      </a>
     );
   }
 }
@@ -17,5 +18,5 @@ render() {
 export default TemplateCSV;
 
 TemplateCSV.propTypes = {
-  type:  PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };

@@ -9,83 +9,83 @@ import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
 
 const styles = {
   userProfile: {
-    flexDirection: "row",
-    alignItems: "center",
-    margin: "24px 12px"
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: '24px 12px',
   },
   userData: {
-    flexDirection: "column",
-    marginLeft: "12px"
+    flexDirection: 'column',
+    marginLeft: '12px',
   },
   userLogsContainer: {
-    maxHeight: `${50*6}px`,
-    overflow: "scroll",
+    maxHeight: `${50 * 6}px`,
+    overflow: 'scroll',
   },
-}
+};
 
 class Users extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       user: undefined,
       loading: true,
-    }
+    };
   }
 
   async componentWillMount() {
-    const { id } = this.props.match.params
+    const { id } = this.props.match.params;
     try {
       const response = await axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/drivers_and_events/${id}`);
       console.log(response);
       const user = response.data;
-      this.setState({ user, loading: false })
+      this.setState({ user, loading: false });
     } catch (error) {
       console.error(error);
     }
   }
 
 
-    render(){
-      if (this.state.loading) return <Aux><Loader /></Aux>
-      const { user } = this.state
-      const { events } = user
+  render() {
+    if (this.state.loading) return <Aux><Loader /></Aux>;
+    const { user } = this.state;
+    const { events } = user;
 
 
-      return (
-            <Aux>
+    return (
+      <Aux>
 
-            <h1>{`${user.first_name} ${user.last_name}`}</h1>
-            <Row style={styles.userProfile}>
-                <Avatar src={user.picture} />
-                <div style={styles.userData}>
-                  <div>Driver license number: {user.driver_license_number}</div>
-                  <div>Email: {user.email}</div>
-                </div>
-            </Row>
-            <Container style={styles.userLogsContainer}>
-              <Table striped>
-                <thead>
-                  <tr>
-                    <th>Event</th>
-                    <th>Detail</th>
-                    <th>Timestamp</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {events.map(event => (
-                    <tr key={event.id}>
-                      <td>{EVENT_TYPES[event.event_type]}</td>
-                      <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
-                      <td>{event.event_timestamp}</td>
-                    </tr>
+        <h1>{`${user.first_name} ${user.last_name}`}</h1>
+        <Row style={styles.userProfile}>
+          <Avatar src={user.picture} />
+          <div style={styles.userData}>
+            <div>Driver license number: {user.driver_license_number}</div>
+            <div>Email: {user.email}</div>
+          </div>
+        </Row>
+        <Container style={styles.userLogsContainer}>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Detail</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map(event => (
+                <tr key={event.id}>
+                  <td>{EVENT_TYPES[event.event_type]}</td>
+                  <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
+                  <td>{event.event_timestamp}</td>
+                </tr>
                   ))}
-                </tbody>
-              </Table>
-            </Container>
-            </Aux>
+            </tbody>
+          </Table>
+        </Container>
+      </Aux>
 
-        );
-    }
+    );
+  }
 }
 
 export default Users;

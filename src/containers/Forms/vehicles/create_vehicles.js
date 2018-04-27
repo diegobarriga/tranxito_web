@@ -2,9 +2,9 @@ import React from 'react';
 import SimpleReactFileUpload from '../templates/create_entity';
 
 class CreateVehicles extends React.Component {
-render() {
+  render() {
     return (
-      <SimpleReactFileUpload type="vehicles"/>
+      <SimpleReactFileUpload type="vehicles" />
     );
   }
 }
