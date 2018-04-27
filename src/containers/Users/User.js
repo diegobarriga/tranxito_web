@@ -4,8 +4,10 @@ import { ListGroup, ListGroupItem, Button, Row, Col, Container, Table } from 're
 import Aux from '../../hoc/Aux';
 import axios from 'axios';
 import Avatar from '../../components/Avatar';
+import Graph from './graph';
 import Loader from '../../components/Loader/Loader';
 import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
+import { Bar, Line, Pie } from 'react-chartjs-2';
 
 const styles = {
   userProfile: {
@@ -24,8 +26,9 @@ const styles = {
 };
 
 class Users extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       user: undefined,
       loading: true,
@@ -54,34 +57,39 @@ class Users extends React.Component {
     return (
       <Aux>
 
+
         <h1>{`${user.first_name} ${user.last_name}`}</h1>
         <Row style={styles.userProfile}>
-          <Avatar src={user.picture} />
-          <div style={styles.userData}>
-            <div>Driver license number: {user.driver_license_number}</div>
-            <div>Email: {user.email}</div>
-          </div>
-        </Row>
+              <Avatar src={user.picture} />
+              <div style={styles.userData}>
+                  <div>Driver license number: {user.driver_license_number}</div>
+                  <div>Email: {user.email}</div>
+                </div>
+            </Row>
+
+        <Graph />
+        <br />
         <Container style={styles.userLogsContainer}>
-          <Table striped>
-            <thead>
-              <tr>
-                <th>Event</th>
-                <th>Detail</th>
-                <th>Timestamp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events.map(event => (
-                <tr key={event.id}>
-                  <td>{EVENT_TYPES[event.event_type]}</td>
-                  <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
-                  <td>{event.event_timestamp}</td>
-                </tr>
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>Event</th>
+                    <th>Detail</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {events.map(event => (
+                    <tr key={event.id}>
+                      <td>{EVENT_TYPES[event.event_type]}</td>
+                      <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
+                      <td>{event.event_timestamp}</td>
+                    </tr>
+
                   ))}
-            </tbody>
-          </Table>
-        </Container>
+                </tbody>
+              </Table>
+            </Container>
       </Aux>
 
     );
