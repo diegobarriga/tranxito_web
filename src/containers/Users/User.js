@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Bar, Line, Pie } from 'react-chartjs-2';
+import axios from 'axios';
 import { ListGroup, ListGroupItem, Button, Row, Col, Container, Table } from 'reactstrap';
 import Aux from '../../hoc/Aux';
-import axios from 'axios';
 import Avatar from '../../components/Avatar';
 import Graph from './graph';
 import Loader from '../../components/Loader/Loader';
 import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
-import { Bar, Line, Pie } from 'react-chartjs-2';
 
 const styles = {
   userProfile: {
@@ -60,17 +60,17 @@ class Users extends React.Component {
 
         <h1>{`${user.first_name} ${user.last_name}`}</h1>
         <Row style={styles.userProfile}>
-              <Avatar src={user.picture} />
-              <div style={styles.userData}>
-                  <div>Driver license number: {user.driver_license_number}</div>
-                  <div>Email: {user.email}</div>
-                </div>
-            </Row>
+          <Avatar src={user.picture} />
+          <div style={styles.userData}>
+                <div>Driver license number: {user.driver_license_number}</div>
+                <div>Email: {user.email}</div>
+              </div>
+        </Row>
 
         <Graph />
         <br />
         <Container style={styles.userLogsContainer}>
-              <Table striped>
+          <Table striped>
                 <thead>
                   <tr>
                     <th>Event</th>
@@ -89,7 +89,7 @@ class Users extends React.Component {
                   ))}
                 </tbody>
               </Table>
-            </Container>
+        </Container>
       </Aux>
 
     );
