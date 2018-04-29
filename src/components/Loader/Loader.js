@@ -1,6 +1,5 @@
 import React from 'react';
-import styles from '../../assets/styles/loader.css'
-console.log(styles);
+import '../../assets/styles/loader.css';
 
 export default function Loader() {
   return (

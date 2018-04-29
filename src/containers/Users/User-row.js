@@ -6,22 +6,21 @@ import PropTypes from 'prop-types';
 
 
 class UserRow extends React.Component {
-
   render() {
     const pStyle = {
-      justifyContent: "flex-end"
+      justifyContent: 'flex-end',
     };
 
 
     const divStyle = {
-      display: "flex",
-      flexDirection: "row",
+      display: 'flex',
+      flexDirection: 'row',
 
-    }
-    console.log("KEY DE USERROW")
-    console.log(this.props.id)
+    };
+    console.log('KEY DE USERROW');
+    console.log(this.props.id);
 
-    return(
+    return (
 
       <ListGroupItem style={divStyle} className="justify-content-between">
         <figure className="media-left">
@@ -30,11 +29,11 @@ class UserRow extends React.Component {
         <Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name} - {this.props.username}</Link>
 
         <div style={pStyle}>
-          <Link className="btn btn-secondary btn-sm" to={"/"}>Edit</Link>{' '}
+          <Link className="btn btn-secondary btn-sm" to="/">Edit</Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}>Delete</Button>
         </div>
       </ListGroupItem>
-    )
+    );
   }
 }
 
@@ -42,9 +41,9 @@ export default UserRow;
 
 
 UserRow.propTypes = {
-  first_name:  PropTypes.string.isRequired,
-  last_name:  PropTypes.string.isRequired,
-  username:  PropTypes.string.isRequired,
-  picture:  PropTypes.string.isRequired,
+  first_name: PropTypes.string.isRequired,
+  last_name: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };

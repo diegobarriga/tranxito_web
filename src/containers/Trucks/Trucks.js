@@ -9,38 +9,34 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
 class Trucks extends React.Component {
+  onDeleteBtnClick() {
+  }
 
-    onDeleteBtnClick(){
+  render() {
+    let authRedirect = null;
+    if (!this.props.isAuthenticated) {
+      authRedirect = <Redirect to="/" />;
     }
 
-    render(){
+    return (
+      <Aux>
+        { authRedirect }
+        <h1> Trucks </h1>
+        <div className="buttons">
+          <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> Create vehicle</Link>
+          <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> Create multiple vehicles</Link>
+        </div>
+        <Container>
+          <TrucksInfo motor_carrier_id={0} />
+        </Container>
+      </Aux>
 
-        let authRedirect = null;
-        if (!this.props.isAuthenticated){
-            authRedirect = <Redirect to="/" />;
-        }
-
-        return (
-            <Aux>
-                { authRedirect }
-                <h1> Trucks </h1>
-                <div className="buttons">
-                    <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color='white'/> Create vehicle</Link>
-                <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color='white'/><FontAwesomeIcon icon="car" color='white'/> Create multiple vehicles</Link>
-                </div>
-                <Container>
-                    <TrucksInfo motor_carrier_id={ 0 }/>
-                </Container>
-            </Aux>
-
-        );
-    }
+    );
+  }
 }
 
-const mapStateToProps = state => {
-    return {
-        isAuthenticated: state.token !== null
-    };
-};
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.token !== null,
+});
 
 export default connect(mapStateToProps)(Trucks);

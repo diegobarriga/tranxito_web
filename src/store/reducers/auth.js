@@ -1,52 +1,41 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../utility'
+import { updateObject } from '../utility';
 
 const initialState = {
-    token: null,
-    user_id: null,
-    error: null,
-    loading: false,
-    signSuccess: false
-}
+  token: null,
+  userId: null,
+  error: null,
+  loading: false,
+  role: null,
+};
 
-const authStart = ( state, action ) => {
-    return updateObject( state, { error: null, loading: true } )
-}
+const authStart = (state, action) => updateObject(state, { error: null, loading: true });
 
-const authSuccess = ( state, action ) => {
-    return updateObject( state, {
-        token: action.token,
-        userId: action.userId,
-        error: null,
-        loading: false
-    });
-}
+const authSuccess = (state, action) => updateObject(state, {
+  token: action.token,
+  userId: action.userId,
+  role: action.role,
+  error: null,
+  loading: false,
+});
 
+const authFail = (state, action) => updateObject(state, {
+  error: action.error,
+  loading: false,
+});
 
+const authLogout = (state, action) => updateObject(state, { token: null, userId: null, role: null });
 
-const authFail = ( state, action ) => {
-    return updateObject( state, {
-        error: action.error,
-        loading: false
-    });
-}
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.AUTH_START: return authStart(state, action);
+    case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
+    case actionTypes.AUTH_FAIL: return authFail(state, action);
+    case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
 
-const authLogout = ( state, action ) => {
-    return updateObject( state, { token: null, userId: null} );
-}
-
-const reducer = ( state = initialState, action ) => {
-    switch (action.type){
-        case actionTypes.AUTH_START: return authStart(state, action);
-        case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
-        case actionTypes.AUTH_FAIL: return authFail(state, action);
-        case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
-        
-
-        default:
-            return state;                
-            
-    }
-}
+    default:
+      return state;
+  }
+};
 
 export default reducer;
