@@ -7,6 +7,7 @@ const initialState = {
   error: null,
   loading: false,
   role: null,
+  motorCarrierId: null
 };
 
 const authStart = (state, action) => updateObject(state, { error: null, loading: true });
@@ -17,6 +18,7 @@ const authSuccess = (state, action) => updateObject(state, {
   role: action.role,
   error: null,
   loading: false,
+  motorCarrierId: action.motorCarrierId,
 });
 
 const authFail = (state, action) => updateObject(state, {

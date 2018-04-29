@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import getUsersService from '../../services/users';
-import axios from 'axios';
+
 
 export const getUsersStart = () => {
     return {
@@ -10,7 +10,6 @@ export const getUsersStart = () => {
 
 
 export const getUsersSuccess = ( users ) => {
-
     return {
         type: actionTypes.GET_USERS_SUCCESS,
         users: users,
@@ -20,8 +19,7 @@ export const getUsersSuccess = ( users ) => {
 export const getUsersFail = ( error ) => {
     return {
         type: actionTypes.GET_USERS_FAIL,
-        error: error
-
+        error: error,
     };
 };
 
@@ -34,7 +32,9 @@ export const getUsers = (token, motorCarrierId) => {
       getUsersService(token, motorCarrierId)
       .then( (response) => {
         try{
-          const users = response.data.json()
+          //const users = response.data.json()
+          const users = response;
+          console.log(users);
           dispatch(getUsersSuccess( users ))
         }
         catch(error){

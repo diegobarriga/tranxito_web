@@ -17,8 +17,6 @@ class UserRow extends React.Component {
       flexDirection: 'row',
 
     };
-    console.log('KEY DE USERROW');
-    console.log(this.props.id);
 
     return (
 

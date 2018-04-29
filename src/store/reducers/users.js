@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../utility'
+import { updateObject } from '../utility';
 
 const initialState = {
     users: [],
@@ -11,7 +11,6 @@ const getUsersFail = (state, action) => {
 
 }
 const getUsersSuccess = (state, action) => {
-  console.log(action.users)
   return updateObject( state, { users: action.users, loading: false } )
 }
 
@@ -21,7 +20,7 @@ const getUsersStart = ( state, action ) => {
 
 
 const reducer = ( state = initialState, action ) => {
-    console.log(action.type)
+
     switch (action.type){
         case actionTypes.GET_USERS_START: return getUsersStart(state, action);
         case actionTypes.GET_USERS_SUCCESS: return getUsersSuccess(state, action);
