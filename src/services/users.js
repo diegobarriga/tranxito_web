@@ -1,9 +1,9 @@
 import jsonRequest from './jsonRequest';
 
 export default {
-  async getUsers(motor_carrier_id) {
+  async getUsers(token, motorCarrierId) {
     /* Based on wican */
-    return jsonRequest(`/drivers_by_motor_carrier/${motor_carrier_id}`);
+    return jsonRequest(`/MotorCarriers/${motorCarrierId}/people/?access_token=${token}`);
   },
   // async getLoggedUser() {
   //   const user = await jsonRequest('/users/current');
