@@ -2,37 +2,29 @@ import React from 'react';
 import { ListGroup } from 'reactstrap';
 import UserRow from './User-row';
 import Loader from '../../components/Loader/Loader';
-import usersService from '../../services/users';
+import * as actions from '../../store/actions/users';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class UsersInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      users: [],
-      loading: false,
-      loggedUser: null,
-    };
+
   }
 
   componentDidMount() {
-    this.fetchUsers();
-  }
-
-  async fetchUsers() {
-    this.setState({ loading: true });
-    const users = await usersService.getUsers(this.props.motor_carrier_id);
-    this.setState({ loading: false, users });
+    this.props.getUsers(this.props.token, this.props.motorCarrierId);
   }
 
   render() {
+
     return (
       <div>
-        {this.state.loading && <Loader />}
+        {this.props.loading && <Loader />}
 
         <ListGroup>
           {
-              this.state.users.map(user => (<UserRow
+              this.props.users.map(user => (<UserRow
                 key={user.id}
                 id={user.id}
                 first_name={user.first_name}
@@ -47,8 +39,19 @@ class UsersInfo extends React.Component {
   }
 }
 
-export default UsersInfo;
-
-UsersInfo.propTypes = {
-  motor_carrier_id: PropTypes.number.isRequired,
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        motorCarrierId: state.auth.motorCarrierId,
+        users: state.users.users,
+        loading: state.users.loading,
+    };
 };
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getUsers: ( token, motorCarrierId ) => dispatch(actions.getUsers(token, motorCarrierId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersInfo);

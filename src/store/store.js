@@ -2,12 +2,16 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import authReducer from './reducers/auth';
 import mcarrierReducer from './reducers/mcarrier';
+import usersReducer from './reducers/users';
+import vehiclesReducer from './reducers/vehicles';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   auth: authReducer,
   mcarrier: mcarrierReducer,
+  users: usersReducer,
+  vehicles: vehiclesReducer,
 });
 
 

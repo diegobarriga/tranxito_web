@@ -2,37 +2,30 @@ import React from 'react';
 import { ListGroup } from 'reactstrap';
 import TruckRow from './Truck-row';
 import Loader from '../../components/Loader/Loader';
-import trucksService from '../../services/trucks';
+import * as actions from '../../store/actions/vehicles';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class TrucksInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      trucks: [],
-      loading: false,
-      loggedUser: null,
-    };
   }
 
   componentDidMount() {
-    this.fetchTrucks();
+    this.props.getVehicles(this.props.token, this.props.motorCarrierId);
+
   }
 
-  async fetchTrucks() {
-    this.setState({ loading: true });
-    const trucks = await trucksService.getTrucks(this.props.motor_carrier_id);
-    this.setState({ loading: false, trucks });
-  }
+
 
   render() {
     return (
       <div>
-        {this.state.loading && <Loader />}
-
+        {this.props.loading && <Loader />}
+        {console.log(this.props.vehicles)}
         <ListGroup>
           {
-              this.state.trucks.map(truck => (<TruckRow
+              this.props.vehicles.map(truck => (<TruckRow
                 key={truck.id}
                 vin={truck.vin}
                 CMV_power_unit_number={truck.CMV_power_unit_number}
@@ -50,8 +43,23 @@ class TrucksInfo extends React.Component {
   }
 }
 
-export default TrucksInfo;
 
-TrucksInfo.propTypes = {
-  motor_carrier_id: PropTypes.number.isRequired,
+
+
+
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        motorCarrierId: state.auth.motorCarrierId,
+        vehicles: state.vehicles.vehicles,
+        loading: state.vehicles.loading,
+    };
 };
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getVehicles: ( token, motorCarrierId ) => dispatch(actions.getVehicles(token, motorCarrierId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrucksInfo);
