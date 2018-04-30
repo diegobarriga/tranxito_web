@@ -22,10 +22,6 @@ class Trucks extends React.Component {
       <Aux>
         { authRedirect }
         <h1> Trucks </h1>
-        <div className="buttons">
-          <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> Create vehicle</Link>
-          <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> Create multiple vehicles</Link>
-        </div>
         <Container>
           <TrucksInfo motor_carrier_id={0} />
         </Container>
