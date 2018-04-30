@@ -17,7 +17,7 @@ class MotorCarriers extends React.Component {
 
   render() {
     const h1Style = {
-      marginBottom: '2rem',
+      marginBottom: '1rem',
     };
 
     const flexContainer = {
