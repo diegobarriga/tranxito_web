@@ -195,6 +195,7 @@ class CreateDriverForm extends React.Component {
           type="select"
           name="exempt_driver_configuration"
           placeholder="Exempt Driver Configuration"
+          error={errors.exempt_driver_configuration}
           onChange={this.onChange}>
             <option>1</option>
             <option>E</option>
@@ -206,6 +207,7 @@ class CreateDriverForm extends React.Component {
           type="select"
           name="time_zone_offset_utc"
           placeholder="Time Zone Offset UTC"
+          error={errors.time_zone_offset_utc}
           onChange={this.onChange}>
             {this.createSelectItems(4, 11)}
           </Form.Input>
@@ -215,6 +217,7 @@ class CreateDriverForm extends React.Component {
           type="datetime-local"
           name="starting_time_24_hour_period"
           placeholder="Starting Time 24 Hour Period"
+          error={errors.starting_time_24_hour_period}
           onChange={this.onChange} />
         </Form.Group>
         <Form.Group>
@@ -222,6 +225,7 @@ class CreateDriverForm extends React.Component {
           type="select"
           name="move_yards_use"
           placeholder="Move Yards Use"
+          error={errors.move_yards_use}
           onChange={this.onChange}>
             {this.createSelectItems(0, 1)}
           </Form.Input>
@@ -231,6 +235,7 @@ class CreateDriverForm extends React.Component {
           type="select"
           name="default_use"
           placeholder="Default Use"
+          error={errors.default_use}
           onChange={this.onChange}>
             {this.createSelectItems(0, 1)}
           </Form.Input>
@@ -240,6 +245,7 @@ class CreateDriverForm extends React.Component {
           type="select"
           name="personal_use"
           placeholder="Personal Use"
+          error={errors.personal_use}
           onChange={this.onChange}>
             {this.createSelectItems(0, 1)}
           </Form.Input>
