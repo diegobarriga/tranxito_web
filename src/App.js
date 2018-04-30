@@ -16,7 +16,8 @@ import CreateVehicles from './containers/Forms/vehicles/create_vehicles';
 import Login from './containers/Sessions/Login/Login';
 import Home from './components/Home/Home';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
-import MotorCarrier from './containers/MotorCarriers//MotorCarrier';
+import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
+import mForm from './containers/MotorCarriers/mForm';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import fontawesome from '@fortawesome/fontawesome';
@@ -47,6 +48,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/" exact component={Home} />
           <Route path="/logout" component={Logout} />
+          <Route path="/motor_carriers/create" component={mForm} />
           <Route path="/motor_carriers/:id/new_supervisor" component={Signup} />
           <Route path="/motor_carriers/:id" component={MotorCarrier} />
           <Route path="/motor_carriers" component={MotorCarriers} />

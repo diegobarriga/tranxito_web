@@ -5,7 +5,7 @@ import UsersInfo from './Users-info';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import styles from '../../assets/styles/forms.css';
+import '../../assets/styles/forms.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 class Users extends React.Component {

@@ -45,7 +45,7 @@ class MotorCarriers extends React.Component {
         { authRedirect }
         <h1 style={h1Style}> MotorCarriers </h1>
         <div className="buttons">
-          <Link className="btn btn-sm green spacing" to="/motor_carriers"><FontAwesomeIcon icon="user" color="white" /> Create MotorCarrier</Link>
+          <Link className="btn btn-sm green spacing" to="/motor_carriers/create"><FontAwesomeIcon icon="user" color="white" /> Create MotorCarrier</Link>
         </div>
         <Container>
           <Row >
@@ -53,8 +53,8 @@ class MotorCarriers extends React.Component {
               <ListGroup>
                 {
                   this.props.mCarrierList.map(carrier => (
-                    <div style={flexContainer} className="list-group-item-action list-group-item">
-                      <div style={containerObject}>
+                    <div key={carrier.id} style={flexContainer} className="list-group-item-action list-group-item">
+                      <div key={carrier.id} style={containerObject}>
                         <Link key={carrier.id} to="/">
                           {carrier.name}
                         </Link>

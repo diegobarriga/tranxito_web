@@ -49,7 +49,7 @@ class SimpleReactFileUpload extends React.Component {
       const classString = `alert alert-${this.state.type}`;
       var status = (<div id="status" className={classString} ref="status">
         {this.state.message}
-      </div>);
+                    </div>);
     }
 
     return (
