@@ -6,11 +6,15 @@ class ModalTemplate extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      errors: {},
     };
   }
 
   render() {
-    const { show, close, title, FormComponent, submitFunc } = this.props;
+    const { errors } = this.state;
+    const {
+ show, close, title, FormComponent, submitFunc 
+} = this.props;
     return (
       <Modal open={show} dimmer="inverted" onClose={close}>
         <Modal.Header toggle={close}>
