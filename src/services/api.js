@@ -125,3 +125,4 @@ export default {
       axios.post(`${apiPath}/People/upload?access_token=${token}`, formData, config),
   },
 };
+
