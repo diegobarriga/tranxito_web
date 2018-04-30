@@ -14,11 +14,11 @@ const sidebar = props => (
           <Link className="list-group-item-action list-group-item" to="/motor_carriers">Motor Carriers</Link>
           :
           <Aux>
-            <Link className="list-group-item-action list-group-item" to="/dashboard">Dashboard</Link>
+            <Link className="list-group-item-action list-group-item disabledCursor" onClick={(e) => e.preventDefault()} to="/dashboard">Dashboard</Link>
             <Link className="list-group-item-action list-group-item" to="/drivers">Drivers</Link>
             <Link className="list-group-item-action list-group-item" to="/vehicles">Trucks</Link>
-            <Link className="list-group-item-action list-group-item" to="/logs">Logs</Link>
-            <ListGroupItem tag="a" href="#" action>Settings</ListGroupItem>
+            <Link className="list-group-item-action list-group-item disabledCursor" onClick={(e) => e.preventDefault()} to="/logs">Alerts</Link>
+          <Link className="list-group-item-action list-group-item disabledCursor" onClick={(e) => e.preventDefault()} to="/">Settings</Link>
           </Aux> }
 
       </ListGroup>
