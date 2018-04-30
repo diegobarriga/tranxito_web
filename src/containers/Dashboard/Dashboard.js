@@ -12,8 +12,17 @@ class Dashboard extends React.Component {
       authRedirect = <Redirect to="/" />;
     }
 
+    let alert = null;
+
+    console.log(this.props.error.status);
+    if (this.props.error.status === 200) {
+      alert = <div> SUCCESS </div>;
+    }
+
+
     return (
       <Aux>
+        { alert }
         { authRedirect }
         <h1> Dashboard </h1>
       </Aux>
@@ -28,6 +37,8 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
+  isLoading: state.auth.loading,
+  error: state.auth.error,
 });
 
 export default connect(mapStateToProps)(Dashboard);

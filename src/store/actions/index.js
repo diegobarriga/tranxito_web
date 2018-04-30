@@ -2,6 +2,10 @@ export {
   login,
   logout,
   signup,
+  errorReset,
 } from './auth';
 
-export { initMCarriers } from './mcarrier';
+export {
+  initMCarriers,
+  carrierRegister,
+} from './mcarrier';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ListGroupItem, Button } from 'reactstrap';
-import styles from '../../assets/styles/users.css';
 import PropTypes from 'prop-types';
+import { ListGroupItem, Button } from 'reactstrap';
+import '../../assets/styles/users.css';
 
 
 class UserRow extends React.Component {
