@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import {Form, FormGroup, HelpBlock, FormControl, Button, Checkbox, Alert} from 'react-bootstrap';
+import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { HelpBlock, Alert} from 'react-bootstrap';
 
 class ResetPasswordForm extends Component {
 
@@ -49,8 +50,9 @@ class ResetPasswordForm extends Component {
 
   validate(data) {
     const errors = {};
-    if (!data.password) errors.password = "Can't be blank";
-    if (data.password !== data.passwordConfirmation)
+    if (!data.password) errors.password = "This field can't be blank";
+    if (!data.passwordConfirmation) errors.passwordConfirmation = "This field can't be blank";
+    else if (data.password !== data.passwordConfirmation)
       errors.passwordConfirmation = "Passwords must match";
     return errors;
   };
@@ -61,26 +63,24 @@ class ResetPasswordForm extends Component {
     return (
       <Form onSubmit={this.onSubmit}>
         {!!errors.global && <Alert bsStyle="danger">{errors.global}</Alert>}
-        <FormGroup
+        <Form.Group
           controlId="passwordResetInput"
         >
-          <FormControl
+          <Form.Input
             type={!this.state.showPassword ? "password" : "text"}
             name="password"
             placeholder="New Password"
-            inputRef={c => this.password = c}
             onChange={this.onChange}
           />
           {errors.password && <HelpBlock>{errors.password}</HelpBlock>}
-        </FormGroup>
-        <FormGroup
+        </Form.Group>
+        <Form.Group
           controlId="passwordConfirmationResetInput"
         >
-          <FormControl
+          <Form.Input
             type={!this.state.showPassword ? "password" : "text"}
             name="passwordConfirmation"
             placeholder="Confirm new password"
-            inputRef={c => this.passwordConfirmation = c}
             onChange={this.onChange}
           />
           {errors.passwordConfirmation && <HelpBlock>{errors.passwordConfirmation}</HelpBlock>}
@@ -89,10 +89,9 @@ class ResetPasswordForm extends Component {
           </Checkbox>
         </FormGroup>
         <Button
-          className="btn btn-7"
           bsSize="lg"
           type="submit"
-          disabled={isLoading}
+          loading={isLoading}
         >
           Reset
         </Button>

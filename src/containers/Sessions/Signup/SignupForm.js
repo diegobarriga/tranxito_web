@@ -1,24 +1,30 @@
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
+import { Button, Checkbox, Form } from 'semantic-ui-react';
 var _ = require('lodash');
 
-class LoginForm extends Component {
+class SignupForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
       data: {
         email: '',
-        password: ''
+        password: '',
+        passwordConfirmation: '',
+        firstName: '',
+        lastName: '',
+        username: '',
+        accountType: 'S'
+        }
       },
       isLoading: false,
       redirectTo: false,
       showPassword: false
     }
     this.onTogglePassword = this.onTogglePassword.bind(this);
-    this.isValidLogin = this.isValidLogin.bind(this);
+    this.isValidSignup = this.isValidSignup.bind(this);
     this.onChange = this.onChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
@@ -36,15 +42,28 @@ class LoginForm extends Component {
   }
 
   validateInput(data) {
-    let errors = {};
-    if (validator.isEmpty(String(data.email))) {
+    let errors = {}
+    console.log(data);
+    if (_.isEmpty(String(data.firstName))) {
+      errors.firstName = 'This field is required';
+    }
+    if (_.isEmpty(String(data.lastName))) {
+      errors.lastName = 'This field is required';
+    }
+    if (_.isEmpty(String(data.email))) {
       errors.email = 'This field is required';
     }
     else if (!validator.isEmail(String(data.email))) {
-      errors.email = 'Not a valid email';
+      errors.email = 'Input is not a valid email';
     }
-    if (validator.isEmpty(String(data.password))) {
+    if (_.isEmpty(String(data.password))) {
       errors.password = 'This field is required';
+    }
+    if (_.isEmpty(String(data.passwordConfirmation))) {
+      errors.passwordConfirmation = 'This field is required';
+    }
+    else if (!validator.equals(String(data.password), String(data.passwordConfirmation))) {
+      errors.passwordConfirmation = "Passwords don't match";
     }
     return {
       errors,
@@ -52,32 +71,61 @@ class LoginForm extends Component {
     }
   }
 
-  isValidLogin(){
-    const { errors, isValid } = this.validateInput(this.state.data);
+  isValidSignup(){
+    const { errors, isValid } = this.validateInput(this.state.credentials);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
+
+  submitHandler = (event) => {
+    // prevents reloading of the page
+    event.preventDefault();
+    this.props.login(this.state.data).catch(
+      (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+    );
 
   submitHandler(event){
     event.preventDefault(); // prevents reload of the page
     if (this.isValidLogin()) {
       this.setState({ errors: {}, isLoading: true});
       // verify credentials
-      this.props.login(this.state.data).catch(
+      this.props.login(this.state).catch(
         (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
       );
     }
   }
 
-
   render(){
     const { errors, isLoading, redirectTo, showPassword } = this.state;
+    // Change redirect link
     if (redirectTo) {
       this.setState({redirectTo: false});
       return <Redirect to='/dashboard'/>;
     }
     return(
       <Form onSubmit={this.submitHandler}>
+        <Form.Group widths='equal'>
+          <Form.Input
+          type="text"
+          name="firstName"
+          placeholder='First Name'
+          error={errors.firstName}
+          />
+          <Form.Input
+          type="text"
+          name="lastName"
+          placeholder='Last Name'
+          error={errors.lastName}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+          type="text"
+          name="username"
+          placeholder='Username'
+          error={errors.username}
+          />
+        </Form.Group>
         <Form.Group>
           <Form.Input
           type="email"
@@ -95,6 +143,14 @@ class LoginForm extends Component {
             onChange={this.onChange}
             error={errors.password}
           />
+          <Form.Input
+            placeholder='Password Confirmation'
+            type={!showPassword ? "password" : "text"}
+            name="passwordConfirmation"
+            autoComplete="new-password"
+            onChange={this.onChange}
+            error={errors.passwordConfirmation}
+          />
           <Checkbox label='Show password' onClick={this.onTogglePassword}/>
         </Form.Group>
         <Button type='submit' loading={isLoading}>Submit</Button>
@@ -103,8 +159,8 @@ class LoginForm extends Component {
   }
 }
 
-LoginForm.propTypes = {
-  login: PropTypes.func.isRequired
+SignupForm.propTypes = {
+  signup: PropTypes.func.isRequired
 }
 
-export default LoginForm;
+export default SignupForm;

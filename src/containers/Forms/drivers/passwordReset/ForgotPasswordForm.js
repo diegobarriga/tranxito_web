@@ -61,16 +61,14 @@ class ForgotPasswordForm extends Component {
             type="email"
             name="email"
             placeholder="Email"
-            inputRef={c => this.email = c}
             onChange={this.onChange}
           />
           {errors.email && <HelpBlock>{errors.email}</HelpBlock>}
         </Form.Group>
         <Button
-          className="btn btn-7"
           bsSize="lg"
           type="submit"
-          disabled={isLoading}
+          loading={isLoading}
         >
           Submit
         </Button>

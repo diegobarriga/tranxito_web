@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {Grid, Row, Col, Alert} from 'react-bootstrap';
 import ForgotPasswordForm from "./ForgotPasswordForm";
-import { resetPasswordRequest } from "./../../actions/authActions";
+// import { resetPasswordRequest } from "./../../actions/authActions";
 
 class ForgotPasswordView extends Component {
 
