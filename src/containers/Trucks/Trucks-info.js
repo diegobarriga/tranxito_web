@@ -2,37 +2,60 @@ import React from 'react';
 import { ListGroup } from 'reactstrap';
 import TruckRow from './Truck-row';
 import Loader from '../../components/Loader/Loader';
-import trucksService from '../../services/trucks';
+import * as actions from '../../store/actions/vehicles';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Input } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import styles from '../../assets/styles/forms.css';
 
 class TrucksInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trucks: [],
-      loading: false,
-      loggedUser: null,
+      search: ''
     };
+    this.updateSearch = this.updateSearch.bind(this);
   }
 
   componentDidMount() {
-    this.fetchTrucks();
+    this.props.getVehicles(this.props.token, this.props.motorCarrierId);
+
   }
 
-  async fetchTrucks() {
-    this.setState({ loading: true });
-    const trucks = await trucksService.getTrucks(this.props.motor_carrier_id);
-    this.setState({ loading: false, trucks });
+  updateSearch(event) {
+    this.setState({ search: event.target.value })
   }
+
 
   render() {
+
+    let filtered_vehicles = this.props.vehicles.filter(
+      (vehicle) => {
+        return (vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+        vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+        vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+        vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+      }
+    );
     return (
       <div>
-        {this.state.loading && <Loader />}
 
+        <div className="inlineBox">
+          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type='text' value={this.state.search} onChange={this.updateSearch}></input>
+          <div className="buttons">
+            <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> Create vehicle</Link>
+            <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> Create multiple vehicles</Link>
+          </div>
+        </div>
+
+
+        {this.props.loading && <Loader />}
+        {console.log(filtered_vehicles)}
         <ListGroup>
           {
-              this.state.trucks.map(truck => (<TruckRow
+              filtered_vehicles.sort(function(a, b){return a.car_maker > b.car_maker}).map(truck => (<TruckRow
                 key={truck.id}
                 vin={truck.vin}
                 CMV_power_unit_number={truck.CMV_power_unit_number}
@@ -50,8 +73,19 @@ class TrucksInfo extends React.Component {
   }
 }
 
-export default TrucksInfo;
-
-TrucksInfo.propTypes = {
-  motor_carrier_id: PropTypes.number.isRequired,
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        motorCarrierId: state.auth.motorCarrierId,
+        vehicles: state.vehicles.vehicles,
+        loading: state.vehicles.loading,
+    };
 };
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getVehicles: ( token, motorCarrierId ) => dispatch(actions.getVehicles(token, motorCarrierId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrucksInfo);

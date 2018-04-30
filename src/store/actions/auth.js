@@ -6,13 +6,15 @@ export const authStart = () => ({
 });
 
 
-export const authSuccess = (token, userId, role, response) => ({
+
+export const authSuccess = (token, userId, role, response, motorCarrierId) => ({
+
   type: actionTypes.AUTH_SUCCESS,
   token,
   userId,
   role,
   response,
-
+  motorCarrierId,
 });
 
 export const authFail = error => ({
@@ -108,7 +110,8 @@ export const login = (email, password) => (dispatch) => {
       axios.get(userUrl)
         .then((userResponse) => {
           console.log(response);
-          dispatch(authSuccess(response.data.id, response.data.userId, userResponse.data.account_type, response));
+          dispatch(authSuccess(response.data.id, response.data.userId, userResponse.data.account_type,response, userResponse.data.motorCarrierId));
+
         })
         .catch((err) => {
           console.log(err);

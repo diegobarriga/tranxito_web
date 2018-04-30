@@ -8,9 +8,11 @@ const pStyle = {
   color: 'white',
 };
 
+const path = `${process.env.PUBLIC_URL}/logoe2e.svg`
+
 const navibar = props => (
   <Navbar fixed="top" className="navbar" light expand="md">
-    <NavbarBrand style={pStyle} >E2E Group</NavbarBrand>
+    <img src={path} className="logo" alt="E2E Performance"/>
     <Nav className="ml-auto" navbar>
 
       { props.isAuth ?

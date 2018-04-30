@@ -101,7 +101,7 @@ class CreateDriver extends React.Component {
                   </Input>
                 </FormGroup>
                 <FormGroup>
-                  <Input type="select" name="time_zone_offset_utc" placeholder="Time Zone Offset UTC"onChange={this.onChange}>
+                  <Input type="select" name="time_zone_offset_utc" placeholder="Time Zone Offset UTC" onChange={this.onChange}>
                     {this.createSelectItems(4, 11)}
                   </Input>
                 </FormGroup>

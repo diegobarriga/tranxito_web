@@ -1,10 +1,7 @@
 @import './colors.scss';
 
 .sidebar {
-
-
   background: lighten($e2e-grey, 45%);
-
   color: lighten($e2e-grey, 50%);
   min-height: 700px;
   padding: 10px;
@@ -13,4 +10,13 @@
 
 .nav-button:hover{
   background-color: black;
+}
+
+.disabledCursor {
+  cursor: default;
+  background-color: lighten($e2e-grey, 35%);
+}
+
+.disabledCursor:hover {
+  background-color: lighten($e2e-grey, 35%);
 }

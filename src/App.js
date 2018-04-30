@@ -25,8 +25,9 @@ import faFileExcel from '@fortawesome/fontawesome-free-solid/faFileExcel';
 import faUsers from '@fortawesome/fontawesome-free-solid/faUsers';
 import faUser from '@fortawesome/fontawesome-free-solid/faUser';
 import faCar from '@fortawesome/fontawesome-free-solid/faCar';
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 
-fontawesome.library.add(faFileExcel, faUser, faUsers, faCar);
+fontawesome.library.add(faFileExcel, faUser, faUsers, faCar, faSearch);
 
 
 class App extends Component {
