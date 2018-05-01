@@ -4,12 +4,13 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import { Button, Container, Row, Col } from 'reactstrap';
-import Loader from '../../../components/Loader/Loader';
+import Loader from '../../../../components/Loader/Loader';
 import LoginForm from './LoginForm';
-import * as actions from '../../../store/actions/index';
+import * as actions from '../../../../store/actions/index';
 
 
 class LoginView extends Component {
+
   constructor(props) {
     super(props);
     this.state = {

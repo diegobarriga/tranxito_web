@@ -4,9 +4,10 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-import Loader from '../../../components/Loader/Loader';
-import Alert from '../../Alert/Alert';
+import * as actions from '../../../../store/actions/index';
+import Loader from '../../../../components/Loader/Loader';
+import Alert from '../../../Alert/Alert';
+import SignupForm from './SignupForm';
 
 
 class SignupView extends Component {
@@ -69,7 +70,7 @@ class SignupView extends Component {
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               { authRedirect }
               <h1 style={h1Style}>Register Supervisor</h1>
-              <SignupForm signup={this.props.onAuth}>
+              <SignupForm signup={this.props.onAuth}/>
             </Col>
           </Row>
         </Container>
@@ -78,7 +79,7 @@ class SignupView extends Component {
 }
 
 
-Signup.propTypes = {
+SignupView.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
@@ -88,7 +89,7 @@ Signup.propTypes = {
   resetError: PropTypes.func.isRequired,
 };
 
-Signup.defaultProps = {
+SignupView.defaultProps = {
   error: null,
 };
 
@@ -108,4 +109,4 @@ const mapDispatchToProps = dispatch => ({
   resetError: () => dispatch(actions.errorReset()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signup));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupView));

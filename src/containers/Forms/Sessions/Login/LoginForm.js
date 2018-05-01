@@ -6,6 +6,7 @@ import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
 var _ = require('lodash');
 
 class LoginForm extends Component {
+
   constructor(props) {
     super(props);
     this.state = {

@@ -49,7 +49,7 @@ class VehicleInfo extends React.Component {
         {console.log(filtered_vehicles)}
         <ListGroup>
           {
-              filtered_vehicles.sort((a, b) => a.car_maker > b.car_maker).map(truck => (<VehicleRow
+              filtered_vehicles.sort((a, b) => {return a.car_maker > b.car_maker}).map(truck => (<VehicleRow
                 key={truck.id}
                 vin={truck.vin}
                 CMV_power_unit_number={truck.CMV_power_unit_number}
