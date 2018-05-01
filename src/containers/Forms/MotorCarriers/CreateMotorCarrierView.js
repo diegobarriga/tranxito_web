@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import Loader from '../../components/Loader/Loader';
-import * as actions from '../../store/actions/index';
+import Loader from '../../../components/Loader/Loader';
+import * as actions from '../../../store/actions/index';
 import CreateMotorCarrierForm from './CreateMotorCarrierForm';
 
 

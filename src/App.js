@@ -22,7 +22,7 @@ import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
 import Users from './containers/Users/Users';
-import User from './containers/Users/User';
+import UserProfile from './containers/Users/UserProfile';
 import Vehicles from './containers/Vehicles/Vehicles';
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';

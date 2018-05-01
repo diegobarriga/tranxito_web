@@ -153,6 +153,7 @@ class CreateVehicleForm extends React.Component {
         <Form.Group>
           <Form.Input
             type="number"
+            min={0}
             name="IMEI_ELD"
             placeholder="IMEI ELD"
             onChange={this.onChange}

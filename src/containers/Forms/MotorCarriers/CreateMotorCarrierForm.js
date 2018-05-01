@@ -91,6 +91,7 @@ class CreateMotorCarrierForm extends Component {
             <Form.Input
               type="number"
               name="USDOT_number"
+              min={0}
               onChange={this.onChange}
               placeholder="USDOT Number"
               error={errors.USDOT_number}
