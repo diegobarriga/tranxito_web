@@ -82,7 +82,8 @@ class Signup extends React.Component {
       if (this.props.error === null) {
         alert = null;
       } else if (this.props.error.status === 200) {
-        alert = (<Alert alertType="SUCCESS" />);
+        const msg = 'Supervisor was created successfully';
+        alert = (<Alert alertType="SUCCESS" message={msg} />);
         // this.props.resetError();
       } else {
         alert = (<Alert alertType="FAIL" />);

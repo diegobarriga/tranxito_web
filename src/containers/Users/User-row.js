@@ -22,12 +22,12 @@ class UserRow extends React.Component {
 
       <ListGroupItem style={divStyle} className="justify-content-between">
         <figure className="media-left">
-          <img className="media-object" width="64px" src={this.props.picture} />
+          <img className="media-object" width="64px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/People/download/${this.props.image}`} />
         </figure>
         <Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name} - {this.props.username}</Link>
 
         <div style={pStyle}>
-          <Link className="btn btn-secondary btn-sm" to="/">Edit</Link>{' '}
+          <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}>Edit</Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}>Delete</Button>
         </div>
       </ListGroupItem>

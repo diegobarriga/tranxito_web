@@ -21,6 +21,7 @@ class TrucksInfo extends React.Component {
 
   componentDidMount() {
     this.props.getVehicles(this.props.token, this.props.motorCarrierId);
+    console.log(this.props.vehicles);
 
   }
 
@@ -64,7 +65,7 @@ class TrucksInfo extends React.Component {
                 plaque={truck.plaque}
                 state={truck.state}
                 IMEI_ELD={truck.IMEI_ELD}
-                picture="https://wsa1.pakwheels.com/assets/default-display-image-car-638815e7606c67291ff77fd17e1dbb16.png"
+                image={truck.image}
               />))
             }
         </ListGroup>
