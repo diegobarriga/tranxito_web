@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import validator from 'validator';
 import TemplateCSV from '../templates/template_csv';
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Select} from 'semantic-ui-react';
 var _ = require('lodash');
 
 class CreateDriverForm extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -121,7 +121,7 @@ class CreateDriverForm extends Component {
   createSelectItems(min, max) {
     const items = [];
     for (let i = min; i <= max; i++) {
-      items.push(<option>{i}</option>);
+      items.push(<option value={i}>{i}</option>);
     }
     return items;
   }
@@ -214,26 +214,26 @@ class CreateDriverForm extends Component {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Input
-          type="select"
+        <Form.Field
+          label='Exempt Driver Configuration'
+          control='select'
           name="exempt_driver_configuration"
-          placeholder="Exempt Driver Configuration"
-          error={errors.exempt_driver_configuration}
-          onChange={this.onChange}>
-            <option>1</option>
-            <option>E</option>
-            <option selected="selected">0</option>
-          </Form.Input>
+          onChange={this.onChange}
+        >
+          <option value='0'>0</option>
+          <option value='1'>1</option>
+          <option value='E'>E</option>
+        </Form.Field>
         </Form.Group>
         <Form.Group>
-          <Form.Input
-          type="select"
+        <Form.Field
+          label='Time Zone Offset UTC'
+          control='select'
           name="time_zone_offset_utc"
-          placeholder="Time Zone Offset UTC"
-          error={errors.time_zone_offset_utc}
-          onChange={this.onChange}>
-            {this.createSelectItems(4, 11)}
-          </Form.Input>
+          onChange={this.onChange}
+        >
+          {this.createSelectItems(4,11)}
+        </Form.Field>
         </Form.Group>
         <Form.Group>
           <Form.Input
@@ -244,34 +244,34 @@ class CreateDriverForm extends Component {
           onChange={this.onChange} />
         </Form.Group>
         <Form.Group>
-          <Form.Input
-          type="select"
+        <Form.Field
+          label='Move Yards Use'
+          control='select'
           name="move_yards_use"
-          placeholder="Move Yards Use"
-          error={errors.move_yards_use}
-          onChange={this.onChange}>
-            {this.createSelectItems(0, 1)}
-          </Form.Input>
+          onChange={this.onChange}
+        >
+          {this.createSelectItems(0,1)}
+        </Form.Field>
         </Form.Group>
         <Form.Group>
-          <Form.Input
-          type="select"
+        <Form.Field
+          label='Default Use'
+          control='select'
           name="default_use"
-          placeholder="Default Use"
-          error={errors.default_use}
-          onChange={this.onChange}>
-            {this.createSelectItems(0, 1)}
-          </Form.Input>
+          onChange={this.onChange}
+        >
+          {this.createSelectItems(0,1)}
+        </Form.Field>
         </Form.Group>
         <Form.Group>
-          <Form.Input
-          type="select"
+        <Form.Field
+          label='Personal Use'
+          control='select'
           name="personal_use"
-          placeholder="Personal Use"
-          error={errors.personal_use}
-          onChange={this.onChange}>
-            {this.createSelectItems(0, 1)}
-          </Form.Input>
+          onChange={this.onChange}
+        >
+          {this.createSelectItems(0,1)}
+        </Form.Field>
         </Form.Group>
         <Button type='submit' loading={isLoading}>Submit</Button>
       </Form>
