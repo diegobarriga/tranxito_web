@@ -4,24 +4,24 @@ import TemplateCSV from '../templates/template_csv';
 import { Button, Checkbox, Form } from 'semantic-ui-react';
 var _ = require('lodash');
 
-class CreateVehicleForm extends React.Component {
+class EditVehicleForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
       data: {
-        vin: '',
-        CMV_power_unit_number: '',
-        model: '',
-        car_maker: '',
-        plaque: '',
-        state: '',
-        IMEI_EL: '',
+        vin: this.props.data.vin,
+        CMV_power_unit_number: this.props.data.CMV_power_unit_number,
+        model: this.props.data.model,
+        car_maker: this.props.data.car_maker,
+        plaque: this.props.data.plaque,
+        state: this.props.data.state,
+        IMEI_EL: this.props.data.IMEI_EL,
       }
       isLoading: false,
       redirectTo: false
     };
-    this.isValidCreate = this.isValidCreate.bind(this);
+    this.isValidEdit = this.isValidEdit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
@@ -36,7 +36,7 @@ class CreateVehicleForm extends React.Component {
   // TODO Complete with defined validations
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
 
-  validateInput(data) {
+  validateForm.Input(data) {
     let errors = {}
     console.log(data);
     if (data.vin.length > 18 || data.vin.length < 17) {
@@ -75,7 +75,7 @@ class CreateVehicleForm extends React.Component {
     }
   }
 
-  isValidCreate(){
+  isValidEdit(){
     const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
     return isValid;
@@ -83,7 +83,7 @@ class CreateVehicleForm extends React.Component {
 
   submitHandler(event){
     event.preventDefault(); // prevents reload of the page
-    if (this.isValidCreate()) {
+    if (this.isValidEdit()) {
       this.setState({ errors: {}, isLoading: true});
       // verify credentials
       this.props.submit(this.state.data).catch(
@@ -93,7 +93,7 @@ class CreateVehicleForm extends React.Component {
   }
 
   render() {
-    const { errors, isLoading, redirectTo } = this.state;
+    const { errors, isLoading, redirectTo, data } = this.state;
     // Change redirect link
     if (redirectTo) {
       this.setState({redirectTo: false});
@@ -114,6 +114,7 @@ class CreateVehicleForm extends React.Component {
           <Form.Input
             type="text"
             name="CMV_power_unit_number"
+            value={data.CMV_power_unit_number}
             placeholder="CMV Power Unit Number"
             onChange={this.onChange}
             error={errors.lastName}
@@ -160,15 +161,16 @@ class CreateVehicleForm extends React.Component {
             type="number"
             name="IMEI_ELD"
             placeholder="IMEI ELD"
+            min={0}
             onChange={this.onChange}
             error={errors.IMEI_ELD}
           />
         </Form.Group>
-        <Button type='submit' loading={isLoading}>Submit</Button>
+        <Button type='submit' loading={isLoading}>Update</Button>
       </Form>
     );
   }
 }
 
 
-export default CreateVehicleForm;
+export default EditVehicleForm;

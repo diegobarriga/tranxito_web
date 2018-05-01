@@ -110,7 +110,7 @@ class CreateDriverForm extends React.Component {
   }
 
   isValidCreate(){
-    const { errors, isValid } = this.validateForm.Input(this.state.data);
+    const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
