@@ -1,13 +1,14 @@
 import React from 'react';
-import axios, { post } from 'axios';
+import validator from 'validator';
 import TemplateCSV from '../templates/template_csv';
-import styles from '../../../assets/styles/forms.css';
-import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import { Button, Checkbox, Form } from 'semantic-ui-react';
+var _ = require('lodash');
 
 class CreateVehicleForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      errors: {},
       data: {
         vin: '',
         CMV_power_unit_number: '',
@@ -17,23 +18,12 @@ class CreateVehicleForm extends React.Component {
         state: '',
         IMEI_EL: '',
       }
-
+      isLoading: false,
+      redirectTo: false
     };
-    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.isValidCreate = this.isValidCreate.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.postData = this.postData.bind(this);
-  }
-  onFormSubmit(e) {
-    e.preventDefault(); // Stop form submit
-    this.postData(this.state.data).then((response) => {
-      console.log(response.data);
-      console.log(response.status);
-      if (response.status === 201) {
-        this.setState({ type: 'success', message: 'We have created all the new vehicles. You will be able to see them shortly in the application.' });
-      } else {
-        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
-      }
-    });
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
   onChange(event) {
@@ -45,51 +35,136 @@ class CreateVehicleForm extends React.Component {
 
   // TODO Complete with defined validations
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
-  validateInput(data) {
+
+  validateForm.Input(data) {
     let errors = {}
     console.log(data);
-    if (_.isEmpty(String(data.firstName))) {
-      errors.firstName = 'This field is required';
+    if (data.vin.length > 18 || data.vin.length < 17) {
+      errors.vin = 'Must be 17 or 18 characters long';
     }
-    
+    else if (data.vin.length == 18 && String(data.vin)[0] !== '-') {
+      errors.vin = "Must start with a dash (-) if VIN is 18 char long";
+    }
+    if (_.isEmpty(String(data.CMV_power_unit_number))) {
+      errors.CMV_power_unit_number = 'This field is required';
+    }
+    else if (data.IMEI_ELD && !data.CMV_power_unit_number) {
+      errors.CMV_power_unit_number = 'CMV Power Unit Number field is required';
+    }
+    if (_.isEmpty(String(data.model))) {
+      errors.model = 'This field is required';
+    }
+    else if (!validator.isEmail(String(data.email))) {
+      errors.email = 'Input is not a valid email';
+    }
+    if (_.isEmpty(String(data.car_maker))) {
+      errors.car_maker = 'This field is required';
+    }
+    if (_.isEmpty(String(data.plaque))) {
+      errors.plaque = 'This field is required';
+    }
+    if (_.isEmpty(String(data.state))) {
+      errors.state = 'This field is required';
+    }
+    else if (String(data.state).length != 2)) {
+      errors.state = 'Not a valid state';
+    }
     return {
       errors,
       isValid: _.isEmpty(errors)
     }
   }
 
-  render() {
-    if (this.state.type && this.state.message) {
-      const classString = `alert alert-${this.state.type}`;
-      var status = (<div id="status" className={classString} ref="status">
-        {this.state.message}
-      </div>);
-    }
+  isValidCreate(){
+    const { errors, isValid } = this.validateForm.Input(this.state.data);
+    if (!isValid) this.setState({ errors });
+    return isValid;
+  }
 
+  submitHandler(event){
+    event.preventDefault(); // prevents reload of the page
+    if (this.isValidCreate()) {
+      this.setState({ errors: {}, isLoading: true});
+      // verify credentials
+      this.props.submit(this.state.data).catch(
+        (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+      );
+    }
+  }
+
+  render() {
+    const { errors, isLoading, redirectTo } = this.state;
+    // Change redirect link
+    if (redirectTo) {
+      this.setState({redirectTo: false});
+      return <Redirect to='/dashboard'/>;
+    }
     return (
-      <Form onSubmit={this.onFormSubmit}>
-        <FormGroup>
-          <Input type="string" name="vin" placeholder="VIN Number" onChange={this.onChange} />
-        </FormGroup>
-        <FormGroup>
-          <Input type="string" name="CMV_power_unit_number" placeholder="CMV Power Unit Number" onChange={this.onChange} />
-        </FormGroup>
-        <FormGroup>
-          <Input type="string" name="model" placeholder="Vehicle Model" onChange={this.onChange} />
-        </FormGroup>
-        <FormGroup>
-          <Input type="string" name="car_maker" placeholder="Car Maker" onChange={this.onChange} />
-        </FormGroup>
-        <FormGroup>
-          <Input type="string" name="plaque" placeholder="Plaque" onChange={this.onChange} />
-        </FormGroup>
-        <FormGroup>
-          <Input type="string" name="state" placeholder="State" onChange={this.onChange} />
-        </FormGroup>
-        <FormGroup>
-          <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" onChange={this.onChange} />
-        </FormGroup>
-        <Button>Submit</Button>
+      <Form onSubmit={this.submitHandler}>
+        <Form.Group>
+          <Form.Input
+            type="text"
+            name="vin"
+            placeholder="VIN Number"
+            onChange={this.onChange}
+            error={errors.vin}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            type="text"
+            name="CMV_power_unit_number"
+            placeholder="CMV Power Unit Number"
+            onChange={this.onChange}
+            error={errors.lastName}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            type="text"
+            name="model"
+            placeholder="Vehicle Model"
+            onChange={this.onChange}
+            error={errors.model}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            type="text"
+            name="car_maker"
+            placeholder="Car Maker"
+            onChange={this.onChange}
+            error={errors.car_maker}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            type="text"
+            name="plaque"
+            placeholder="Plaque"
+            onChange={this.onChange}
+            error={errors.planque}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            type="text"
+            name="state"
+            placeholder="State"
+            onChange={this.onChange}
+            error={errors.state}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            type="number"
+            name="IMEI_ELD"
+            placeholder="IMEI ELD"
+            onChange={this.onChange}
+            error={errors.IMEI_ELD}
+          />
+        </Form.Group>
+        <Button type='submit' loading={isLoading}>Submit</Button>
       </Form>
     );
   }

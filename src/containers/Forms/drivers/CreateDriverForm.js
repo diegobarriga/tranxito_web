@@ -1,9 +1,8 @@
 import React from 'react';
-import axios, { post } from 'axios';
 import validator from 'validator';
 import TemplateCSV from '../templates/template_csv';
-import styles from '../../../assets/styles/forms.css';
 import { Button, Checkbox, Form } from 'semantic-ui-react';
+var _ = require('lodash');
 
 class CreateDriverForm extends React.Component {
   constructor(props) {
@@ -26,9 +25,9 @@ class CreateDriverForm extends React.Component {
         passwordConfirmation: ''
       }
     };
-    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.isValidCreate = this.isValidCreate.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.postData = this.postData.bind(this);
   }
 
   onChange(event) {
@@ -110,6 +109,12 @@ class CreateDriverForm extends React.Component {
     }
   }
 
+  isValidCreate(){
+    const { errors, isValid } = this.validateForm.Input(this.state.data);
+    if (!isValid) this.setState({ errors });
+    return isValid;
+  }
+
   createSelectItems(min, max) {
     const items = [];
     for (let i = min; i <= max; i++) {
@@ -118,11 +123,22 @@ class CreateDriverForm extends React.Component {
     return items;
   }
 
+  submitHandler(event){
+    event.preventDefault(); // prevents reload of the page
+    if (this.isValidCreate()) {
+      this.setState({ errors: {}, isLoading: true});
+      // verify credentials
+      this.props.submit(this.state.data).catch(
+        (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+      );
+    }
+  }
+
   render() {
     const { errors } = this.state;
 
     return (
-      <Form onSubmit={this.onFormSubmit}>
+      <Form onSubmit={this.submitHandler}>
         <Form.Group widths='equal'>
           <Form.Input
           type="text"

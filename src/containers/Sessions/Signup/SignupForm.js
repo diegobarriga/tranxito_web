@@ -72,7 +72,7 @@ class SignupForm extends Component {
   }
 
   isValidSignup(){
-    const { errors, isValid } = this.validateInput(this.state.credentials);
+    const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
     return isValid;
   }

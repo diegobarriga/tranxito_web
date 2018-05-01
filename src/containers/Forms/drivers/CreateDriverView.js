@@ -13,7 +13,6 @@ class CreateDriverView extends React.Component {
       message: ''
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.postData = this.postData.bind(this);
   }
   onFormSubmit(e) {
@@ -51,7 +50,7 @@ class CreateDriverView extends React.Component {
           <Row>
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               <h1>Create New Driver</h1>
-              <CreateDriverForm>
+              <CreateDriverForm submit={this.onFormSubmit}/>
             </Col>
           </Row>
         </Container>
