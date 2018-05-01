@@ -19,8 +19,8 @@ class TruckRow extends React.Component {
     return (
       <ListGroupItem style={divStyle} className="justify-content-between">
         <div className="truck_wrapper">
-          <figure className="left">
-            <img className="media-object" width="100px" src={this.props.picture} />
+          <figure className="left">            
+            <img className="media-object" width="100px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/Vehicle/download/${this.props.image}`} />
           </figure>
           <div className="right">
             <ul>

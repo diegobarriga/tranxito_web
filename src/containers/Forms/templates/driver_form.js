@@ -47,24 +47,25 @@ class DriverForm extends React.Component {
           console.log('response');
           console.log(response);
           const newData = {
-            first_name: response.first_name,
-            last_name: response.last_name,
-            email: response.email,
-            driver_license_number: response.driver_license_number,
-            licenses_issuing_state: response.licenses_issuing_state,
-            exempt_driver_configuration: response.exempt_driver_configuration,
-            time_zone_offset_utc: response.time_zone_offset_utc,
-            starting_time_24_hour_period: response.starting_time_24_hour_period,
-            move_yards_use: response.move_yards_use,
-            default_use: response.default_use,
-            personal_use: response.personal_use,
-            image: response.image,
-            username: response.username,
+            first_name: response.data.first_name,
+            last_name: response.data.last_name,
+            email: response.data.email,
+            driver_license_number: response.data.driver_license_number,
+            licenses_issuing_state: response.data.licenses_issuing_state,
+            exempt_driver_configuration: response.data.exempt_driver_configuration,
+            time_zone_offset_utc: response.data.time_zone_offset_utc,
+            starting_time_24_hour_period: response.data.starting_time_24_hour_period,
+            move_yards_use: response.data.move_yards_use,
+            default_use: response.data.default_use,
+            personal_use: response.data.personal_use,
+            image: response.data.image,
+            username: response.data.username,
             password: '',
             account_type: 'D',
             account_status: true,
           };
           this.setState({ data: newData });
+          console.log(this.state);
           
         } else {
           console.log('Error loading user info');
@@ -174,29 +175,29 @@ class DriverForm extends React.Component {
             <h1 style={h1Style}> {this.props.title }</h1>
             <Form onSubmit={this.onFormSubmit}>
               <FormGroup>
-                <Input type="string" value={this.state.data.name} name="first_name" placeholder="First Name" onChange={this.onChange} />
+                <Input type="string" value={this.state.data.first_name} name="first_name" placeholder="First Name" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
-                <Input type="string" name="last_name" placeholder="Last Name" onChange={this.onChange} />
+                <Input type="string" value={this.state.data.last_name} name="last_name" placeholder="Last Name" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
-                <Input type="email" name="email" placeholder="Email" onChange={this.onChange} />
+                <Input type="email" name="email" value={this.state.data.email} placeholder="Email" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
-                <Input type="string" name="driver_license_number" placeholder="Driver License Number" onChange={this.onChange} />
+                <Input type="string" name="driver_license_number" value={this.state.data.driver_license_number} placeholder="Driver License Number" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
-                <Input type="string" name="licenses_issuing_state" placeholder="Licenses Issuing State" onChange={this.onChange} />
+                <Input type="string" name="licenses_issuing_state" value={this.state.data.licenses_issuing_state} placeholder="Licenses Issuing State" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
-                <Input type="select" name="exempt_driver_configuration" placeholder="Exempt Driver Configuration" onChange={this.onChange}>
+                <Input type="select" name="exempt_driver_configuration" value={this.state.data.exempt_driver_configuration} placeholder="Exempt Driver Configuration" onChange={this.onChange}>
                   <option>1</option>
                   <option>E</option>
                   <option selected="selected">0</option>
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Input type="select" name="time_zone_offset_utc" placeholder="Time Zone Offset UTC" onChange={this.onChange}>
+                <Input type="select" name="time_zone_offset_utc" value={this.state.data.time_zone_offset_utc} placeholder="Time Zone Offset UTC" onChange={this.onChange}>
                   {this.createSelectItems(4, 11)}
                 </Input>
               </FormGroup>
