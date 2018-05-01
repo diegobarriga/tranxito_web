@@ -135,7 +135,7 @@ class CreateDriverForm extends React.Component {
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors, showPassword } = this.state;
 
     return (
       <Form onSubmit={this.submitHandler}>
@@ -144,12 +144,14 @@ class CreateDriverForm extends React.Component {
           type="text"
           name="firstName"
           placeholder='First Name'
+          onChange={this.onChange}
           error={errors.firstName}
           />
           <Form.Input
           type="text"
           name="lastName"
           placeholder='Last Name'
+          onChange={this.onChange}
           error={errors.lastName}
           />
         </Form.Group>
@@ -158,6 +160,7 @@ class CreateDriverForm extends React.Component {
           type="text"
           name="username"
           placeholder='Username'
+          onChange={this.onChange}
           error={errors.username}
           />
         </Form.Group>
@@ -166,6 +169,7 @@ class CreateDriverForm extends React.Component {
           type="email"
           name="email"
           placeholder='Email'
+          onChange={this.onChange}
           error={errors.email}
           />
         </Form.Group>

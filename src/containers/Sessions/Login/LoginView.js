@@ -11,39 +11,29 @@ import * as actions from '../../../store/actions/index';
 
 class LoginView extends Component {
   constructor(props) {
-  super(props);
-  this.state = {
-    errors: {},
-    redirectTo: false,
-    pathname: '',
-    sessionCompany: ''
+    super(props);
+    this.state = {
+      errors: {},
+      redirectTo: false,
+      pathname: '',
+    };
+  // this.submit = this.submit.bind(this);
   }
-  this.submit = this.submit.bind(this);
-}
-submit(data) {
-  this.props.login(data).then(() => {
-    this.props.addFlashMessage({
-      type: 'success',
-      text: 'Login successful'
-    });
-    this.setState({ redirectTo: true, pathname: '/companies'});
-  });
-}
 
-
-  submitHandler = (event) => {
-    // prevents reloading of the page
-    event.preventDefault();
-    this.props.onAuth(data).then(() => {
-      this.props.addFlashMessage({
-        type: 'success',
-        text: 'Login successful'
-      });
-      this.setState({ redirectTo: true, pathname: '/companies'});
-    });
-  }
+  // login(event) {
+  //   // prevents reloading of the page
+  //   event.preventDefault();
+  //   this.props.onAuth(data).then(() => {
+  //     this.props.addFlashMessage({
+  //       type: 'success',
+  //       text: 'Login successful'
+  //     });
+  //     this.setState({ redirectTo: true, pathname: '/companies'});
+  //   });
+  // }
 
   render() {
+    const { errors, redirectTo } = this.state;
     if (this.props.isLoading === true) return <Loader />;
 
     const h1Style = {
@@ -68,7 +58,7 @@ submit(data) {
             { authRedirect }
             <h1 style={h1Style}>Login</h1>
             {errors.form && <Alert bsStyle="danger">{errors.form}</Alert>}
-            <LoginForm login={this.props.onAuth}>
+            <LoginForm login={this.props.onAuth} />
           </Col>
         </Row>
       </Container>
@@ -76,17 +66,18 @@ submit(data) {
   }
 }
 
-Login.propTypes = {
+LoginView.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
-
+  // error: PropTypes.object,
 };
-Login.defaultProps = {
+/*
+LoginView.defaultProps = {
   error: null,
 };
+*/
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
@@ -96,7 +87,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: (email, password) => dispatch(actions.login(email, password)),
+  onAuth: credentials => dispatch(actions.login(credentials)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginView);

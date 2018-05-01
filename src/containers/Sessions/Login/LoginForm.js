@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -28,7 +29,7 @@ class LoginForm extends Component {
     this.setState({ showPassword: !this.state.showPassword });
   }
 
-  onChange(e) {
+  onChange(event) {
     this.setState({
       ...this.state,
       data: { ...this.state.data, [event.target.name]: event.target.value }
@@ -37,13 +38,13 @@ class LoginForm extends Component {
 
   validateInput(data) {
     let errors = {};
-    if (validator.isEmpty(String(data.email))) {
+    if (_.isEmpty(String(data.email))) {
       errors.email = 'This field is required';
     }
     else if (!validator.isEmail(String(data.email))) {
       errors.email = 'Not a valid email';
     }
-    if (validator.isEmpty(String(data.password))) {
+    if (_.isEmpty(String(data.password))) {
       errors.password = 'This field is required';
     }
     return {
@@ -63,19 +64,19 @@ class LoginForm extends Component {
     if (this.isValidLogin()) {
       this.setState({ errors: {}, isLoading: true});
       // verify credentials
-      this.props.login(this.state.data).catch(
-        (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-      );
+      this.props.login(this.state.data);
+      // .catch(
+      //   (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+      // );
     }
   }
 
-
   render(){
     const { errors, isLoading, redirectTo, showPassword } = this.state;
-    if (redirectTo) {
-      this.setState({redirectTo: false});
-      return <Redirect to='/dashboard'/>;
-    }
+    // if (redirectTo) {
+    //   this.setState({redirectTo: false});
+    //   return <Redirect to='/dashboard'/>;
+    // }
     return(
       <Form onSubmit={this.submitHandler}>
         <Form.Group>
@@ -83,6 +84,7 @@ class LoginForm extends Component {
           type="email"
           name="email"
           placeholder='Email'
+          onChange={this.onChange}
           error={errors.email}
           />
         </Form.Group>
