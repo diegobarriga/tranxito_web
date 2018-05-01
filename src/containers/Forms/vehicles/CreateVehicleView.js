@@ -1,27 +1,18 @@
-import React from 'react';
+import React, {Component} from 'react';
 import axios, { post } from 'axios';
 import TemplateCSV from '../templates/template_csv';
 import styles from '../../../assets/styles/forms.css';
 import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import CreateVehicleForm from './CreateVehicleForm';
 
-class CreateVehicle extends React.Component {
+class CreateVehicleView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {
-        vin: '',
-        CMV_power_unit_number: '',
-        model: '',
-        car_maker: '',
-        plaque: '',
-        state: '',
-        IMEI_EL: '',
-      },
       type: '',
       message: '',
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.postData = this.postData.bind(this);
   }
   onFormSubmit(e) {
@@ -35,12 +26,6 @@ class CreateVehicle extends React.Component {
         this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
       }
     });
-  }
-
-  onChange(e) {
-    const state = this.state;
-    state.data[e.target.name] = e.target.value;
-    this.setState(state);
   }
 
   postData(data) {
@@ -63,30 +48,7 @@ class CreateVehicle extends React.Component {
           <Row>
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               <h1>Create New Vehicle</h1>
-              <Form onSubmit={this.onFormSubmit}>
-                <FormGroup>
-                  <Input type="string" name="vin" placeholder="VIN Number" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Input type="string" name="CMV_power_unit_number" placeholder="CMV Power Unit Number" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Input type="string" name="model" placeholder="Vehicle Model" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Input type="string" name="car_maker" placeholder="Car Maker" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Input type="string" name="plaque" placeholder="Plaque" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Input type="string" name="state" placeholder="State" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" onChange={this.onChange} />
-                </FormGroup>
-                <Button>Submit</Button>
-              </Form>
+              <CreateDriverForm submit={this.onFormSubmit}/>
             </Col>
           </Row>
         </Container>
@@ -96,4 +58,4 @@ class CreateVehicle extends React.Component {
 }
 
 
-export default CreateVehicle;
+export default CreateVehicleView;
