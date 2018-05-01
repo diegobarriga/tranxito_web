@@ -81,12 +81,8 @@ export const signup = (
 };
 
 
-export const login = (email, password) => (dispatch) => {
+export const login = (authData) => (dispatch) => {
   dispatch(authStart());
-  const authData = {
-    email,
-    password,
-  };
 
   api.people.login(authData)
     .then((response) => {

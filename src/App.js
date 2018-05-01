@@ -37,14 +37,11 @@ import CreateDriver from './containers/Forms/drivers/create_driver';
 import CreateDrivers from './containers/Forms/drivers/create_drivers';
 import EditDriver from './containers/Forms/drivers/edit_driver';
 import CreateVehicles from './containers/Forms/vehicles/create_vehicles';
-import CreateVehicle from './containers/Forms/vehicles/create_vehicle';
-import EditVehicle from './containers/Forms/vehicles/edit_vehicle';
-
-import Login from './containers/Sessions/Login/Login';
-// import Home from './components/Home/Home';
+import LoginView from './containers/Sessions/Login/LoginView';
+import Home from './components/Home/Home';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
-import mForm from './containers/MotorCarriers/mForm';
+import CreateMotorCarrierView from './containers/MotorCarriers/CreateMotorCarrierView';
 
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
@@ -70,10 +67,10 @@ class App extends Component {
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/" exact component={Login} />
+          <Route path="/login" component={LoginView} />
+          <Route path="/" exact component={LoginView} />
           <Route path="/logout" component={Logout} />
-          <Route path="/motor_carriers/create" component={mForm} />
+          <Route path="/motor_carriers/create" component={CreateMotorCarrierView} />
           <Route path="/motor_carriers/:id/new_supervisor" component={Signup} />
           <Route path="/motor_carriers/:id" component={MotorCarrier} />
           <Route path="/motor_carriers" component={MotorCarriers} />
