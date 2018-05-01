@@ -3,6 +3,7 @@ export {
   logout,
   signup,
   errorReset,
+  logoutToken,
 } from './auth';
 
 export {

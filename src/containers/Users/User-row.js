@@ -27,7 +27,7 @@ class UserRow extends React.Component {
         <Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name} - {this.props.username}</Link>
 
         <div style={pStyle}>
-          <Link className="btn btn-secondary btn-sm" to="/">Edit</Link>{' '}
+          <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}>Edit</Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}>Delete</Button>
         </div>
       </ListGroupItem>
