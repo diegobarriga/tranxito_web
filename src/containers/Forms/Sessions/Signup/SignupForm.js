@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -17,7 +18,6 @@ class SignupForm extends Component {
         lastName: '',
         username: '',
         accountType: 'S'
-        }
       },
       isLoading: false,
       redirectTo: false,

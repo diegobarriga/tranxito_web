@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
-import Loader from '../../../components/Loader/Loader';
+import Loader from '../../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import Alert from '../../Alert/Alert';
 

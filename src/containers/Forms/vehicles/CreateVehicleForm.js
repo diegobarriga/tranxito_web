@@ -17,7 +17,7 @@ class CreateVehicleForm extends React.Component {
         plaque: '',
         state: '',
         IMEI_EL: '',
-      }
+      },
       isLoading: false,
       redirectTo: false
     };
@@ -66,7 +66,7 @@ class CreateVehicleForm extends React.Component {
     if (_.isEmpty(String(data.state))) {
       errors.state = 'This field is required';
     }
-    else if (String(data.state).length != 2)) {
+    else if (String(data.state).length != 2) {
       errors.state = 'Not a valid state';
     }
     return {
@@ -94,11 +94,6 @@ class CreateVehicleForm extends React.Component {
 
   render() {
     const { errors, isLoading, redirectTo } = this.state;
-    // Change redirect link
-    if (redirectTo) {
-      this.setState({redirectTo: false});
-      return <Redirect to='/dashboard'/>;
-    }
     return (
       <Form onSubmit={this.submitHandler}>
         <Form.Group>

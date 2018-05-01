@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListGroup } from 'reactstrap';
-import TruckRow from './TruckRow';
+import VehicleRow from './VehicleRow';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/vehicles';
 import { connect } from 'react-redux';
@@ -55,7 +55,7 @@ class VehicleInfo extends React.Component {
         {console.log(filtered_vehicles)}
         <ListGroup>
           {
-              filtered_vehicles.sort(function(a, b){return a.car_maker > b.car_maker}).map(truck => (<TruckRow
+              filtered_vehicles.sort(function(a, b){return a.car_maker > b.car_maker}).map(truck => (<VehicleRow
                 key={truck.id}
                 vin={truck.vin}
                 CMV_power_unit_number={truck.CMV_power_unit_number}

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import validator from 'validator';
 import TemplateCSV from '../templates/template_csv';
 import { Button, Checkbox, Form } from 'semantic-ui-react';
 var _ = require('lodash');
 
-class CreateDriverForm extends React.Component {
+class CreateDriverForm extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +24,9 @@ class CreateDriverForm extends React.Component {
         username: '',
         password: '',
         passwordConfirmation: ''
-      }
+      },
+      isLoading: false,
+      showPassword: false
     };
     this.isValidCreate = this.isValidCreate.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
@@ -45,13 +48,13 @@ class CreateDriverForm extends React.Component {
     if (_.isEmpty(String(data.firstName))) {
       errors.firstName = 'This field is required';
     }
-    else if (String(data.firstName.length) > 30 || String(data.lastName).length < 2)) {
+    else if (String(data.firstName.length) > 30 || String(data.firstName).length < 2) {
       errors.firstName = 'First name must have between 2-30 characters';
     }
     if (_.isEmpty(String(data.lastName))) {
       errors.lastName = 'This field is required';
     }
-    else if (String(data.lastName.length) > 30 || String(data.lastName).length < 2)) {
+    else if (String(data.lastName.length) > 30 || String(data.lastName).length < 2) {
       errors.lastName = 'Last name must have between 2-30 characters';
     }
     if (_.isEmpty(String(data.email))) {
@@ -75,13 +78,13 @@ class CreateDriverForm extends React.Component {
     else if (!validator.isAlphanumeric(String(data.driver_license_number))) {
       errors.driver_license_number = 'Must only contain numbers and letters (0-9/A-Z)';
     }
-    else if (String(data.driver_license_number).length > 20)) {
+    else if (String(data.driver_license_number).length > 20) {
       errors.driver_license_number = 'Must have ≤ 20 characters';
     }
     if (_.isEmpty(String(data.licenses_issuing_state))) {
       errors.licenses_issuing_state = 'This field is required';
     }
-    else if (String(data.licenses_issuing_state).length != 2)) {
+    else if (String(data.licenses_issuing_state).length != 2) {
       errors.licenses_issuing_state = 'Not a valid state';
     }
     if (_.isEmpty(String(data.exempt_driver_configuration))) {
@@ -93,7 +96,7 @@ class CreateDriverForm extends React.Component {
     if (_.isEmpty(String(data.time_zone_offset_utc))) {
       errors.time_zone_offset_utc = 'This field is required';
     }
-    else if (!validator.isInt(String(this.time_zone_offset_utc), {min: 4, max: 11}) {
+    else if (!validator.isInt(String(this.time_zone_offset_utc), {min: 4, max: 11})) {
       errors.time_zone_offset_utc = "Must be an integer between 4 and 11";
     }
     //format time
@@ -135,7 +138,7 @@ class CreateDriverForm extends React.Component {
   }
 
   render() {
-    const { errors, showPassword } = this.state;
+    const { errors, isLoading, showPassword } = this.state;
 
     return (
       <Form onSubmit={this.submitHandler}>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios, { post } from 'axios';
 import TemplateCSV from '../templates/template_csv';
 import styles from '../../../assets/styles/forms.css';
-import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import CreateVehicleForm from './CreateVehicleForm';
 
 class CreateVehicleView extends Component {
@@ -48,7 +48,7 @@ class CreateVehicleView extends Component {
           <Row>
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               <h1>Create New Vehicle</h1>
-              <CreateDriverForm submit={this.onFormSubmit}/>
+              <CreateVehicleForm submit={this.onFormSubmit}/>
             </Col>
           </Row>
         </Container>
