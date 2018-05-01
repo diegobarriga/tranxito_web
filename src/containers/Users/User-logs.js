@@ -27,7 +27,6 @@ class UserLogs extends React.Component {
   async componentWillMount() {
     try {
       const response = await axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/drivers_and_events/${this.props.id}`);
-      console.log(response);
       const user = response.data;
       this.setState({ user, loading: false });
     } catch (error) {

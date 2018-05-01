@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { Row, Col, Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import Avatar from '../../components/Avatar';
-import Graph from './graph';
+import * as actions from '../../store/actions/user-info';
+import { connect } from 'react-redux';
 import Loader from '../../components/Loader/Loader';
 
 const styles = {
@@ -22,39 +22,25 @@ const styles = {
 class UserInfo extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      user: undefined,
-      loading: true,
-    };
   }
 
-  async componentWillMount() {
-    try {
-      const response = await axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/drivers_and_events/${this.props.id}`);
-      console.log(response);
-      const user = response.data;
-      this.setState({ user, loading: false });
-    } catch (error) {
-      console.error(error);
-    }
+  componentDidMount() {
+    this.props.getUserInfo(this.props.token, this.props.id);
+    console.log("USER", this.props.user);
   }
 
 
   render() {
-    if (this.state.loading) return <Aux><Loader /></Aux>;
-    const { user } = this.state;
-
+    if (this.props.user == null) return <Loader />;
 
     return (
       <Aux>
-
-        <h1>{`${user.first_name} ${user.last_name}`}</h1>
+        <h1>{`${this.props.user.first_name} ${this.props.user.last_name}`}</h1>
         <Row style={styles.userProfile}>
-          <Avatar src={user.picture} />
+          <Avatar src={this.props.user.picture} />
           <div style={styles.userData}>
-                <div>Driver license number: {user.driver_license_number}</div>
-                <div>Email: {user.email}</div>
+                <div>Driver license number: {this.props.user.driver_license_number}</div>
+                <div>Email: {this.props.user.email}</div>
               </div>
         </Row>
 
@@ -64,4 +50,18 @@ class UserInfo extends React.Component {
   }
 }
 
-export default UserInfo;
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        loading: state.userInfo.loading,
+        user: state.userInfo.user,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getUserInfo: ( token, UserId ) => dispatch(actions.getUserInfo(token, UserId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);

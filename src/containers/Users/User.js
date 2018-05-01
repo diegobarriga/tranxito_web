@@ -16,12 +16,8 @@ class User extends React.Component {
     super(props);
   }
 
-
-
   render() {
     const { id } = this.props.match.params;
-
-
 
     return (
       <Aux>

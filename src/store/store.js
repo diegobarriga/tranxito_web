@@ -4,6 +4,7 @@ import authReducer from './reducers/auth';
 import mcarrierReducer from './reducers/mcarrier';
 import usersReducer from './reducers/users';
 import vehiclesReducer from './reducers/vehicles';
+import userInfoReducer from './reducers/user-info';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   mcarrier: mcarrierReducer,
   users: usersReducer,
   vehicles: vehiclesReducer,
+  userInfo: userInfoReducer,
 });
 
 
