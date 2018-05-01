@@ -71,3 +71,4 @@ TruckRow.propTypes = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TruckRow);
+

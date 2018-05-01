@@ -4,9 +4,10 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-import Loader from '../../../components/Loader/Loader';
-import Alert from '../../Alert/Alert';
+import * as actions from '../../../../store/actions/index';
+import Loader from '../../../../components/Loader/Loader';
+import Alert from '../../../Alert/Alert';
+import SignupForm from './SignupForm';
 
 
 class SignupView extends Component {
@@ -17,7 +18,6 @@ class SignupView extends Component {
     redirectTo: false,
     pathname: ''
   }
-  this.submit = this.submit.bind(this);
 }
 
   componentDidMount() {
@@ -69,7 +69,7 @@ class SignupView extends Component {
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               { authRedirect }
               <h1 style={h1Style}>Register Supervisor</h1>
-              <SignupForm signup={this.submit}>
+              <SignupForm submit={this.props.onAuth}/>
             </Col>
           </Row>
         </Container>
@@ -78,7 +78,7 @@ class SignupView extends Component {
 }
 
 
-Signup.propTypes = {
+SignupView.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
@@ -88,7 +88,7 @@ Signup.propTypes = {
   resetError: PropTypes.func.isRequired,
 };
 
-Signup.defaultProps = {
+SignupView.defaultProps = {
   error: null,
 };
 
@@ -104,26 +104,8 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: (
-    email,
-    password,
-    firstName,
-    lastName,
-    username,
-    accountType,
-    motorCarrierId,
-    token,
-  ) => dispatch(actions.signup(
-    email,
-    password,
-    firstName,
-    lastName,
-    username,
-    accountType,
-    motorCarrierId,
-    token,
-  )),
+  onAuth: (data) => dispatch(actions.signup(data)),
   resetError: () => dispatch(actions.errorReset()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signup));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupView));

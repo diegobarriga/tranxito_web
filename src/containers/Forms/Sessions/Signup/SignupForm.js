@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
+import { Button, Checkbox, Form } from 'semantic-ui-react';
 var _ = require('lodash');
 
 class SignupForm extends Component {
@@ -18,6 +17,7 @@ class SignupForm extends Component {
         lastName: '',
         username: '',
         accountType: 'S'
+        }
       },
       isLoading: false,
       redirectTo: false,
@@ -86,8 +86,15 @@ class SignupForm extends Component {
     // );
   }
 
-  emptyErrors() {
-    return Object.keys(this.state.errors).length === 0;
+  submitHandler(event){
+    event.preventDefault(); // prevents reload of the page
+    if (this.isValidLogin()) {
+      this.setState({ errors: {}, isLoading: true});
+      // verify credentials
+      this.props.login(this.state).catch(
+        (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+      );
+    }
   }
 
   render(){
@@ -99,66 +106,55 @@ class SignupForm extends Component {
     }
     return(
       <Form onSubmit={this.submitHandler}>
-        <FormGroup widths='equal'>
-          <Input
+        <Form.Group widths='equal'>
+          <Form.Input
           type="text"
-          name="first_name"
+          name="firstName"
           placeholder='First Name'
-          invalid={errors.first_name}
+          error={errors.firstName}
           />
-          <FormFeedback>{errors.first_name}</FormFeedback>
-          <Input
+          <Form.Input
           type="text"
-          name="last_name"
+          name="lastName"
           placeholder='Last Name'
-          invalid={errors.last_name}
+          error={errors.lastName}
           />
-          <FormFeedback>{errors.last_name}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
           type="text"
           name="username"
           placeholder='Username'
-          invalid={errors.username}
+          error={errors.username}
           />
-          <FormFeedback>{errors.username}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
           type="email"
           name="email"
           placeholder='Email'
-          invalid={errors.email}
+          error={errors.email}
           />
-          <FormFeedback>{errors.email}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
             placeholder='Password'
             type={!showPassword ? "password" : "text"}
             name="password"
             autoComplete="new-password"
             onChange={this.onChange}
-            invalid={errors.password}
+            error={errors.password}
           />
-          <FormFeedback>{errors.password}</FormFeedback>
-          <Input
+          <Form.Input
             placeholder='Password Confirmation'
             type={!showPassword ? "password" : "text"}
             name="passwordConfirmation"
             autoComplete="new-password"
             onChange={this.onChange}
-            invalid={errors.passwordConfirmation}
+            error={errors.passwordConfirmation}
           />
-          <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
-        </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
-            Show password
-          </Label>
-        </FormGroup>
+          <Checkbox label='Show password' onClick={this.onTogglePassword}/>
+        </Form.Group>
         <Button type='submit' loading={isLoading}>Submit</Button>
       </Form>
     );
@@ -166,7 +162,7 @@ class SignupForm extends Component {
 }
 
 SignupForm.propTypes = {
-  submit: PropTypes.func.isRequired
+  signup: PropTypes.func.isRequired
 }
 
 export default SignupForm;

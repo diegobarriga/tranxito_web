@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Aux from '../../hoc/Aux';
+import { connect } from 'react-redux';
 import TrucksInfo from './TrucksInfo';
+import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
 import Alert from '../Alert/Alert';
 

@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import { Button, Container, Row, Col } from 'reactstrap';
-import Loader from '../../../../components/Loader/Loader';
+import Loader from '../../../components/Loader/Loader';
 import LoginForm from './LoginForm';
-import * as actions from '../../../../store/actions/index';
+import * as actions from '../../../store/actions/index';
 
 
 class LoginView extends Component {
@@ -71,12 +71,13 @@ LoginView.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
-
+  // error: PropTypes.object,
 };
+/*
 LoginView.defaultProps = {
   error: null,
 };
+*/
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,

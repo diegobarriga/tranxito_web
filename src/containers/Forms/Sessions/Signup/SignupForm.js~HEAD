@@ -1,7 +1,8 @@
+import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
 var _ = require('lodash');
 
 class SignupForm extends Component {
@@ -17,7 +18,6 @@ class SignupForm extends Component {
         lastName: '',
         username: '',
         accountType: 'S'
-        }
       },
       isLoading: false,
       redirectTo: false,
@@ -34,7 +34,7 @@ class SignupForm extends Component {
     this.setState({ showPassword: !this.state.showPassword });
   }
 
-  onChange(e) {
+  onChange(event) {
     this.setState({
       ...this.state,
       data: { ...this.state.data, [event.target.name]: event.target.value }
@@ -77,22 +77,17 @@ class SignupForm extends Component {
     return isValid;
   }
 
-  submitHandler = (event) => {
+  submitHandler(event){
     // prevents reloading of the page
     event.preventDefault();
-    this.props.login(this.state.data).catch(
-      (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-    );
+    this.props.submit(this.state.data);
+    // .catch(
+    //   (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+    // );
+  }
 
-  submitHandler(event){
-    event.preventDefault(); // prevents reload of the page
-    if (this.isValidLogin()) {
-      this.setState({ errors: {}, isLoading: true});
-      // verify credentials
-      this.props.login(this.state).catch(
-        (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-      );
-    }
+  emptyErrors() {
+    return Object.keys(this.state.errors).length === 0;
   }
 
   render(){
@@ -104,55 +99,66 @@ class SignupForm extends Component {
     }
     return(
       <Form onSubmit={this.submitHandler}>
-        <Form.Group widths='equal'>
-          <Form.Input
+        <FormGroup widths='equal'>
+          <Input
           type="text"
-          name="firstName"
+          name="first_name"
           placeholder='First Name'
-          error={errors.firstName}
+          invalid={errors.first_name}
           />
-          <Form.Input
+          <FormFeedback>{errors.first_name}</FormFeedback>
+          <Input
           type="text"
-          name="lastName"
+          name="last_name"
           placeholder='Last Name'
-          error={errors.lastName}
+          invalid={errors.last_name}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.last_name}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
           type="text"
           name="username"
           placeholder='Username'
-          error={errors.username}
+          invalid={errors.username}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.username}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
           type="email"
           name="email"
           placeholder='Email'
-          error={errors.email}
+          invalid={errors.email}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.email}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             placeholder='Password'
             type={!showPassword ? "password" : "text"}
             name="password"
             autoComplete="new-password"
             onChange={this.onChange}
-            error={errors.password}
+            invalid={errors.password}
           />
-          <Form.Input
+          <FormFeedback>{errors.password}</FormFeedback>
+          <Input
             placeholder='Password Confirmation'
             type={!showPassword ? "password" : "text"}
             name="passwordConfirmation"
             autoComplete="new-password"
             onChange={this.onChange}
-            error={errors.passwordConfirmation}
+            invalid={errors.passwordConfirmation}
           />
-          <Checkbox label='Show password' onClick={this.onTogglePassword}/>
-        </Form.Group>
+          <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
+            Show password
+          </Label>
+        </FormGroup>
         <Button type='submit' loading={isLoading}>Submit</Button>
       </Form>
     );
@@ -160,7 +166,7 @@ class SignupForm extends Component {
 }
 
 SignupForm.propTypes = {
-  signup: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired
 }
 
 export default SignupForm;
