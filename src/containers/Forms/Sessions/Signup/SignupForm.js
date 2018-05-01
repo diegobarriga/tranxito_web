@@ -34,7 +34,7 @@ class SignupForm extends Component {
     this.setState({ showPassword: !this.state.showPassword });
   }
 
-  onChange(e) {
+  onChange(event) {
     this.setState({
       ...this.state,
       data: { ...this.state.data, [event.target.name]: event.target.value }
@@ -77,12 +77,14 @@ class SignupForm extends Component {
     return isValid;
   }
 
-  submitHandler = (event) => {
+  submitHandler(event){
     // prevents reloading of the page
     event.preventDefault();
-    this.props.login(this.state.data).catch(
-      (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-    );
+    this.props.submit(this.state.data);
+    // .catch(
+    //   (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+    // );
+  }
 
   submitHandler(event){
     event.preventDefault(); // prevents reload of the page

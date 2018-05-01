@@ -1,10 +1,13 @@
 import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { ListGroup } from 'reactstrap';
 import { connect } from 'react-redux';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import TruckRow from './Truck-row';
+import TruckRow from './TruckRow';
+import Loader from '../../components/Loader/Loader';
+import * as actions from '../../store/actions/vehicles';
+
 import '../../assets/styles/forms.css';
 
 class TrucksInfo extends React.Component {

@@ -69,7 +69,7 @@ class SignupView extends Component {
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               { authRedirect }
               <h1 style={h1Style}>Register Supervisor</h1>
-              <SignupForm signup={this.submit}>
+              <SignupForm signup={this.props.onAuth}>
             </Col>
           </Row>
         </Container>
@@ -104,25 +104,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: (
-    email,
-    password,
-    firstName,
-    lastName,
-    username,
-    accountType,
-    motorCarrierId,
-    token,
-  ) => dispatch(actions.signup(
-    email,
-    password,
-    firstName,
-    lastName,
-    username,
-    accountType,
-    motorCarrierId,
-    token,
-  )),
+  onAuth: (data) => dispatch(actions.signup(data)),
   resetError: () => dispatch(actions.errorReset()),
 });
 

@@ -4,7 +4,7 @@ import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Aux from '../../hoc/Aux';
-import TrucksInfo from './Trucks-info';
+import TrucksInfo from './TrucksInfo';
 import '../../assets/styles/forms.css';
 import Alert from '../Alert/Alert';
 
