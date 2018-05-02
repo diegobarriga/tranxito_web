@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroupItem, Button } from 'reactstrap';
-import styles from '../../assets/styles/trucks.css';
+import '../../assets/styles/trucks.css';
 import PropTypes from 'prop-types';
 
 
@@ -19,19 +19,19 @@ class TruckRow extends React.Component {
     return (
       <ListGroupItem style={divStyle} className="justify-content-between">
         <div className="truck_wrapper">
-          <figure className="left">            
-            <img className="media-object" width="100px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/Vehicle/download/${this.props.image}`} />
+          <figure className="left">
+            <img className="media-object" width="100px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/Vehicles/download/${this.props.image}`} />
           </figure>
           <div className="right">
             <ul>
-              <li><Link to="/">{this.props.car_maker} {this.props.model} - {this.props.plaque}</Link></li>
+              <li>{this.props.car_maker} {this.props.model} - {this.props.plaque}</li>
               <li>State: {this.props.state}</li>
               <li>VIN: {this.props.vin}</li>
             </ul>
           </div>
         </div>
         <div style={pStyle}>
-          <Link className="btn btn-secondary btn-sm" to="/">Edit</Link>{' '}
+          <Link className="btn btn-secondary btn-sm" to={`/vehicles/${this.props.id}/edit`}>Edit</Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}>Delete</Button>
         </div>
       </ListGroupItem>
