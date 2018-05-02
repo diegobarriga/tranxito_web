@@ -42,7 +42,7 @@ class UsersInfo extends React.Component {
             <Link className="btn btn-sm green" to="/drivers/new_drivers"><FontAwesomeIcon icon="users" color="white" /> Create multiple drivers</Link>
           </div>
         </div>
-        {this.props.loading && <Loader />}
+
         <ListGroup>
           {
               filtered_users.sort((a, b) => a.last_name > b.last_name).map(user => (<UserRow

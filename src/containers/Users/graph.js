@@ -32,14 +32,14 @@ class Graph extends React.Component {
       loading: true,
       chartData: {
         xLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'],
-        yLabels: ['A', 'B', 'C', 'D'],
+        yLabels: ['OFF', 'SB', 'D', 'ON'],
         datasets: [
           {
             steppedLine: true,
             label: 'Population',
             data: [
-              'A', 'B', 'C', 'B', 'A', 'C', 'D', 'D', 'C', 'C', 'C', 'A',
-              'B', 'C', 'D', 'D', 'C', 'C', 'C', 'A', 'C', 'D', 'D',
+              'OFF', 'OFF', 'OFF', 'OFF', 'OFF', 'D', 'D', 'D', 'SB', 'SB', 'SB', 'SB',
+              'SB', 'ON', 'D', 'D', 'D', 'D', 'ON', 'OFF', 'OFF', 'OFF', 'OFF',
 
 
             ],
