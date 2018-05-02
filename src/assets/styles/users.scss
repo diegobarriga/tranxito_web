@@ -1,3 +1,20 @@
 .user_content{
   display: flex;
 }
+
+.user_wrapper {
+  display: flex;
+  flex-grow: 1;
+}
+
+.left {
+  flex: 0 0 13%;
+}
+
+.right {
+  flex: 1;
+}
+
+.user_wrapper li {
+  list-style: none;
+}

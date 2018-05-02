@@ -21,7 +21,7 @@ class Trucks extends React.Component {
     return (
       <Aux>
         { authRedirect }
-        <h1> Trucks </h1>
+        <h1> Vehicles </h1>
         <Container>
           <TrucksInfo motor_carrier_id={0} />
         </Container>

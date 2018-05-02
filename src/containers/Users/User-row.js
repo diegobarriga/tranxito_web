@@ -19,18 +19,29 @@ class UserRow extends React.Component {
     };
 
     return (
-
       <ListGroupItem style={divStyle} className="justify-content-between">
-        <figure className="media-left">
-          <img className="media-object" width="64px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/People/download/${this.props.image}`} />
-        </figure>
-        <Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name} - {this.props.username}</Link>
-
+        <div className="user_wrapper">
+          <figure className="left">
+            <img className="media-object" width="100px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/People/download/${this.props.image}`} />
+          </figure>
+          <div className="right">
+            <ul>
+              <li><Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name}</Link></li>
+              <li>Username: {this.props.username}</li>
+              <li>License Number: {this.props.license_number}</li>
+            </ul>
+          </div>
+        </div>
         <div style={pStyle}>
-          <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}>Edit</Link>{' '}
+            <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}>Edit</Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}>Delete</Button>
         </div>
       </ListGroupItem>
+
+
+
+
+
     );
   }
 }

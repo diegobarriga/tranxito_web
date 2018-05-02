@@ -16,9 +16,8 @@ const sidebar = props => (
           <Aux>
             <Link className="list-group-item-action list-group-item disabledCursor" onClick={(e) => e.preventDefault()} to="/dashboard">Dashboard</Link>
             <Link className="list-group-item-action list-group-item" to="/drivers">Drivers</Link>
-            <Link className="list-group-item-action list-group-item" to="/vehicles">Trucks</Link>
+            <Link className="list-group-item-action list-group-item" to="/vehicles">Vehicles</Link>
             <Link className="list-group-item-action list-group-item disabledCursor" onClick={(e) => e.preventDefault()} to="/logs">Alerts</Link>
-          <Link className="list-group-item-action list-group-item disabledCursor" onClick={(e) => e.preventDefault()} to="/">Settings</Link>
           </Aux> }
 
       </ListGroup>

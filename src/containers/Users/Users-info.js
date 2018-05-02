@@ -29,7 +29,7 @@ class UsersInfo extends React.Component {
 
   render() {
     if (this.props.isLoading === true) return <Loader />;
-    
+
     const filtered_users = this.props.users.filter(user => ((user.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
         user.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
         user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) && user.account_status === true && user.account_type === 'D'));
@@ -51,6 +51,7 @@ class UsersInfo extends React.Component {
                 first_name={user.first_name}
                 last_name={user.last_name}
                 username={user.username}
+                license_number={user.driver_license_number}
                 image={user.image}
               />))
             }
