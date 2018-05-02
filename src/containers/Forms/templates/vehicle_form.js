@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reactstrap';
 import axios, { post } from 'axios';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
@@ -19,6 +19,7 @@ class CreateVehicle extends React.Component {
       },
       type: '',
       message: '',
+      picture: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -39,8 +40,14 @@ class CreateVehicle extends React.Component {
 
   onChange(e) {
     const state = this.state;
-    state.data[e.target.name] = e.target.value;
+    if (e.target.name === 'picture') {
+      state.picture = e.target.files[0];
+      console.log(this.state.picture);
+    } else {
+      state.data[e.target.name] = e.target.value;
+    }
     this.setState(state);
+
   }
 
   postData(data) {
@@ -48,6 +55,7 @@ class CreateVehicle extends React.Component {
     console.log(data);
     return post(url, data);
   }
+
 
   render() {
     if (this.state.type && this.state.message) {
@@ -84,6 +92,10 @@ class CreateVehicle extends React.Component {
                 </FormGroup>
                 <FormGroup>
                   <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">Image</Label>
+                  <Input type="file" name="picture" value={this.state.data.picture} className="center-item" onChange={this.onChange} />
                 </FormGroup>
                 <Button>Submit</Button>
               </Form>

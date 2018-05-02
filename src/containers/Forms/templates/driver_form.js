@@ -82,10 +82,11 @@ class DriverForm extends React.Component {
       console.log(imgResponse.status);
       if (imgResponse.status === 200) {
         console.log('imagen creada correctamente');
+        console.log(imgResponse.data.result.files.file[0].name);
         // setiamos el nombre de la imagen con la respuesta
         const updatedState = {
           ...this.state.data,
-          image: imgResponse.name,
+          image: imgResponse.data.result.files.file[0].name,
         };
         this.setState({ data: updatedState });
 
@@ -95,19 +96,19 @@ class DriverForm extends React.Component {
             console.log(response.data);
             console.log(response.status);
             if (response.status === 200) {
-              this.setState({ type: 'success', message: 'We have created all the new drivers. You will be able to see them shortly in the application.' });
+              this.setState({ type: 'success', message: 'We have created the new driver. You will be able to see him shortly in the application.' });
             } else {
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
           });
 
-        // Si estamos editando un usuario
+        // // Si estamos editando un usuario
         } else {
           this.patchData(this.state.data).then((response) => {
             console.log(response.data);
             console.log(response.status);
             if (response.status === 200) {
-              this.setState({ type: 'success', message: 'We have created all the new drivers. You will be able to see them shortly in the application.' });
+              this.setState({ type: 'success', message: 'We have edited the driver.' });
             } else {
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
@@ -122,7 +123,7 @@ class DriverForm extends React.Component {
   onChange(e) {
     const state = this.state;
     if (e.target.name === 'picture') {
-      state.picture = e.target.value;
+      state.picture = e.target.files[0];
       console.log(this.state.picture);
     } else {
       state.data[e.target.name] = e.target.value;
@@ -233,12 +234,10 @@ class DriverForm extends React.Component {
                   {this.createSelectItems(0, 1)}
                 </Input>
               </FormGroup>
-
               <FormGroup>
                 <Label for="image">Image</Label>
                 <Input type="file" name="picture" value={this.state.data.picture} className="center-item" onChange={this.onChange} />
               </FormGroup>
-
               <FormGroup>
                 <Input type="string" name="username" placeholder="Username" value={this.state.data.username} onChange={this.onChange} />
               </FormGroup>
