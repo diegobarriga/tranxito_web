@@ -190,21 +190,27 @@ class DriverForm extends React.Component {
             <h1 style={h1Style}> {this.props.title }</h1>
             <Form onSubmit={this.onFormSubmit}>
               <FormGroup>
+                <Label for="image">First Name</Label>
                 <Input type="string" value={this.state.data.first_name} name="first_name" placeholder="First Name" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Last Name</Label>
                 <Input type="string" value={this.state.data.last_name} name="last_name" placeholder="Last Name" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Email</Label>
                 <Input type="email" name="email" value={this.state.data.email} placeholder="Email" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Driver License Number</Label>
                 <Input type="string" name="driver_license_number" value={this.state.data.driver_license_number} placeholder="Driver License Number" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Licenses Issuing State</Label>
                 <Input type="string" name="licenses_issuing_state" value={this.state.data.licenses_issuing_state} placeholder="Licenses Issuing State" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Exempt Driver Configuration</Label>
                 <Input type="select" name="exempt_driver_configuration" value={this.state.data.exempt_driver_configuration} placeholder="Exempt Driver Configuration" onChange={this.onChange}>
                   <option>1</option>
                   <option>E</option>
@@ -212,24 +218,29 @@ class DriverForm extends React.Component {
                 </Input>
               </FormGroup>
               <FormGroup>
+                <Label for="image">Time Zone Offset UTC</Label>
                 <Input type="select" name="time_zone_offset_utc" value={this.state.data.time_zone_offset_utc} placeholder="Time Zone Offset UTC" onChange={this.onChange}>
                   {this.createSelectItems(4, 11)}
                 </Input>
               </FormGroup>
               <FormGroup>
+                <Label for="image">Starting Time 24 Hour Period</Label>
                 <Input type="datetime-local" name="starting_time_24_hour_period" value={this.state.data.starting_time_24_hour_period} placeholder="Starting Time 24 Hour Period" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Move Yards Use</Label>
                 <Input type="select" name="move_yards_use" placeholder="Move Yards Use" value={this.state.data.move_yards_use} onChange={this.onChange}>
                   {this.createSelectItems(0, 1)}
                 </Input>
               </FormGroup>
               <FormGroup>
+                <Label for="image">Default Use</Label>
                 <Input type="select" name="default_use" placeholder="Default Use" value={this.state.data.default_use} onChange={this.onChange}>
                   {this.createSelectItems(0, 1)}
                 </Input>
               </FormGroup>
               <FormGroup>
+                <Label for="image">Personal Use</Label>
                 <Input type="select" name="personal_use" placeholder="Personal Use" value={this.state.data.personal_use} onChange={this.onChange}>
                   {this.createSelectItems(0, 1)}
                 </Input>
@@ -239,9 +250,11 @@ class DriverForm extends React.Component {
                 <Input type="file" name="picture" value={this.state.data.picture} className="center-item" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Username</Label>
                 <Input type="string" name="username" placeholder="Username" value={this.state.data.username} onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+                <Label for="image">Password</Label>
                 <Input type="password" name="password" placeholder="Password" onChange={this.onChange} />
               </FormGroup>
               <Button>Submit</Button>
