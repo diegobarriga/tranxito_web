@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ListGroup, ListGroupItem, Container, Table } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import Loader from '../../components/Loader/Loader';
+import * as actions from '../../store/actions/user-logs';
+import { connect } from 'react-redux';
 import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
 
 const styles = {
@@ -17,27 +19,14 @@ const styles = {
 class UserLogs extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      user: undefined,
-      loading: true,
-    };
   }
 
-  async componentWillMount() {
-    try {
-      const response = await axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/drivers_and_events/${this.props.id}`);
-      const user = response.data;
-      this.setState({ user, loading: false });
-    } catch (error) {
-      console.error(error);
-    }
+  componentDidMount() {
+    this.props.getUserLogs(this.props.token, this.props.id);
   }
 
   render() {
-    if (this.state.loading) return <Aux><Loader /></Aux>;
-    const { user } = this.state;
-    const { events } = user;
+    if (this.props.logs == null) return <Loader />;
     return (
 
         <Container style={styles.userLogsContainer}>
@@ -50,7 +39,7 @@ class UserLogs extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {events.map(event => (
+                  {this.props.logs.map(event => (
                     <tr key={event.id}>
                       <td>{EVENT_TYPES[event.event_type]}</td>
                       <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
@@ -65,4 +54,20 @@ class UserLogs extends React.Component {
       );
     }
   }
-export default UserLogs;
+
+
+  const mapStateToProps = state => {
+      return {
+          token: state.auth.token,
+          loading: state.userLogs.loading,
+          logs: state.userLogs.logs,
+      };
+  };
+
+  const mapDispatchToProps = dispatch => {
+      return {
+          getUserLogs: ( token, UserId ) => dispatch(actions.getUserLogs(token, UserId))
+      }
+  }
+
+  export default connect(mapStateToProps, mapDispatchToProps)(UserLogs);
