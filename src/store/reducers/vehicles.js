@@ -3,7 +3,7 @@ import { updateObject } from '../utility';
 
 const initialState = {
     vehicles: [],
-    loadingUsers: false
+    loading: false
 }
 
 const getVehiclesFail = (state, action) => {

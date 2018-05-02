@@ -90,15 +90,29 @@ class DriverForm extends React.Component {
         };
         this.setState({ data: updatedState });
 
-        this.postData(this.state.data).then((response) => {
-          console.log(response.data);
-          console.log(response.status);
-          if (response.status === 200) {
-            this.setState({ type: 'success', message: 'We have created all the new drivers. You will be able to see them shortly in the application.' });
-          } else {
-            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
-          }
-        });
+        if (this.props.isCreate) {
+          this.postData(this.state.data).then((response) => {
+            console.log(response.data);
+            console.log(response.status);
+            if (response.status === 200) {
+              this.setState({ type: 'success', message: 'We have created all the new drivers. You will be able to see them shortly in the application.' });
+            } else {
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            }
+          });
+        } else {
+          this.patchData(this.state.data).then((response) => {
+            console.log(response.data);
+            console.log(response.status);
+            if (response.status === 200) {
+              this.setState({ type: 'success', message: 'We have created all the new drivers. You will be able to see them shortly in the application.' });
+            } else {
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            }
+          });
+        }
+        
+
       } else {
         this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
       }
@@ -109,10 +123,12 @@ class DriverForm extends React.Component {
     const state = this.state;
     if (e.target.name === 'picture') {
       state.picture = e.target.value;
+      console.log(this.state.picture);
     } else {
       state.data[e.target.name] = e.target.value;
     }
 
+    
     this.setState(state);
   }
 
@@ -202,31 +218,31 @@ class DriverForm extends React.Component {
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Input type="datetime-local" name="starting_time_24_hour_period" placeholder="Starting Time 24 Hour Period" onChange={this.onChange} />
+                <Input type="datetime-local" name="starting_time_24_hour_period" value={this.state.data.starting_time_24_hour_period} placeholder="Starting Time 24 Hour Period" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
-                <Input type="select" name="move_yards_use" placeholder="Move Yards Use" onChange={this.onChange}>
+                <Input type="select" name="move_yards_use" placeholder="Move Yards Use" value={this.state.data.move_yards_use} onChange={this.onChange}>
                   {this.createSelectItems(0, 1)}
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Input type="select" name="default_use" placeholder="Default Use" onChange={this.onChange}>
+                <Input type="select" name="default_use" placeholder="Default Use" value={this.state.data.default_use} onChange={this.onChange}>
                   {this.createSelectItems(0, 1)}
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Input type="select" name="personal_use" placeholder="Personal Use" onChange={this.onChange}>
+                <Input type="select" name="personal_use" placeholder="Personal Use" value={this.state.data.personal_use} onChange={this.onChange}>
                   {this.createSelectItems(0, 1)}
                 </Input>
               </FormGroup>
 
               <FormGroup>
                 <Label for="image">Image</Label>
-                <Input type="file" name="picture" accept="image/*" className="center-item" onChange={this.onChange} />
+                <Input type="file" name="picture" value={this.state.data.picture} className="center-item" onChange={this.onChange} />
               </FormGroup>
 
               <FormGroup>
-                <Input type="string" name="username" placeholder="Username" onChange={this.onChange} />
+                <Input type="string" name="username" placeholder="Username" value={this.state.data.username} onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
                 <Input type="password" name="password" placeholder="Password" onChange={this.onChange} />

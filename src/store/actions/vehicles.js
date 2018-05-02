@@ -1,5 +1,5 @@
+import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import getVehiclesService from '../../services/trucks';
 
 
 export const getVehiclesStart = () => {
@@ -25,23 +25,17 @@ export const getVehiclesFail = ( error ) => {
 
 
 
-export const getVehicles = (token, motorCarrierId) => {
-  return dispatch => {
+export const getVehicles = (token, motorCarrierId) => (dispatch) => {
+    dispatch(getVehiclesStart());
+    const vehicleUrl = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`;
+    axios.get(vehicleUrl)
+      .then((vehicleResponse) => {
+        console.log(vehicleResponse);
+        dispatch(getVehiclesSuccess(vehicleResponse.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    };
 
-      dispatch(getVehiclesStart());
-      getVehiclesService(token, motorCarrierId)
-      .then( (response) => {
-        try{
-          //const users = response.data.json()
-          const vehicles = response;
-          console.log(vehicles);
-          dispatch(getVehiclesSuccess( vehicles ));
-        }
-        catch(error){
-          dispatch(getVehiclesFail());
-        }
 
-        }
-      )
-    }
-}
