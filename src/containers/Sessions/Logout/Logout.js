@@ -6,6 +6,7 @@ import * as actions from '../../../store/actions/index';
 
 class Logout extends Component {
   componentDidMount() {
+    // this.props.postLogout(this.props.token);
     this.props.onLogout();
   }
   render() {
@@ -16,10 +17,17 @@ class Logout extends Component {
 
 Logout.propTypes = {
   onLogout: PropTypes.func.isRequired,
+  // postLogout: PropTypes.func.isRequired,
+  // token: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = state => ({
+  token: state.auth.token,
+});
 
 const mapDispatchToProps = dispatch => ({
   onLogout: () => dispatch(actions.logout()),
+  postLogout: token => dispatch(actions.logoutToken(token)),
 });
 
-export default connect(null, mapDispatchToProps)(Logout);
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

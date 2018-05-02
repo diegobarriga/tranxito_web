@@ -9,9 +9,6 @@ import '../../assets/styles/forms.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 class Users extends React.Component {
-  onDeleteBtnClick() {
-  }
-
   render() {
     let authRedirect = null;
     if (!this.props.isAuthenticated) {

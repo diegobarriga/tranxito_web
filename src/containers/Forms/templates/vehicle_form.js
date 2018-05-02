@@ -1,0 +1,118 @@
+import React from 'react';
+import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reactstrap';
+import axios, { post } from 'axios';
+import TemplateCSV from '../templates/template_csv';
+import '../../../assets/styles/forms.css';
+
+class CreateVehicle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        vin: '',
+        CMV_power_unit_number: '',
+        model: '',
+        car_maker: '',
+        plaque: '',
+        state: '',
+        IMEI_EL: '',
+      },
+      type: '',
+      message: '',
+      picture: null,
+    };
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.postData = this.postData.bind(this);
+  }
+  onFormSubmit(e) {
+    e.preventDefault(); // Stop form submit
+    this.postData(this.state.data).then((response) => {
+      console.log(response.data);
+      console.log(response.status);
+      if (response.status === 201) {
+        this.setState({ type: 'success', message: 'We have created all the new vehicles. You will be able to see them shortly in the application.' });
+      } else {
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+      }
+    });
+  }
+
+  onChange(e) {
+    const state = this.state;
+    if (e.target.name === 'picture') {
+      state.picture = e.target.files[0];
+      console.log(this.state.picture);
+    } else {
+      state.data[e.target.name] = e.target.value;
+    }
+    this.setState(state);
+
+  }
+
+  postData(data) {
+    const url = 'https://private-459d3-elde2e.apiary-mock.com/vehicles';
+    console.log(data);
+    return post(url, data);
+  }
+
+
+  render() {
+    if (this.state.type && this.state.message) {
+      const classString = `alert alert-${this.state.type}`;
+      var status = (<div id="status" className={classString} ref="status">
+        {this.state.message}
+                    </div>);
+    }
+
+    return (
+      <div>{status}
+        <Container>
+          <Row>
+            <Col sm="12" md={{ size: 5, offset: 3 }}>
+              <h1>{this.props.title}</h1>
+              <Form onSubmit={this.onFormSubmit}>
+                <FormGroup>
+                  <Label for="image">VIN Number</Label>
+                  <Input type="string" name="vin" placeholder="VIN Number" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">CMV Power Unit Number</Label>
+                  <Input type="string" name="CMV_power_unit_number" placeholder="CMV Power Unit Number" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">Vehicle Model</Label>
+                  <Input type="string" name="model" placeholder="Vehicle Model" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">Car Maker</Label>
+                  <Input type="string" name="car_maker" placeholder="Car Maker" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">Plaque</Label>
+                  <Input type="string" name="plaque" placeholder="Plaque" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">State</Label>
+                  <Input type="string" name="state" placeholder="State" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">IMEI ELD</Label>
+                  <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" onChange={this.onChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="image">Image</Label>
+                  <Input type="file" name="picture" value={this.state.data.picture} className="center-item" onChange={this.onChange} />
+                </FormGroup>
+                <Button>Submit</Button>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+}
+
+
+export default CreateVehicle;
