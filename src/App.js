@@ -8,15 +8,14 @@ import Driver from './containers/Users/User';
 import Vehicles from './containers/Trucks/Trucks';
 
 
-
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Logout from './containers/Sessions/Logout/Logout';
 import CreateDriver from './containers/Forms/drivers/create_driver';
 import CreateDrivers from './containers/Forms/drivers/create_drivers';
 import EditDriver from './containers/Forms/drivers/edit_driver';
-import CreateVehicle from './containers/Forms/vehicles/create_vehicle';
 import CreateVehicles from './containers/Forms/vehicles/create_vehicles';
+import CreateVehicle from './containers/Forms/vehicles/create_vehicle';
 import EditVehicle from './containers/Forms/vehicles/edit_vehicle';
 
 import Login from './containers/Sessions/Login/Login';
@@ -50,7 +49,7 @@ class App extends Component {
           <Route path="/drivers" component={Drivers} />
           <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
           <Route path="/vehicles/new_vehicle" component={CreateVehicle} />
-          <Route path="/vehicles/:id/edit" component={EditVehicle} />          
+          <Route path="/vehicles/:id/edit" component={EditVehicle} />
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />

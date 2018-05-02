@@ -4,6 +4,7 @@ import { Label, Button, Form, FormGroup, Input, Container, Row, Col } from 'reac
 import axios, { post } from 'axios';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
+
 import VehicleForm from '../templates/vehicle_form';
 
 class EditVehicle extends React.Component {

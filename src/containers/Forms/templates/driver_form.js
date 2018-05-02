@@ -66,7 +66,6 @@ class DriverForm extends React.Component {
           };
           this.setState({ data: newData });
           console.log(this.state);
-          
         } else {
           console.log('Error loading user info');
         }
@@ -90,6 +89,7 @@ class DriverForm extends React.Component {
         };
         this.setState({ data: updatedState });
 
+        // Si estamos creando un usuario
         if (this.props.isCreate) {
           this.postData(this.state.data).then((response) => {
             console.log(response.data);
@@ -100,6 +100,8 @@ class DriverForm extends React.Component {
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
           });
+
+        // Si estamos editando un usuario
         } else {
           this.patchData(this.state.data).then((response) => {
             console.log(response.data);
@@ -111,8 +113,6 @@ class DriverForm extends React.Component {
             }
           });
         }
-        
-
       } else {
         this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
       }
@@ -128,7 +128,7 @@ class DriverForm extends React.Component {
       state.data[e.target.name] = e.target.value;
     }
 
-    
+
     this.setState(state);
   }
 
@@ -148,7 +148,6 @@ class DriverForm extends React.Component {
     return patch(url, data);
   }
 
-
   imgUpload(file) {
     const url = `https://e2e-eld-test.herokuapp.com/api/imageContainers/People/upload?access_token=${this.props.token}`;
     const formData = new FormData();
@@ -161,7 +160,6 @@ class DriverForm extends React.Component {
     };
     return post(url, formData, config);
   }
-
 
   createSelectItems(min, max) {
     const items = [];

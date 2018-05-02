@@ -126,7 +126,6 @@ class SimpleReactFileUpload extends React.Component {
     }
   }
 
-
   fileUpload(file) {
     const url = `https://e2e-eld-test.herokuapp.com/api/People/upload?access_token=${this.props.token}`;
     const formData = new FormData();
@@ -141,15 +140,11 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   render() {
-    if (this.state.type && this.state.message) {
+    /* if (this.state.type && this.state.message) {
       const classString = `alert alert-${this.state.type}`;
-      var status = (<div id="status" className={classString} ref="status">
-        {this.state.message}
-      </div>);
-    }
-    const h1Style = {
-      marginTop: '6rem',
-    };
+      var status = (<div id="status" className={classString} ref="status">  {this.state.message} </div>);
+    } */
+
 
     let alert;
     if (this.state.isValid === false) {
@@ -160,7 +155,7 @@ class SimpleReactFileUpload extends React.Component {
     }
 
     return (
-      <div>{status}
+      <div>
         { alert }
         <div className="aligner">
           <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>

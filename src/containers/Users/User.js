@@ -55,42 +55,41 @@ class Users extends React.Component {
 
 
     return (
-      <Aux>
-
+      <Container>
 
         <h1>{`${user.first_name} ${user.last_name}`}</h1>
         <Row style={styles.userProfile}>
           <Avatar src={user.picture} />
           <div style={styles.userData}>
-                <div>Driver license number: {user.driver_license_number}</div>
-                <div>Email: {user.email}</div>
-              </div>
+            <div>Driver license number: {user.driver_license_number}</div>
+            <div>Email: {user.email}</div>
+          </div>
         </Row>
 
         <Graph />
         <br />
-        <Container style={styles.userLogsContainer}>
+        <Row style={styles.userLogsContainer}>
           <Table striped>
-                <thead>
-                  <tr>
-                    <th>Event</th>
-                    <th>Detail</th>
-                    <th>Timestamp</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {events.map(event => (
-                    <tr key={event.id}>
-                      <td>{EVENT_TYPES[event.event_type]}</td>
-                      <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
-                      <td>{event.event_timestamp}</td>
-                    </tr>
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Detail</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map(event => (
+                <tr key={event.id}>
+                  <td>{EVENT_TYPES[event.event_type]}</td>
+                  <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
+                  <td>{event.event_timestamp}</td>
+                </tr>
 
                   ))}
-                </tbody>
-              </Table>
-        </Container>
-      </Aux>
+            </tbody>
+          </Table>
+        </Row>
+      </Container>
 
     );
   }

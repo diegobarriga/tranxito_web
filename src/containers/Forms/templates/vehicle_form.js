@@ -1,8 +1,8 @@
 import React from 'react';
+import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
 import axios, { post } from 'axios';
 import TemplateCSV from '../templates/template_csv';
-import styles from '../../../assets/styles/forms.css';
-import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import '../../../assets/styles/forms.css';
 
 class CreateVehicle extends React.Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class CreateVehicle extends React.Component {
       const classString = `alert alert-${this.state.type}`;
       var status = (<div id="status" className={classString} ref="status">
         {this.state.message}
-      </div>);
+                    </div>);
     }
 
     return (
