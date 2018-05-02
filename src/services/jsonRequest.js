@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 export default async function jsonRequest(path, method, options = {}) {
-  const base_path = 'https://e2e-eld-test.herokuapp.com/api';
+  const basePath = 'https://e2e-eld-test.herokuapp.com/api';
 
   if (method === 'get') {
     try {
-      const response = await axios.get(`${base_path}${path}`);
+      const response = await axios.get(`${basePath}${path}`);
       console.log(response);
       return response;
     } catch (error) {
