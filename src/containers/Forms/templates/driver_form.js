@@ -139,8 +139,8 @@ class DriverForm extends React.Component {
   }
 
 
-  postData(data) {
-    const url = `https://e2e-eld-test.herokuapp.com/api/People?access_token=${this.props.token}`;
+  postData(data, motor_carrier_id) {
+    const url = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers/${this.props.motorCarrierId}/people?access_token=${this.props.token}`;
     return post(url, data);
   }
 
@@ -273,6 +273,7 @@ DriverForm.propTypes = {
 
 const mapStateToProps = state => ({
   token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId
 
 });
 
