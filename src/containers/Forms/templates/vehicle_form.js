@@ -73,24 +73,31 @@ class CreateVehicle extends React.Component {
               <h1>{this.props.title}</h1>
               <Form onSubmit={this.onFormSubmit}>
                 <FormGroup>
+                  <Label for="image">VIN Number</Label>
                   <Input type="string" name="vin" placeholder="VIN Number" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
+                  <Label for="image">CMV Power Unit Number</Label>
                   <Input type="string" name="CMV_power_unit_number" placeholder="CMV Power Unit Number" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
+                  <Label for="image">Vehicle Model</Label>
                   <Input type="string" name="model" placeholder="Vehicle Model" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
+                  <Label for="image">Car Maker</Label>
                   <Input type="string" name="car_maker" placeholder="Car Maker" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
+                  <Label for="image">Plaque</Label>
                   <Input type="string" name="plaque" placeholder="Plaque" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
+                  <Label for="image">State</Label>
                   <Input type="string" name="state" placeholder="State" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
+                  <Label for="image">IMEI ELD</Label>
                   <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
