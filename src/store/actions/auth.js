@@ -6,7 +6,6 @@ export const authStart = () => ({
 });
 
 
-
 export const authSuccess = (token, userId, role, response, motorCarrierId) => ({
 
   type: actionTypes.AUTH_SUCCESS,
@@ -28,6 +27,7 @@ export const createSuccess = response => ({
   type: actionTypes.CREATE_SUCCESS,
 });
 
+
 export const errorReset = () => ({
   type: actionTypes.ERROR_RESET,
 });
@@ -37,19 +37,10 @@ export const logout = () => ({
   type: actionTypes.AUTH_LOGOUT,
 });
 
-
-export const carrierRegister = (name, number, mday, token) => (dispatch) => {
-  const regData = {
-    name,
-    number,
-    mday,
-  };
-
-  const url = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers?access_token=${token}`;
-
-  axios.post(url, regData)
+export const logoutToken = (token) => {
+  const url = `https://e2e-eld-test.herokuapp.com/api/People/logout?access_token=${token}`;
+  axios.post(url)
     .then((response) => {
-      dispatch(createSuccess());
       console.log(response);
     })
     .catch((err) => {
@@ -79,7 +70,7 @@ export const signup = (
     motorCarrierId,
   };
 
-
+  // const url = `https://eld-test.azurewebsites.net/api/People?access_token=${token}`;
   const url = `https://e2e-eld-test.herokuapp.com/api/People?access_token=${token}`;
 
 
@@ -102,16 +93,17 @@ export const login = (email, password) => (dispatch) => {
     password,
   };
 
+  // const url = 'https://eld-test.azurewebsites.net/api/People/login';
   const url = 'https://e2e-eld-test.herokuapp.com/api/People/login';
 
   axios.post(url, authData, { headers: { 'Access-Control-Allow-Origin': '*' } })
     .then((response) => {
+      // const userUrl = `https://eld-test.azurewebsites.net/api/People/${response.data.userId}?access_token=${response.data.id}`;
       const userUrl = `https://e2e-eld-test.herokuapp.com/api/People/${response.data.userId}?access_token=${response.data.id}`;
       axios.get(userUrl)
         .then((userResponse) => {
           console.log(response);
-          dispatch(authSuccess(response.data.id, response.data.userId, userResponse.data.account_type,response, userResponse.data.motorCarrierId));
-
+          dispatch(authSuccess(response.data.id, response.data.userId, userResponse.data.account_type, response, userResponse.data.motorCarrierId));
         })
         .catch((err) => {
           console.log(err);

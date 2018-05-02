@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/alert.css';
 
@@ -12,26 +13,24 @@ class Alert extends React.Component {
       this.setState({
         visible: false,
       });
-    }, 3000);
+    }, 4000);
   }
 
   render() {
-    let message;
     let alertt;
     let messageFade;
     if (this.props.alertType === 'SUCCESS') {
       alertt = 'alert alert-success';
       messageFade = 'alert alert-success updown target';
-      message = 'Supervisor created successfully';
     } else {
       alertt = 'alert alert-danger';
-      message = 'Error Supervisor was not created';
+
       messageFade = 'alert alert-danger updown target';
     }
 
-    let alert = <div className={alertt}> {message} </div>;
+    let alert = <div className={alertt}> {this.props.message} </div>;
     if (this.state.visible === false) {
-      alert = <div className={messageFade}> {message} </div>;
+      alert = <div className={messageFade}> {this.props.message} </div>;
     }
     return (
       <Aux>
@@ -40,5 +39,10 @@ class Alert extends React.Component {
     );
   }
 }
+Alert.propTypes = {
+  alertType: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+
+};
 
 export default Alert;

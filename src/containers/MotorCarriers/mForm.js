@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reactstrap';
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/index';
@@ -17,13 +17,13 @@ class CarrierRegister extends React.Component {
         value: '',
       },
       mday: {
-        value: '',
+        value: '7',
       },
     },
   }
 
   onInputChange = (event) => {
-    const { state } = this.state;
+    const state = this.state;
     state.controls[event.target.name].value = event.target.value;
     this.setState(state);
   }
@@ -69,13 +69,19 @@ class CarrierRegister extends React.Component {
             <h1 style={h1Style}>Create Motor Carrier</h1>
             <Form onSubmit={this.submitHandler}>
               <FormGroup>
-                <Input type="text" name="name" onChange={this.onInputChange} placeholder="Name" />
+                <Label for="name">Name</Label>
+                <Input type="text" name="name" onChange={this.onInputChange} placeholder="name" />
               </FormGroup>
               <FormGroup>
+                <Label for="mday">USDOT Number</Label>
                 <Input type="text" name="number" onChange={this.onInputChange} placeholder="USDOT Number" />
               </FormGroup>
               <FormGroup>
-                <Input type="text" name="mday" onChange={this.onInputChange} placeholder="Multiday basis used" />
+                <Label for="mday">Multiday basis used</Label>
+                <Input type="select" onChange={this.onInputChange} name="mday" >
+                  <option>7</option>
+                  <option>8</option>
+                </Input>
               </FormGroup>
               <Button>Submit</Button>
             </Form>

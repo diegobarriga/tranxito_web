@@ -7,7 +7,7 @@ const initialState = {
   error: null,
   loading: false,
   role: null,
-  motorCarrierId: null
+  motorCarrierId: null,
 };
 
 const authStart = (state, action) => updateObject(state, { error: null, loading: true });

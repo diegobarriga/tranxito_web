@@ -1,7 +1,7 @@
 import React from 'react';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import styles from '../../../assets/styles/forms.css';
 import PropTypes from 'prop-types';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import '../../../assets/styles/forms.css';
 
 class TemplateCSV extends React.Component {
   render() {
