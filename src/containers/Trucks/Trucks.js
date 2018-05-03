@@ -14,11 +14,11 @@ class Trucks extends React.Component {
 
 
   render() {
-    console.log(path.basePath); 
+    console.log(path.BASE_PATH);
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
-    
+
     }
 
     return (

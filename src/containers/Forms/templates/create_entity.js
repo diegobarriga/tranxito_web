@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios, { post } from 'axios';
 import { Button, Form, Input } from 'reactstrap';
+import * as path from '../../../store/actions/basepath';
 
 import Alert from '../../Alert/Alert';
 import TemplateCSV from '../templates/template_csv';
@@ -115,8 +116,8 @@ class SimpleReactFileUpload extends React.Component {
       this.fileUpload(this.state.file).then((response) => {
         console.log(response.data);
         console.log(response.status);
-        if (response.status === 201) {
-          this.setState({ type: 'success', message: `We have created all the new ${this.props.type}. You will be able to see them shortly in the application.` });
+        if (response.status === 204) {
+          this.setState({ type: 'success', message: `We have created all the new ${this.props.type}.` });
         } else {
           this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         }
@@ -127,7 +128,7 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   fileUpload(file) {
-    const url = `https://e2e-eld-test.herokuapp.com/api/People/upload?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/People/upload?access_token=${this.props.token}`;
     const formData = new FormData();
     formData.append('file', file);
     console.log(formData);
@@ -140,23 +141,14 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   render() {
-    /* if (this.state.type && this.state.message) {
+    if (this.state.type && this.state.message) {
       const classString = `alert alert-${this.state.type}`;
-      var status = (<div id="status" className={classString} ref="status">  {this.state.message} </div>);
-    } */
-
-
-    let alert;
-    if (this.state.isValid === false) {
-      const msg = 'Error, invalid csv format';
-      alert = (
-        <Alert alertType="FAILED" message={msg} />
-      );
+      var status = (<div id="status" className={classString} ref="status">{this.state.message} </div>);
     }
 
     return (
       <div>
-        { alert }
+        <div>{ status }</div>
         <div className="aligner">
           <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>
           <div className="aligner-item"><p>The template below has the structure the csv file must have. You can download it, fill it and then upload it. That simple!</p></div>

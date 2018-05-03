@@ -1,11 +1,12 @@
 import axios from 'axios';
+import * as path from '../store/actions/basepath';
 
-export default async function jsonRequest(path, method, options = {}) {
-  const basePath = 'https://e2e-eld-test.herokuapp.com/api';
+export default async function jsonRequest(_path, method, options = {}) {
 
   if (method === 'get') {
     try {
-      const response = await axios.get(`${basePath}${path}`);
+      console.log(`${path.BASE_PATH}${_path}`);
+      const response = await axios.get(`${path.BASE_PATH}${_path}`);
       console.log(response);
       return response;
     } catch (error) {

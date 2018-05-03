@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import * as path from '../../store/actions/basepath';
 
 export const setMotorCarriers = motorcarriers => ({
   type: actionTypes.SET_MOTORCARRIER,
@@ -13,7 +14,7 @@ export const createSuccess = response => ({
 
 
 export const initMCarriers = token => (dispatch) => {
-  axios.get(`https://e2e-eld-test.herokuapp.com/api/MotorCarriers?access_token=${token}`)
+  axios.get(`${path.BASE_PATH}/api/MotorCarriers?access_token=${token}`)
     .then((response) => {
       console.log(response.data);
       dispatch(setMotorCarriers(response.data));
@@ -32,7 +33,7 @@ export const carrierRegister = (name, USDOT_number, multiday_basis_used, token) 
     multiday_basis_used,
   };
   // const url = `https://eld-test.azurewebsites.net/api/MotorCarriers?access_token=${token}`;
-  const url = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers?access_token=${token}`;
+  const url = `${path.BASE_PATH}/api/MotorCarriers?access_token=${token}`;
 
   console.log(regData);
   axios.post(url, regData)

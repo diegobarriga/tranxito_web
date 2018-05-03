@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { ListGroupItem, Button } from 'reactstrap';
 import '../../assets/styles/users.css';
 import * as actions from '../../store/actions/index';
-
+import * as path from '../../store/actions/basepath';
 
 class UserRow extends React.Component {
 
@@ -32,7 +32,7 @@ class UserRow extends React.Component {
       <ListGroupItem style={divStyle} className="justify-content-between">
         <div className="user_wrapper">
           <figure className="left">
-            <img className="media-object" width="100px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/People/download/${this.props.image}`} />
+            <img className="media-object" width="100px" src={`${path.BASE_PATH}/api/imageContainers/People/download/${this.props.image}`} />
           </figure>
           <div className="right">
             <ul>

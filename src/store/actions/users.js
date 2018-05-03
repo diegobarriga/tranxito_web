@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import * as path from '../../store/actions/basepath';
 
 export const getUsersStart = () => ({
   type: actionTypes.GET_USERS_START,
@@ -26,13 +27,13 @@ export const onDelete = (userId, token) => (dispatch) => {
   const data = {
     account_status: false,
   }
-  const url = `https://e2e-eld-test.herokuapp.com/api/People/${userId}?access_token=${token}`;
+  const url = `${path.BASE_PATH}/api/People/${userId}?access_token=${token}`;
   axios.patch(url, data)
   .then((response) => {
     console.log("userdeleted")
     console.log(response);
     dispatch(onDeleteSuccess(userId));
-    
+
   })
   .catch((err) => {
     console.log(err);
@@ -42,7 +43,7 @@ export const onDelete = (userId, token) => (dispatch) => {
 
 export const getUsers = (token, motorCarrierId) => (dispatch) => {
   dispatch(getUsersStart());
-  const userUrl = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers/${motorCarrierId}/people?access_token=${token}`;
+  const userUrl = `${path.BASE_PATH}/api/MotorCarriers/${motorCarrierId}/people?access_token=${token}`;
   axios.get(userUrl)
     .then((userResponse) => {
       console.log(userResponse);

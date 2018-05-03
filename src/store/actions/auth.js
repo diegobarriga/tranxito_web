@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import * as path from '../../store/actions/basepath';
 
 export const authStart = () => ({
   type: actionTypes.AUTH_START,
@@ -38,7 +39,7 @@ export const logout = () => ({
 });
 
 export const logoutToken = (token) => {
-  const url = `https://e2e-eld-test.herokuapp.com/api/People/logout?access_token=${token}`;
+  const url = `${path.BASE_PATH}/api/People/logout?access_token=${token}`;
   axios.post(url)
     .then((response) => {
       console.log(response);
@@ -71,7 +72,7 @@ export const signup = (
   };
 
   // const url = `https://eld-test.azurewebsites.net/api/People?access_token=${token}`;
-  const url = `https://e2e-eld-test.herokuapp.com/api/People?access_token=${token}`;
+  const url = `${path.BASE_PATH}/api/People?access_token=${token}`;
 
 
   console.log(authData);
@@ -94,12 +95,12 @@ export const login = (email, password) => (dispatch) => {
   };
 
   // const url = 'https://eld-test.azurewebsites.net/api/People/login';
-  const url = 'https://e2e-eld-test.herokuapp.com/api/People/login';
+  const url = `${path.BASE_PATH}/api/People/login`;
 
   axios.post(url, authData, { headers: { 'Access-Control-Allow-Origin': '*' } })
     .then((response) => {
       // const userUrl = `https://eld-test.azurewebsites.net/api/People/${response.data.userId}?access_token=${response.data.id}`;
-      const userUrl = `https://e2e-eld-test.herokuapp.com/api/People/${response.data.userId}?access_token=${response.data.id}`;
+      const userUrl = `${path.BASE_PATH}/api/People/${response.data.userId}?access_token=${response.data.id}`;
       axios.get(userUrl)
         .then((userResponse) => {
           console.log(response);

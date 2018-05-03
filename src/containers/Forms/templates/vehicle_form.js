@@ -6,6 +6,7 @@ import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reac
 import axios, { post, patch, get } from 'axios';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
+import * as path from '../../../store/actions/basepath';
 
 class CreateVehicle extends React.Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class CreateVehicle extends React.Component {
             console.log(response.data);
             console.log(response.status);
             if (response.status === 200) {
-              this.setState({ type: 'success', message: 'We have created the new driver. You will be able to see him shortly in the application.' });
+              this.setState({ type: 'success', message: 'We have created the new vehicle.' });
             } else {
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
@@ -89,7 +90,7 @@ class CreateVehicle extends React.Component {
             console.log(response.data);
             console.log(response.status);
             if (response.status === 200) {
-              this.setState({ type: 'success', message: 'We have edited the driver.' });
+              this.setState({ type: 'success', message: 'We have edited the vehicle.' });
             } else {
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
@@ -114,25 +115,25 @@ class CreateVehicle extends React.Component {
   }
 
   getVehicleInfo() {
-    const url = `https://e2e-eld-test.herokuapp.com/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
     return get(url);
   }
-  
+
 
   postData(data) {
-    const url = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers/${this.props.motorCarrierId}/vehicles?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/MotorCarriers/${this.props.motorCarrierId}/vehicles?access_token=${this.props.token}`;
     console.log(data);
     return post(url, data);
   }
 
   patchData(data) {
-    const url = `https://e2e-eld-test.herokuapp.com/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
     return patch(url, data);
   }
 
   imgUpload(file) {
-    
-    const url = `https://e2e-eld-test.herokuapp.com/api/imageContainers/Vehicles/upload?access_token=${this.props.token}`;
+
+    const url = `${path.BASE_PATH}/api/imageContainers/Vehicles/upload?access_token=${this.props.token}`;
     const formData = new FormData();
     console.log(file);
     formData.append('file', file);
