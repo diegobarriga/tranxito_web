@@ -54,8 +54,8 @@ class App extends Component {
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/" exact component={Home} />
+          
+          <Route path="/" exact component={Login} />
           <Route path="/logout" component={Logout} />
           <Route path="/motor_carriers/create" component={mForm} />
           <Route path="/motor_carriers/:id/new_supervisor" component={Signup} />

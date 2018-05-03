@@ -16,6 +16,29 @@ export const getUsersFail = error => ({
   error,
 });
 
+export const onDeleteSuccess = userId => ({
+  type: actionTypes.DELETE_USER,
+  userId,
+});
+
+
+export const onDelete = (userId, token) => (dispatch) => {
+  const data = {
+    account_status: false,
+  }
+  const url = `https://e2e-eld-test.herokuapp.com/api/People/${userId}?access_token=${token}`;
+  axios.patch(url, data)
+  .then((response) => {
+    console.log("userdeleted")
+    console.log(response);
+    dispatch(onDeleteSuccess(userId));
+    
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
 
 export const getUsers = (token, motorCarrierId) => (dispatch) => {
   dispatch(getUsersStart());
@@ -29,18 +52,3 @@ export const getUsers = (token, motorCarrierId) => (dispatch) => {
       console.log(err);
     });
 };
-
-  /*
-  getUsersService(token, motorCarrierId)
-    .then((response) => {
-      try {
-        // const users = response.data.json()
-        const users = response;
-        console.log(users);
-        dispatch(getUsersSuccess(users));
-      } catch (error) {
-        console.log(error);
-        dispatch(getUsersFail());
-      }
-    });
-    */

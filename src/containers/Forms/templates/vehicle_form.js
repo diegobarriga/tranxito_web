@@ -1,6 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reactstrap';
-import axios, { post } from 'axios';
+import axios, { post, patch, get } from 'axios';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
 
@@ -15,7 +18,8 @@ class CreateVehicle extends React.Component {
         car_maker: '',
         plaque: '',
         state: '',
-        IMEI_EL: '',
+        IMEI_ELD: '',
+        image: '',
       },
       type: '',
       message: '',
@@ -25,15 +29,74 @@ class CreateVehicle extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.postData = this.postData.bind(this);
   }
+
+  componentDidMount() {
+    // Si estamos editando el documento cargamos los datos del usuario para completar el form
+    if (!this.props.isCreate) {
+      this.getVehicleInfo().then((response) => {
+        if (response.status === 200) {
+          console.log('response');
+          console.log(response);
+          const newData = {
+            vin: response.data.vin,
+            CMV_power_unit_number: response.data.CMV_power_unit_number,
+            model: response.data.model,
+            car_maker: response.data.car_maker,
+            plaque: response.data.plaque,
+            state: response.data.state,
+            IMEI_ELD: response.data.IMEI_ELD,
+            image: response.data.image,
+          };
+          this.setState({ data: newData });
+          console.log(this.state);
+        } else {
+          console.log('Error loading user info');
+        }
+      });
+    }
+  }
+
   onFormSubmit(e) {
     e.preventDefault(); // Stop form submit
-    this.postData(this.state.data).then((response) => {
-      console.log(response.data);
-      console.log(response.status);
-      if (response.status === 201) {
-        this.setState({ type: 'success', message: 'We have created all the new vehicles. You will be able to see them shortly in the application.' });
+    this.imgUpload(this.state.picture).then((imgResponse) => {
+      console.log("aaaaaaa");
+
+      if (imgResponse.status === 200) {
+        console.log('imagen creada correctamente');
+        console.log(imgResponse.data.result.files.file[0].name);
+        // setiamos el nombre de la imagen con la respuesta
+        const updatedState = {
+          ...this.state.data,
+          image: imgResponse.data.result.files.file[0].name,
+        };
+        this.setState({ data: updatedState });
+
+        // Si estamos creando un usuario
+        if (this.props.isCreate) {
+          this.postData(this.state.data).then((response) => {
+            console.log(response.data);
+            console.log(response.status);
+            if (response.status === 200) {
+              this.setState({ type: 'success', message: 'We have created the new driver. You will be able to see him shortly in the application.' });
+            } else {
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            }
+          });
+
+        // // Si estamos editando un usuario
+        } else {
+          this.patchData(this.state.data).then((response) => {
+            console.log(response.data);
+            console.log(response.status);
+            if (response.status === 200) {
+              this.setState({ type: 'success', message: 'We have edited the driver.' });
+            } else {
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            }
+          });
+        }
       } else {
-        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
       }
     });
   }
@@ -46,14 +109,40 @@ class CreateVehicle extends React.Component {
     } else {
       state.data[e.target.name] = e.target.value;
     }
-    this.setState(state);
 
+    this.setState(state);
   }
 
+  getVehicleInfo() {
+    const url = `https://e2e-eld-test.herokuapp.com/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
+    return get(url);
+  }
+  
+
   postData(data) {
-    const url = 'https://private-459d3-elde2e.apiary-mock.com/vehicles';
+    const url = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers/${this.props.motorCarrierId}/vehicles?access_token=${this.props.token}`;
     console.log(data);
     return post(url, data);
+  }
+
+  patchData(data) {
+    const url = `https://e2e-eld-test.herokuapp.com/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
+    return patch(url, data);
+  }
+
+  imgUpload(file) {
+    
+    const url = `https://e2e-eld-test.herokuapp.com/api/imageContainers/Vehicles/upload?access_token=${this.props.token}`;
+    const formData = new FormData();
+    console.log(file);
+    formData.append('file', file);
+    console.log(formData);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    return post(url, formData, config);
   }
 
 
@@ -74,35 +163,35 @@ class CreateVehicle extends React.Component {
               <Form onSubmit={this.onFormSubmit}>
                 <FormGroup>
                   <Label for="image">VIN Number</Label>
-                  <Input type="string" name="vin" placeholder="VIN Number" onChange={this.onChange} />
+                  <Input type="string" name="vin" value={this.state.data.vin} placeholder="VIN Number" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">CMV Power Unit Number</Label>
-                  <Input type="string" name="CMV_power_unit_number" placeholder="CMV Power Unit Number" onChange={this.onChange} />
+                  <Input type="string" name="CMV_power_unit_number" value={this.state.data.CMV_power_unit_number} placeholder="CMV Power Unit Number" onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">Vehicle Model</Label>
-                  <Input type="string" name="model" placeholder="Vehicle Model" onChange={this.onChange} />
+                  <Input type="string" name="model" placeholder="Vehicle Model" value={this.state.data.model} onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">Car Maker</Label>
-                  <Input type="string" name="car_maker" placeholder="Car Maker" onChange={this.onChange} />
+                  <Input type="string" name="car_maker" placeholder="Car Maker" value={this.state.data.car_maker} onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">Plaque</Label>
-                  <Input type="string" name="plaque" placeholder="Plaque" onChange={this.onChange} />
+                  <Input type="string" name="plaque" placeholder="Plaque" value={this.state.data.plaque} onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">State</Label>
-                  <Input type="string" name="state" placeholder="State" onChange={this.onChange} />
+                  <Input type="string" name="state" placeholder="State" value={this.state.data.state} onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">IMEI ELD</Label>
-                  <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" onChange={this.onChange} />
+                  <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" value={this.state.data.IMEI_EL} onChange={this.onChange} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">Image</Label>
-                  <Input type="file" name="picture" value={this.state.data.picture} className="center-item" onChange={this.onChange} />
+                  <Input type="file" name="picture"  value={this.state.data.first_name} className="center-item" onChange={this.onChange} />
                 </FormGroup>
                 <Button>Submit</Button>
               </Form>
@@ -114,5 +203,15 @@ class CreateVehicle extends React.Component {
   }
 }
 
+CreateVehicle.propTypes = {
+  title: PropTypes.string.isRequired,
+  isCreate: PropTypes.bool.isRequired,
+};
 
-export default CreateVehicle;
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId
+
+});
+
+export default withRouter(connect(mapStateToProps)(CreateVehicle));

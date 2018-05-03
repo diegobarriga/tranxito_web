@@ -21,7 +21,7 @@ const navibar = props => (
         </NavItem>
         :
         <NavItem>
-          <Link className="nav-link" style={pStyle} to="/login">Login</Link>
+          <Link className="nav-link" style={pStyle} to="/">Login</Link>
         </NavItem> }
 
     </Nav>

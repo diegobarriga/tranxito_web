@@ -17,6 +17,23 @@ const getUsersSuccess = (state, action) => updateObject(state, {
   loading: false,
 });
 
+
+const onDeleteSuccess = (state, action) => {
+  const oldUser = state.users.find(user => user.id === action.userId);
+  const otherUsers = state.users.filter(user => user.id !== action.userId);
+  const newUser = Object.assign({}, oldUser, {
+    account_status: false,
+  });
+
+  console.log(newUser);
+
+  return updateObject(state, {
+    loading: false,
+    users: [newUser, ...otherUsers],
+  });
+};
+
+
 const getUsersStart = (state, action) => updateObject(state, { error: null, loading: true });
 
 
@@ -25,6 +42,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_USERS_START: return getUsersStart(state, action);
     case actionTypes.GET_USERS_SUCCESS: return getUsersSuccess(state, action);
     case actionTypes.GET_USERS_FAIL: return getUsersFail(state, action);
+    case actionTypes.DELETE_USER: return onDeleteSuccess(state, action);
 
     default:
       return state;

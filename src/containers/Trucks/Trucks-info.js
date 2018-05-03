@@ -3,6 +3,7 @@ import { ListGroup } from 'reactstrap';
 import TruckRow from './Truck-row';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/vehicles';
+import * as path from '../../store/actions/basepath';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Input } from 'reactstrap';
@@ -20,7 +21,7 @@ class TrucksInfo extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getVehicles(this.props.token, this.props.motorCarrierId);    
+    this.props.getVehicles(this.props.token, this.props.motorCarrierId);   
 
   }
 
