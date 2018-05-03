@@ -22,7 +22,6 @@ class TrucksInfo extends React.Component {
 
   componentDidMount() {
     this.props.getVehicles(this.props.token, this.props.motorCarrierId);   
-
   }
 
   updateSearch(event) {
@@ -31,6 +30,8 @@ class TrucksInfo extends React.Component {
 
 
   render() {
+
+    if (this.props.isLoading === true) return <Loader />;
 
     let filtered_vehicles = this.props.vehicles.filter(
       (vehicle) => {
@@ -51,9 +52,6 @@ class TrucksInfo extends React.Component {
           </div>
         </div>
 
-
-        {this.props.loading && <Loader />}
-        {console.log(filtered_vehicles)}
         <ListGroup>
           {
               filtered_vehicles.sort(function(a, b){return a.car_maker > b.car_maker}).map(truck => (<TruckRow
@@ -80,7 +78,7 @@ const mapStateToProps = state => {
         token: state.auth.token,
         motorCarrierId: state.auth.motorCarrierId,
         vehicles: state.vehicles.vehicles,
-        loading: state.vehicles.loading,
+        isLoading: state.vehicles.loading,
     };
 };
 
