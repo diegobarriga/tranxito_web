@@ -6,7 +6,7 @@ import { ListGroupItem, Button } from 'reactstrap';
 import axios from 'axios';
 import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
-
+import * as path from '../../store/actions/basepath';
 
 class TruckRow extends React.Component {
 
@@ -33,7 +33,7 @@ class TruckRow extends React.Component {
       <ListGroupItem style={divStyle} className="justify-content-between">
         <div className="truck_wrapper">
           <figure className="left">
-            <img className="media-object" width="100px" src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/Vehicles/download/${this.props.image}`} />
+            <img className="media-object" width="100px" src={`${path.BASE_PATH}/api/imageContainers/Vehicles/download/${this.props.image}`} />
           </figure>
           <div className="right">
             <ul>
@@ -71,7 +71,7 @@ TruckRow.propTypes = {
   plaque: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
   IMEI_ELD: PropTypes.number.isRequired,
-  
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TruckRow);

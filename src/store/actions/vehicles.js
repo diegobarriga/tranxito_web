@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-
+import * as path from '../../store/actions/basepath';
 
 export const getVehiclesStart = () => ({
   type: actionTypes.GET_VEHICLES_START,
@@ -24,7 +24,7 @@ export const onVehicleDeleteSuccess = vehicleId => ({
 
 
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
-  const url = `https://e2e-eld-test.herokuapp.com/api/Vehicles/${vehicleId}?access_token=${token}`;
+  const url = `${path.BASE_PATH}/api/Vehicles/${vehicleId}?access_token=${token}`;
   axios.delete(url)
   .then((response) => {
     console.log("vehicledeleted");
@@ -42,7 +42,7 @@ export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
 
 export const getVehicles = (token, motorCarrierId) => (dispatch) => {
   dispatch(getVehiclesStart());
-  const vehicleUrl = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`;
+  const vehicleUrl = `${path.BASE_PATH}/api/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`;
   axios.get(vehicleUrl)
     .then((vehicleResponse) => {
       console.log(vehicleResponse);
@@ -52,4 +52,3 @@ export const getVehicles = (token, motorCarrierId) => (dispatch) => {
       console.log(err);
     });
 };
-

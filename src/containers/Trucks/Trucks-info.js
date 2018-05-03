@@ -21,7 +21,7 @@ class TrucksInfo extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getVehicles(this.props.token, this.props.motorCarrierId);   
+    this.props.getVehicles(this.props.token, this.props.motorCarrierId);
   }
 
   updateSearch(event) {

@@ -6,6 +6,7 @@ import { Label, Button, Form, FormGroup, Input, Container, Row, Col } from 'reac
 import axios, { post, patch, get } from 'axios';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
+import * as path from '../../../store/actions/basepath';
 
 
 class DriverForm extends React.Component {
@@ -96,7 +97,7 @@ class DriverForm extends React.Component {
             console.log(response.data);
             console.log(response.status);
             if (response.status === 200) {
-              this.setState({ type: 'success', message: 'We have created the new driver. You will be able to see him shortly in the application.' });
+              this.setState({ type: 'success', message: 'We have created the new driver.' });
             } else {
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
@@ -134,23 +135,23 @@ class DriverForm extends React.Component {
   }
 
   getUserInfo() {
-    const url = `https://e2e-eld-test.herokuapp.com/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
     return get(url);
   }
 
 
   postData(data) {
-    const url = `https://e2e-eld-test.herokuapp.com/api/MotorCarriers/${this.props.motorCarrierId}/people?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/MotorCarriers/${this.props.motorCarrierId}/people?access_token=${this.props.token}`;
     return post(url, data);
   }
 
   patchData(data) {
-    const url = `https://e2e-eld-test.herokuapp.com/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
     return patch(url, data);
   }
 
   imgUpload(file) {
-    const url = `https://e2e-eld-test.herokuapp.com/api/imageContainers/People/upload?access_token=${this.props.token}`;
+    const url = `${path.BASE_PATH}/api/imageContainers/People/upload?access_token=${this.props.token}`;
     const formData = new FormData();
     formData.append('file', file);
     console.log(formData);
@@ -184,8 +185,8 @@ class DriverForm extends React.Component {
 
     return (
       <Container>
+        <div>{ status }</div>
         <Row>
-          { status }
           <Col sm="12" md={{ size: 5, offset: 3 }}>
             <h1 style={h1Style}> {this.props.title }</h1>
             <Form onSubmit={this.onFormSubmit}>

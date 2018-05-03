@@ -6,6 +6,7 @@ import Avatar from '../../components/Avatar';
 import * as actions from '../../store/actions/user-info';
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader/Loader';
+import * as path from '../../store/actions/basepath';
 
 const styles = {
   userProfile: {
@@ -37,7 +38,7 @@ class UserInfo extends React.Component {
       <Aux>
         <h1>{`${this.props.user.first_name} ${this.props.user.last_name}`}</h1>
         <Row style={styles.userProfile}>
-          <Avatar src={`https://e2e-eld-test.herokuapp.com/api/imageContainers/People/download/${this.props.user.image}`} />
+          <Avatar src={`${path.BASE_PATH}/api/imageContainers/People/download/${this.props.user.image}`} />
           <div style={styles.userData}>
                 <div>Driver license number: {this.props.user.driver_license_number}</div>
                 <div>Email: {this.props.user.email}</div>
