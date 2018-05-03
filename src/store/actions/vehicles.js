@@ -17,6 +17,28 @@ export const getVehiclesFail = error => ({
   error,
 });
 
+export const onVehicleDeleteSuccess = vehicleId => ({
+  type: actionTypes.DELETE_VEHICLE,
+  vehicleId,
+});
+
+
+export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
+  const url = `https://e2e-eld-test.herokuapp.com/api/Vehicles/${vehicleId}?access_token=${token}`;
+  axios.delete(url)
+  .then((response) => {
+    console.log("vehicledeleted");
+    dispatch(onVehicleDeleteSuccess(vehicleId));
+
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
+
+
+
 
 export const getVehicles = (token, motorCarrierId) => (dispatch) => {
   dispatch(getVehiclesStart());

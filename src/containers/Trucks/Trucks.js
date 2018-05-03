@@ -7,15 +7,18 @@ import { Redirect } from 'react-router-dom';
 import styles from '../../assets/styles/forms.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import * as path from '../../store/actions/basepath';
 
 class Trucks extends React.Component {
-  onDeleteBtnClick() {
-  }
+
+
 
   render() {
+    console.log(path.basePath); 
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
+    
     }
 
     return (

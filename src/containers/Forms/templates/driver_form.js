@@ -247,7 +247,7 @@ class DriverForm extends React.Component {
               </FormGroup>
               <FormGroup>
                 <Label for="image">Image</Label>
-                <Input type="file" name="picture" value={this.state.data.picture} className="center-item" onChange={this.onChange} />
+                <Input type="file" name="picture"  className="center-item" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
                 <Label for="image">Username</Label>

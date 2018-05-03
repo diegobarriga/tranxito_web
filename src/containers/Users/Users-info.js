@@ -21,6 +21,7 @@ class UsersInfo extends React.Component {
 
   componentDidMount() {
     this.props.getUsers(this.props.token, this.props.motorCarrierId);
+    console.log(this.props.users);
   }
 
   updateSearch(event) {
