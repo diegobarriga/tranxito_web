@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import validator from 'validator';
 import TemplateCSV from '../templates/template_csv';
-import { Button, Checkbox, Form, Select} from 'semantic-ui-react';
+import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
 var _ = require('lodash');
 
 class CreateDriverForm extends Component {
@@ -31,6 +31,8 @@ class CreateDriverForm extends Component {
     this.isValidCreate = this.isValidCreate.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.emptyErrors = this.emptyErrors.bind(this);
+    this.onTogglePassword = this.onTogglePassword.bind(this);
   }
 
   onChange(event) {
@@ -45,17 +47,20 @@ class CreateDriverForm extends Component {
   validateInput(data) {
     let errors = {}
     console.log(data);
-    if (_.isEmpty(String(data.firstName))) {
-      errors.firstName = 'This field is required';
+    if (_.isEmpty(String(data.first_name))) {
+      errors.first_name = 'This field is required';
     }
-    else if (String(data.firstName.length) > 30 || String(data.firstName).length < 2) {
-      errors.firstName = 'First name must have between 2-30 characters';
+    else if (String(data.first_name.length) > 30 || String(data.first_name).length < 2) {
+      errors.first_name = 'First name must have between 2-30 characters';
     }
-    if (_.isEmpty(String(data.lastName))) {
-      errors.lastName = 'This field is required';
+    if (_.isEmpty(String(data.last_name))) {
+      errors.last_name = 'This field is required';
     }
-    else if (String(data.lastName.length) > 30 || String(data.lastName).length < 2) {
-      errors.lastName = 'Last name must have between 2-30 characters';
+    else if (String(data.last_name.length) > 30 || String(data.last_name).length < 2) {
+      errors.last_name = 'Last name must have between 2-30 characters';
+    }
+    if (_.isEmpty(String(data.username))) {
+      errors.username = 'This field is required';
     }
     if (_.isEmpty(String(data.email))) {
       errors.email = 'This field is required';
@@ -112,8 +117,13 @@ class CreateDriverForm extends Component {
     }
   }
 
+  onTogglePassword() {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
+
   isValidCreate(){
     const { errors, isValid } = this.validateInput(this.state.data);
+    console.log(errors);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
@@ -137,142 +147,187 @@ class CreateDriverForm extends Component {
     }
   }
 
+  emptyErrors() {
+    return Object.keys(this.state.errors).length === 0;
+  }
+
   render() {
-    const { errors, isLoading, showPassword } = this.state;
+    const { errors, isLoading, showPassword, data } = this.state;
 
     return (
       <Form onSubmit={this.submitHandler}>
-        <Form.Group widths='equal'>
-          <Form.Input
+        <FormGroup widths='equal'>
+          <Input
           type="text"
-          name="firstName"
+          name="first_name"
           placeholder='First Name'
           onChange={this.onChange}
-          error={errors.firstName}
+          valid={!this.emptyErrors() && !errors.first_name}
+          invalid={errors.first_name}
           />
-          <Form.Input
+          <FormFeedback>{errors.first_name}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
           type="text"
-          name="lastName"
+          name="last_name"
           placeholder='Last Name'
           onChange={this.onChange}
-          error={errors.lastName}
+          valid={!this.emptyErrors() && !errors.last_name}
+          invalid={errors.last_name}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.last_name}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
           type="text"
           name="username"
           placeholder='Username'
           onChange={this.onChange}
-          error={errors.username}
+          valid={!this.emptyErrors() && !errors.username}
+          invalid={errors.username}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.username}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
           type="email"
           name="email"
           placeholder='Email'
           onChange={this.onChange}
-          error={errors.email}
+          invalid={errors.email}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.email}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             placeholder='Password'
             type={!showPassword ? "password" : "text"}
             name="password"
             autoComplete="new-password"
             onChange={this.onChange}
-            error={errors.password}
+            valid={!this.emptyErrors() && !errors.password}
+            invalid={errors.password}
           />
-          <Form.Input
+          <FormFeedback>{errors.password}</FormFeedback>
+          </FormGroup>
+          <FormGroup>
+          <Input
             placeholder='Password Confirmation'
             type={!showPassword ? "password" : "text"}
             name="passwordConfirmation"
             autoComplete="new-password"
             onChange={this.onChange}
-            error={errors.passwordConfirmation}
+            valid={!this.emptyErrors() && !errors.passwordConfirmation}
+            invalid={errors.passwordConfirmation}
           />
-          <Checkbox label='Show password' onClick={this.onTogglePassword}/>
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
+            Show password
+          </Label>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="driver_license_number"
             placeholder="Driver License Number"
             onChange={this.onChange}
-            error={errors.driver_license_number}
+            valid={!this.emptyErrors() && !errors.driver_license_number}
+            invalid={errors.driver_license_number}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.driver_license_number}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="licenses_issuing_state"
             placeholder="Licenses Issuing State"
             onChange={this.onChange}
-            error={errors.licenses_issuing_state}
+            valid={!this.emptyErrors() && !errors.licenses_issuing_state}
+            invalid={errors.licenses_issuing_state}
           />
-        </Form.Group>
-        <Form.Group>
-        <Form.Field
+          <FormFeedback>{errors.licenses_issuing_state}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+        <Label>Exempt Driver Configuration</Label>
+        <Input
           label='Exempt Driver Configuration'
-          control='select'
+          type='select'
           name="exempt_driver_configuration"
           onChange={this.onChange}
+          valid={!this.emptyErrors() && !errors.exempt_driver_configuration}
+          invalid={errors.exempt_driver_configuration}
         >
           <option value='0'>0</option>
           <option value='1'>1</option>
           <option value='E'>E</option>
-        </Form.Field>
-        </Form.Group>
-        <Form.Group>
-        <Form.Field
-          label='Time Zone Offset UTC'
-          control='select'
+        </Input>
+        <FormFeedback>{errors.exempt_driver_configuration}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+        <Label>Time Zone Offset in UTC</Label>
+        <Input
+          type='select'
           name="time_zone_offset_utc"
           onChange={this.onChange}
+          valid={errors.time_zone_offset_utc}
+          invalid={!this.emptyErrors() && !errors.time_zone_offset_utc}
         >
           {this.createSelectItems(4,11)}
-        </Form.Field>
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+        </Input>
+        <FormFeedback>{errors.time_zone_offset_utc}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Label>Starting Time 24 Hour Period</Label>
+          <Input
           type="datetime-local"
           name="starting_time_24_hour_period"
-          placeholder="Starting Time 24 Hour Period"
-          error={errors.starting_time_24_hour_period}
+          valid={!this.emptyErrors() && !errors.starting_time_24_hour_period}
+          invalid={errors.starting_time_24_hour_period}
           onChange={this.onChange} />
-        </Form.Group>
-        <Form.Group>
-        <Form.Field
-          label='Move Yards Use'
-          control='select'
+        </FormGroup>
+        <FormGroup>
+        <Label>Move Yards Use</Label>
+        <Input
+          type='select'
           name="move_yards_use"
           onChange={this.onChange}
+          valid={!this.emptyErrors() && !errors.move_yards_use}
+          invalid={errors.move_yards_use}
         >
           {this.createSelectItems(0,1)}
-        </Form.Field>
-        </Form.Group>
-        <Form.Group>
-        <Form.Field
-          label='Default Use'
-          control='select'
+        </Input>
+        <FormFeedback>{errors.move_yards_use}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+        <Label>Default Use</Label>
+        <Input
+          type='select'
           name="default_use"
           onChange={this.onChange}
+          valid={!this.emptyErrors() && !errors.default_use}
+          invalid={errors.default_use}
         >
           {this.createSelectItems(0,1)}
-        </Form.Field>
-        </Form.Group>
-        <Form.Group>
-        <Form.Field
-          label='Personal Use'
-          control='select'
+        </Input>
+        <FormFeedback>{errors.default_use}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+        <Label>Personal Use</Label>
+        <Input
+          type='select'
           name="personal_use"
           onChange={this.onChange}
+          valid={!this.emptyErrors() && !errors.personal_use}
+          invalid={errors.personal_use}
         >
           {this.createSelectItems(0,1)}
-        </Form.Field>
-        </Form.Group>
+        </Input>
+        <FormFeedback>{errors.personal_use}</FormFeedback>
+        </FormGroup>
         <Button type='submit' loading={isLoading}>Submit</Button>
       </Form>
     );

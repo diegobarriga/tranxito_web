@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
-import { Button, Form, Input } from 'semantic-ui-react';
+import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
+
 var _ = require('lodash');
 
 
@@ -22,6 +23,7 @@ class CreateMotorCarrierForm extends Component {
     this.onChange = this.onChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+    this.emptyErrors = this.emptyErrors.bind(this);
   }
 
   onChange(event) {
@@ -68,6 +70,10 @@ class CreateMotorCarrierForm extends Component {
     }
   }
 
+  emptyErrors() {
+    return Object.keys(this.state.errors).length === 0;
+  }
+
   isValidCreate(){
     const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
@@ -78,34 +84,40 @@ class CreateMotorCarrierForm extends Component {
     const { errors, isLoading } = this.state;
     return (
         <Form onSubmit={this.submitHandler}>
-          <Form.Group>
-            <Form.Input
+          <FormGroup>
+            <Input
               type="text"
               name="name"
               onChange={this.onChange}
               placeholder="Name"
-              error={errors.name}
+              valid={!this.emptyErrors() && !errors.name}
+              invalid={errors.name}
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Input
+            <FormFeedback>{errors.Numberame}</FormFeedback>
+          </FormGroup>
+          <FormGroup>
+            <Input
               type="number"
               name="USDOT_number"
               min={0}
               onChange={this.onChange}
               placeholder="USDOT Number"
-              error={errors.USDOT_number}
+              valid={!this.emptyErrors() && !errors.USDOT_number}
+              invalid={errors.USDOT_number}
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Input
+            <FormFeedback>{errors.USDOT_number}</FormFeedback>
+          </FormGroup>
+          <FormGroup>
+            <Input
             type="text"
             name="multiday_basis_used"
             onChange={this.onChange}
             placeholder="Multiday basis used"
-            error={errors.multiday_basis_used}
+            valid={!this.emptyErrors() && !errors.multiday_basis_used}
+            invalid={errors.multiday_basis_used}
             />
-          </Form.Group>
+            <FormFeedback>{errors.multiday_basis_used}</FormFeedback>
+          </FormGroup>
           <Button type="submit" loading={isLoading}>Submit</Button>
         </Form>
     );

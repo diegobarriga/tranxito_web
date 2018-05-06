@@ -78,33 +78,33 @@ class EditMotorCarrierForm extends Component {
     const { errors, isLoading } = this.state;
     return (
         <Form onSubmit={this.submitHandler}>
-          <Form.Group>
-            <Form.Input
+          <FormGroup>
+            <Input
               type="text"
               name="name"
               onChange={this.onChange}
               placeholder="Name"
               error={errors.name}
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Input
+          </FormGroup>
+          <FormGroup>
+            <Input
               type="number"
               name="USDOT_number"
               onChange={this.onChange}
               placeholder="USDOT Number"
               error={errors.USDOT_number}
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Input
+          </FormGroup>
+          <FormGroup>
+            <Input
             type="text"
             name="multiday_basis_used"
             onChange={this.onChange}
             placeholder="Multiday basis used"
             error={errors.multiday_basis_used}
             />
-          </Form.Group>
+          </FormGroup>
           <Button type="submit" loading={isLoading}>Update</Button>
         </Form>
     );

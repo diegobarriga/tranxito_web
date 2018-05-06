@@ -54,7 +54,7 @@ class ForgotPasswordForm extends Component {
     return (
       <Form onSubmit={this.onSubmit}>
         {!!errors.global && <Alert bsStyle="danger">{errors.global}</Alert>}
-        <Form.Group
+        <FormGroup
           controlId="username"
         >
           <Form.Control
@@ -64,7 +64,7 @@ class ForgotPasswordForm extends Component {
             onChange={this.onChange}
           />
           {errors.email && <HelpBlock>{errors.email}</HelpBlock>}
-        </Form.Group>
+        </FormGroup>
         <Button
           bsSize="lg"
           type="submit"

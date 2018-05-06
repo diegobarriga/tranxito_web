@@ -1,7 +1,8 @@
 import React from 'react';
 import validator from 'validator';
 import TemplateCSV from '../templates/template_csv';
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
+
 var _ = require('lodash');
 
 class CreateVehicleForm extends React.Component {
@@ -96,70 +97,84 @@ class CreateVehicleForm extends React.Component {
     const { errors, isLoading, redirectTo } = this.state;
     return (
       <Form onSubmit={this.submitHandler}>
-        <Form.Group>
-          <Form.Input
+        <FormGroup>
+          <Input
             type="text"
             name="vin"
             placeholder="VIN Number"
             onChange={this.onChange}
-            error={errors.vin}
+            valid={!this.emptyErrors() && !errors.vin}
+            invalid={errors.vin}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.vin}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="CMV_power_unit_number"
             placeholder="CMV Power Unit Number"
             onChange={this.onChange}
-            error={errors.lastName}
+            valid={!this.emptyErrors() && !errors.CMV_power_unit_number}
+            invalid={errors.CMV_power_unit_number}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.CMV_power_unit_number}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="model"
             placeholder="Vehicle Model"
             onChange={this.onChange}
-            error={errors.model}
+            valid={!this.emptyErrors() && !errors.model}
+            invalid={errors.model}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.model}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="car_maker"
             placeholder="Car Maker"
             onChange={this.onChange}
-            error={errors.car_maker}
+            valid={!this.emptyErrors() && !errors.car_maker}
+            invalid={errors.car_maker}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.car_maker}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="plaque"
             placeholder="Plaque"
             onChange={this.onChange}
-            error={errors.planque}
+            valid={!this.emptyErrors() && !errors.plaque}
+            invalid={errors.plaque}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.plaque}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="state"
             placeholder="State"
             onChange={this.onChange}
-            error={errors.state}
+            valid={!this.emptyErrors() && !errors.state}
+            invalid={errors.state}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.state}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="number"
             min={0}
             name="IMEI_ELD"
             placeholder="IMEI ELD"
             onChange={this.onChange}
-            error={errors.IMEI_ELD}
+            valid={!this.emptyErrors() && !errors.IMEI_ELD}
+            invalid={errors.IMEI_ELD}
           />
-        </Form.Group>
+          <FormFeedback>{errors.IMEI_ELD}</FormFeedback>
+        </FormGroup>
         <Button type='submit' loading={isLoading}>Submit</Button>
       </Form>
     );

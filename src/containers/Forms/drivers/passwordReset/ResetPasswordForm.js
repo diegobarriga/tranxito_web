@@ -63,21 +63,21 @@ class ResetPasswordForm extends Component {
     return (
       <Form onSubmit={this.onSubmit}>
         {!!errors.global && <Alert bsStyle="danger">{errors.global}</Alert>}
-        <Form.Group
+        <FormGroup
           controlId="passwordResetInput"
         >
-          <Form.Input
+          <Input
             type={!this.state.showPassword ? "password" : "text"}
             name="password"
             placeholder="New Password"
             onChange={this.onChange}
           />
           {errors.password && <HelpBlock>{errors.password}</HelpBlock>}
-        </Form.Group>
-        <Form.Group
+        </FormGroup>
+        <FormGroup
           controlId="passwordConfirmationResetInput"
         >
-          <Form.Input
+          <Input
             type={!this.state.showPassword ? "password" : "text"}
             name="passwordConfirmation"
             placeholder="Confirm new password"
