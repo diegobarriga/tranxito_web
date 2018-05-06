@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import { Button, Checkbox, Form } from 'semantic-ui-react';
-import { HelpBlock, Alert} from 'react-bootstrap';
+import { Button, Form, FormGroup, FormFeedback, Input} from 'reactstrap';
 
 class ResetPasswordForm extends Component {
 
@@ -20,7 +19,8 @@ class ResetPasswordForm extends Component {
     this.onTogglePassword = this.onTogglePassword.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.validate = this.validate.bind(this);
+    this.validateInput = this.validateInput.bind(this);
+    this.emptyErrors = this.emptyErrors.bind(this);
   }
 
   onTogglePassword() {
@@ -36,19 +36,23 @@ class ResetPasswordForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const errors = this.validate(this.state.data);
+    const errors = this.validateInput(this.state.data);
     this.setState({ errors });
     if (Object.keys(errors).length === 0) {
       this.setState({ isLoading: true });
       this.props
         .resetPaswordSubmit(this.state.data)
-        .catch(err =>
-          this.setState({ errors: err.response.data.errors, isLoading: false })
-        );
+        // .catch(err =>
+        //   this.setState({ errors: err.response.data.errors, isLoading: false })
+        // );
     }
   }
 
-  validate(data) {
+  emptyErrors() {
+    return Object.keys(this.state.errors).length === 0;
+  }
+
+  validateInput(data) {
     const errors = {};
     if (!data.password) errors.password = "This field can't be blank";
     if (!data.passwordConfirmation) errors.passwordConfirmation = "This field can't be blank";
@@ -58,42 +62,44 @@ class ResetPasswordForm extends Component {
   };
 
   render() {
-    const { errors, isLoading } = this.state;
+    const { errors, isLoading, showPassword} = this.state;
 
     return (
       <Form onSubmit={this.onSubmit}>
-        {!!errors.global && <Alert bsStyle="danger">{errors.global}</Alert>}
         <FormGroup
           controlId="passwordResetInput"
         >
           <Input
-            type={!this.state.showPassword ? "password" : "text"}
+            type={!showPassword ? "password" : "text"}
             name="password"
             placeholder="New Password"
             onChange={this.onChange}
+            valid={!this.emptyErrors() && !errors.password}
+            invalid={errors.password}
           />
-          {errors.password && <HelpBlock>{errors.password}</HelpBlock>}
+          <FormFeedback>{errors.password}</FormFeedback>
         </FormGroup>
         <FormGroup
           controlId="passwordConfirmationResetInput"
         >
           <Input
-            type={!this.state.showPassword ? "password" : "text"}
+            type={!showPassword ? "password" : "text"}
             name="passwordConfirmation"
             placeholder="Confirm new password"
             onChange={this.onChange}
+            valid={!this.emptyErrors() && !errors.passwordConfirmation}
+            invalid={errors.passwordConfirmation}
           />
-          {errors.passwordConfirmation && <HelpBlock>{errors.passwordConfirmation}</HelpBlock>}
+          <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
           <Checkbox ref="modalCheckbox" onClick={this.onTogglePassword}>
             Show
           </Checkbox>
         </FormGroup>
         <Button
-          bsSize="lg"
           type="submit"
           loading={isLoading}
         >
-          Reset
+          Reset Password
         </Button>
       </Form>
     );

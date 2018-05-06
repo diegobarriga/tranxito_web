@@ -152,7 +152,7 @@ class CreateDriverForm extends Component {
   }
 
   render() {
-    const { errors, isLoading, showPassword, data } = this.state;
+    const { errors, isLoading, showPassword} = this.state;
 
     return (
       <Form onSubmit={this.submitHandler}>

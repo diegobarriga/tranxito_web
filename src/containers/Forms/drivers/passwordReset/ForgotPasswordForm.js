@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { HelpBlock } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormFeedback, Input} from 'reactstrap';
 import isEmail from "validator/lib/isEmail";
-
 
 class ForgotPasswordForm extends Component {
 
@@ -35,9 +34,9 @@ class ForgotPasswordForm extends Component {
       this.setState({ isLoading: true });
       this.props
         .submit(this.state.data)
-        .catch(err =>
-          this.setState({ errors: err.response.data.errors, isLoading: false })
-        );
+        // .catch(err =>
+        //   this.setState({ errors: err.response.data.errors, isLoading: false })
+        // );
     }
   };
 
@@ -53,17 +52,16 @@ class ForgotPasswordForm extends Component {
 
     return (
       <Form onSubmit={this.onSubmit}>
-        {!!errors.global && <Alert bsStyle="danger">{errors.global}</Alert>}
         <FormGroup
-          controlId="username"
         >
-          <Form.Control
+          <Input
             type="email"
             name="email"
             placeholder="Email"
             onChange={this.onChange}
+            invalid={errors.email}
           />
-          {errors.email && <HelpBlock>{errors.email}</HelpBlock>}
+          <FormFeedback>{errors.email}</FormFeedback>
         </FormGroup>
         <Button
           bsSize="lg"
