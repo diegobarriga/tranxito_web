@@ -36,7 +36,7 @@ class EditVehicleForm extends React.Component {
   // TODO Complete with defined validations
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
 
-  validateForm.Input(data) {
+  validateInput(data) {
     let errors = {}
     console.log(data);
     if (data.vin.length > 18 || data.vin.length < 17) {
@@ -101,71 +101,78 @@ class EditVehicleForm extends React.Component {
     }
     return (
       <Form onSubmit={this.submitHandler}>
-        <Form.Group>
-          <Form.Input
+        <FormGroup>
+          <Input
             type="text"
             name="vin"
             placeholder="VIN Number"
             onChange={this.onChange}
-            error={errors.vin}
+            valid={!this.emptyErrors() && !errors.vin}
+            invalid={errors.vin}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="CMV_power_unit_number"
             value={data.CMV_power_unit_number}
             placeholder="CMV Power Unit Number"
             onChange={this.onChange}
-            error={errors.lastName}
+            valid={!this.emptyErrors() && !errors.CMV_power_unit_number}
+            invalid={errors.CMV_power_unit_number}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="model"
             placeholder="Vehicle Model"
             onChange={this.onChange}
-            error={errors.model}
+            valid={!this.emptyErrors() && !errors.model}
+            invalid={errors.model}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="car_maker"
             placeholder="Car Maker"
             onChange={this.onChange}
-            error={errors.car_maker}
+            valid={!this.emptyErrors() && !errors.car_maker}
+            invalid={errors.car_maker}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="plaque"
             placeholder="Plaque"
             onChange={this.onChange}
-            error={errors.planque}
+            valid={!this.emptyErrors() && !errors.plaque}
+            invalid={errors.plaque}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="text"
             name="state"
             placeholder="State"
             onChange={this.onChange}
-            error={errors.state}
+            valid={!this.emptyErrors() && !errors.state}
+            invalid={errors.state}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+        </FormGroup>
+        <FormGroup>
+          <Input
             type="number"
             name="IMEI_ELD"
             placeholder="IMEI ELD"
             min={0}
             onChange={this.onChange}
-            error={errors.IMEI_ELD}
+            valid={!this.emptyErrors() && !errors.IMEI_ELD}
+            invalid={errors.IMEI_ELD}
           />
-        </Form.Group>
+        </FormGroup>
         <Button type='submit' loading={isLoading}>Update</Button>
       </Form>
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
+import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
 var _ = require('lodash');
 
 class LoginForm extends Component {
@@ -24,6 +24,7 @@ class LoginForm extends Component {
     this.onChange = this.onChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+    this.emptyErrors = this.emptyErrors.bind(this);
   }
 
   onTogglePassword() {
@@ -54,6 +55,10 @@ class LoginForm extends Component {
     }
   }
 
+  emptyErrors() {
+    return Object.keys(this.state.errors).length === 0;
+  }
+
   isValidLogin(){
     const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
@@ -80,26 +85,34 @@ class LoginForm extends Component {
     // }
     return(
       <Form onSubmit={this.submitHandler}>
-        <Form.Group>
-          <Form.Input
+        <FormGroup>
+          <Input
           type="email"
           name="email"
           placeholder='Email'
           onChange={this.onChange}
-          error={errors.email}
+          valid={!this.emptyErrors() && !errors.email}
+          invalid={errors.email}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Input
+          <FormFeedback>{errors.email}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
             placeholder='Password'
             type={!showPassword ? "password" : "text"}
             name="password"
             autoComplete="new-password"
             onChange={this.onChange}
-            error={errors.password}
+            invalid={errors.password}
           />
-          <Checkbox label='Show password' onClick={this.onTogglePassword}/>
-        </Form.Group>
+          <FormFeedback>{errors.password}</FormFeedback>
+        </FormGroup>
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
+            Show password
+          </Label>
+        </FormGroup>
         <Button type='submit' loading={isLoading}>Submit</Button>
       </Form>
     );

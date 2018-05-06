@@ -18,7 +18,6 @@ class SignupView extends Component {
     redirectTo: false,
     pathname: ''
   }
-  this.submit = this.submit.bind(this);
 }
 
   componentDidMount() {
@@ -70,7 +69,7 @@ class SignupView extends Component {
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               { authRedirect }
               <h1 style={h1Style}>Register Supervisor</h1>
-              <SignupForm signup={this.props.onAuth}/>
+              <SignupForm submit={this.props.onAuth}/>
             </Col>
           </Row>
         </Container>
