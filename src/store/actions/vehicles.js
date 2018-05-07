@@ -26,18 +26,14 @@ export const onVehicleDeleteSuccess = vehicleId => ({
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
   const url = `${path.BASE_PATH}/api/Vehicles/${vehicleId}?access_token=${token}`;
   axios.delete(url)
-  .then((response) => {
-    console.log("vehicledeleted");
-    dispatch(onVehicleDeleteSuccess(vehicleId));
-
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then((response) => {
+      console.log('vehicledeleted');
+      dispatch(onVehicleDeleteSuccess(vehicleId));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
-
-
-
 
 
 export const getVehicles = (token, motorCarrierId) => (dispatch) => {

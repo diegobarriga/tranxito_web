@@ -38,7 +38,6 @@ class CarrierRegister extends React.Component {
       this.state.controls.mday.value,
       this.props.token,
     );
-    this.props.history.push('/motor_carriers');
   }
 
   render() {
@@ -106,7 +105,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   isAdmin: state.auth.role === 'A',
   token: state.auth.token,
-  isLoading: state.auth.loading,
+  isLoading: state.mcarrier.loading,
 });
 
 

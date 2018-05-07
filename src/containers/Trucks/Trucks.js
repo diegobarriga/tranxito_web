@@ -1,24 +1,18 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import Aux from '../../hoc/Aux';
-import TrucksInfo from './Trucks-info';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import styles from '../../assets/styles/forms.css';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import Aux from '../../hoc/Aux';
+import TrucksInfo from './Trucks-info';
+import '../../assets/styles/forms.css';
 import * as path from '../../store/actions/basepath';
 
 class Trucks extends React.Component {
-
-
-
   render() {
     console.log(path.BASE_PATH);
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
-
     }
 
     return (

@@ -10,7 +10,6 @@ import UserInfo from './User-info';
 import Loader from '../../components/Loader/Loader';
 
 
-
 class User extends React.Component {
   constructor(props) {
     super(props);
@@ -21,9 +20,9 @@ class User extends React.Component {
 
     return (
       <Aux>
-        <UserInfo id={id}/>
+        <UserInfo id={id} />
         <Graph />
-        <UserLogs id={id}/>
+        <UserLogs id={id} />
       </Aux>
 
     );

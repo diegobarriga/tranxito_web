@@ -26,18 +26,16 @@ export const onDeleteSuccess = userId => ({
 export const onDelete = (userId, token) => (dispatch) => {
   const data = {
     account_status: false,
-  }
+  };
   const url = `${path.BASE_PATH}/api/People/${userId}?access_token=${token}`;
   axios.patch(url, data)
-  .then((response) => {
-    console.log("userdeleted")
-    console.log(response);
-    dispatch(onDeleteSuccess(userId));
-
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then((response) => {
+      console.log(response);
+      dispatch(onDeleteSuccess(userId));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 

@@ -1,1 +1,1 @@
-export const BASE_PATH = 'https://eld-test.azurewebsites.net';
+export const BASE_PATH = 'https://e2e-eld-test.herokuapp.com';

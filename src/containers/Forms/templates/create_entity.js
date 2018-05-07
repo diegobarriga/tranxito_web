@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios, { post } from 'axios';
 import { Button, Form, Input } from 'reactstrap';
+import axios from 'axios';
 import * as path from '../../../store/actions/basepath';
-
-import Alert from '../../Alert/Alert';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
 
@@ -137,7 +135,7 @@ class SimpleReactFileUpload extends React.Component {
         'content-type': 'multipart/form-data',
       },
     };
-    return post(url, formData, config);
+    return axios.post(url, formData, config);
   }
 
   render() {

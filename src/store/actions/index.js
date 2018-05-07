@@ -11,14 +11,8 @@ export {
   carrierRegister,
 } from './mcarrier';
 
-export {
-  onDelete,
-} from './users';
+export { onDelete } from './users';
 
-export {
-  onVehicleDelete,
-} from './vehicles';
+export { onVehicleDelete } from './vehicles';
 
-export {
-  basePath,
-} from './basepath';
+export { basePath } from './basepath';

@@ -3,8 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reactstrap';
-import axios, { post, patch, get } from 'axios';
-import TemplateCSV from '../templates/template_csv';
+import axios from 'axios';
 import '../../../assets/styles/forms.css';
 import * as path from '../../../store/actions/basepath';
 
@@ -60,7 +59,7 @@ class CreateVehicle extends React.Component {
   onFormSubmit(e) {
     e.preventDefault(); // Stop form submit
     this.imgUpload(this.state.picture).then((imgResponse) => {
-      console.log("aaaaaaa");
+      console.log('aaaaaaa');
 
       if (imgResponse.status === 200) {
         console.log('imagen creada correctamente');
@@ -116,23 +115,22 @@ class CreateVehicle extends React.Component {
 
   getVehicleInfo() {
     const url = `${path.BASE_PATH}/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
-    return get(url);
+    return axios.get(url);
   }
 
 
   postData(data) {
     const url = `${path.BASE_PATH}/api/MotorCarriers/${this.props.motorCarrierId}/vehicles?access_token=${this.props.token}`;
     console.log(data);
-    return post(url, data);
+    return axios.post(url, data);
   }
 
   patchData(data) {
     const url = `${path.BASE_PATH}/api/Vehicles/${this.props.match.params.id}?access_token=${this.props.token}`;
-    return patch(url, data);
+    return axios.patch(url, data);
   }
 
   imgUpload(file) {
-
     const url = `${path.BASE_PATH}/api/imageContainers/Vehicles/upload?access_token=${this.props.token}`;
     const formData = new FormData();
     console.log(file);
@@ -143,7 +141,7 @@ class CreateVehicle extends React.Component {
         'content-type': 'multipart/form-data',
       },
     };
-    return post(url, formData, config);
+    return axios.post(url, formData, config);
   }
 
 
@@ -152,7 +150,7 @@ class CreateVehicle extends React.Component {
       const classString = `alert alert-${this.state.type}`;
       var status = (<div id="status" className={classString} ref="status">
         {this.state.message}
-                    </div>);
+      </div>);
     }
 
     return (
@@ -192,7 +190,7 @@ class CreateVehicle extends React.Component {
                 </FormGroup>
                 <FormGroup>
                   <Label for="image">Image</Label>
-                  <Input type="file" name="picture"  value={this.state.data.first_name} className="center-item" onChange={this.onChange} />
+                  <Input type="file" name="picture" value={this.state.data.first_name} className="center-item" onChange={this.onChange} />
                 </FormGroup>
                 <Button>Submit</Button>
               </Form>
@@ -211,7 +209,7 @@ CreateVehicle.propTypes = {
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  motorCarrierId: state.auth.motorCarrierId
+  motorCarrierId: state.auth.motorCarrierId,
 
 });
 

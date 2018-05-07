@@ -1,18 +1,14 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ListGroupItem, Button } from 'reactstrap';
-import axios from 'axios';
 import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
 import * as path from '../../store/actions/basepath';
 
 class TruckRow extends React.Component {
-
-
-
-  onDeleteBtnClick(userId, token){
+  onDeleteBtnClick(userId, token) {
     console.log(userId);
     console.log(token);
     this.props.deleteVehicle(userId, token);
@@ -58,19 +54,20 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteVehicle: (vehicleId, token) => dispatch(actions.onVehicleDelete(vehicleId, token))
+  deleteVehicle: (vehicleId, token) => dispatch(actions.onVehicleDelete(vehicleId, token)),
 });
-
 
 
 TruckRow.propTypes = {
   vin: PropTypes.string.isRequired,
-  CMV_power_unit_number: PropTypes.string.isRequired,
   model: PropTypes.string.isRequired,
   car_maker: PropTypes.string.isRequired,
   plaque: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
-  IMEI_ELD: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  deleteVehicle: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
 
 };
 

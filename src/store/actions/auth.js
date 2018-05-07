@@ -71,11 +71,7 @@ export const signup = (
     motorCarrierId,
   };
 
-  // const url = `https://eld-test.azurewebsites.net/api/People?access_token=${token}`;
   const url = `${path.BASE_PATH}/api/People?access_token=${token}`;
-
-
-  console.log(authData);
   axios.post(url, authData)
     .then((response) => {
       dispatch(createSuccess(response));
@@ -94,17 +90,21 @@ export const login = (email, password) => (dispatch) => {
     password,
   };
 
-  // const url = 'https://eld-test.azurewebsites.net/api/People/login';
   const url = `${path.BASE_PATH}/api/People/login`;
 
   axios.post(url, authData, { headers: { 'Access-Control-Allow-Origin': '*' } })
     .then((response) => {
-      // const userUrl = `https://eld-test.azurewebsites.net/api/People/${response.data.userId}?access_token=${response.data.id}`;
       const userUrl = `${path.BASE_PATH}/api/People/${response.data.userId}?access_token=${response.data.id}`;
       axios.get(userUrl)
         .then((userResponse) => {
           console.log(response);
-          dispatch(authSuccess(response.data.id, response.data.userId, userResponse.data.account_type, response, userResponse.data.motorCarrierId));
+          dispatch(authSuccess(
+            response.data.id,
+            response.data.userId,
+            userResponse.data.account_type,
+            response,
+            userResponse.data.motorCarrierId,
+          ));
         })
         .catch((err) => {
           console.log(err);

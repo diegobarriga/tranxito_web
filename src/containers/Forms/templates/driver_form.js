@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Label, Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
-import axios, { post, patch, get } from 'axios';
-import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
 import * as path from '../../../store/actions/basepath';
 
@@ -136,18 +135,18 @@ class DriverForm extends React.Component {
 
   getUserInfo() {
     const url = `${path.BASE_PATH}/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
-    return get(url);
+    return axios.get(url);
   }
 
 
   postData(data) {
     const url = `${path.BASE_PATH}/api/MotorCarriers/${this.props.motorCarrierId}/people?access_token=${this.props.token}`;
-    return post(url, data);
+    return axios.post(url, data);
   }
 
   patchData(data) {
     const url = `${path.BASE_PATH}/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
-    return patch(url, data);
+    return axios.patch(url, data);
   }
 
   imgUpload(file) {
@@ -160,7 +159,7 @@ class DriverForm extends React.Component {
         'content-type': 'multipart/form-data',
       },
     };
-    return post(url, formData, config);
+    return axios.post(url, formData, config);
   }
 
   createSelectItems(min, max) {
@@ -248,7 +247,7 @@ class DriverForm extends React.Component {
               </FormGroup>
               <FormGroup>
                 <Label for="image">Image</Label>
-                <Input type="file" name="picture"  className="center-item" onChange={this.onChange} />
+                <Input type="file" name="picture" className="center-item" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
                 <Label for="image">Username</Label>
@@ -274,7 +273,7 @@ DriverForm.propTypes = {
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  motorCarrierId: state.auth.motorCarrierId
+  motorCarrierId: state.auth.motorCarrierId,
 
 });
 

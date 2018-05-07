@@ -25,8 +25,6 @@ const onDeleteSuccess = (state, action) => {
     account_status: false,
   });
 
-  console.log(newUser);
-
   return updateObject(state, {
     loading: false,
     users: [newUser, ...otherUsers],
