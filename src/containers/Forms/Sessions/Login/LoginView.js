@@ -10,16 +10,15 @@ import * as actions from '../../../../store/actions/index';
 
 
 class LoginView extends Component {
-
   constructor(props) {
-  super(props);
-  this.state = {
-    errors: {},
-    redirectTo: false,
-    pathname: ''
-  }
+    super(props);
+    this.state = {
+      errors: {},
+      redirectTo: false,
+      pathname: '',
+    };
   // this.submit = this.submit.bind(this);
-}
+  }
 
   // login(event) {
   //   // prevents reloading of the page
@@ -34,7 +33,7 @@ class LoginView extends Component {
   // }
 
   render() {
-    const { errors, redirectTo} = this.state;
+    const { errors, redirectTo } = this.state;
     if (this.props.isLoading === true) return <Loader />;
 
     const h1Style = {
@@ -59,7 +58,7 @@ class LoginView extends Component {
             { authRedirect }
             <h1 style={h1Style}>Login</h1>
             {errors.form && <Alert bsStyle="danger">{errors.form}</Alert>}
-            <LoginForm login={this.props.onAuth}/>
+            <LoginForm login={this.props.onAuth} />
           </Col>
         </Row>
       </Container>
@@ -87,7 +86,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: (credentials) => dispatch(actions.login(credentials)),
+  onAuth: credentials => dispatch(actions.login(credentials)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
