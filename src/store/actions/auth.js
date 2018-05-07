@@ -1,6 +1,6 @@
-import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import * as path from '../../store/actions/basepath';
+import api from '../../services/api';
+
 
 export const authStart = () => ({
   type: actionTypes.AUTH_START,
@@ -8,7 +8,6 @@ export const authStart = () => ({
 
 
 export const authSuccess = (token, userId, role, response, motorCarrierId) => ({
-
   type: actionTypes.AUTH_SUCCESS,
   token,
   userId,
@@ -20,7 +19,6 @@ export const authSuccess = (token, userId, role, response, motorCarrierId) => ({
 export const authFail = error => ({
   type: actionTypes.AUTH_FAIL,
   error,
-
 });
 
 export const createSuccess = response => ({
@@ -39,8 +37,7 @@ export const logout = () => ({
 });
 
 export const logoutToken = (token) => {
-  const url = `${path.BASE_PATH}/api/People/logout?access_token=${token}`;
-  axios.post(url)
+  api.people.logout(token)
     .then((response) => {
       console.log(response);
     })
@@ -53,10 +50,10 @@ export const logoutToken = (token) => {
 export const signup = (
   email,
   password,
-  first_name,
-  last_name,
+  firstName,
+  lastName,
   username,
-  account_type,
+  accounType,
   motorCarrierId,
   token,
 ) => (dispatch) => {
@@ -64,15 +61,14 @@ export const signup = (
   const authData = {
     email,
     password,
-    first_name,
-    last_name,
+    first_name: firstName,
+    last_name: lastName,
     username,
-    account_type,
+    account_type: accounType,
     motorCarrierId,
   };
 
-  const url = `${path.BASE_PATH}/api/People?access_token=${token}`;
-  axios.post(url, authData)
+  api.people.signup(authData, token)
     .then((response) => {
       dispatch(createSuccess(response));
       console.log(response);
@@ -90,12 +86,9 @@ export const login = (email, password) => (dispatch) => {
     password,
   };
 
-  const url = `${path.BASE_PATH}/api/People/login`;
-
-  axios.post(url, authData, { headers: { 'Access-Control-Allow-Origin': '*' } })
+  api.people.login(authData)
     .then((response) => {
-      const userUrl = `${path.BASE_PATH}/api/People/${response.data.userId}?access_token=${response.data.id}`;
-      axios.get(userUrl)
+      api.people.getUser(response.data.userId, response.data.id)
         .then((userResponse) => {
           console.log(response);
           dispatch(authSuccess(

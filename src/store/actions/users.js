@@ -1,6 +1,6 @@
-import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import * as path from '../../store/actions/basepath';
+import api from '../../services/api';
+
 
 export const getUsersStart = () => ({
   type: actionTypes.GET_USERS_START,
@@ -27,8 +27,8 @@ export const onDelete = (userId, token) => (dispatch) => {
   const data = {
     account_status: false,
   };
-  const url = `${path.BASE_PATH}/api/People/${userId}?access_token=${token}`;
-  axios.patch(url, data)
+
+  api.people.updateUser(userId, token, data)
     .then((response) => {
       console.log(response);
       dispatch(onDeleteSuccess(userId));
@@ -41,8 +41,8 @@ export const onDelete = (userId, token) => (dispatch) => {
 
 export const getUsers = (token, motorCarrierId) => (dispatch) => {
   dispatch(getUsersStart());
-  const userUrl = `${path.BASE_PATH}/api/MotorCarriers/${motorCarrierId}/people?access_token=${token}`;
-  axios.get(userUrl)
+
+  api.motorCarriers.getMotorCarrierPeople(motorCarrierId, token)
     .then((userResponse) => {
       console.log(userResponse);
       dispatch(getUsersSuccess(userResponse.data));

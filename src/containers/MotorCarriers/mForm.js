@@ -105,7 +105,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   isAdmin: state.auth.role === 'A',
   token: state.auth.token,
-  isLoading: state.mcarrier.loading,
+  isLoading: state.mCarrier.loading,
 });
 
 

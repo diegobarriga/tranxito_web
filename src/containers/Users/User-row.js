@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ListGroupItem, Button } from 'reactstrap';
@@ -8,8 +8,7 @@ import * as actions from '../../store/actions/index';
 import * as path from '../../store/actions/basepath';
 
 class UserRow extends React.Component {
-
-  onDeleteBtnClick(userId, token){
+  onDeleteBtnClick(userId, token) {
     console.log(userId);
     console.log(token);
     this.props.deleteUser(userId, token);
@@ -43,7 +42,7 @@ class UserRow extends React.Component {
           </div>
         </div>
         <div style={pStyle}>
-            <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}>Edit</Link>{' '}
+          <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}>Edit</Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}>Delete</Button>
         </div>
       </ListGroupItem>
@@ -58,18 +57,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteUser: (userId, token) => dispatch(actions.onDelete(userId, token))
+  deleteUser: (userId, token) => dispatch(actions.onDelete(userId, token)),
 });
-
-
 
 
 UserRow.propTypes = {
   first_name: PropTypes.string.isRequired,
   last_name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRow);

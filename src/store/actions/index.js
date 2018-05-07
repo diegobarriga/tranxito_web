@@ -9,7 +9,7 @@ export {
 export {
   initMCarriers,
   carrierRegister,
-} from './mcarrier';
+} from './mCarrier';
 
 export { onDelete } from './users';
 

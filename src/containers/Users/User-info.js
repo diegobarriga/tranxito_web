@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Container } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Row } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import Avatar from '../../components/Avatar';
-import * as actions from '../../store/actions/user-info';
-import { connect } from 'react-redux';
+import * as actions from '../../store/actions/userInfo';
 import Loader from '../../components/Loader/Loader';
 import * as path from '../../store/actions/basepath';
 
@@ -27,7 +26,7 @@ class UserInfo extends React.Component {
 
   componentDidMount() {
     this.props.getUserInfo(this.props.token, this.props.id);
-    console.log("USER", this.props.user);
+    console.log('USER', this.props.user);
   }
 
 
@@ -40,9 +39,9 @@ class UserInfo extends React.Component {
         <Row style={styles.userProfile}>
           <Avatar src={`${path.BASE_PATH}/api/imageContainers/People/download/${this.props.user.image}`} />
           <div style={styles.userData}>
-                <div>Driver license number: {this.props.user.driver_license_number}</div>
-                <div>Email: {this.props.user.email}</div>
-              </div>
+            <div>Driver license number: {this.props.user.driver_license_number}</div>
+            <div>Email: {this.props.user.email}</div>
+          </div>
         </Row>
 
       </Aux>
@@ -51,18 +50,14 @@ class UserInfo extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-    return {
-        token: state.auth.token,
-        loading: state.userInfo.loading,
-        user: state.userInfo.user,
-    };
-};
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  loading: state.userInfo.loading,
+  user: state.userInfo.user,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getUserInfo: ( token, UserId ) => dispatch(actions.getUserInfo(token, UserId))
-    }
-}
+const mapDispatchToProps = dispatch => ({
+  getUserInfo: (token, UserId) => dispatch(actions.getUserInfo(token, UserId)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);

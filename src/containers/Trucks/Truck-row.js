@@ -64,7 +64,7 @@ TruckRow.propTypes = {
   car_maker: PropTypes.string.isRequired,
   plaque: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   deleteVehicle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
