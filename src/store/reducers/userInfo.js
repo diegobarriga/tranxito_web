@@ -19,8 +19,8 @@ const getUserInfoStart = state => updateObject(state, { error: null, loading: tr
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_USER_INFO_START: return getUserInfoStart(state, action);
-    case actionTypes.GET_USER_INFO_SUCCESS: return getUserInfoSuccess(state);
+    case actionTypes.GET_USER_INFO_START: return getUserInfoStart(state);
+    case actionTypes.GET_USER_INFO_SUCCESS: return getUserInfoSuccess(state, action);
     case actionTypes.GET_USER_INFO_FAIL: return getUserInfoFail(state, action);
 
     default:
