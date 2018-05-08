@@ -1,23 +1,16 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ListGroupItem, Button } from 'reactstrap';
-import axios from 'axios';
 import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
-import * as path from '../../store/actions/basepath';
+import api from '../../services/api';
 
 class TruckRow extends React.Component {
-
-
-
-  onDeleteBtnClick(userId, token){
-    console.log(userId);
-    console.log(token);
+  onDeleteBtnClick(userId, token) {
     this.props.deleteVehicle(userId, token);
   }
-
 
   render() {
     const pStyle = {
@@ -33,7 +26,7 @@ class TruckRow extends React.Component {
       <ListGroupItem style={divStyle} className="justify-content-between">
         <div className="truck_wrapper">
           <figure className="left">
-            <img className="media-object" width="100px" src={`${path.BASE_PATH}/api/imageContainers/Vehicles/download/${this.props.image}`} />
+            <img className="media-object" alt="vehicle-img" width="100px" src={api.images.vehicleImageLink(this.props.image)} />
           </figure>
           <div className="right">
             <ul>
@@ -58,20 +51,20 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteVehicle: (vehicleId, token) => dispatch(actions.onVehicleDelete(vehicleId, token))
+  deleteVehicle: (vehicleId, token) => dispatch(actions.onVehicleDelete(vehicleId, token)),
 });
-
 
 
 TruckRow.propTypes = {
   vin: PropTypes.string.isRequired,
-  CMV_power_unit_number: PropTypes.string.isRequired,
   model: PropTypes.string.isRequired,
   car_maker: PropTypes.string.isRequired,
   plaque: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
-  IMEI_ELD: PropTypes.number.isRequired,
-
+  id: PropTypes.number.isRequired,
+  deleteVehicle: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TruckRow);

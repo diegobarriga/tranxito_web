@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Container } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Row } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import Avatar from '../../components/Avatar';
-import * as actions from '../../store/actions/user-info';
-import { connect } from 'react-redux';
+import * as actions from '../../store/actions/userInfo';
 import Loader from '../../components/Loader/Loader';
-import * as path from '../../store/actions/basepath';
+import api from '../../services/api';
 
 const styles = {
   userProfile: {
@@ -21,15 +21,9 @@ const styles = {
 };
 
 class UserInfo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.getUserInfo(this.props.token, this.props.id);
-    console.log("USER", this.props.user);
   }
-
 
   render() {
     if (this.props.user == null) return <Loader />;
@@ -38,31 +32,46 @@ class UserInfo extends React.Component {
       <Aux>
         <h1>{`${this.props.user.first_name} ${this.props.user.last_name}`}</h1>
         <Row style={styles.userProfile}>
-          <Avatar src={`${path.BASE_PATH}/api/imageContainers/People/download/${this.props.user.image}`} />
+          <Avatar src={api.images.userImageLink(this.props.user.image)} />
           <div style={styles.userData}>
-                <div>Driver license number: {this.props.user.driver_license_number}</div>
-                <div>Email: {this.props.user.email}</div>
-              </div>
+            <div>Driver license number: {this.props.user.driver_license_number}</div>
+            <div>Email: {this.props.user.email}</div>
+          </div>
         </Row>
-
       </Aux>
-
     );
   }
 }
 
-const mapStateToProps = state => {
-    return {
-        token: state.auth.token,
-        loading: state.userInfo.loading,
-        user: state.userInfo.user,
-    };
+UserInfo.propTypes = {
+  user: PropTypes.object,
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+  email: PropTypes.string,
+  image: PropTypes.string,
+  driver_license_number: PropTypes.string,
+  getUserInfo: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getUserInfo: ( token, UserId ) => dispatch(actions.getUserInfo(token, UserId))
-    }
-}
+UserInfo.defaultProps = {
+  user: null,
+  first_name: undefined,
+  last_name: undefined,
+  email: undefined,
+  image: undefined,
+  driver_license_number: undefined,
+};
+
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  loading: state.userInfo.loading,
+  user: state.userInfo.user,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getUserInfo: (token, UserId) => dispatch(actions.getUserInfo(token, UserId)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);

@@ -1,24 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
-import Aux from '../../hoc/Aux';
-import TrucksInfo from './Trucks-info';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import styles from '../../assets/styles/forms.css';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-import * as path from '../../store/actions/basepath';
+import Aux from '../../hoc/Aux';
+import TrucksInfo from './Trucks-info';
+import '../../assets/styles/forms.css';
 
 class Trucks extends React.Component {
-
-
-
   render() {
-    console.log(path.BASE_PATH);
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
-
     }
 
     return (
@@ -26,13 +19,17 @@ class Trucks extends React.Component {
         { authRedirect }
         <h1> Vehicles </h1>
         <Container>
-          <TrucksInfo motor_carrier_id={0} />
+          <TrucksInfo />
         </Container>
       </Aux>
 
     );
   }
 }
+
+Trucks.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,

@@ -11,48 +11,37 @@ import Alert from '../../Alert/Alert';
 
 class Signup extends React.Component {
   state = {
-    controls: {
-      email: {
-        value: '',
-      },
-      password: {
-        value: '',
-      },
-      lastName: {
-        value: '',
-      },
-      firstName: {
-        value: '',
-      },
-      username: {
-        value: '',
-      },
-      accountType: {
-        value: 'S',
-      },
-    },
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    username: '',
+    accountType: 'S',
   }
 
   componentDidMount() {
     this.props.resetError();
   }
-    onInputChange = (event) => {
-      const state = this.state;
-      state.controls[event.target.name].value = event.target.value;
-      this.setState(state);
-    }
 
+
+  handleFieldChange(fieldName) {
+    return (ev) => {
+      this.setState({
+        [fieldName]: ev.target.value,
+      });
+    };
+  }
 
     submitHandler = (event) => {
       // prevents reloading of the page
       event.preventDefault();
       this.props.onAuth(
-        this.state.controls.email.value,
-        this.state.controls.password.value,
-        this.state.controls.firstName.value,
-        this.state.controls.lastName.value,
-        this.state.controls.username.value,
-        this.state.controls.accountType.value,
+        this.state.email,
+        this.state.password,
+        this.state.firstName,
+        this.state.lastName,
+        this.state.username,
+        this.state.accountType,
         this.props.match.params.id,
         this.props.token,
       );
@@ -78,15 +67,16 @@ class Signup extends React.Component {
 
 
       let alert;
-
+      let msg = '';
       if (this.props.error === null) {
         alert = null;
       } else if (this.props.error.status === 200) {
-        const msg = 'Supervisor was created successfully';
+        msg = 'Supervisor was created successfully';
         alert = (<Alert alertType="SUCCESS" message={msg} />);
         // this.props.resetError();
       } else {
-        alert = (<Alert alertType="FAIL" />);
+        msg = 'Error the supervisor could not be created';
+        alert = (<Alert alertType="FAIL" message={msg} />);
         // this.props.resetError();
       }
 
@@ -107,19 +97,19 @@ class Signup extends React.Component {
               <h1 style={h1Style}>Register Supervisor</h1>
               <Form onSubmit={this.submitHandler}>
                 <FormGroup>
-                  <Input type="text" name="username" onChange={this.onInputChange} placeholder="Username" />
+                  <Input type="text" name="username" onChange={this.handleFieldChange('username')} placeholder="Username" />
                 </FormGroup>
                 <FormGroup>
-                  <Input type="text" name="firstName" onChange={this.onInputChange} placeholder="First Name" />
+                  <Input type="text" name="firstName" onChange={this.handleFieldChange('firstName')} placeholder="First Name" />
                 </FormGroup>
                 <FormGroup>
-                  <Input type="text" name="lastName" onChange={this.onInputChange} placeholder="Last Name" />
+                  <Input type="text" name="lastName" onChange={this.handleFieldChange('lastName')} placeholder="Last Name" />
                 </FormGroup>
                 <FormGroup>
-                  <Input type="email" name="email" onChange={this.onInputChange} placeholder="Email" />
+                  <Input type="email" name="email" onChange={this.handleFieldChange('email')} placeholder="Email" />
                 </FormGroup>
                 <FormGroup>
-                  <Input type="password" name="password" onChange={this.onInputChange} placeholder="Password" />
+                  <Input type="password" name="password" onChange={this.handleFieldChange('password')} placeholder="Password" />
                 </FormGroup>
                 <Button>Submit</Button>
               </Form>
@@ -139,6 +129,7 @@ Signup.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   resetError: PropTypes.func.isRequired,
+  match: PropTypes.func.isRequired,
 };
 
 Signup.defaultProps = {

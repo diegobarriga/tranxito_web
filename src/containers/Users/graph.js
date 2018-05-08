@@ -1,13 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ListGroup, ListGroupItem, Button, Row, Col, Container, Table } from 'reactstrap';
-import Aux from '../../hoc/Aux';
-import axios from 'axios';
-import Avatar from '../../components/Avatar';
-import Loader from '../../components/Loader/Loader';
-import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
+/*
 const styles = {
   userProfile: {
     flexDirection: 'row',
@@ -23,13 +17,14 @@ const styles = {
     overflow: 'scroll',
   },
 };
+*/
 
 class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: undefined,
-      loading: true,
+      // user: undefined,
+      // loading: true,
       chartData: {
         xLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'],
         yLabels: ['OFF', 'SB', 'D', 'ON'],
@@ -54,10 +49,10 @@ class Graph extends React.Component {
 
   render() {
     return (
-        <Line
-              data={this.state.chartData}
-              height={75}
-              options={{
+      <Line
+        data={this.state.chartData}
+        height={75}
+        options={{
 
               title: {
                 display: true,
@@ -90,7 +85,7 @@ class Graph extends React.Component {
                         }],
                       },
             }}
-            />
+      />
 
 
     );

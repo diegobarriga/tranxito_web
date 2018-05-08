@@ -9,16 +9,8 @@ export {
 export {
   initMCarriers,
   carrierRegister,
-} from './mcarrier';
+} from './mCarrier';
 
-export {
-  onDelete,
-} from './users';
+export { onDelete } from './users';
 
-export {
-  onVehicleDelete,
-} from './vehicles';
-
-export {
-  basePath,
-} from './basepath';
+export { onVehicleDelete } from './vehicles';

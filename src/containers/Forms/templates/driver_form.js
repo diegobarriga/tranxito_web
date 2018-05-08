@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Label, Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
-import axios, { post, patch, get } from 'axios';
-import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
-import * as path from '../../../store/actions/basepath';
-
+import api from '../../../services/api';
 
 class DriverForm extends React.Component {
   constructor(props) {
@@ -77,25 +74,17 @@ class DriverForm extends React.Component {
 
   onFormSubmit(e) {
     e.preventDefault(); // Stop form submit
-
     this.imgUpload(this.state.picture).then((imgResponse) => {
-      console.log(imgResponse.data);
-      console.log(imgResponse.status);
       if (imgResponse.status === 200) {
-        console.log('imagen creada correctamente');
-        console.log(imgResponse.data.result.files.file[0].name);
         // setiamos el nombre de la imagen con la respuesta
         const updatedState = {
           ...this.state.data,
           image: imgResponse.data.result.files.file[0].name,
         };
         this.setState({ data: updatedState });
-
         // Si estamos creando un usuario
         if (this.props.isCreate) {
           this.postData(this.state.data).then((response) => {
-            console.log(response.data);
-            console.log(response.status);
             if (response.status === 200) {
               this.setState({ type: 'success', message: 'We have created the new driver.' });
             } else {
@@ -106,8 +95,6 @@ class DriverForm extends React.Component {
         // // Si estamos editando un usuario
         } else {
           this.patchData(this.state.data).then((response) => {
-            console.log(response.data);
-            console.log(response.status);
             if (response.status === 200) {
               this.setState({ type: 'success', message: 'We have edited the driver.' });
             } else {
@@ -129,43 +116,39 @@ class DriverForm extends React.Component {
     } else {
       state.data[e.target.name] = e.target.value;
     }
-
-
     this.setState(state);
   }
 
   getUserInfo() {
-    const url = `${path.BASE_PATH}/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
-    return get(url);
+    return api.people.getUser(this.props.match.params.id, this.props.token);
   }
 
-
   postData(data) {
-    const url = `${path.BASE_PATH}/api/MotorCarriers/${this.props.motorCarrierId}/people?access_token=${this.props.token}`;
-    return post(url, data);
+    return api.motorCarriers.createMotorCarrierPeople(
+      this.props.motorCarrierId,
+      this.props.token,
+      data,
+    );
   }
 
   patchData(data) {
-    const url = `${path.BASE_PATH}/api/People/${this.props.match.params.id}?access_token=${this.props.token}`;
-    return patch(url, data);
+    return api.people.updateUser(this.props.match.params.id, this.props.token, data);
   }
 
   imgUpload(file) {
-    const url = `${path.BASE_PATH}/api/imageContainers/People/upload?access_token=${this.props.token}`;
     const formData = new FormData();
     formData.append('file', file);
-    console.log(formData);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
       },
     };
-    return post(url, formData, config);
+    return api.images.driverImageUpload(formData, config, this.props.token);
   }
 
   createSelectItems(min, max) {
     const items = [];
-    for (let i = min; i <= max; i++) {
+    for (let i = min; i <= max; i += 1) {
       items.push(<option>{i}</option>);
     }
     return items;
@@ -213,7 +196,6 @@ class DriverForm extends React.Component {
               <FormGroup>
                 <Label for="image">Exempt Driver Configuration</Label>
                 <Input type="select" name="exempt_driver_configuration" value={this.state.data.exempt_driver_configuration} placeholder="Exempt Driver Configuration" onChange={this.onChange}>
-                  <option>1</option>
                   <option>E</option>
                   <option selected="selected">0</option>
                 </Input>
@@ -248,7 +230,7 @@ class DriverForm extends React.Component {
               </FormGroup>
               <FormGroup>
                 <Label for="image">Image</Label>
-                <Input type="file" name="picture"  className="center-item" onChange={this.onChange} />
+                <Input type="file" name="picture" className="center-item" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
                 <Label for="image">Username</Label>
@@ -270,11 +252,14 @@ class DriverForm extends React.Component {
 DriverForm.propTypes = {
   title: PropTypes.string.isRequired,
   isCreate: PropTypes.bool.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  motorCarrierId: state.auth.motorCarrierId
+  motorCarrierId: state.auth.motorCarrierId,
 
 });
 

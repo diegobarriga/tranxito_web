@@ -15,8 +15,9 @@ class TemplateCSV extends React.Component {
   }
 }
 
-export default TemplateCSV;
-
 TemplateCSV.propTypes = {
   type: PropTypes.string.isRequired,
 };
+
+export default TemplateCSV;
+

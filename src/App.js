@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import fontawesome from '@fortawesome/fontawesome';
+import faFileExcel from '@fortawesome/fontawesome-free-solid/faFileExcel';
+import faUsers from '@fortawesome/fontawesome-free-solid/faUsers';
+import faUser from '@fortawesome/fontawesome-free-solid/faUser';
+import faCar from '@fortawesome/fontawesome-free-solid/faCar';
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
+import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
+import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
+
 import Layout from './containers/Layout/Layout';
 import Signup from './containers/Sessions/Signup/Signup';
 import './assets/styles/App.css';
 import Drivers from './containers/Users/Users';
 import Driver from './containers/Users/User';
 import Vehicles from './containers/Trucks/Trucks';
-
 
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
@@ -19,20 +27,11 @@ import CreateVehicle from './containers/Forms/vehicles/create_vehicle';
 import EditVehicle from './containers/Forms/vehicles/edit_vehicle';
 
 import Login from './containers/Sessions/Login/Login';
-import Home from './components/Home/Home';
+// import Home from './components/Home/Home';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import mForm from './containers/MotorCarriers/mForm';
 
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import fontawesome from '@fortawesome/fontawesome';
-import faFileExcel from '@fortawesome/fontawesome-free-solid/faFileExcel';
-import faUsers from '@fortawesome/fontawesome-free-solid/faUsers';
-import faUser from '@fortawesome/fontawesome-free-solid/faUser';
-import faCar from '@fortawesome/fontawesome-free-solid/faCar';
-import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
-import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
-import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
 
 fontawesome.library.add(faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit);
 
@@ -54,7 +53,7 @@ class App extends Component {
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={Signup} />
-          
+
           <Route path="/" exact component={Login} />
           <Route path="/logout" component={Logout} />
           <Route path="/motor_carriers/create" component={mForm} />

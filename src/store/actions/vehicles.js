@@ -1,6 +1,5 @@
-import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import * as path from '../../store/actions/basepath';
+import api from '../../services/api';
 
 export const getVehiclesStart = () => ({
   type: actionTypes.GET_VEHICLES_START,
@@ -24,26 +23,20 @@ export const onVehicleDeleteSuccess = vehicleId => ({
 
 
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
-  const url = `${path.BASE_PATH}/api/Vehicles/${vehicleId}?access_token=${token}`;
-  axios.delete(url)
-  .then((response) => {
-    console.log("vehicledeleted");
-    dispatch(onVehicleDeleteSuccess(vehicleId));
-
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  api.vehicles.deleteVehcle(vehicleId, token)
+    .then(() => {
+      console.log('vehicledeleted');
+      dispatch(onVehicleDeleteSuccess(vehicleId));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
-
-
-
 
 
 export const getVehicles = (token, motorCarrierId) => (dispatch) => {
   dispatch(getVehiclesStart());
-  const vehicleUrl = `${path.BASE_PATH}/api/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`;
-  axios.get(vehicleUrl)
+  api.motorCarriers.getMotorCarrierVehicles(motorCarrierId, token)
     .then((vehicleResponse) => {
       console.log(vehicleResponse);
       dispatch(getVehiclesSuccess(vehicleResponse.data));
