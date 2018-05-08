@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Form, Input } from 'reactstrap';
-import axios from 'axios';
-import * as path from '../../../store/actions/basepath';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
+import api from '../../../services/api';
 
 class SimpleReactFileUpload extends React.Component {
   constructor(props) {
@@ -24,7 +24,6 @@ class SimpleReactFileUpload extends React.Component {
     this.setState({ isValid: null });
   }
 
-
   onFormSubmit(e) {
     e.preventDefault(); // Stop form submit
     const reader = new FileReader();
@@ -39,7 +38,7 @@ class SimpleReactFileUpload extends React.Component {
 
   checkValid(drivers) {
     console.log(drivers);
-    for (let i = 0; i < drivers.length; i++) {
+    for (let i = 0; i < drivers.length; i += 1) {
       if (drivers[i].first_name.length < 2 && drivers[i].first_name.length > 30) {
         this.setState({ isValid: false });
         console.log('firstname');
@@ -95,10 +94,10 @@ class SimpleReactFileUpload extends React.Component {
     const arr = csv.split('\n');
     const drivers = [];
     const headers = arr[0].split(',');
-    for (let i = 1; i < arr.length; i++) {
+    for (let i = 1; i < arr.length; i += 1) {
       const data = arr[i].split(',');
       const obj = {};
-      for (let j = 0; j < data.length; j++) {
+      for (let j = 0; j < data.length; j += 1) {
         obj[headers[j].trim()] = data[j].trim();
       }
       drivers.push(obj);
@@ -126,16 +125,14 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   fileUpload(file) {
-    const url = `${path.BASE_PATH}/api/People/upload?access_token=${this.props.token}`;
     const formData = new FormData();
     formData.append('file', file);
-    console.log(formData);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
       },
     };
-    return axios.post(url, formData, config);
+    return api.file.csvFileUpload(formData, config, this.props.token);
   }
 
   render() {
@@ -168,5 +165,11 @@ class SimpleReactFileUpload extends React.Component {
 const mapStateToProps = state => ({
   token: state.auth.token,
 });
+
+SimpleReactFileUpload.propTypes = {
+  type: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+};
+
 
 export default connect(mapStateToProps)(SimpleReactFileUpload);

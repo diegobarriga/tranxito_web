@@ -14,5 +14,3 @@ export {
 export { onDelete } from './users';
 
 export { onVehicleDelete } from './vehicles';
-
-export { basePath } from './basepath';

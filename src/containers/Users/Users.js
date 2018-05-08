@@ -1,12 +1,11 @@
 import React from 'react';
 import { Container } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Aux from '../../hoc/Aux';
 import UsersInfo from './Users-info';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import '../../assets/styles/forms.css';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 class Users extends React.Component {
   render() {
@@ -20,13 +19,16 @@ class Users extends React.Component {
         { authRedirect }
         <h1> Drivers </h1>
         <Container>
-          <UsersInfo motor_carrier_id={0} />
+          <UsersInfo />
         </Container>
       </Aux>
 
     );
   }
 }
+Users.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,

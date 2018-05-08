@@ -9,23 +9,18 @@ import * as actions from '../../store/actions/index';
 
 class CarrierRegister extends React.Component {
   state = {
-    controls: {
-      name: {
-        value: '',
-      },
-      number: {
-        value: '',
-      },
-      mday: {
-        value: '7',
-      },
-    },
+    name: '',
+    number: '',
+    mday: '7',
   }
 
-  onInputChange = (event) => {
-    const state = this.state;
-    state.controls[event.target.name].value = event.target.value;
-    this.setState(state);
+
+  handleFieldChange(fieldName) {
+    return (ev) => {
+      this.setState({
+        [fieldName]: ev.target.value,
+      });
+    };
   }
 
 
@@ -33,9 +28,9 @@ class CarrierRegister extends React.Component {
     // prevents reloading of the page
     event.preventDefault();
     this.props.onRegister(
-      this.state.controls.name.value,
-      this.state.controls.number.value,
-      this.state.controls.mday.value,
+      this.state.name,
+      this.state.number,
+      this.state.mday,
       this.props.token,
     );
   }
@@ -69,15 +64,15 @@ class CarrierRegister extends React.Component {
             <Form onSubmit={this.submitHandler}>
               <FormGroup>
                 <Label for="name">Name</Label>
-                <Input type="text" name="name" onChange={this.onInputChange} placeholder="name" />
+                <Input type="text" name="name" onChange={this.handleFieldChange('name')} placeholder="name" />
               </FormGroup>
               <FormGroup>
                 <Label for="mday">USDOT Number</Label>
-                <Input type="text" name="number" onChange={this.onInputChange} placeholder="USDOT Number" />
+                <Input type="text" name="number" onChange={this.handleFieldChange('number')} placeholder="USDOT Number" />
               </FormGroup>
               <FormGroup>
                 <Label for="mday">Multiday basis used</Label>
-                <Input type="select" onChange={this.onInputChange} name="mday" >
+                <Input type="select" onChange={this.handleFieldChange('mday')} name="mday" >
                   <option>7</option>
                   <option>8</option>
                 </Input>

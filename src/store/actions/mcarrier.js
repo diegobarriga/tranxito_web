@@ -28,12 +28,12 @@ export const initMCarriers = token => (dispatch) => {
 };
 
 
-export const carrierRegister = (name, USDOT_number, multiday_basis_used, token) => (dispatch) => {
+export const carrierRegister = (name, usdotNumber, multidayBasisUsed, token) => (dispatch) => {
   dispatch(createMCarrierStart());
   const regData = {
     name,
-    USDOT_number,
-    multiday_basis_used,
+    USDOT_number: usdotNumber,
+    multiday_basis_used: multidayBasisUsed,
   };
 
   api.motorCarriers.createMotorCarrier(regData, token)

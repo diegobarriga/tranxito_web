@@ -5,15 +5,12 @@ import { connect } from 'react-redux';
 import { ListGroupItem, Button } from 'reactstrap';
 import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
-import * as path from '../../store/actions/basepath';
+import api from '../../services/api';
 
 class TruckRow extends React.Component {
   onDeleteBtnClick(userId, token) {
-    console.log(userId);
-    console.log(token);
     this.props.deleteVehicle(userId, token);
   }
-
 
   render() {
     const pStyle = {
@@ -29,7 +26,7 @@ class TruckRow extends React.Component {
       <ListGroupItem style={divStyle} className="justify-content-between">
         <div className="truck_wrapper">
           <figure className="left">
-            <img className="media-object" width="100px" src={`${path.BASE_PATH}/api/imageContainers/Vehicles/download/${this.props.image}`} />
+            <img className="media-object" alt="vehicle-img" width="100px" src={api.images.vehicleImageLink(this.props.image)} />
           </figure>
           <div className="right">
             <ul>
@@ -68,7 +65,6 @@ TruckRow.propTypes = {
   deleteVehicle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TruckRow);

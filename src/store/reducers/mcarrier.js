@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../utility';
+import updateObject from '../utility';
 
 const initialState = {
   motorCarriers: [],
@@ -7,7 +7,7 @@ const initialState = {
   error: null,
 };
 
-const createMCarrierStart = (state, action) => updateObject(state, { error: null, loading: true });
+const createMCarrierStart = state => updateObject(state, { error: null, loading: true });
 
 
 const createMCSuccess = (state, action) => {
@@ -28,7 +28,7 @@ const setMotorCarriers = (state, action) => updateObject(state, {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_MOTORCARRIER: return setMotorCarriers(state, action);
-    case actionTypes.START_MCCREATE: return createMCarrierStart(state, action);
+    case actionTypes.START_MCCREATE: return createMCarrierStart(state);
     case actionTypes.CREATEMC_SUCCESS: return createMCSuccess(state, action);
 
     default:

@@ -14,7 +14,6 @@ class Dashboard extends React.Component {
 
     const alert = null;
 
-
     return (
       <Aux>
         { alert }

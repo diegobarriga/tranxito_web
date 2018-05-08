@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Container, Table } from 'reactstrap';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/userLogs';
@@ -11,7 +12,6 @@ const styles = {
     overflow: 'scroll',
   },
 };
-
 
 class UserLogs extends React.Component {
   componentDidMount() {
@@ -48,6 +48,16 @@ class UserLogs extends React.Component {
   }
 }
 
+UserLogs.propTypes = {
+  getUserLogs: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  logs: PropTypes.array,
+};
+
+UserLogs.defaultProps = {
+  logs: null,
+};
 
 const mapStateToProps = state => ({
   token: state.auth.token,

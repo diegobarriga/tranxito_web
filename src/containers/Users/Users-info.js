@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, Input } from 'reactstrap';
+import { ListGroup } from 'reactstrap';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
@@ -21,7 +21,6 @@ class UsersInfo extends React.Component {
 
   componentDidMount() {
     this.props.getUsers(this.props.token, this.props.motorCarrierId);
-    console.log(this.props.users);
   }
 
   updateSearch(event) {
@@ -31,9 +30,11 @@ class UsersInfo extends React.Component {
   render() {
     if (this.props.isLoading === true) return <Loader />;
 
-    const filtered_users = this.props.users.filter(user => ((user.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        user.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) && user.account_status === true && user.account_type === 'D'));
+    const filteredUsers = this.props.users.filter(user => ((
+      user.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      user.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) &&
+      user.account_status === true && user.account_type === 'D'));
     return (
       <div>
         <div className="inlineBox">
@@ -46,7 +47,7 @@ class UsersInfo extends React.Component {
 
         <ListGroup>
           {
-              filtered_users.sort((a, b) => a.last_name > b.last_name).map(user => (<UserRow
+              filteredUsers.sort((a, b) => a.last_name > b.last_name).map(user => (<UserRow
                 key={user.id}
                 id={user.id}
                 first_name={user.first_name}
@@ -61,6 +62,15 @@ class UsersInfo extends React.Component {
     );
   }
 }
+
+UsersInfo.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired,
+};
+
 
 const mapStateToProps = state => ({
   token: state.auth.token,

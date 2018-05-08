@@ -92,12 +92,14 @@ Login.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
+  // error: PropTypes.object,
 
 };
+/*
 Login.defaultProps = {
   error: null,
 };
+*/
 
 
 const mapStateToProps = state => ({

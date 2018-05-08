@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import TruckRow from './Truck-row';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/vehicles';
-
 import '../../assets/styles/forms.css';
 
 class TrucksInfo extends React.Component {
@@ -31,10 +30,12 @@ class TrucksInfo extends React.Component {
   render() {
     if (this.props.isLoading === true) return <Loader />;
 
-    const filtered_vehicles = this.props.vehicles.filter(vehicle => (vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+    const filteredVehicles = this.props.vehicles.filter(vehicle => (
+      vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+
     return (
       <div>
 
@@ -48,7 +49,7 @@ class TrucksInfo extends React.Component {
 
         <ListGroup>
           {
-              filtered_vehicles.sort((a, b) => a.car_maker > b.car_maker).map(truck => (<TruckRow
+              filteredVehicles.sort((a, b) => a.car_maker > b.car_maker).map(truck => (<TruckRow
                 key={truck.id}
                 id={truck.id}
                 vin={truck.vin}
@@ -66,6 +67,18 @@ class TrucksInfo extends React.Component {
     );
   }
 }
+
+TrucksInfo.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  vehicles: PropTypes.array.isRequired,
+  getVehicles: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+};
+
+TrucksInfo.defaultProps = {
+
+};
 
 const mapStateToProps = state => ({
   token: state.auth.token,

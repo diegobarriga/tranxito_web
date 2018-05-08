@@ -47,12 +47,12 @@ export default {
   vehicles: {
     getVehicles: () =>
       axios.get(`${apiPath}/Vehicles`),
-    getVehicle: vehicleId =>
-      axios.get(`${apiPath}/Vehicles/${vehicleId}`),
+    getVehicle: (vehicleId, token) =>
+      axios.get(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
     deleteVehcle: (vehicleId, token) =>
       axios.delete(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
-    updateVehicle: vehicle =>
-      axios.put(`${apiPath}/Vehicles/${vehicle.id}`, { vehicle }),
+    updateVehicle: (vehicleId, token, data) =>
+      axios.patch(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`, data),
     setImage: (vehicleId, url) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/setImage`, { url }),
     getVehicleMotorCarrier: vehicleId =>
@@ -73,16 +73,16 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`),
     getMotorCarrierPerson: (motorCarrierId, userId) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/userId/${userId}`),
-    createMotorCarrierPeople: (motorCarrierId, user) =>
-      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/people`, { user }),
+    createMotorCarrierPeople: (motorCarrierId, token, user) =>
+      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`, user),
     countMotorCarrierPeople: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count`),
     getMotorCarrierVehicles: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`),
     getMotorCarrierVehicle: (motorCarrierId, vehicleId) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles/${vehicleId}`),
-    createMotorCarrierVehicle: (motorCarrierId, vehicle) =>
-      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/people`, { vehicle }),
+    createMotorCarrierVehicle: (motorCarrierId, token, vehicle) =>
+      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`, vehicle),
     countMotorCarrierVehicles: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles/count`),
     getMotorCarrierEvents: motorCarrierId =>
@@ -106,5 +106,17 @@ export default {
       axios.get(`${apiPath}/Events/${eventId}/vehicle`),
     getEventMotorCarrier: eventId =>
       axios.get(`${apiPath}/Events/${eventId}/motorCarrier`),
+  },
+  images: {
+    userImageLink: image => `${apiPath}/imageContainers/People/download/${image}`,
+    vehicleImageLink: image => `${apiPath}/imageContainers/Vehicles/download/${image}`,
+    driverImageUpload: (formData, config, token) =>
+      axios.post(`${apiPath}/imageContainers/People/upload?access_token=${token}`, formData, config),
+    vehicleImageUpload: (formData, config, token) =>
+      axios.post(`${apiPath}/imageContainers/Vehicles/upload?access_token=${token}`, formData, config),
+  },
+  file: {
+    csvFileUpload: (formData, config, token) =>
+      axios.post(`${apiPath}/People/upload?access_token=${token}`, formData, config),
   },
 };

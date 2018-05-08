@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../utility';
+import updateObject from '../utility';
 
 const initialState = {
   users: [],
@@ -32,12 +32,12 @@ const onDeleteSuccess = (state, action) => {
 };
 
 
-const getUsersStart = (state, action) => updateObject(state, { error: null, loading: true });
+const getUsersStart = state => updateObject(state, { error: null, loading: true });
 
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_USERS_START: return getUsersStart(state, action);
+    case actionTypes.GET_USERS_START: return getUsersStart(state);
     case actionTypes.GET_USERS_SUCCESS: return getUsersSuccess(state, action);
     case actionTypes.GET_USERS_FAIL: return getUsersFail(state, action);
     case actionTypes.DELETE_USER: return onDeleteSuccess(state, action);
