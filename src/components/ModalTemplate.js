@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 class ModalTemplate extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      errors: {}
-    }
+      errors: {},
+    };
   }
 
   render() {
