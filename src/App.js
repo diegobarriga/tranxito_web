@@ -61,6 +61,9 @@ class App extends Component {
           <Route path="/vehicles/new_vehicle" component={CreateVehicle} />
           <Route path="/vehicles/:id/edit" component={EditVehicle} />
           <Route path="/vehicles" component={Vehicles} />
+          <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
+          <Route path="/vehicles/new_vehicle" component={CreateVehicleView} />
+          <Route path="/vehicles/:id/edit" component={EditVehicle} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={SignupView} />

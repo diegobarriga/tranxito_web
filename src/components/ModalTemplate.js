@@ -3,6 +3,10 @@ import { Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 class ModalTemplate extends Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> Fix App.js
   constructor(props) {
     super(props);
     this.state = {
