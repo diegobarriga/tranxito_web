@@ -12,7 +12,7 @@ class Footer extends Component {
               <Col sm={3}>
                 <ul className="menu">
                   <li>
-                    <a href="http://www.e2egroup.co/en/home/" target="_blank">E2E Group</a>
+                    <a href="http://www.e2egroup.co/en/home/" target="_blank" rel="noopener noreferrer">E2E Group</a>
                   </li>
                   <li>
                     <a href="mailto:info@e2egroup.co">Contact</a>
@@ -29,7 +29,11 @@ class Footer extends Component {
               </Col>
               <Col sm={5}>
                 <span className="lead color-heading">About E2E Group</span>
-                <p>End-2-End plans and executes logistic operations on land in a secure and efficient way. As a social committed organization, E2E promotes positive values in society and establishes a friendly work environment for disabled people.</p>
+                <p>End-2-End plans and executes logistic operations on land in a
+                 secure and efficient way. As a social committed organization,
+                 E2E promotes positive values in society and establishes a friendly
+                work environment for disabled people.
+                </p>
               </Col>
               <Col sm={4}>
                 <ul className="contact-methods">

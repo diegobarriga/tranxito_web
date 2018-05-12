@@ -22,7 +22,7 @@ import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
 import Users from './containers/Users/Users';
-import UserProfile from './containers/Users/UserProfile';
+import User from './containers/Users/User';
 import Vehicles from './containers/Vehicles/Vehicles';
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
@@ -63,7 +63,7 @@ class App extends Component {
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
           <Route path="/vehicles/new_vehicle" component={CreateVehicleView} />
-          <Route path="/vehicles/:id/edit" component={EditVehicle} />
+          <Route path="/vehicles/:id/edit" component={EditVehicleView} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={SignupView} />

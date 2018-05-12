@@ -4,21 +4,27 @@ import PropTypes from 'prop-types';
 
 class ModalTemplate extends Component {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> Fix App.js
+=======
+>>>>>>> more cleanup
   constructor(props) {
     super(props);
     this.state = {
-      errors: {},
     };
   }
 
   render() {
+<<<<<<< HEAD
     const { errors } = this.state;
     const {
  show, close, title, FormComponent, submitFunc 
 } = this.props;
+=======
+    const { show, close, title, FormComponent, submitFunc } = this.props;
+>>>>>>> more cleanup
     return (
       <Modal open={show} dimmer="inverted" onClose={close}>
         <Modal.Header toggle={close}>
