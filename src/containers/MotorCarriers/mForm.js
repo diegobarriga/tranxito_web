@@ -5,6 +5,7 @@ import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reac
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/index';
+import Alert from '../Alert/Alert';
 
 
 class CarrierRegister extends React.Component {
@@ -14,6 +15,9 @@ class CarrierRegister extends React.Component {
     mday: '7',
   }
 
+  componentDidMount() {
+    this.props.resetError();
+  }
 
   handleFieldChange(fieldName) {
     return (ev) => {
@@ -54,9 +58,29 @@ class CarrierRegister extends React.Component {
       authRedirect = <Redirect to="/" />;
     }
 
+    /* Alert */
+    let alert;
+    let msg = '';
+    if (this.props.error === null) {
+      alert = null;
+    } else if (this.props.error.status === 200) {
+      msg = 'The MotorCarrier was created successfully';
+      alert = (<Alert alertType="SUCCESS" message={msg} />);
+      // this.props.resetError();
+    } else {
+      msg = 'Error the motorcarrier could not be created';
+      alert = (<Alert alertType="FAIL" message={msg} />);
+      // this.props.resetError();
+    }
+
 
     return (
       <Container>
+        <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
         <Row>
           <Col sm="12" md={{ size: 5, offset: 3 }}>
             { authRedirect }
@@ -93,6 +117,13 @@ CarrierRegister.propTypes = {
   onRegister: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  resetError: PropTypes.func.isRequired,
+  error: PropTypes.object,
+};
+
+
+CarrierRegister.defaultProps = {
+  error: null,
 };
 
 
@@ -101,6 +132,7 @@ const mapStateToProps = state => ({
   isAdmin: state.auth.role === 'A',
   token: state.auth.token,
   isLoading: state.mCarrier.loading,
+  error: state.mCarrier.error,
 });
 
 
@@ -111,7 +143,7 @@ const mapDispatchToProps = dispatch => ({
     mday,
     token,
   )),
-
+  resetError: () => dispatch(actions.errorReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarrierRegister);

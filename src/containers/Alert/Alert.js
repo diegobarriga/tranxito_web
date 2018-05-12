@@ -17,18 +17,17 @@ class Alert extends React.Component {
   }
 
   render() {
-    let alertt;
+    let tmpAlert;
     let messageFade;
     if (this.props.alertType === 'SUCCESS') {
-      alertt = 'alert alert-success';
+      tmpAlert = 'alert alert-success';
       messageFade = 'alert alert-success updown target';
     } else {
-      alertt = 'alert alert-danger';
-
+      tmpAlert = 'alert alert-danger';
       messageFade = 'alert alert-danger updown target';
     }
 
-    let alert = <div className={alertt}> {this.props.message} </div>;
+    let alert = <div className={tmpAlert}> {this.props.message} </div>;
     if (this.state.visible === false) {
       alert = <div className={messageFade}> {this.props.message} </div>;
     }

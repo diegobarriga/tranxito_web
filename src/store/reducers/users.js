@@ -17,7 +17,7 @@ const getUsersSuccess = (state, action) => updateObject(state, {
   loading: false,
 });
 
-
+/* borrar driver de la store */
 const onDeleteSuccess = (state, action) => {
   const oldUser = state.users.find(user => user.id === action.userId);
   const otherUsers = state.users.filter(user => user.id !== action.userId);
@@ -26,6 +26,7 @@ const onDeleteSuccess = (state, action) => {
   });
 
   return updateObject(state, {
+    error: action.response,
     loading: false,
     users: [newUser, ...otherUsers],
   });

@@ -65,7 +65,7 @@ class Signup extends React.Component {
         authRedirect = <Redirect to="/" />;
       }
 
-
+      /* Alert */
       let alert;
       let msg = '';
       if (this.props.error === null) {
@@ -79,8 +79,6 @@ class Signup extends React.Component {
         alert = (<Alert alertType="FAIL" message={msg} />);
         // this.props.resetError();
       }
-
-      /* Dispatch action to reset status to null */
 
 
       return (
@@ -129,7 +127,7 @@ Signup.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   resetError: PropTypes.func.isRequired,
-  match: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 Signup.defaultProps = {

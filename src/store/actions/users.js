@@ -17,9 +17,10 @@ export const getUsersFail = error => ({
   error,
 });
 
-export const onDeleteSuccess = userId => ({
+export const onDeleteSuccess = (userId, response) => ({
   type: actionTypes.DELETE_USER,
   userId,
+  response,
 });
 
 
@@ -31,7 +32,7 @@ export const onDelete = (userId, token) => (dispatch) => {
   api.people.updateUser(userId, token, data)
     .then((response) => {
       console.log(response);
-      dispatch(onDeleteSuccess(userId));
+      dispatch(onDeleteSuccess(userId, response));
     })
     .catch((err) => {
       console.log(err);

@@ -106,7 +106,7 @@ export const login = (email, password) => (dispatch) => {
       console.log(response);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.response);
       dispatch(authFail(err));
     });
 };
