@@ -25,7 +25,7 @@ import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
 import Users from './containers/Users/Users';
-import UserProfile from './containers/Users/UserProfile';
+import User from './containers/Users/User';
 import Vehicles from './containers/Vehicles/Vehicles';
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
@@ -37,7 +37,7 @@ import CreateDrivers from './containers/Forms/Drivers/create_drivers';
 import CreateVehicleView from './containers/Forms/Vehicles/CreateVehicleView';
 import CreateMotorCarrierView from './containers/Forms/MotorCarriers/CreateMotorCarrierView';
 import CreateVehicles from './containers/Forms/Vehicles/create_vehicles';
-import Home from './components/Home/Home';
+import EditVehicleView from './containers/Forms/Vehicles/edit_vehicle';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 
@@ -54,12 +54,12 @@ class App extends Component {
         <Switch>
           <Route path="/drivers/new_drivers" component={CreateDrivers} />
           <Route path="/drivers/new_driver" component={CreateDriverView} />
-          <Route path="/drivers/:id" component={UserProfile} />
+          <Route path="/drivers/:id" component={User} />
           <Route path="/drivers" component={Users} />
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
           <Route path="/vehicles/new_vehicle" component={CreateVehicleView} />
-          <Route path="/vehicles/:id/edit" component={EditVehicle} />
+          <Route path="/vehicles/:id/edit" component={EditVehicleView} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={SignupView} />

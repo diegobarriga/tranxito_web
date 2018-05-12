@@ -18,13 +18,15 @@ class CreateVehicleForm extends React.Component {
         plaque: '',
         state: '',
         IMEI_EL: '',
+        image: '',
       },
       isLoading: false,
-      redirectTo: false
+      redirectTo: false,
     };
     this.isValidCreate = this.isValidCreate.bind(this);
     this.onChange = this.onChange.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+    this.validateInput = this.validateInput.bind(this);
   }
 
   onChange(event) {
@@ -39,7 +41,6 @@ class CreateVehicleForm extends React.Component {
 
   validateInput(data) {
     let errors = {}
-    console.log(data);
     if (data.vin.length > 18 || data.vin.length < 17) {
       errors.vin = 'Must be 17 or 18 characters long';
     }
@@ -76,10 +77,21 @@ class CreateVehicleForm extends React.Component {
     }
   }
 
-  isValidCreate(){
+  isValidCreate() {
     const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
     return isValid;
+  }
+
+  imgUpload(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    return api.images.vehicleImageUpload(formData, config, this.props.token);
   }
 
   submitHandler(event){
