@@ -5,6 +5,8 @@ import { Button, Form, Input } from 'reactstrap';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
+import Alert from '../../Alert/Alert';
+import Loader from '../../../components/Loader/Loader';
 
 class SimpleReactFileUpload extends React.Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class SimpleReactFileUpload extends React.Component {
       type: '',
       message: '',
       isValid: null,
+      loading: false,
 
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -25,6 +28,7 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   onFormSubmit(e) {
+    this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     const reader = new FileReader();
     reader.readAsText(this.state.file);
@@ -114,12 +118,15 @@ class SimpleReactFileUpload extends React.Component {
         console.log(response.data);
         console.log(response.status);
         if (response.status === 204) {
+          this.setState({ ...this.state, loading: false });
           this.setState({ type: 'success', message: `We have created all the new ${this.props.type}.` });
         } else {
+          this.setState({ ...this.state, loading: false });
           this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         }
       });
     } else {
+      this.setState({ ...this.state, loading: false });
       console.log('invalid');
     }
   }
@@ -136,14 +143,19 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   render() {
+    if (this.state.loading === true) return <Loader />;
+    let alert;
     if (this.state.type && this.state.message) {
-      const classString = `alert alert-${this.state.type}`;
-      var status = (<div id="status" className={classString} ref="status">{this.state.message} </div>);
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
 
     return (
       <div>
-        <div>{ status }</div>
+        <div>{ alert }</div>
         <div className="aligner">
           <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>
           <div className="aligner-item"><p>The template below has the structure the csv file must have. You can download it, fill it and then upload it. That simple!</p></div>

@@ -43,7 +43,7 @@ class CarrierRegister extends React.Component {
     if (this.props.isLoading === true) return <Loader />;
 
     const h1Style = {
-      marginTop: '5rem',
+      marginTop: '2rem',
       textAlign: 'center',
       marginBottom: '2rem',
     };
@@ -64,13 +64,11 @@ class CarrierRegister extends React.Component {
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = 'The MotorCarrier was created successfully';
+      msg = 'The Motor Carrier was created successfully';
       alert = (<Alert alertType="SUCCESS" message={msg} />);
-      // this.props.resetError();
     } else {
-      msg = 'Error the motorcarrier could not be created';
+      msg = 'Error the motor carrier could not be created';
       alert = (<Alert alertType="FAIL" message={msg} />);
-      // this.props.resetError();
     }
 
 

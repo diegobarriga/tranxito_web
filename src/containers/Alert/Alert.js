@@ -21,10 +21,10 @@ class Alert extends React.Component {
     let messageFade;
     if (this.props.alertType === 'SUCCESS') {
       tmpAlert = 'alert alert-success';
-      messageFade = 'alert alert-success updown target';
+      messageFade = 'alert alert-success slideup';
     } else {
       tmpAlert = 'alert alert-danger';
-      messageFade = 'alert alert-danger updown target';
+      messageFade = 'alert alert-danger slideup';
     }
 
     let alert = <div className={tmpAlert}> {this.props.message} </div>;

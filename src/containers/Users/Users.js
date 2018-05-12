@@ -31,9 +31,9 @@ class Users extends React.Component {
     return (
       <Aux>
         { authRedirect }
-        { alert }
-        <h1> Drivers </h1>
         <Container>
+          { alert }
+          <h1> Drivers </h1>
           <UsersInfo />
         </Container>
       </Aux>

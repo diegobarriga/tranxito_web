@@ -11,6 +11,9 @@ export {
   carrierRegister,
 } from './mCarrier';
 
-export { onDelete } from './users';
+export {
+  onDelete,
+  delErrorReset,
+} from './users';
 
 export { onVehicleDelete } from './vehicles';

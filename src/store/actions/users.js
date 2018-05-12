@@ -23,6 +23,10 @@ export const onDeleteSuccess = (userId, response) => ({
   response,
 });
 
+export const delErrorReset = () => ({
+  type: actionTypes.DEL_ERROR_RESET,
+});
+
 
 export const onDelete = (userId, token) => (dispatch) => {
   const data = {
@@ -32,6 +36,7 @@ export const onDelete = (userId, token) => (dispatch) => {
   api.people.updateUser(userId, token, data)
     .then((response) => {
       console.log(response);
+      dispatch(delErrorReset());
       dispatch(onDeleteSuccess(userId, response));
     })
     .catch((err) => {
