@@ -12,16 +12,16 @@ class Layout extends Component {
       <Aux>
 
         <div className="app">
-          <header className="app__navbar" >
+          <header className="appNavbar" >
             <Navibar isAuth={this.props.isAuthenticated} />
           </header>
-          <main className="app__body">
-            <div className="app__main">
+          <main className="appBody">
+            <div className="appMain">
 
-              <div className="center-area">
+              <div className="centerArea">
                 { this.props.children }
               </div>
-              <div className="left-sidebar">
+              <div className="leftSidebar">
                 { this.props.isAuthenticated &&
                 <Sidebar isAdm={this.props.isAdmin} />
                 }
