@@ -1,14 +1,14 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import MotorCarrierForm from './MotorCarrierForm';
 
 
-class MotorCarrierView extends React.Component {
+class MotorCarrierFormView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +24,15 @@ class MotorCarrierView extends React.Component {
 
   render() {
     if (this.props.isLoading === true) return <Loader />;
+
+    let alert;
+    if (this.state.type && this.state.message) {
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
+    }
 
     const h1Style = {
       marginTop: '5rem',
@@ -45,9 +54,14 @@ class MotorCarrierView extends React.Component {
     return (
       <Container>
         <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
+        <Row>
           <Col sm="12" md={{ size: 5, offset: 3 }}>
             { authRedirect }
-            <h1 style={h1Style}>Create Motor Carrier</h1>
+            <h1 style={h1Style}>{ this.props.title }</h1>
             <MotorCarrierForm
               submit={this.submit}
               token={this.props.token}
@@ -60,7 +74,8 @@ class MotorCarrierView extends React.Component {
 }
 
 
-MotorCarrierView.propTypes = {
+MotorCarrierFormView.propTypes = {
+  title: PropTypes.string.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onRegister: PropTypes.func.isRequired,
@@ -87,4 +102,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MotorCarrierView);
+export default connect(mapStateToProps, mapDispatchToProps)(MotorCarrierFormView);

@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../../assets/styles/forms.css';
-
-import VehicleForm from '../templates/vehicle_form';
+import VehicleFormView from '../templates/VehicleFormView';
 
 class EditVehicle extends React.Component {
   render() {
     return (
-      <VehicleForm title="Edit Vehicle" isCreate={false} />
+      <VehicleFormView title="Edit Vehicle" isCreate={false} />
     );
   }
 }

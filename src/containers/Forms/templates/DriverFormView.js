@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'reactstrap';
-import '../../../assets/styles/forms.css';
+import { Container, Row, Col, Alert } from 'reactstrap';
 import api from '../../../services/api';
 import DriverForm from './DriverForm';
 
@@ -86,11 +85,14 @@ class DriverFormView extends React.Component {
 
 
   render() {
+    let alert;
     if (this.state.type && this.state.message) {
-      const classString = `alert alert-${this.state.type}`;
-      let status = (<div id="status" className={classString} ref="status">{this.state.message} </div>);
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
-
     const h1Style = {
       marginTop: '1rem',
       marginBottom: '2rem',
@@ -105,7 +107,11 @@ class DriverFormView extends React.Component {
 
     return (
       <Container>
-        <div>{ status }</div>
+        <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
         <Row>
           <Col sm="12" md={{ size: 5, offset: 3 }}>
             <h1 style={h1Style}> { title }</h1>

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
 import { Button, Form, FormGroup, FormFeedback, Input } from 'reactstrap';
+import api from '../../../services/api';
+import '../../../assets/styles/forms.css';
 
-let _ = require('lodash');
+const _ = require('lodash');
 
 
 class MotorCarrierForm extends Component {
@@ -24,6 +26,24 @@ class MotorCarrierForm extends Component {
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
     this.emptyErrors = this.emptyErrors.bind(this);
+  }
+
+  componentDidMount() {
+    // Si estamos editando el documento cargamos los datos del usuario para completar el form
+    if (!this.props.isCreate) {
+      this.getMotorCarrierInfo().then((response) => {
+        if (response.status === 200) {
+          const newData = {
+            name: response.data.name,
+            USDOT_number: response.data.USDOT_number,
+            multiday_basis_used: response.data.multiday_basis_used,
+          };
+          this.setState({ data: newData });
+        } else {
+          console.log('Error loading motor carrier info');
+        }
+      });
+    }
   }
 
   onChange(event) {
@@ -58,7 +78,7 @@ class MotorCarrierForm extends Component {
 
   submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
-    if (this.isValidCreate()) {
+    if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.submit(this.state.data);
     }
@@ -68,7 +88,11 @@ class MotorCarrierForm extends Component {
     return Object.keys(this.state.errors).length === 0;
   }
 
-  isValidCreate() {
+  getMotorCarrierInfo() {
+    return api.motorCarriers.getMotorCarrier(this.props.match.params.id);
+  }
+
+  isValidData() {
     const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
     return isValid;
@@ -122,8 +146,9 @@ class MotorCarrierForm extends Component {
 }
 
 MotorCarrierForm.propTypes = {
+  isCreate: PropTypes.bool.isRequired,
   submit: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
+  match: PropTypes.func.isRequired,
 };
 
 export default MotorCarrierForm;

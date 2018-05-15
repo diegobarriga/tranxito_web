@@ -2,8 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reactstrap';
-import '../../../assets/styles/forms.css';
+import { Alert, Container, Row, Col } from 'reactstrap';
 import api from '../../../services/api';
 
 class VehicleFormView extends React.Component {
@@ -87,16 +86,23 @@ class VehicleFormView extends React.Component {
 
 
   render() {
+    let alert;
     if (this.state.type && this.state.message) {
-      const classString = `alert alert-${this.state.type}`;
-      var status = (<div id="status" className={classString} ref="status">
-        {this.state.message}
-      </div>);
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
 
     return (
-      <div> { status }
+      <div>
         <Container>
+          <Row>
+            <Col sm="12" md={{ size: 12 }}>
+              { alert }
+            </Col>
+          </Row>
           <Row>
             <Col sm="12" md={{ size: 5, offset: 3 }}>
               <h1>{this.props.title}</h1>
@@ -119,7 +125,6 @@ VehicleFormView.propTypes = {
 const mapStateToProps = state => ({
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,
-
 });
 
 export default withRouter(connect(mapStateToProps)(VehicleFormView));

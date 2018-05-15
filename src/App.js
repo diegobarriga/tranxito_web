@@ -32,12 +32,14 @@ import Dashboard from './containers/Dashboard/Dashboard';
 import LoginView from './containers/Forms/Sessions/Login/LoginView';
 import SignupView from './containers/Forms/Sessions/Signup/SignupView';
 import Logout from './containers/Forms/Sessions/Logout/Logout';
-import CreateDriverView from './containers/Forms/Drivers/CreateDriverView';
-import CreateDrivers from './containers/Forms/Drivers/create_drivers';
-import CreateVehicleView from './containers/Forms/Vehicles/CreateVehicleView';
-import CreateMotorCarrierView from './containers/Forms/MotorCarriers/CreateMotorCarrierView';
-import CreateVehicles from './containers/Forms/Vehicles/create_vehicles';
-import EditVehicleView from './containers/Forms/Vehicles/edit_vehicle';
+import CreateDriver from './containers/Forms/Drivers/CreateDriver';
+import EditDriver from './containers/Forms/Drivers/EditDriver';
+import CreateDrivers from './containers/Forms/Drivers/CreateDrivers';
+import CreateVehicle from './containers/Forms/Vehicles/CreateVehicle';
+import CreateVehicles from './containers/Forms/Vehicles/CreateVehicles';
+import EditVehicle from './containers/Forms/Vehicles/EditVehicle';
+import CreateMotorCarrier from './containers/Forms/MotorCarriers/CreateMotorCarrier';
+import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 
@@ -53,20 +55,22 @@ class App extends Component {
       <Layout>
         <Switch>
           <Route path="/drivers/new_drivers" component={CreateDrivers} />
-          <Route path="/drivers/new_driver" component={CreateDriverView} />
+          <Route path="/drivers/new_driver" component={CreateDriver} />
           <Route path="/drivers/:id" component={User} />
+          <Route path="/drivers/:id/edit" component={EditDriver} />
           <Route path="/drivers" component={Users} />
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
-          <Route path="/vehicles/new_vehicle" component={CreateVehicleView} />
-          <Route path="/vehicles/:id/edit" component={EditVehicleView} />
+          <Route path="/vehicles/new_vehicle" component={CreateVehicle} />
+          <Route path="/vehicles/:id/edit" component={EditVehicle} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={SignupView} />
           <Route path="/login" component={LoginView} />
           <Route path="/" exact component={LoginView} />
           <Route path="/logout" component={Logout} />
-          <Route path="/motor_carriers/create" component={CreateMotorCarrierView} />
+          <Route path="/motor_carriers/create" component={CreateMotorCarrier} />
+          <Route path="/motor_carriers/:id/edit" component={EditMotorCarrier} />
           <Route path="/motor_carriers/:id/new_supervisor" component={SignupView} />
           <Route path="/motor_carriers/:id" component={MotorCarrier} />
           <Route path="/motor_carriers" component={MotorCarriers} />

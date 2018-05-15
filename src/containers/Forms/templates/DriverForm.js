@@ -3,6 +3,7 @@ import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import api from '../../../services/api';
+import '../../../assets/styles/forms.css';
 
 const _ = require('lodash');
 
@@ -68,6 +69,10 @@ class DriverForm extends Component {
         }
       });
     }
+  }
+
+  onTogglePassword() {
+    this.setState({ showPassword: !this.state.showPassword });
   }
 
   onChange(event) {

@@ -9,7 +9,7 @@ const pStyle = {
   color: 'white',
 };
 
-const path = `${process.env.PUBLIC_URL}/logoe2e.svg`;
+const path = `${process.env.PUBLIC_URL}/img/logoe2e.svg`;
 
 const navibar = props => (
   <Navbar fixed="top" className="navbar" light expand="md">
