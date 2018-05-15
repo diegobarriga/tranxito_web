@@ -174,7 +174,7 @@ class DriverForm extends Component {
     return items;
   }
 
-  submitHandler(event) {
+  async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });

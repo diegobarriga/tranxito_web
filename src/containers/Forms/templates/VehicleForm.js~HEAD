@@ -1,11 +1,13 @@
 import React from 'react';
 import validator from 'validator';
-import TemplateCSV from '../templates/template_csv';
-import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
+import PropTypes from 'prop-types';
+import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import '../../../assets/styles/forms.css';
+import api from '../../../services/api';
 
-var _ = require('lodash');
+const _ = require('lodash');
 
-class CreateVehicleForm extends React.Component {
+class VehicleForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,47 +19,92 @@ class CreateVehicleForm extends React.Component {
         car_maker: '',
         plaque: '',
         state: '',
-        IMEI_EL: '',
-        image: '',
+        IMEI_ELD: '',
       },
+      picture: '',
       isLoading: false,
       redirectTo: false,
     };
-    this.isValidCreate = this.isValidCreate.bind(this);
+    this.validateInput = this.validateInput.bind(this);
+    this.isValidData = this.isValidData.bind(this);
+    this.validateInput = this.validateInput.bind(this);
+    this.emptyErrors = this.emptyErrors.bind(this);
     this.onChange = this.onChange.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
-    this.validateInput = this.validateInput.bind(this);
   }
 
+  componentDidMount() {
+    // Si estamos editando el documento cargamos los datos del usuario para completar el form
+    if (!this.props.isCreate) {
+      this.getVehicleInfo().then((response) => {
+        if (response.status === 200) {
+          const newData = {
+            vin: response.data.vin,
+            CMV_power_unit_number: response.data.CMV_power_unit_number,
+            model: response.data.model,
+            car_maker: response.data.car_maker,
+            plaque: response.data.plaque,
+            state: response.data.state,
+            IMEI_ELD: response.data.IMEI_ELD,
+            image: response.data.image,
+          };
+          this.setState({ data: newData });
+        } else {
+          console.log('Error loading vehicle info');
+        }
+      });
+    }
+  }
+
+
+
   onChange(event) {
-    this.setState({
-      ...this.state,
-      data: { ...this.state.data, [event.target.name]: event.target.value }
-    });
+    if (event.target.name === 'picture') {
+      this.setState({ picture: event.target.files[0] });
+    } else {
+      this.setState({
+        ...this.state,
+        data: { ...this.state.data, [event.target.name]: event.target.value },
+      });
+    }
+  }
+
+  getVehicleInfo() {
+    return api.vehicles.getVehicle(this.props.match.params.id, this.props.token);
+  }
+
+  isValidData() {
+    const { errors, isValid } = this.validateInput(this.state.data);
+    if (!isValid) this.setState({ errors });
+    return isValid;
   }
 
   // TODO Complete with defined validations
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
-
   validateInput(data) {
-    let errors = {}
+    const errors = {};
     if (data.vin.length > 18 || data.vin.length < 17) {
       errors.vin = 'Must be 17 or 18 characters long';
-    }
-    else if (data.vin.length == 18 && String(data.vin)[0] !== '-') {
-      errors.vin = "Must start with a dash (-) if VIN is 18 char long";
+    } else if (data.vin.length == 18 && String(data.vin)[0] !== '-') {
+      errors.vin = 'Must start with a dash (-) if VIN is 18 char long';
     }
     if (_.isEmpty(String(data.CMV_power_unit_number))) {
       errors.CMV_power_unit_number = 'This field is required';
-    }
-    else if (data.IMEI_ELD && !data.CMV_power_unit_number) {
+    } else if (data.IMEI_ELD && !data.CMV_power_unit_number) {
       errors.CMV_power_unit_number = 'CMV Power Unit Number field is required';
     }
+    /* fede pls
+    if (_.isEmpty(String(data.model))) {
+      errors.model = 'This field is required';
+    } else if (!validator.isEmail(String(data.email))) {
+      errors.email = 'Input is not a valid email';
+    }
+    */
     if (_.isEmpty(String(data.model))) {
       errors.model = 'This field is required';
     }
-    else if (!validator.isEmail(String(data.email))) {
-      errors.email = 'Input is not a valid email';
+    if (_.isEmpty(String(data.IMEI_ELD))) {
+      errors.IMEI_ELD = 'This field is required';
     }
     if (_.isEmpty(String(data.car_maker))) {
       errors.car_maker = 'This field is required';
@@ -67,46 +114,40 @@ class CreateVehicleForm extends React.Component {
     }
     if (_.isEmpty(String(data.state))) {
       errors.state = 'This field is required';
-    }
-    else if (String(data.state).length != 2) {
+    } else if (String(data.state).length !== 2) {
       errors.state = 'Not a valid state';
     }
     return {
       errors,
-      isValid: _.isEmpty(errors)
-    }
-  }
-
-  isValidCreate() {
-    const { errors, isValid } = this.validateInput(this.state.data);
-    if (!isValid) this.setState({ errors });
-    return isValid;
-  }
-
-  imgUpload(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
+      isValid: _.isEmpty(errors),
     };
-    return api.images.vehicleImageUpload(formData, config, this.props.token);
   }
 
-  submitHandler(event){
+  emptyErrors() {
+    return Object.keys(this.state.errors).length === 0;
+  }
+
+  async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
-    if (this.isValidCreate()) {
-      this.setState({ errors: {}, isLoading: true});
+    
+    if (this.isValidData()) {
+      this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      this.props.submit(this.state.data).catch(
-        (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-      );
+      console.log('submited');
+      try {
+        await this.props.submit(this.state)
+      } catch (error) {
+        this.setState({ errors: error.response.data.errors, isLoading: false });
+      }
     }
   }
 
   render() {
-    const { errors, isLoading, redirectTo } = this.state;
+    const {
+      errors,
+      isLoading,
+      data,
+    } = this.state;
     return (
       <Form onSubmit={this.submitHandler}>
         <FormGroup>
@@ -115,6 +156,7 @@ class CreateVehicleForm extends React.Component {
             name="vin"
             placeholder="VIN Number"
             onChange={this.onChange}
+            value={data.vin}
             valid={!this.emptyErrors() && !errors.vin}
             invalid={errors.vin}
           />
@@ -125,6 +167,7 @@ class CreateVehicleForm extends React.Component {
             type="text"
             name="CMV_power_unit_number"
             placeholder="CMV Power Unit Number"
+            value={data.CMV_power_unit_number}
             onChange={this.onChange}
             valid={!this.emptyErrors() && !errors.CMV_power_unit_number}
             invalid={errors.CMV_power_unit_number}
@@ -136,6 +179,7 @@ class CreateVehicleForm extends React.Component {
             type="text"
             name="model"
             placeholder="Vehicle Model"
+            value={data.model}
             onChange={this.onChange}
             valid={!this.emptyErrors() && !errors.model}
             invalid={errors.model}
@@ -147,6 +191,7 @@ class CreateVehicleForm extends React.Component {
             type="text"
             name="car_maker"
             placeholder="Car Maker"
+            value={data.car_maker}
             onChange={this.onChange}
             valid={!this.emptyErrors() && !errors.car_maker}
             invalid={errors.car_maker}
@@ -158,6 +203,7 @@ class CreateVehicleForm extends React.Component {
             type="text"
             name="plaque"
             placeholder="Plaque"
+            value={data.plaque}
             onChange={this.onChange}
             valid={!this.emptyErrors() && !errors.plaque}
             invalid={errors.plaque}
@@ -169,6 +215,7 @@ class CreateVehicleForm extends React.Component {
             type="text"
             name="state"
             placeholder="State"
+            value={data.state}
             onChange={this.onChange}
             valid={!this.emptyErrors() && !errors.state}
             invalid={errors.state}
@@ -181,17 +228,28 @@ class CreateVehicleForm extends React.Component {
             min={0}
             name="IMEI_ELD"
             placeholder="IMEI ELD"
+            value={data.IMEI_ELD}
             onChange={this.onChange}
             valid={!this.emptyErrors() && !errors.IMEI_ELD}
             invalid={errors.IMEI_ELD}
           />
           <FormFeedback>{errors.IMEI_ELD}</FormFeedback>
         </FormGroup>
-        <Button type='submit' loading={isLoading}>Submit</Button>
+        <FormGroup>
+          <Label for="image">Image</Label>
+          <Input type="file" name="picture" className="center-item" onChange={this.onChange} />
+        </FormGroup>
+        <Button type="submit" loading={isLoading}>Submit</Button>
       </Form>
     );
   }
 }
 
+VehicleForm.propTypes = {
+  isCreate: PropTypes.bool.isRequired,
+  submit: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  match: PropTypes.func.isRequired,
+};
 
-export default CreateVehicleForm;
+export default VehicleForm;

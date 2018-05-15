@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Alert } from 'reactstrap';
+import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import DriverForm from './DriverForm';
 

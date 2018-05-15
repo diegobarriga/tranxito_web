@@ -6,14 +6,6 @@ import { Redirect } from 'react-router-dom';
 import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
 import Aux from '../../hoc/Aux';
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
-import UsersInfo from './UsersInfo';
->>>>>>> more cleanup
->>>>>>> more cleanup
 import '../../assets/styles/forms.css';
 
 class Users extends React.Component {
