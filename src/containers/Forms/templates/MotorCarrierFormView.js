@@ -13,10 +13,13 @@ class MotorCarrierFormView extends React.Component {
     super(props);
     this.state = {
     };
+    this.postData = this.postData.bind(this);
+    this.patchData = this.patchData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
 
-  submit(data) {
+  onFormSubmit(data) {
     this.props.onRegister(data);
     // this.props.token,
     this.props.history.push('/motor_carriers');
@@ -63,7 +66,7 @@ class MotorCarrierFormView extends React.Component {
             { authRedirect }
             <h1 style={h1Style}>{ this.props.title }</h1>
             <MotorCarrierForm
-              submit={this.submit}
+              submit={this.onFormSubmit}
               token={this.props.token}
             />
           </Col>

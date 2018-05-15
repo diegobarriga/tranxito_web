@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Alert, Container, Row, Col } from 'reactstrap';
+import VehicleForm from './VehicleForm';
 import api from '../../../services/api';
 
 class VehicleFormView extends React.Component {
@@ -14,28 +15,19 @@ class VehicleFormView extends React.Component {
       picture: null,
     };
     this.postData = this.postData.bind(this);
+    this.patchData = this.patchData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.imgUpload = this.imgUpload.bind(this);
   }
 
-  onFormSubmit(e) {
-    e.preventDefault(); // Stop form submit
+  onFormSubmit(data) {
     this.imgUpload(this.state.picture).then((imgResponse) => {
-      console.log('aaaaaaa');
-
       if (imgResponse.status === 200) {
-        console.log('imagen creada correctamente');
-        console.log(imgResponse.data.result.files.file[0].name);
         // setiamos el nombre de la imagen con la respuesta
-        const updatedState = {
-          ...this.state.data,
-          image: imgResponse.data.result.files.file[0].name,
-        };
-        this.setState({ data: updatedState });
-
+        data.image = imgResponse.data.result.files.file[0].name;
         // Si estamos creando un usuario
         if (this.props.isCreate) {
-          this.postData(this.state.data).then((response) => {
-            console.log(response.data);
-            console.log(response.status);
+          this.postData(data).then((response) => {
             if (response.status === 200) {
               this.setState({ type: 'success', message: 'We have created the new vehicle.' });
             } else {
@@ -45,9 +37,7 @@ class VehicleFormView extends React.Component {
 
         // // Si estamos editando un usuario
         } else {
-          this.patchData(this.state.data).then((response) => {
-            console.log(response.data);
-            console.log(response.status);
+          this.patchData(data).then((response) => {
             if (response.status === 200) {
               this.setState({ type: 'success', message: 'We have edited the vehicle.' });
             } else {
@@ -87,6 +77,14 @@ class VehicleFormView extends React.Component {
 
   render() {
     let alert;
+
+    const {
+      title,
+      isCreate,
+      token,
+      match,
+    } = this.props;
+
     if (this.state.type && this.state.message) {
       if (this.state.type === 'success') {
         alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
@@ -96,20 +94,24 @@ class VehicleFormView extends React.Component {
     }
 
     return (
-      <div>
-        <Container>
-          <Row>
-            <Col sm="12" md={{ size: 12 }}>
-              { alert }
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="12" md={{ size: 5, offset: 3 }}>
-              <h1>{this.props.title}</h1>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <Container>
+        <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 5, offset: 3 }}>
+            <h1>{title}</h1>
+            <VehicleForm
+              submit={this.onFormSubmit}
+              isCreate={isCreate}
+              token={token}
+              match={match}
+            />
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

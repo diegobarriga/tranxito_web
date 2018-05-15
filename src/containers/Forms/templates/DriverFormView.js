@@ -15,17 +15,16 @@ class DriverFormView extends React.Component {
       message: '',
     };
     this.postData = this.postData.bind(this);
+    this.patchData = this.patchData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.imgUpload = this.imgUpload.bind(this);
   }
 
   onFormSubmit(data) {
     this.imgUpload(this.state.picture).then((imgResponse) => {
       if (imgResponse.status === 200) {
         // setiamos el nombre de la imagen con la respuesta
-        const updatedState = {
-          ...this.state.data,
-          image: imgResponse.data.result.files.file[0].name,
-        };
-        this.setState({ data: updatedState });
+        data.image = imgResponse.data.result.files.file[0].name;
         // Si estamos creando un usuario
         if (this.props.isCreate) {
           this.postData(data).then((response) => {
@@ -116,6 +115,7 @@ class DriverFormView extends React.Component {
           <Col sm="12" md={{ size: 5, offset: 3 }}>
             <h1 style={h1Style}> { title }</h1>
             <DriverForm
+              submit={this.onFormSubmit}
               isCreate={isCreate}
               token={token}
               match={match}
