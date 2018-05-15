@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Input, Container, Row, Col, Label } from 'reactstrap';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
+import Alert from '../../Alert/Alert';
+import Loader from '../../../components/Loader/Loader';
 
 class CreateVehicle extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class CreateVehicle extends React.Component {
       type: '',
       message: '',
       picture: null,
+      loading: false,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -56,6 +59,7 @@ class CreateVehicle extends React.Component {
   }
 
   onFormSubmit(e) {
+    this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     this.imgUpload(this.state.picture).then((imgResponse) => {
       console.log('aaaaaaa');
@@ -76,8 +80,10 @@ class CreateVehicle extends React.Component {
             console.log(response.data);
             console.log(response.status);
             if (response.status === 200) {
+              this.setState({ ...this.state, loading: false });
               this.setState({ type: 'success', message: 'We have created the new vehicle.' });
             } else {
+              this.setState({ ...this.state, loading: false });
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
           });
@@ -88,13 +94,16 @@ class CreateVehicle extends React.Component {
             console.log(response.data);
             console.log(response.status);
             if (response.status === 200) {
+              this.setState({ ...this.state, loading: false });
               this.setState({ type: 'success', message: 'We have edited the vehicle.' });
             } else {
+              this.setState({ ...this.state, loading: false });
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
           });
         }
       } else {
+        this.setState({ ...this.state, loading: false });
         this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
       }
     });
@@ -141,58 +150,65 @@ class CreateVehicle extends React.Component {
 
 
   render() {
+    if (this.state.loading === true) return <Loader />;
+
+    let alert;
     if (this.state.type && this.state.message) {
-      const classString = `alert alert-${this.state.type}`;
-      var status = (<div id="status" className={classString} ref="status">
-        {this.state.message}
-      </div>);
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
 
     return (
-      <div>{status}
-        <Container>
-          <Row>
-            <Col sm="12" md={{ size: 5, offset: 3 }}>
-              <h1>{this.props.title}</h1>
-              <Form onSubmit={this.onFormSubmit}>
-                <FormGroup>
-                  <Label for="image">VIN Number</Label>
-                  <Input type="string" name="vin" value={this.state.data.vin} placeholder="VIN Number" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="image">CMV Power Unit Number</Label>
-                  <Input type="string" name="CMV_power_unit_number" value={this.state.data.CMV_power_unit_number} placeholder="CMV Power Unit Number" onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="image">Vehicle Model</Label>
-                  <Input type="string" name="model" placeholder="Vehicle Model" value={this.state.data.model} onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="image">Car Maker</Label>
-                  <Input type="string" name="car_maker" placeholder="Car Maker" value={this.state.data.car_maker} onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="image">Plaque</Label>
-                  <Input type="string" name="plaque" placeholder="Plaque" value={this.state.data.plaque} onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="image">State</Label>
-                  <Input type="string" name="state" placeholder="State" value={this.state.data.state} onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="image">IMEI ELD</Label>
-                  <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" value={this.state.data.IMEI_EL} onChange={this.onChange} />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="image">Image</Label>
-                  <Input type="file" name="picture" value={this.state.data.first_name} className="center-item" onChange={this.onChange} />
-                </FormGroup>
-                <Button>Submit</Button>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <Container>
+        <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 5, offset: 3 }}>
+            <h1>{this.props.title}</h1>
+            <Form onSubmit={this.onFormSubmit}>
+              <FormGroup>
+                <Label for="image">VIN Number</Label>
+                <Input type="string" name="vin" value={this.state.data.vin} placeholder="VIN Number" onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">CMV Power Unit Number</Label>
+                <Input type="string" name="CMV_power_unit_number" value={this.state.data.CMV_power_unit_number} placeholder="CMV Power Unit Number" onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">Vehicle Model</Label>
+                <Input type="string" name="model" placeholder="Vehicle Model" value={this.state.data.model} onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">Car Maker</Label>
+                <Input type="string" name="car_maker" placeholder="Car Maker" value={this.state.data.car_maker} onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">Plaque</Label>
+                <Input type="string" name="plaque" placeholder="Plaque" value={this.state.data.plaque} onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">State</Label>
+                <Input type="string" name="state" placeholder="State" value={this.state.data.state} onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">IMEI ELD</Label>
+                <Input type="number" name="IMEI_ELD" placeholder="IMEI ELD" value={this.state.data.IMEI_EL} onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="image">Image</Label>
+                <Input type="file" name="picture" value={this.state.data.first_name} className="center-item" onChange={this.onChange} />
+              </FormGroup>
+              <Button>Submit</Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

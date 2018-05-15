@@ -24,7 +24,7 @@ class MotorCarriers extends React.Component {
       display: 'flex',
     };
 
-    const containerObject = {
+    const containedObject = {
       flexGrow: '1',
     };
 
@@ -54,7 +54,7 @@ class MotorCarriers extends React.Component {
                 {
                   this.props.mCarrierList.map(carrier => (
                     <div key={carrier.id} style={flexContainer} className="list-group-item-action list-group-item">
-                      <div key={carrier.id} style={containerObject}>
+                      <div key={carrier.id} style={containedObject}>
                         <Link key={carrier.id} to="/">
                           {carrier.name}
                         </Link>

@@ -17,7 +17,9 @@ const getUsersSuccess = (state, action) => updateObject(state, {
   loading: false,
 });
 
+const delErrorReset = state => updateObject(state, { error: null });
 
+/* borrar driver de la store */
 const onDeleteSuccess = (state, action) => {
   const oldUser = state.users.find(user => user.id === action.userId);
   const otherUsers = state.users.filter(user => user.id !== action.userId);
@@ -26,6 +28,7 @@ const onDeleteSuccess = (state, action) => {
   });
 
   return updateObject(state, {
+    error: action.response,
     loading: false,
     users: [newUser, ...otherUsers],
   });
@@ -41,6 +44,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_USERS_SUCCESS: return getUsersSuccess(state, action);
     case actionTypes.GET_USERS_FAIL: return getUsersFail(state, action);
     case actionTypes.DELETE_USER: return onDeleteSuccess(state, action);
+    case actionTypes.DEL_ERROR_RESET: return delErrorReset(state);
 
     default:
       return state;

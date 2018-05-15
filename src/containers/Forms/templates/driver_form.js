@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { Label, Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
+import Alert from '../../Alert/Alert';
+import Loader from '../../../components/Loader/Loader';
 
 class DriverForm extends React.Component {
   constructor(props) {
@@ -31,6 +33,7 @@ class DriverForm extends React.Component {
       picture: null,
       type: '',
       message: '',
+      loading: false,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -42,8 +45,6 @@ class DriverForm extends React.Component {
     if (!this.props.isCreate) {
       this.getUserInfo().then((response) => {
         if (response.status === 200) {
-          console.log('response');
-          console.log(response);
           const newData = {
             first_name: response.data.first_name,
             last_name: response.data.last_name,
@@ -73,6 +74,7 @@ class DriverForm extends React.Component {
 
 
   onFormSubmit(e) {
+    this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     this.imgUpload(this.state.picture).then((imgResponse) => {
       if (imgResponse.status === 200) {
@@ -85,9 +87,11 @@ class DriverForm extends React.Component {
         // Si estamos creando un usuario
         if (this.props.isCreate) {
           this.postData(this.state.data).then((response) => {
+            this.setState({ ...this.state, loading: false });
             if (response.status === 200) {
               this.setState({ type: 'success', message: 'We have created the new driver.' });
             } else {
+              this.setState({ ...this.state, loading: false });
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
           });
@@ -96,13 +100,16 @@ class DriverForm extends React.Component {
         } else {
           this.patchData(this.state.data).then((response) => {
             if (response.status === 200) {
+              this.setState({ ...this.state, loading: false });
               this.setState({ type: 'success', message: 'We have edited the driver.' });
             } else {
+              this.setState({ ...this.state, loading: false });
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
           });
         }
       } else {
+        this.setState({ ...this.state, loading: false });
         this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
       }
     });
@@ -156,9 +163,15 @@ class DriverForm extends React.Component {
 
 
   render() {
+    if (this.state.loading === true) return <Loader />;
+
+    let alert;
     if (this.state.type && this.state.message) {
-      const classString = `alert alert-${this.state.type}`;
-      var status = (<div id="status" className={classString} ref="status">{this.state.message} </div>);
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
 
     const h1Style = {
@@ -168,7 +181,11 @@ class DriverForm extends React.Component {
 
     return (
       <Container>
-        <div>{ status }</div>
+        <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
         <Row>
           <Col sm="12" md={{ size: 5, offset: 3 }}>
             <h1 style={h1Style}> {this.props.title }</h1>
