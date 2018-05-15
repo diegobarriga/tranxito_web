@@ -5,16 +5,14 @@ import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
-import CreateMotorCarrierForm from './CreateMotorCarrierForm';
+import MotorCarrierForm from './MotorCarrierForm';
 
 
-class CreateMotorCarrierView extends React.Component {
+class MotorCarrierView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      errors: {},
-      redirectTo: false
-    }
+    };
   }
 
 
@@ -50,7 +48,10 @@ class CreateMotorCarrierView extends React.Component {
           <Col sm="12" md={{ size: 5, offset: 3 }}>
             { authRedirect }
             <h1 style={h1Style}>Create Motor Carrier</h1>
-            <CreateMotorCarrierForm submit={this.submit}/>
+            <MotorCarrierForm
+              submit={this.submit}
+              token={this.props.token}
+            />
           </Col>
         </Row>
       </Container>
@@ -59,7 +60,7 @@ class CreateMotorCarrierView extends React.Component {
 }
 
 
-CreateMotorCarrierView.propTypes = {
+MotorCarrierView.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onRegister: PropTypes.func.isRequired,
@@ -86,4 +87,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateMotorCarrierView);
+export default connect(mapStateToProps, mapDispatchToProps)(MotorCarrierView);

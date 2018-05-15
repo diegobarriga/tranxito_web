@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
-import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
+import { Button, Form, FormGroup, FormFeedback, Input } from 'reactstrap';
 
 let _ = require('lodash');
 
 
-class CreateMotorCarrierForm extends Component {
+class MotorCarrierForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,9 +61,6 @@ class CreateMotorCarrierForm extends Component {
     if (this.isValidCreate()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.submit(this.state.data);
-      // .catch(
-      //   (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-      // );
     }
   }
 
@@ -78,7 +75,7 @@ class CreateMotorCarrierForm extends Component {
   }
 
   render() {
-    const { errors, isLoading } = this.state;
+    const { errors, isLoading, data } = this.state;
     return (
       <Form onSubmit={this.submitHandler}>
         <FormGroup>
@@ -87,6 +84,7 @@ class CreateMotorCarrierForm extends Component {
             name="name"
             onChange={this.onChange}
             placeholder="Name"
+            value={data.name}
             valid={!this.emptyErrors() && !errors.name}
             invalid={errors.name}
           />
@@ -97,6 +95,7 @@ class CreateMotorCarrierForm extends Component {
             type="number"
             name="USDOT_number"
             min={0}
+            value={data.USDOT_number}
             onChange={this.onChange}
             placeholder="USDOT Number"
             valid={!this.emptyErrors() && !errors.USDOT_number}
@@ -108,6 +107,7 @@ class CreateMotorCarrierForm extends Component {
           <Input
             type="text"
             name="multiday_basis_used"
+            value={data.multiday_basis_used}
             onChange={this.onChange}
             placeholder="Multiday basis used"
             valid={!this.emptyErrors() && !errors.multiday_basis_used}
@@ -121,8 +121,9 @@ class CreateMotorCarrierForm extends Component {
   }
 }
 
-CreateMotorCarrierForm.propTypes = {
+MotorCarrierForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
-export default CreateMotorCarrierForm;
+export default MotorCarrierForm;
