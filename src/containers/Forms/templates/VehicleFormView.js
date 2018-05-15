@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Container, Row, Col, Alert } from 'reactstrap';
 import VehicleForm from './VehicleForm';
-import { Button, Form, FormGroup, Input, Container, Row, Col, Label, Alert } from 'reactstrap';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 
@@ -13,7 +13,6 @@ class VehicleFormView extends React.Component {
     this.state = {
       type: '',
       message: '',
-      picture: null,
     };
     this.postData = this.postData.bind(this);
     this.patchData = this.patchData.bind(this);
