@@ -1,16 +1,36 @@
-.main {
-    flex: 80%;
-    background-color: white;
-    padding: 20px;
+.app { min-height: 100vh; }
+.appBody, .appMain{ flex: 1; }
+.app, .appBody {
+  display: flex;
+  flex-direction: column;
 }
 
-.navibar {
-    display: flex;
+.centerArea{ background: white; }
+
+.appNavbar{
+  margin-bottom: 75px; 
 }
 
-.layout-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 75px;
+.appMain{
+  display: flex;
+}
+
+.centerArea{
+  flex: 1 1 40em;
+  margin-top: 2rem;
+}
+.leftSidebar{
+  flex: 0 1 15em;
+  order: -1;
+  margin-right: 2rem;
+}
+
+@media (max-width: 550px) {
+  .appMain{
+    flex-direction: column;
+  }
+  .leftSidebar{
+    order: 0;
+  }
 }
 
