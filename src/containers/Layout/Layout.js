@@ -10,17 +10,27 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <div className="navibar">
-          <Navibar isAuth={this.props.isAuthenticated} />
-        </div>
-        <div className="layout-container">
-          { this.props.isAuthenticated &&
-          <Sidebar isAdm={this.props.isAdmin} />
-          }
-          <main className="main">
-            { this.props.children }
+
+        <div className="app">
+          <header className="appNavbar" >
+            <Navibar isAuth={this.props.isAuthenticated} />
+          </header>
+          <main className="appBody">
+            <div className="appMain">
+
+              <div className="centerArea">
+                { this.props.children }
+              </div>
+              <div className="leftSidebar">
+                { this.props.isAuthenticated &&
+                <Sidebar isAdm={this.props.isAdmin} />
+                }
+              </div>
+            </div>
+            <footer />
           </main>
         </div>
+
       </Aux>
     );
   }
