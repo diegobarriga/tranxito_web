@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import ReactTooltip from 'react-tooltip';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
-import { Label, Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import { Label, Button, Form, FormGroup, Input, Container, Row, Col, InputGroup, InputGroupAddon } from 'reactstrap';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert from '../../Alert/Alert';
@@ -95,8 +97,7 @@ class DriverForm extends React.Component {
               this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             }
           });
-
-        // // Si estamos editando un usuario
+        // Si estamos editando un usuario
         } else {
           this.patchData(this.state.data).then((response) => {
             if (response.status === 200) {
@@ -179,6 +180,7 @@ class DriverForm extends React.Component {
       marginBottom: '2rem',
     };
 
+    console.log(this.state.picture);
     return (
       <Container>
         <Row>
@@ -211,39 +213,105 @@ class DriverForm extends React.Component {
                 <Input type="string" name="licenses_issuing_state" value={this.state.data.licenses_issuing_state} placeholder="Licenses Issuing State" onChange={this.onChange} />
               </FormGroup>
               <FormGroup>
+
                 <Label for="image">Exempt Driver Configuration</Label>
-                <Input type="select" name="exempt_driver_configuration" value={this.state.data.exempt_driver_configuration} placeholder="Exempt Driver Configuration" onChange={this.onChange}>
-                  <option>E</option>
-                  <option selected="selected">0</option>
-                </Input>
+                <InputGroup>
+                  <Input type="select" name="exempt_driver_configuration" value={this.state.data.exempt_driver_configuration} placeholder="Exempt Driver Configuration" onChange={this.onChange}>
+                    <option>E</option>
+                    <option selected="selected">0</option>
+                  </Input>
+                  <InputGroupAddon addonType="append">
+                    <button disabled>
+                      <a data-tip data-for="happyFace"> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </a>
+                      <ReactTooltip id="happyFace" place="right" type="dark">
+                        <span>Show happy face</span>
+                      </ReactTooltip >
+                    </button>
+                  </InputGroupAddon>
+                </InputGroup>
+
+
               </FormGroup>
               <FormGroup>
                 <Label for="image">Time Zone Offset UTC</Label>
-                <Input type="select" name="time_zone_offset_utc" value={this.state.data.time_zone_offset_utc} placeholder="Time Zone Offset UTC" onChange={this.onChange}>
-                  {this.createSelectItems(4, 11)}
-                </Input>
+                <InputGroup>
+                  <Input type="select" name="time_zone_offset_utc" value={this.state.data.time_zone_offset_utc} placeholder="Time Zone Offset UTC" onChange={this.onChange}>
+                    {this.createSelectItems(4, 11)}
+                  </Input>
+                  <InputGroupAddon addonType="append">
+                    <button disabled>
+                      <a data-tip data-for="happyFace"> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </a>
+                      <ReactTooltip id="happyFace" place="right" type="dark">
+                        <span>Show happy face</span>
+                      </ReactTooltip >
+                    </button>
+                  </InputGroupAddon>
+                </InputGroup>
               </FormGroup>
+
               <FormGroup>
                 <Label for="image">Starting Time 24 Hour Period</Label>
-                <Input type="datetime-local" name="starting_time_24_hour_period" value={this.state.data.starting_time_24_hour_period} placeholder="Starting Time 24 Hour Period" onChange={this.onChange} />
+                <InputGroup>
+                  <Input type="datetime-local" name="starting_time_24_hour_period" value={this.state.data.starting_time_24_hour_period} placeholder="Starting Time 24 Hour Period" onChange={this.onChange} />
+                  <InputGroupAddon addonType="append">
+                    <button disabled>
+                      <a data-tip data-for="happyFace"> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </a>
+                      <ReactTooltip id="happyFace" place="right" type="dark">
+                        <span>Show happy face</span>
+                      </ReactTooltip >
+                    </button>
+                  </InputGroupAddon>
+                </InputGroup>
               </FormGroup>
+
               <FormGroup>
                 <Label for="image">Move Yards Use</Label>
-                <Input type="select" name="move_yards_use" placeholder="Move Yards Use" value={this.state.data.move_yards_use} onChange={this.onChange}>
-                  {this.createSelectItems(0, 1)}
-                </Input>
+                <InputGroup>
+                  <Input type="select" name="move_yards_use" placeholder="Move Yards Use" value={this.state.data.move_yards_use} onChange={this.onChange}>
+                    {this.createSelectItems(0, 1)}
+                  </Input>
+                  <InputGroupAddon addonType="append">
+                    <button disabled>
+                      <a data-tip data-for="happyFace"> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </a>
+                      <ReactTooltip id="happyFace" place="right" type="dark">
+                        <span>Show happy face</span>
+                      </ReactTooltip >
+                    </button>
+                  </InputGroupAddon>
+                </InputGroup>
               </FormGroup>
+
               <FormGroup>
                 <Label for="image">Default Use</Label>
-                <Input type="select" name="default_use" placeholder="Default Use" value={this.state.data.default_use} onChange={this.onChange}>
-                  {this.createSelectItems(0, 1)}
-                </Input>
+                <InputGroup>
+                  <Input type="select" name="default_use" placeholder="Default Use" value={this.state.data.default_use} onChange={this.onChange}>
+                    {this.createSelectItems(0, 1)}
+                  </Input>
+                  <InputGroupAddon addonType="append">
+                    <button disabled>
+                      <a data-tip data-for="happyFace"> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </a>
+                      <ReactTooltip id="happyFace" place="right" type="dark">
+                        <span>Show happy face</span>
+                      </ReactTooltip >
+                    </button>
+                  </InputGroupAddon>
+                </InputGroup>
               </FormGroup>
               <FormGroup>
                 <Label for="image">Personal Use</Label>
-                <Input type="select" name="personal_use" placeholder="Personal Use" value={this.state.data.personal_use} onChange={this.onChange}>
-                  {this.createSelectItems(0, 1)}
-                </Input>
+                <InputGroup>
+                  <Input type="select" name="personal_use" placeholder="Personal Use" value={this.state.data.personal_use} onChange={this.onChange}>
+                    {this.createSelectItems(0, 1)}
+                  </Input>
+                  <InputGroupAddon addonType="append">
+                    <button disabled>
+                      <a data-tip data-for="happyFace"> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </a>
+                      <ReactTooltip id="happyFace" place="right" type="dark">
+                        <span>Show happy face</span>
+                      </ReactTooltip >
+                    </button>
+                  </InputGroupAddon>
+                </InputGroup>
               </FormGroup>
               <FormGroup>
                 <Label for="image">Image</Label>
