@@ -18,6 +18,7 @@ import './assets/styles/App.css';
 import Drivers from './containers/Users/Users';
 import Driver from './containers/Users/User';
 import Vehicles from './containers/Trucks/Trucks';
+import Vehicle from './containers/Trucks/Vehicle';
 
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
@@ -52,6 +53,7 @@ class App extends Component {
           <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
           <Route path="/vehicles/new_vehicle" component={CreateVehicle} />
           <Route path="/vehicles/:id/edit" component={EditVehicle} />
+          <Route path="/vehicles/:id" component={Vehicle} />
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />

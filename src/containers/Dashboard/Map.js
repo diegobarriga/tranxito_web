@@ -57,8 +57,8 @@ const MapWithAMarkerClusterer = compose(
           lng={marker.coordinates.lng}
           speed={marker.speed}
           timestamp={marker.timestamp}
-          person={marker.personId}
-          vehicle={marker.vehicleId}
+          userId={marker.personId}
+          vehicleId={marker.vehicleId}
           eventCode={marker.eventCode}
         />
       ))}
@@ -68,13 +68,6 @@ const MapWithAMarkerClusterer = compose(
 
 class Map extends React.Component {
   componentDidMount() {
-    // const url = `https://eld-test.azurewebsites.net/api/MotorCarriers/${this.props.motorCarrierId}/tracking?access_token=${this.props.token}`
-    // const url = 'http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/1/tracking';
-    // fetch(url)
-    //   .then(res => res.json())
-    //   .then((data) => {
-    //     this.setState({ markers: data });
-    //   });
     this.props.getTrackings(this.props.token, this.props.motorCarrierId);
 
     // this.getDefaultPosition();
@@ -82,7 +75,7 @@ class Map extends React.Component {
 
   render() {
     if (this.props.isLoading === true) return <Loader />;
-    console.log(this.props.trackings);
+
     return (
       <MapWithAMarkerClusterer markers={this.props.trackings} />
     );

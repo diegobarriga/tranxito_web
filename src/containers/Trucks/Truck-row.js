@@ -30,7 +30,7 @@ class TruckRow extends React.Component {
           </figure>
           <div className="right">
             <ul>
-              <li>{this.props.car_maker} {this.props.model} - {this.props.plaque}</li>
+              <li><Link to={`/vehicles/${this.props.id}`}>{this.props.car_maker} {this.props.model} - {this.props.plaque}</Link></li>
               <li>State: {this.props.state}</li>
               <li>VIN: {this.props.vin}</li>
             </ul>

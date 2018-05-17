@@ -4,10 +4,10 @@ import authReducer from './reducers/auth';
 import mCarrierReducer from './reducers/mCarrier';
 import usersReducer from './reducers/users';
 import vehiclesReducer from './reducers/vehicles';
+import vehicleReducer from './reducers/vehicle';
 import userInfoReducer from './reducers/userInfo';
 import userLogsReducer from './reducers/userLogs';
 import trackingReducer from './reducers/tracking';
-
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
   mCarrier: mCarrierReducer,
   users: usersReducer,
   vehicles: vehiclesReducer,
+  vehicle: vehicleReducer,
   userInfo: userInfoReducer,
   userLogs: userLogsReducer,
   trackings: trackingReducer,
@@ -46,8 +47,6 @@ const persistedState = loadFromLocalStorage();
 
 const store = createStore(rootReducer, persistedState, composeEnhancers(applyMiddleware(thunk)));
 
-
 store.subscribe(() => saveToLocalStorage({ auth: store.getState().auth }));
-
 
 export default store;
