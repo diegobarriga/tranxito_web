@@ -77,6 +77,9 @@ class Login extends React.Component {
     } else if (this.props.error.response.status === 401) {
       msg = 'Error invalid username or password';
       alert = (<Alert alertType="FAIL" message={msg} />);
+    } else if (this.props.error.response.status === 503) {
+      msg = 'Server Down';
+      alert = (<Alert alertType="FAIL" message={msg} />);
     }
 
 
