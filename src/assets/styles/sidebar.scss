@@ -18,6 +18,13 @@
 .disabledCursor:hover {
   background-color: #dadee1; }
 
+.sidebarBtn {
+  border-radius: 0px
+}
+
+.sidebarBtn:hover {
+  background-color:#dedede;
+}
 
 @media (max-width: 800px) {
   .sidebar{

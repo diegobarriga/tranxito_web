@@ -8,6 +8,7 @@ import faCar from '@fortawesome/fontawesome-free-solid/faCar';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
+import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle';
 
 import Layout from './containers/Layout/Layout';
 import Signup from './containers/Sessions/Signup/Signup';
@@ -33,7 +34,16 @@ import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import mForm from './containers/MotorCarriers/mForm';
 
 
-fontawesome.library.add(faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit);
+fontawesome.library.add(
+  faFileExcel,
+  faUser,
+  faUsers,
+  faCar,
+  faSearch,
+  faTrash,
+  faEdit,
+  faInfoCircle,
+);
 
 
 class App extends Component {
