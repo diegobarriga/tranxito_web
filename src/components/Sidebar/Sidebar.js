@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ListGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -53,7 +53,7 @@ class sidebar extends Component {
     );
   }
 }
->>>>>>> Stashed changes
+
 
 sidebar.propTypes = {
   isAdm: PropTypes.bool.isRequired,
