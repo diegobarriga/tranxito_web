@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
+import Alert from '../../Alert/Alert';
 
 
 class Login extends React.Component {
@@ -17,6 +18,9 @@ class Login extends React.Component {
         value: '',
       },
     },
+  }
+  componentDidMount() {
+    this.props.resetError();
   }
 
   emailChangedHandler = (event) => {
@@ -65,10 +69,26 @@ class Login extends React.Component {
       }
     }
 
+    /* Alerts */
+    let alert;
+    let msg = '';
+    if (this.props.error === null) {
+      alert = null;
+    } else if (this.props.error.response.status === 401) {
+      msg = 'Error invalid username or password';
+      alert = (<Alert alertType="FAIL" message={msg} />);
+    }
+
+
     return (
       <Container>
         <Row>
-          <Col sm="12" md={{ size: 6, offset: 3 }}>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 5, offset: 3 }}>
             { authRedirect }
             <h1 style={h1Style}>Login</h1>
             <Form onSubmit={this.submitHandler}>
@@ -92,14 +112,14 @@ Login.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  // error: PropTypes.object,
+  resetError: PropTypes.func.isRequired,
+  error: PropTypes.object,
 
 };
-/*
+
 Login.defaultProps = {
   error: null,
 };
-*/
 
 
 const mapStateToProps = state => ({
@@ -111,6 +131,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onAuth: (email, password) => dispatch(actions.login(email, password)),
+  resetError: () => dispatch(actions.errorReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

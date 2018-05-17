@@ -16,17 +16,22 @@ export const getVehiclesFail = error => ({
   error,
 });
 
-export const onVehicleDeleteSuccess = vehicleId => ({
+export const onVehicleDeleteSuccess = (vehicleId, response) => ({
   type: actionTypes.DELETE_VEHICLE,
   vehicleId,
+  response,
+});
+
+export const delVErrorReset = () => ({
+  type: actionTypes.DELV_ERROR_RESET,
 });
 
 
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
   api.vehicles.deleteVehcle(vehicleId, token)
-    .then(() => {
-      console.log('vehicledeleted');
-      dispatch(onVehicleDeleteSuccess(vehicleId));
+    .then((response) => {
+      dispatch(delVErrorReset());
+      dispatch(onVehicleDeleteSuccess(vehicleId, response));
     })
     .catch((err) => {
       console.log(err);

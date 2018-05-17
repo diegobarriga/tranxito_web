@@ -10,11 +10,16 @@ export const createMCarrierStart = () => ({
   type: actionTypes.START_MCCREATE,
 });
 
-export const createMCSuccess = regData => ({
+export const createMCSuccess = (regData, response) => ({
   regData,
+  response,
   type: actionTypes.CREATEMC_SUCCESS,
 });
 
+export const createMCFail = error => ({
+  type: actionTypes.MCARRIER_CREATE_FAIL,
+  error,
+});
 
 export const initMCarriers = token => (dispatch) => {
   api.motorCarriers.getMotorCarriers(token)
@@ -38,10 +43,11 @@ export const carrierRegister = (name, usdotNumber, multidayBasisUsed, token) => 
 
   api.motorCarriers.createMotorCarrier(regData, token)
     .then((response) => {
-      console.log(response.data);
-      dispatch(createMCSuccess(regData));
+      console.log(response);
+      dispatch(createMCSuccess(regData, response));
     })
     .catch((err) => {
       console.log(err);
+      dispatch(createMCFail());
     });
 };

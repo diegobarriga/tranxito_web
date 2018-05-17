@@ -9,7 +9,10 @@ import api from '../../services/api';
 
 class TruckRow extends React.Component {
   onDeleteBtnClick(userId, token) {
-    this.props.deleteVehicle(userId, token);
+    const confirmDelete = window.confirm('Are you sure you want to delete this vehicle?');
+    if (confirmDelete) {
+      this.props.deleteVehicle(userId, token);
+    }
   }
 
   render() {
