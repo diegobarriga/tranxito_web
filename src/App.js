@@ -8,6 +8,9 @@ import faCar from '@fortawesome/fontawesome-free-solid/faCar';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
+import faClock from '@fortawesome/fontawesome-free-solid/faClock';
+import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow';
+import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt';
 
 import Layout from './containers/Layout/Layout';
 import Signup from './containers/Sessions/Signup/Signup';
@@ -15,6 +18,7 @@ import './assets/styles/App.css';
 import Drivers from './containers/Users/Users';
 import Driver from './containers/Users/User';
 import Vehicles from './containers/Trucks/Trucks';
+import Vehicle from './containers/Trucks/Vehicle';
 
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
@@ -33,7 +37,7 @@ import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import mForm from './containers/MotorCarriers/mForm';
 
 
-fontawesome.library.add(faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit);
+fontawesome.library.add(faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock, faLocationArrow, faTachometerAlt);
 
 
 class App extends Component {
@@ -49,6 +53,7 @@ class App extends Component {
           <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
           <Route path="/vehicles/new_vehicle" component={CreateVehicle} />
           <Route path="/vehicles/:id/edit" component={EditVehicle} />
+          <Route path="/vehicles/:id" component={Vehicle} />
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
