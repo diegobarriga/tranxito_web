@@ -43,6 +43,8 @@ export default {
       axios.post(`${apiPath}/People/${userId}/events`, { eventData }),
     getUserMotorCarrier: userId =>
       axios.get(`${apiPath}/People/${userId}/motorCarrier`),
+    getUserDutyStatusChange: (userId, token) =>
+      axios.get(`${apiPath}/People/${userId}/dutyStatusChange?access_token=${token}`),
   },
   vehicles: {
     getVehicles: () =>

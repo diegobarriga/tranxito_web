@@ -12,7 +12,7 @@ class User extends React.Component {
     return (
       <Aux>
         <UserInfo id={id} />
-        <Graph />
+        <Graph id={id} />
         <UserLogs id={id} />
       </Aux>
 

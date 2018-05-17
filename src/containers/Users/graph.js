@@ -1,91 +1,103 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Scatter } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Loader from '../../components/Loader/Loader';
-import * as actions from '../../store/actions/userLogs';
+import api from '../../services/api';
 import { EVENT_CODES } from '../../utils/eventTypes';
-
+// import Loader from '../../components/Loader/Loader';
 
 class Graph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      actual: 1,
       chartData: {
-        xLabels: [],
+        xLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+          13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         yLabels: ['Off-duty', 'Sleeper Berth', 'Driving', 'On-duty not driving'],
         datasets: [
           {
             steppedLine: true,
             label: 'Population',
             data: [],
-            backgroundColor: [
-              'rgba(255, 255, 255, 0.6)',
-            ],
+            backgroundColor: ['rgba(255, 255, 255, 0.6)'],
             borderColor: '#c7d41e',
+            showLine: true,
           },
         ],
       },
       logs: [
         {
           event_type: 1,
-          event_code: 1,
-          event_timestamp: '2018-04-21T03:30:20.660Z',
-        },
-        {
-          event_type: 1,
           event_code: 4,
-          event_timestamp: '2018-04-21T07:30:20.660Z',
+          event_timestamp: '2018-04-21T02:10:20.660Z',
+        },
+        [{
+          event_type: 1,
+          event_code: 1,
+          event_timestamp: '2018-04-21T03:04:20.660Z',
         },
         {
           event_type: 1,
           event_code: 3,
-          event_timestamp: '2018-04-21T11:30:20.660Z',
-        },
-        {
-          event_type: 1,
-          event_code: 4,
-          event_timestamp: '2018-04-21T13:30:20.660Z',
+          event_timestamp: '2018-04-21T07:37:20.660Z',
         },
         {
           event_type: 1,
           event_code: 2,
-          event_timestamp: '2018-04-21T23:30:20.660Z',
+          event_timestamp: '2018-04-21T11:18:20.660Z',
         },
+        {
+          event_type: 1,
+          event_code: 4,
+          event_timestamp: '2018-04-21T13:42:20.660Z',
+        },
+        {
+          event_type: 1,
+          event_code: 2,
+          event_timestamp: '2018-04-21T23:21:20.660Z',
+        },
+        ],
       ],
+      api_logs: null,
 
     };
   }
 
   componentDidMount() {
-    this.props.getUserLogs(this.props.token, this.props.id);
+    this.state.api_logs = api.people.getUserDutyStatusChange(this.props.id, this.props.token);
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    // if (this.state.api_logs === null) return <Loader />;
 
-    this.state.logs.map(event => (
+    this.state.chartData.datasets[0].data = [];
+    this.state.actual = this.state.logs[0];
+
+    this.state.chartData.xLabels.map((hour) => {
+      this.state.logs[1].map((event) => {
+        if (hour === parseFloat(event.event_timestamp.substring(11, 13))) {
+          if (this.state.actual.event_code !== event.event_code) {
+            this.state.actual = event;
+          }
+        }
+      });
       this.state.chartData.datasets[0].data.push({
-        x: event.event_timestamp,
-        y: EVENT_CODES[1][event.event_code],
-      })
-    ));
-
-    this.state.logs.map(event => (
-      this.state.chartData.xLabels.push(event.event_timestamp)
-    ));
-    // const filteredLogs = this.state.logs.filter(log => (log.event_type === '1'));
-    // && datetime entre las ultimas 24 horas.
+        x: parseFloat(this.state.actual.event_timestamp.substring(11, 13)) +
+         (parseFloat(this.state.actual.event_timestamp.substring(14, 16)) / 60),
+        y: EVENT_CODES[1][this.state.actual.event_code],
+      });
+    });
 
     return (
-      <Line
+      <Scatter
         data={this.state.chartData}
         height={75}
         options={{
 
               title: {
                 display: true,
-                text: 'Estado Conductor: 21 de Abril',
+                text: 'Last 24 hours',
                 fontSize: 25,
 
               },
@@ -97,7 +109,7 @@ class Graph extends React.Component {
                           display: true,
                           scaleLabel: {
                             display: true,
-                            labelString: 'Hora del día',
+                            labelString: 'Time',
                           },
                         }],
                         yAxes: [{
@@ -106,7 +118,7 @@ class Graph extends React.Component {
                           display: true,
                           scaleLabel: {
                             display: true,
-                            labelString: 'Estado Conductor',
+                            labelString: 'Duty status',
                           },
                           ticks: {
                             reverse: true,
@@ -122,20 +134,12 @@ class Graph extends React.Component {
 }
 
 Graph.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  getUserLogs: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  loading: state.userLogs.loading,
-  logs: state.userLogs.logs,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserLogs: (token, UserId) => dispatch(actions.getUserLogs(token, UserId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Graph);
+export default connect(mapStateToProps)(Graph);
