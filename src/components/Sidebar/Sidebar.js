@@ -45,6 +45,7 @@ class sidebar extends Component {
                 <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}>Vehicles</Link>
                 <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/">Devices</Link>
                 <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/">Supervisors</Link>
+
               </Aux> }
 
           </ListGroup>
