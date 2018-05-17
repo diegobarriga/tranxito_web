@@ -65,7 +65,7 @@ class Login extends React.Component {
       if (this.props.isAdmin) {
         authRedirect = <Redirect to="/motor_carriers" />;
       } else {
-        authRedirect = <Redirect to="/drivers" />;
+        authRedirect = <Redirect to="/dashboard" />;
       }
     }
 

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Marker, InfoWindow } from 'react-google-maps';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import Loader from '../../components/Loader/Loader';
 import * as userActions from '../../store/actions/userInfo';
 import * as vehicleActions from '../../store/actions/vehicle';
 
