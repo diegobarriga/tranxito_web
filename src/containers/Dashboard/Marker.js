@@ -62,8 +62,8 @@ class InfoWindowMarker extends Component {
           this.state.isOpen &&
           <InfoWindow onCloseClick={() => this.handleToggleClose()}>
             <div>
-              <p><FontAwesomeIcon icon="car" /> {this.props.vehicle.car_maker} {this.props.vehicle.model} - {this.props.vehicle.plaque}</p>
-              <p><FontAwesomeIcon icon="user" /><Link to={`/drivers/${this.props.userId}`}> {this.props.user.first_name} {this.props.user.last_name}</Link></p>
+              <p><FontAwesomeIcon icon="car" /><Link to={`/vehicles/${this.props.vehicle.id}`}> {this.props.vehicle.car_maker} {this.props.vehicle.model} - {this.props.vehicle.plaque}</Link></p>
+              <p><FontAwesomeIcon icon="user" /><Link to={`/drivers/${this.props.user.id}`}> {this.props.user.first_name} {this.props.user.last_name}</Link></p>
               <p><FontAwesomeIcon icon="location-arrow" /> {this.props.lat}, {this.props.lng}</p>
               <p><FontAwesomeIcon icon="clock" /> {this.props.timestamp}</p>
               <p><FontAwesomeIcon icon="tachometer-alt" /> {this.props.speed} mph</p>

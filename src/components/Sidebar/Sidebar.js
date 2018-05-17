@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import '../../assets/styles/sidebar.css';
 import Aux from '../../hoc/Aux';
 
-
 class sidebar extends Component {
   state = {
     dashboardClicked: false,
@@ -44,7 +43,9 @@ class sidebar extends Component {
                 <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}>Dashboard</Link>
                 <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}>Drivers</Link>
                 <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}>Vehicles</Link>
-                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/logs">Alerts</Link>
+                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/">Devices</Link>
+                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/">Supervisors</Link>
+
               </Aux> }
 
           </ListGroup>
@@ -53,6 +54,7 @@ class sidebar extends Component {
     );
   }
 }
+
 
 sidebar.propTypes = {
   isAdm: PropTypes.bool.isRequired,

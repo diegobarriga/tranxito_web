@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import Map from './Map';
 
@@ -19,9 +20,10 @@ class Dashboard extends React.Component {
       <Aux>
         { alert }
         { authRedirect }
-        <h1> Dashboard </h1>
-
-        <Map />
+        <Container>
+          <h1> Dashboard </h1>
+          <Map />
+        </Container>
 
       </Aux>
     );
