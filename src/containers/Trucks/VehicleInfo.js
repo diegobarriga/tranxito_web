@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row } from 'reactstrap';
 import Aux from '../../hoc/Aux';
-import Avatar from '../../components/Avatar';
 import * as actions from '../../store/actions/vehicle';
 import Loader from '../../components/Loader/Loader';
 import api from '../../services/api';

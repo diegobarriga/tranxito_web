@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { ListGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/sidebar.css';
@@ -40,11 +41,11 @@ class sidebar extends Component {
               <Link className="list-group-item-action list-group-item" to="/motor_carriers">Motor Carriers</Link>
               :
               <Aux>
-                <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}>Dashboard</Link>
-                <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}>Drivers</Link>
-                <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}>Vehicles</Link>
-                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/">Devices</Link>
-                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/">Supervisors</Link>
+                <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}><FontAwesomeIcon icon="chart-line" /> Dashboard</Link>
+                <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> Drivers</Link>
+                <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> Vehicles</Link>
+                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon={['fab', 'bluetooth']} /> Devices</Link>
+                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon="user-cog" /> Supervisors</Link>
 
               </Aux> }
 
