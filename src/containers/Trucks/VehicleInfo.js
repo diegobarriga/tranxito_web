@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row } from 'reactstrap';
 import Aux from '../../hoc/Aux';
-import * as actions from '../../store/actions/vehicle';
 import Loader from '../../components/Loader/Loader';
 import api from '../../services/api';
 
@@ -20,25 +19,44 @@ const styles = {
 };
 
 class VehicleInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      vehicle: null,
+      loading: true,
+    };
+  }
+
   componentDidMount() {
-    console.log('didmount');
-    this.props.getVehicle(this.props.token, this.props.id);
-    console.log(this.props.vehicle);
+    this.getVehicle()
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({ vehicle: response.data, loading: false });
+        } else {
+          this.setState({ loading: false });
+        }
+      });
+  }
+
+  getVehicle() {
+    return api.vehicles.getVehicle(this.props.id, this.props.token);
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
-    console.log(this.props.vehicle);
+    if (this.state.loading === true) return <Loader />;
+
+    if (this.state.vehicle === null) return <div><h2>Could not get the vehicle</h2></div>;
+
     return (
       <Aux>
-        <h1>{`${this.props.vehicle.car_maker} ${this.props.vehicle.model}`}</h1>
+        <h1>{`${this.state.vehicle.car_maker} ${this.state.vehicle.model}`}</h1>
         <Row style={styles.userProfile}>
-          <img src={api.images.vehicleImageLink(this.props.vehicle.image)}/>
+          <img src={api.images.vehicleImageLink(this.state.vehicle.image)} alt="vehicleImg" />
           <div style={styles.userData}>
-            <div>Plaque: {this.props.vehicle.palque}</div>
-            <div>VIN: {this.props.vehicle.vin}</div>
-            <div>ELD: {this.props.vehicle.IMEI_ELD}</div>
-            <div>State: {this.props.vehicle.state}</div>
+            <div>Plaque: {this.state.vehicle.palque}</div>
+            <div>VIN: {this.state.vehicle.vin}</div>
+            <div>ELD: {this.state.vehicle.IMEI_ELD}</div>
+            <div>State: {this.state.vehicle.state}</div>
           </div>
         </Row>
       </Aux>
@@ -47,25 +65,13 @@ class VehicleInfo extends React.Component {
 }
 
 VehicleInfo.propTypes = {
-  vehicle: PropTypes.object,
-  getVehicle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
 
-VehicleInfo.defaultProps = {
-  vehicle: null,
-};
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  isLoading: state.vehicle.loading,
-  vehicle: state.vehicle.vehicle,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getVehicle: (token, vehicleId) => dispatch(actions.getVehicle(token, vehicleId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(VehicleInfo);
+export default connect(mapStateToProps)(VehicleInfo);
