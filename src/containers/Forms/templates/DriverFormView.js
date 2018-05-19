@@ -10,7 +10,6 @@ class DriverFormView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      picture: null,
       type: '',
       message: '',
     };
@@ -20,35 +19,60 @@ class DriverFormView extends React.Component {
     this.imgUpload = this.imgUpload.bind(this);
   }
 
-  onFormSubmit(data) {
-    this.imgUpload(this.state.picture).then((imgResponse) => {
-      if (imgResponse.status === 200) {
-        // setiamos el nombre de la imagen con la respuesta
-        data.image = imgResponse.data.result.files.file[0].name;
-        // Si estamos creando un usuario
-        if (this.props.isCreate) {
-          this.postData(data).then((response) => {
-            if (response.status === 200) {
-              this.setState({ type: 'success', message: 'We have created the new driver.' });
-            } else {
-              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
-            }
-          });
-
-        // // Si estamos editando un usuario
+  onFormSubmit(formData) {
+    if (formData.picture !== '') {
+      this.imgUpload(formData.picture).then((imgResponse) => {
+        if (imgResponse.status === 200) {
+          // setiamos el nombre de la imagen con la respuesta
+          const submitData = {
+            ...formData.data,
+            image: imgResponse.data.result.files.file[0].name,
+          };
+          console.log(submitData);
+          // Si estamos creando un usuario
+          if (this.props.isCreate) {
+            this.postData(submitData).then((response) => {
+              if (response.status === 200) {
+                this.setState({ type: 'success', message: 'We have created the new driver.' });
+              } else {
+                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+              }
+            });
+          // Si estamos editando un usuario
+          } else {
+            this.patchData(submitData).then((response) => {
+              if (response.status === 200) {
+                this.setState({ type: 'success', message: 'We have edited the driver.' });
+              } else {
+                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+              }
+            });
+          }
         } else {
-          this.patchData(data).then((response) => {
-            if (response.status === 200) {
-              this.setState({ type: 'success', message: 'We have edited the driver.' });
-            } else {
-              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
-            }
-          });
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
         }
+      });
+    } else {
+      // Si estamos creando un usuario
+      if (this.props.isCreate) {
+        this.postData(formData.data).then((response) => {
+          if (response.status === 200) {
+            this.setState({ type: 'success', message: 'We have created the new driver.' });
+          } else {
+            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+          }
+        });
+      // Si estamos editando un usuario
       } else {
-        this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
+        this.patchData(formData.data).then((response) => {
+          if (response.status === 200) {
+            this.setState({ type: 'success', message: 'We have edited the driver.' });
+          } else {
+            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+          }
+        });
       }
-    });
+    }
   }
 
   postData(data) {

@@ -26,6 +26,9 @@ class DriverForm extends Component {
         username: '',
         password: '',
         passwordConfirmation: '',
+        // image: 'personDefaultProfilePicture.jpeg',
+        account_type: 'D',
+        account_status: true,
       },
       picture: '',
       isLoading: false,
@@ -176,7 +179,11 @@ class DriverForm extends Component {
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      this.props.submit(this.state.data).catch(err => this.setState({errors: err.response.data.errors, isLoading: false }));
+      try {
+        await this.props.submit(this.state);
+      } catch (error) {
+        this.setState({ errors: error.response.data.errors, isLoading: false });
+      }
     }
   }
 

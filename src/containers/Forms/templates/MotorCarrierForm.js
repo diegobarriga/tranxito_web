@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import validator from 'validator';
-import { Button, Form, FormGroup, FormFeedback, Input } from 'reactstrap';
+import { connect } from 'react-redux';
+// import validator from 'validator';
+import { withRouter } from 'react-router';
+import { Button, Label, Form, FormGroup, FormFeedback, Input } from 'reactstrap';
 import api from '../../../services/api';
 import '../../../assets/styles/forms.css';
 
@@ -16,12 +18,12 @@ class MotorCarrierForm extends Component {
       data: {
         name: '',
         USDOT_number: '',
-        multiday_basis_used: '',
+        multiday_basis_used: '7',
       },
       isLoading: false,
       redirectTo: false,
     };
-    this.isValidCreate = this.isValidCreate.bind(this);
+    // this.isValidCreate = this.isValidCreate.bind(this);
     this.onChange = this.onChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
@@ -53,6 +55,10 @@ class MotorCarrierForm extends Component {
     });
   }
 
+  getMotorCarrierInfo() {
+    return api.motorCarriers.getMotorCarrier(this.props.match.params.id, this.props.token);
+  }
+
   validateInput(data) {
     const errors = {};
     if (_.isEmpty(String(data.name))) {
@@ -60,15 +66,14 @@ class MotorCarrierForm extends Component {
     } else if (String(data.name).length > 120 || String(data.name).length < 4) {
       errors.name = 'Name must be between 4-120 characters long';
     }
+    /* NEED FIX */
     if (_.isEmpty(String(data.USDOT_number))) {
       errors.USDOT_number = 'This field is required';
-    } else if (!validator.isInt(String(this.USDOT_number), { min: 0, max: 999999999 })) {
+    } else if (Number(this.USDOT_number) < 0 || Number(this.USDOT_number) > 999999999) {
       errors.USDOT_number = 'USDOT number must be between 0-999,999,999';
     }
     if (_.isEmpty(String(data.multiday_basis_used))) {
       errors.multiday_basis_used = 'This field is required';
-    } else if (!validator.isInt(String(this.multiday_basis_used), { min: 7, max: 8 })) {
-      errors.multiday_basis_used = 'Multiday basis used number must be 7 or 8';
     }
     return {
       errors,
@@ -88,9 +93,6 @@ class MotorCarrierForm extends Component {
     return Object.keys(this.state.errors).length === 0;
   }
 
-  getMotorCarrierInfo() {
-    return api.motorCarriers.getMotorCarrier(this.props.match.params.id);
-  }
 
   isValidData() {
     const { errors, isValid } = this.validateInput(this.state.data);
@@ -103,6 +105,7 @@ class MotorCarrierForm extends Component {
     return (
       <Form onSubmit={this.submitHandler}>
         <FormGroup>
+          <Label>Name</Label>
           <Input
             type="text"
             name="name"
@@ -115,6 +118,7 @@ class MotorCarrierForm extends Component {
           <FormFeedback>{errors.Numberame}</FormFeedback>
         </FormGroup>
         <FormGroup>
+          <Label>USDOT Number</Label>
           <Input
             type="number"
             name="USDOT_number"
@@ -128,17 +132,21 @@ class MotorCarrierForm extends Component {
           <FormFeedback>{errors.USDOT_number}</FormFeedback>
         </FormGroup>
         <FormGroup>
+          <Label>Multiday basis used</Label>
           <Input
-            type="text"
+            type="select"
             name="multiday_basis_used"
             value={data.multiday_basis_used}
             onChange={this.onChange}
-            placeholder="Multiday basis used"
             valid={!this.emptyErrors() && !errors.multiday_basis_used}
             invalid={errors.multiday_basis_used}
-          />
+          >
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </Input>
           <FormFeedback>{errors.multiday_basis_used}</FormFeedback>
         </FormGroup>
+
         <Button type="submit" loading={isLoading}>Submit</Button>
       </Form>
     );
@@ -149,6 +157,13 @@ MotorCarrierForm.propTypes = {
   isCreate: PropTypes.bool.isRequired,
   submit: PropTypes.func.isRequired,
   match: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
-export default MotorCarrierForm;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.token !== null,
+  isAdmin: state.auth.role === 'A',
+  token: state.auth.token,
+});
+
+export default withRouter(connect(mapStateToProps)(MotorCarrierForm));

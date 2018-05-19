@@ -19,8 +19,7 @@ class VehicleForm extends React.Component {
         car_maker: '',
         plaque: '',
         state: '',
-        IMEI_EL: '',
-        image: '',
+        IMEI_ELD: '',
       },
       picture: '',
       isLoading: false,
@@ -29,6 +28,7 @@ class VehicleForm extends React.Component {
     this.validateInput = this.validateInput.bind(this);
     this.isValidData = this.isValidData.bind(this);
     this.validateInput = this.validateInput.bind(this);
+    this.emptyErrors = this.emptyErrors.bind(this);
     this.onChange = this.onChange.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
@@ -55,6 +55,8 @@ class VehicleForm extends React.Component {
       });
     }
   }
+
+
 
   onChange(event) {
     if (event.target.name === 'picture') {
@@ -91,10 +93,18 @@ class VehicleForm extends React.Component {
     } else if (data.IMEI_ELD && !data.CMV_power_unit_number) {
       errors.CMV_power_unit_number = 'CMV Power Unit Number field is required';
     }
+    /* fede pls
     if (_.isEmpty(String(data.model))) {
       errors.model = 'This field is required';
     } else if (!validator.isEmail(String(data.email))) {
       errors.email = 'Input is not a valid email';
+    }
+    */
+    if (_.isEmpty(String(data.model))) {
+      errors.model = 'This field is required';
+    }
+    if (_.isEmpty(String(data.IMEI_ELD))) {
+      errors.IMEI_ELD = 'This field is required';
     }
     if (_.isEmpty(String(data.car_maker))) {
       errors.car_maker = 'This field is required';
@@ -113,12 +123,22 @@ class VehicleForm extends React.Component {
     };
   }
 
-  submitHandler(event) {
+  emptyErrors() {
+    return Object.keys(this.state.errors).length === 0;
+  }
+
+  async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
+    
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      this.props.submit(this.state.data).catch(err => this.setState({ errors: err.response.data.errors, isLoading: false }));
+      console.log('submited');
+      try {
+        await this.props.submit(this.state)
+      } catch (error) {
+        this.setState({ errors: error.response.data.errors, isLoading: false });
+      }
     }
   }
 
@@ -208,7 +228,7 @@ class VehicleForm extends React.Component {
             min={0}
             name="IMEI_ELD"
             placeholder="IMEI ELD"
-            value={data.IMEI_EL}
+            value={data.IMEI_ELD}
             onChange={this.onChange}
             valid={!this.emptyErrors() && !errors.IMEI_ELD}
             invalid={errors.IMEI_ELD}

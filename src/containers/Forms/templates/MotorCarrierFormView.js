@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
@@ -13,16 +14,16 @@ class MotorCarrierFormView extends React.Component {
     super(props);
     this.state = {
     };
-    this.postData = this.postData.bind(this);
-    this.patchData = this.patchData.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
 
   onFormSubmit(data) {
-    this.props.onRegister(data);
-    // this.props.token,
-    this.props.history.push('/motor_carriers');
+    if (this.props.isCreate) {
+      this.props.onRegister(data, this.props.token, 1, null);
+    } else {
+      this.props.onRegister(data, this.props.token, 0, this.props.match.params.id);
+    }
   }
 
   render() {
@@ -83,6 +84,8 @@ MotorCarrierFormView.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   onRegister: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired,
+  isCreate: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
 
@@ -96,13 +99,12 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-  onRegister: (name, number, mday, token) => dispatch(actions.carrierRegister(
-    name,
-    number,
-    mday,
+  onRegister: (data, token, isCreate) => dispatch(actions.carrierRegister(
+    data,
     token,
+    isCreate,
   )),
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MotorCarrierFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MotorCarrierFormView));

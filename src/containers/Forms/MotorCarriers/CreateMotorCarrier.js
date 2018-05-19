@@ -6,7 +6,7 @@ import MotorCarrierFormView from '../templates/MotorCarrierFormView';
 class CreateMotorCarrier extends React.Component {
   render() {
     return (
-      <MotorCarrierFormView title="Create New Motor Carrier" isCreate={true} />
+      <MotorCarrierFormView title="Create Motor Carrier" isCreate={true} />
     );
   }
 }

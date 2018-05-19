@@ -65,12 +65,12 @@ export default {
   motorCarriers: {
     getMotorCarriers: token =>
       axios.get(`${apiPath}/MotorCarriers?access_token=${token}`),
-    getMotorCarrier: motorCarrierId =>
-      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/`),
+    getMotorCarrier: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`),
     createMotorCarrier: (motorCarrier, token) =>
       axios.post(`${apiPath}/MotorCarriers?access_token=${token}`, motorCarrier),
-    updateMotorCarrier: motorCarrier =>
-      axios.put(`${apiPath}/MotorCarriers/${motorCarrier.id}/`, { motorCarrier }),
+    updateMotorCarrier: (motorCarrierId, data, token) =>
+      axios.patch(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`, data),
     getMotorCarrierPeople: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`),
     getMotorCarrierPerson: (motorCarrierId, userId) =>
