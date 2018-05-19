@@ -86,8 +86,12 @@ class Graph extends React.Component {
               },
               scales: {
                         xAxes: [{
-                          type: 'linear',
                           display: true,
+                          ticks: {
+                            min: 0,
+                            max: 24,
+                            stepSize: 1,
+                          },
                           scaleLabel: {
                             display: true,
                             labelString: 'Time',
@@ -101,9 +105,9 @@ class Graph extends React.Component {
                             display: true,
                             labelString: 'Duty status',
                           },
-                          ticks: {
-                            reverse: true,
-                          },
+                        }],
+                        gridLines: [{
+                          display: true,
                         }],
                       },
             }}
