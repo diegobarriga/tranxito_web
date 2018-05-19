@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import VehicleInfo from './VehicleInfo';
+import VehiclesInfo from './VehiclesInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
 import Alert from '../Alert/Alert';
@@ -37,7 +37,7 @@ class Vehicles extends React.Component {
         { alert }
         <h1> Vehicles </h1>
         <Container>
-          <VehicleInfo motor_carrier_id={0} />
+          <VehiclesInfo motor_carrier_id={0} />
         </Container>
       </Aux>
 
