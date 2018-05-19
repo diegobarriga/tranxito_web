@@ -12,7 +12,16 @@ import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
 import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle';
 import faClock from '@fortawesome/fontawesome-free-solid/faClock';
 import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow';
+
+import faUserCog from '@fortawesome/fontawesome-free-solid/faUserCog';
 import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt';
+import faUserTie from '@fortawesome/fontawesome-free-solid/faUserTie';
+import faChartLine from '@fortawesome/fontawesome-free-solid/faChartLine';
+import faBluetooth from '@fortawesome/fontawesome-free-brands/faBluetooth';
+
+import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
+import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
+
 import Layout from './containers/Layout/Layout';
 import Signup from './containers/Sessions/Signup/Signup';
 import './assets/styles/App.css';
@@ -37,7 +46,11 @@ import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import mForm from './containers/MotorCarriers/mForm';
 
-fontawesome.library.add(faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock, faLocationArrow, faTachometerAlt, faInfoCircle);
+fontawesome.library.add(
+  faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
+  faLocationArrow, faTachometerAlt, faInfoCircle, faUserCog, faUserTie,
+  faBluetooth, faChartLine, faSignInAlt, faSignOutAlt,
+);
 
 class App extends Component {
   render() {

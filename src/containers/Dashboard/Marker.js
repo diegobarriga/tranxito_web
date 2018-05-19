@@ -1,13 +1,12 @@
 /* global google */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Marker, InfoWindow } from 'react-google-maps';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import * as userActions from '../../store/actions/userInfo';
-import * as vehicleActions from '../../store/actions/vehicle';
+import api from '../../services/api';
 
 const marker1 = require('../../assets/images/truck_marker_1.svg');
 const marker2 = require('../../assets/images/truck_marker_2.svg');
@@ -26,12 +25,39 @@ class InfoWindowMarker extends Component {
     super(props);
     this.state = {
       isOpen: false,
+      user: null,
+      vehicle: null,
+      userLoading: true,
+      vehicleLoading: true,
     };
   }
 
   componentDidMount() {
-    this.props.getUserInfo(this.props.token, this.props.userId);
-    this.props.getVehicle(this.props.token, this.props.vehicleId);
+    this.getUserInfo()
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({ user: response.data, userLoading: false });
+        } else {
+          this.setState({ userLoading: false });
+        }
+      });
+
+    this.getVehicle()
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({ vehicle: response.data, vehicleLoading: false });
+        } else {
+          this.setState({ vehicleLoading: false });
+        }
+      });
+  }
+
+  getUserInfo() {
+    return api.people.getUser(this.props.userId, this.props.token);
+  }
+
+  getVehicle() {
+    return api.vehicles.getVehicle(this.props.vehicleId, this.props.token);
   }
 
   handleToggleOpen = () => {
@@ -47,7 +73,8 @@ class InfoWindowMarker extends Component {
   }
 
   render() {
-    if (this.props.vehicleLoading === true || this.props.userLoading === true) return <div />;
+    if (this.state.vehicleLoading === true || this.state.userLoading === true) return <div />;
+
     return (
       <Marker
         key={this.props.id}
@@ -62,8 +89,14 @@ class InfoWindowMarker extends Component {
           this.state.isOpen &&
           <InfoWindow onCloseClick={() => this.handleToggleClose()}>
             <div>
-              <p><FontAwesomeIcon icon="car" /><Link to={`/vehicles/${this.props.vehicle.id}`}> {this.props.vehicle.car_maker} {this.props.vehicle.model} - {this.props.vehicle.plaque}</Link></p>
-              <p><FontAwesomeIcon icon="user" /><Link to={`/drivers/${this.props.user.id}`}> {this.props.user.first_name} {this.props.user.last_name}</Link></p>
+              {
+                this.state.vehicle != null &&
+                <p><FontAwesomeIcon icon="car" /><Link to={`/vehicles/${this.state.vehicle.id}`}> {this.state.vehicle.car_maker} {this.state.vehicle.model} - {this.state.vehicle.plaque}</Link></p>
+              }
+              {
+                this.state.user != null &&
+                <p><FontAwesomeIcon icon="user" /><Link to={`/drivers/${this.state.user.id}`}> {this.state.user.first_name} {this.state.user.last_name}</Link></p>
+              }
               <p><FontAwesomeIcon icon="location-arrow" /> {this.props.lat}, {this.props.lng}</p>
               <p><FontAwesomeIcon icon="clock" /> {this.props.timestamp}</p>
               <p><FontAwesomeIcon icon="tachometer-alt" /> {this.props.speed} mph</p>
@@ -83,32 +116,12 @@ InfoWindowMarker.propTypes = {
   speed: PropTypes.number.isRequired,
   timestamp: PropTypes.string.isRequired,
   userId: PropTypes.number.isRequired,
-  user: PropTypes.object,
   vehicleId: PropTypes.number.isRequired,
-  vehicle: PropTypes.object,
   token: PropTypes.string.isRequired,
-  getUserInfo: PropTypes.func.isRequired,
-  getVehicle: PropTypes.func.isRequired,
-  userLoading: PropTypes.bool.isRequired,
-  vehicleLoading: PropTypes.bool.isRequired,
-};
-
-InfoWindowMarker.defaultProps = {
-  user: null,
-  vehicle: null,
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  userLoading: state.userInfo.loading,
-  user: state.userInfo.user,
-  vehicle: state.vehicle.vehicle,
-  vehicleLoading: state.vehicle.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserInfo: (token, UserId) => dispatch(userActions.getUserInfo(token, UserId)),
-  getVehicle: (token, vehicleId) => dispatch(vehicleActions.getVehicle(token, vehicleId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(InfoWindowMarker);
+export default connect(mapStateToProps)(InfoWindowMarker);

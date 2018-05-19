@@ -22,7 +22,7 @@ const styles = {
 
 class UserInfo extends React.Component {
   componentDidMount() {
-    console.log("didmount user");
+    console.log('didmount user');
     this.props.getUserInfo(this.props.token, this.props.id);
   }
 
