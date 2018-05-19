@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
-import Map from './Map';
+import MapWithMarker from './MapWithMarker';
 
 
 class Dashboard extends React.Component {
@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
         { authRedirect }
         <Container>
           <h1> Dashboard </h1>
-          <Map />
+          <MapWithMarker />
         </Container>
 
       </Aux>

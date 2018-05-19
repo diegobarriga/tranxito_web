@@ -66,7 +66,7 @@ const MapWithAMarkerClusterer = compose(
   </GoogleMap>
 ));
 
-class Map extends React.Component {
+class MapWithMarker extends React.Component {
   componentDidMount() {
     this.props.getTrackings(this.props.token, this.props.motorCarrierId);
 
@@ -83,7 +83,7 @@ class Map extends React.Component {
 }
 
 
-Map.propTypes = {
+MapWithMarker.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   getTrackings: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
@@ -103,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
   getTrackings: (token, motorCarrierId) => dispatch(actions.getTrackings(token, motorCarrierId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(MapWithMarker);
