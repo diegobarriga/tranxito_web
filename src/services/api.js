@@ -59,6 +59,8 @@ export default {
       axios.get(`${apiPath}/Vehicles/${vehicleId}/motorCarrier`),
     exists: vehicleId =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/exists`),
+    getTrackings: (vehicleId, token) =>
+      axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`),
   },
   motorCarriers: {
     getMotorCarriers: token =>
@@ -91,9 +93,9 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/events/${eventId}`),
     countMotorCarrierEvents: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/events/count`),
-    getTrackingsMotorCarrier: motorCarrierId =>
-      // axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking`),
-      axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
+    getTrackingsMotorCarrier: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking?access_token=${token}`),
+      // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
 
   },
   events: {

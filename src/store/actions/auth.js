@@ -1,19 +1,21 @@
 import * as actionTypes from './actionTypes';
 import api from '../../services/api';
-
+import * as functions from './functions';
 
 export const authStart = () => ({
   type: actionTypes.AUTH_START,
 });
 
 
-export const authSuccess = (token, userId, role, response, motorCarrierId) => ({
+export const authSuccess = (token, userId, role, response, motorCarrierId, vehicles, users) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
   userId,
   role,
   response,
   motorCarrierId,
+  vehicles,
+  users,
 });
 
 export const authFail = error => ({
@@ -90,14 +92,27 @@ export const login = (email, password) => (dispatch) => {
     .then((response) => {
       api.people.getUser(response.data.userId, response.data.id)
         .then((userResponse) => {
-          console.log(response);
-          dispatch(authSuccess(
-            response.data.id,
-            response.data.userId,
-            userResponse.data.account_type,
-            response,
+          api.motorCarriers.getMotorCarrierVehicles(
             userResponse.data.motorCarrierId,
-          ));
+            response.data.id,
+          ).then((vehiclesResponse) => {
+            api.motorCarriers.getMotorCarrierPeople(
+              userResponse.data.motorCarrierId,
+              response.data.id,
+            ).then((peopleResponse) => {
+              const usersObject = functions.arrayToObject(peopleResponse.data);
+              const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+              dispatch(authSuccess(
+                response.data.id,
+                response.data.userId,
+                userResponse.data.account_type,
+                response,
+                userResponse.data.motorCarrierId,
+                vehiclesObject,
+                usersObject,
+              ));
+            });
+          });
         })
         .catch((err) => {
           console.log(err);

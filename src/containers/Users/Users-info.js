@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import UserRow from './User-row';
 import Loader from '../../components/Loader/Loader';
-import * as actions from '../../store/actions/users';
 import '../../assets/styles/forms.css';
 
 
@@ -19,9 +18,9 @@ class UsersInfo extends React.Component {
     this.updateSearch = this.updateSearch.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getUsers(this.props.token, this.props.motorCarrierId);
-  }
+  // componentDidMount() {
+  //   this.props.getUsers(this.props.token, this.props.motorCarrierId);
+  // }
 
   updateSearch(event) {
     this.setState({ search: event.target.value });
@@ -30,11 +29,13 @@ class UsersInfo extends React.Component {
   render() {
     if (this.props.isLoading === true) return <Loader />;
 
-    const filteredUsers = this.props.users.filter(user => ((
+    const filteredUsers = Object.values(this.props.users).filter(user => ((
       user.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       user.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) &&
       user.account_status === true && user.account_type === 'D'));
+
+    console.log(typeof (filteredUsers));
     return (
       <div>
         <div className="inlineBox">
@@ -65,23 +66,13 @@ class UsersInfo extends React.Component {
 
 UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  getUsers: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.number.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.object.isRequired,
 };
 
-
 const mapStateToProps = state => ({
-  token: state.auth.token,
-  motorCarrierId: state.auth.motorCarrierId,
-  users: state.users.users,
+  users: state.auth.users,
   loading: state.users.loading,
   isLoading: state.users.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUsers: (token, motorCarrierId) => dispatch(actions.getUsers(token, motorCarrierId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersInfo);
+export default connect(mapStateToProps)(UsersInfo);

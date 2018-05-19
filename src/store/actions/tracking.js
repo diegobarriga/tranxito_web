@@ -20,7 +20,7 @@ export const getTrackings = (token, motorCarrierId) => (dispatch) => {
   api.motorCarriers.getTrackingsMotorCarrier(motorCarrierId, token)
     .then((trackingResponse) => {
       console.log(trackingResponse);
-      dispatch(getTrackingInfoSuccess(trackingResponse.data));
+      dispatch(getTrackingInfoSuccess(trackingResponse.data.data));
     })
     .catch((err) => {
       console.log(err);
