@@ -57,7 +57,6 @@ class VehicleForm extends React.Component {
   }
 
 
-
   onChange(event) {
     if (event.target.name === 'picture') {
       this.setState({ picture: event.target.files[0] });
@@ -85,7 +84,7 @@ class VehicleForm extends React.Component {
     const errors = {};
     if (data.vin.length > 18 || data.vin.length < 17) {
       errors.vin = 'Must be 17 or 18 characters long';
-    } else if (data.vin.length == 18 && String(data.vin)[0] !== '-') {
+    } else if (data.vin.length === 18 && String(data.vin)[0] !== '-') {
       errors.vin = 'Must start with a dash (-) if VIN is 18 char long';
     }
     if (_.isEmpty(String(data.CMV_power_unit_number))) {
@@ -129,13 +128,13 @@ class VehicleForm extends React.Component {
 
   async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
-    
+
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
       console.log('submited');
       try {
-        await this.props.submit(this.state)
+        await this.props.submit(this.state);
       } catch (error) {
         this.setState({ errors: error.response.data.errors, isLoading: false });
       }

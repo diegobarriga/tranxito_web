@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
@@ -15,11 +15,11 @@ class SignupView extends Component {
     super(props);
     this.state = {};
   }
-
+  /*
   componentDidMount() {
     this.props.resetError();
   }
-
+  */
   render() {
     if (this.props.isLoading === true) return <Loader />;
 
@@ -66,6 +66,7 @@ class SignupView extends Component {
             <SignupForm
               submit={this.props.onAuth}
               token={this.props.token}
+              motorCarrierId={this.props.match.params.id}
             />
           </Col>
         </Row>
@@ -82,7 +83,8 @@ SignupView.propTypes = {
   token: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.object,
-  resetError: PropTypes.func.isRequired,
+  // resetError: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 SignupView.defaultProps = {
@@ -96,7 +98,6 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   error: state.auth.error,
   isLoading: state.auth.loading,
-
 });
 
 

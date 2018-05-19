@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button, Form, FormGroup, FormFeedback, Label, Input} from 'reactstrap';
-var _ = require('lodash');
+import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+
+const _ = require('lodash');
 
 class SignupForm extends Component {
   constructor(props) {
@@ -17,12 +18,12 @@ class SignupForm extends Component {
         firstName: '',
         lastName: '',
         username: '',
-        accountType: 'S'
+        accountType: 'S',
       },
       isLoading: false,
       redirectTo: false,
-      showPassword: false
-    }
+      showPassword: false,
+    };
     this.onTogglePassword = this.onTogglePassword.bind(this);
     this.isValidSignup = this.isValidSignup.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -37,12 +38,12 @@ class SignupForm extends Component {
   onChange(event) {
     this.setState({
       ...this.state,
-      data: { ...this.state.data, [event.target.name]: event.target.value }
+      data: { ...this.state.data, [event.target.name]: event.target.value },
     });
   }
 
   validateInput(data) {
-    let errors = {}
+    const errors = {};
     console.log(data);
     if (_.isEmpty(String(data.firstName))) {
       errors.firstName = 'This field is required';
@@ -50,10 +51,12 @@ class SignupForm extends Component {
     if (_.isEmpty(String(data.lastName))) {
       errors.lastName = 'This field is required';
     }
+    if (_.isEmpty(String(data.username))) {
+      errors.username = 'This field is required';
+    }
     if (_.isEmpty(String(data.email))) {
       errors.email = 'This field is required';
-    }
-    else if (!validator.isEmail(String(data.email))) {
+    } else if (!validator.isEmail(String(data.email))) {
       errors.email = 'Input is not a valid email';
     }
     if (_.isEmpty(String(data.password))) {
@@ -61,26 +64,33 @@ class SignupForm extends Component {
     }
     if (_.isEmpty(String(data.passwordConfirmation))) {
       errors.passwordConfirmation = 'This field is required';
-    }
-    else if (!validator.equals(String(data.password), String(data.passwordConfirmation))) {
+    } else if (!validator.equals(String(data.password), String(data.passwordConfirmation))) {
       errors.passwordConfirmation = "Passwords don't match";
     }
     return {
       errors,
-      isValid: _.isEmpty(errors)
-    }
+      isValid: _.isEmpty(errors),
+    };
   }
 
-  isValidSignup(){
+  isValidSignup() {
     const { errors, isValid } = this.validateInput(this.state.data);
     if (!isValid) this.setState({ errors });
     return isValid;
   }
 
-  submitHandler(event){
+  submitHandler(event) {
     // prevents reloading of the page
     event.preventDefault();
-    this.props.submit(this.state.data);
+    if (this.isValidSignup()) {
+      this.setState({ errors: {}, isLoading: true });
+      const newData = {
+        ...this.state.data,
+        token: this.props.token,
+        motorCarrierId: this.props.motorCarrierId,
+      };
+      this.props.submit(newData);
+    }
     // .catch(
     //   (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
     // );
@@ -90,62 +100,72 @@ class SignupForm extends Component {
     return Object.keys(this.state.errors).length === 0;
   }
 
-  render(){
-    const { errors, isLoading, redirectTo, showPassword } = this.state;
+  render() {
+    const {
+      errors, isLoading, redirectTo, showPassword,
+    } = this.state;
     // Change redirect link
     if (redirectTo) {
-      this.setState({redirectTo: false});
-      return <Redirect to='/dashboard'/>;
+      this.setState({ redirectTo: false });
+      return <Redirect to="/dashboard" />;
     }
-    return(
+    return (
       <Form onSubmit={this.submitHandler}>
-        <FormGroup widths='equal'>
+        <FormGroup widths="equal">
           <Input
-          type="text"
-          name="first_name"
-          placeholder='First Name'
-          invalid={errors.first_name}
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            onChange={this.onChange}
+            invalid={errors.firstName}
           />
-          <FormFeedback>{errors.first_name}</FormFeedback>
-          <Input
-          type="text"
-          name="last_name"
-          placeholder='Last Name'
-          invalid={errors.last_name}
-          />
-          <FormFeedback>{errors.last_name}</FormFeedback>
+          <FormFeedback>{errors.firstName}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Input
-          type="text"
-          name="username"
-          placeholder='Username'
-          invalid={errors.username}
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            onChange={this.onChange}
+            invalid={errors.lastName}
+          />
+          <FormFeedback>{errors.lastName}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Input
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={this.onChange}
+            invalid={errors.username}
           />
           <FormFeedback>{errors.username}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Input
-          type="email"
-          name="email"
-          placeholder='Email'
-          invalid={errors.email}
+            type="email"
+            name="email"
+            onChange={this.onChange}
+            placeholder="Email"
+            invalid={errors.email}
           />
           <FormFeedback>{errors.email}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Input
-            placeholder='Password'
-            type={!showPassword ? "password" : "text"}
+            placeholder="Password"
+            type={!showPassword ? 'password' : 'text'}
             name="password"
             autoComplete="new-password"
             onChange={this.onChange}
             invalid={errors.password}
           />
           <FormFeedback>{errors.password}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
           <Input
-            placeholder='Password Confirmation'
-            type={!showPassword ? "password" : "text"}
+            placeholder="Password Confirmation"
+            type={!showPassword ? 'password' : 'text'}
             name="passwordConfirmation"
             autoComplete="new-password"
             onChange={this.onChange}
@@ -159,14 +179,16 @@ class SignupForm extends Component {
             Show password
           </Label>
         </FormGroup>
-        <Button type='submit' loading={isLoading}>Submit</Button>
+        <Button type="submit" loading={isLoading}>Submit</Button>
       </Form>
     );
   }
 }
 
 SignupForm.propTypes = {
-  submit: PropTypes.func.isRequired
-}
+  submit: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.string.isRequired,
+};
 
 export default SignupForm;

@@ -78,9 +78,7 @@ class Signup extends React.Component {
         alert = (<Alert alertType="FAIL" message={msg} />);
       }
 
-
       return (
-
         <Container>
           <Row>
             <Col sm="12" md={{ size: 12 }}>
@@ -116,7 +114,6 @@ class Signup extends React.Component {
     }
 }
 
-
 Signup.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -132,7 +129,6 @@ Signup.defaultProps = {
   error: null,
 };
 
-
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   isAdmin: state.auth.role === 'A',
@@ -141,7 +137,6 @@ const mapStateToProps = state => ({
   isLoading: state.auth.loading,
 
 });
-
 
 const mapDispatchToProps = dispatch => ({
   onAuth: (
