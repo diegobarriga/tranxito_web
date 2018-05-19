@@ -13,7 +13,7 @@ class Vehicle extends React.Component {
       <Aux>
         <Container>
           <VehicleInfo id={id} />
-          <Heatmap />
+          <Heatmap id={id} />
         </Container>
       </Aux>
 

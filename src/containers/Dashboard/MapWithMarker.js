@@ -12,16 +12,19 @@ import Loader from '../../components/Loader/Loader';
 const { MarkerClusterer } = require('react-google-maps/lib/components/addons/MarkerClusterer');
 
 function getDefaultPosition(data) {
-  console.log(data);
+  // console.log(data);
   const bound = new google.maps.LatLngBounds();
   let i;
-  for (i = 0; i < data.length; i += 1) {
-    bound.extend(new google.maps.LatLng(data[i].coordinates.lat, data[i].coordinates.lng));
-    console.log(data[i].coordinates.lat, data[i].coordinates.lng);
+  const cords = Object.values(data);
+
+  for (i = 0; i < cords.length; i += 1) {
+    bound.extend(new google.maps.LatLng(cords[i].coordinates.lat, cords[i].coordinates.lng));
+    // console.log(cords[i].coordinates.lat, cords[i].coordinates.lng);
   }
+
   const lat = bound.getCenter().lat();
   const lng = bound.getCenter().lng();
-  console.log(lat, lng);
+  // console.log(lat, lng);
   return { lat, lng };
 }
 
@@ -41,7 +44,7 @@ const MapWithAMarkerClusterer = compose(
   }),
   withGoogleMap,
 )(props => (
-  <GoogleMap defaultZoom={3} center={getDefaultPosition(props.markers)}>
+  <GoogleMap defaultZoom={2} center={getDefaultPosition(props.markers)}>
     <MarkerClusterer
       onClick={props.onMarkerClustererClick}
       averageCenter
@@ -49,7 +52,8 @@ const MapWithAMarkerClusterer = compose(
       gridSize={60}
     >
 
-      {props.markers.map(marker => (
+      {Object.values(props.markers).map(marker => (
+        marker != null &&
         <InfoWindowMarker
           key={marker.id}
           id={marker.id}
@@ -62,6 +66,7 @@ const MapWithAMarkerClusterer = compose(
           eventCode={marker.eventCode}
         />
       ))}
+
     </MarkerClusterer>
   </GoogleMap>
 ));
@@ -69,7 +74,7 @@ const MapWithAMarkerClusterer = compose(
 class MapWithMarker extends React.Component {
   componentDidMount() {
     this.props.getTrackings(this.props.token, this.props.motorCarrierId);
-
+    // console.log(this.props.trackings);
     // this.getDefaultPosition();
   }
 

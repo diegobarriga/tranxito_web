@@ -21,22 +21,31 @@ const styles = {
 };
 
 class UserInfo extends React.Component {
-  componentDidMount() {
-    console.log('didmount user');
-    this.props.getUserInfo(this.props.token, this.props.id);
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null,
+      loading: true,
+    };
+  }
+
+  componentWillMount() {
+    this.setState({ user: this.props.users[this.props.id], loading: false });
   }
 
   render() {
-    if (this.props.user == null) return <Loader />;
+    console.log(this.state.user);
+    console.log()
+    if (this.state.loading === true) return <Loader />;
 
     return (
       <Aux>
-        <h1>{`${this.props.user.first_name} ${this.props.user.last_name}`}</h1>
+        <h1>{`${this.state.user.first_name} ${this.state.user.last_name}`}</h1>
         <Row style={styles.userProfile}>
-          <Avatar src={api.images.userImageLink(this.props.user.image)} />
+          <Avatar src={api.images.userImageLink(this.state.user.image)} />
           <div style={styles.userData}>
-            <div>Driver license number: {this.props.user.driver_license_number}</div>
-            <div>Email: {this.props.user.email}</div>
+            <div>Driver license number: {this.state.user.driver_license_number}</div>
+            <div>Email: {this.state.user.email}</div>
           </div>
         </Row>
       </Aux>
@@ -45,7 +54,7 @@ class UserInfo extends React.Component {
 }
 
 UserInfo.propTypes = {
-  user: PropTypes.object,
+  users: PropTypes.object,
   first_name: PropTypes.string,
   last_name: PropTypes.string,
   email: PropTypes.string,
@@ -57,7 +66,7 @@ UserInfo.propTypes = {
 };
 
 UserInfo.defaultProps = {
-  user: null,
+  users: null,
   first_name: undefined,
   last_name: undefined,
   email: undefined,
@@ -68,7 +77,7 @@ UserInfo.defaultProps = {
 const mapStateToProps = state => ({
   token: state.auth.token,
   loading: state.userInfo.loading,
-  user: state.userInfo.user,
+  users: state.users.users,
 });
 
 const mapDispatchToProps = dispatch => ({

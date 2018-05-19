@@ -30,7 +30,7 @@ class UsersInfo extends React.Component {
   render() {
     if (this.props.isLoading === true) return <Loader />;
 
-    const filteredUsers = this.props.users.filter(user => ((
+    const filteredUsers = Object.values(this.props.users).filter(user => ((
       user.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       user.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) &&

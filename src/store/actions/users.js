@@ -1,6 +1,12 @@
 import * as actionTypes from './actionTypes';
 import api from '../../services/api';
 
+const arrayToObject = array =>
+  array.reduce((obj, item) => {
+    obj[item.id] = item; // eslint-disable-line
+    return obj;
+  }, {});
+
 
 export const getUsersStart = () => ({
   type: actionTypes.GET_USERS_START,
@@ -50,8 +56,10 @@ export const getUsers = (token, motorCarrierId) => (dispatch) => {
 
   api.motorCarriers.getMotorCarrierPeople(motorCarrierId, token)
     .then((userResponse) => {
-      console.log(userResponse);
-      dispatch(getUsersSuccess(userResponse.data));
+      console.log(userResponse.data);
+      const userObject = arrayToObject(userResponse.data);
+      console.log(userObject);
+      dispatch(getUsersSuccess(userObject));
     })
     .catch((err) => {
       console.log(err);

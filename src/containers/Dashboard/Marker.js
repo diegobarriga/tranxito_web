@@ -74,15 +74,14 @@ class InfoWindowMarker extends Component {
 
   render() {
     if (this.state.vehicleLoading === true || this.state.userLoading === true) return <div />;
-
     return (
       <Marker
         key={this.props.id}
         position={{ lat: this.props.lat, lng: this.props.lng }}
-        icon={{
-            url: markers[this.props.eventCode],
-            scaledSize: new google.maps.Size(40, 40),
-        }}
+        // icon={{
+        //     url: markers[this.props.eventCode],
+        //     scaledSize: new google.maps.Size(40, 40),
+        // }}
         onClick={() => this.handleToggleOpen()}
       >
         {
