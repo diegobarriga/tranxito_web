@@ -43,7 +43,6 @@ Layout.propTypes = {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   isAdmin: state.auth.role === 'A',
-
 });
 
 export default connect(mapStateToProps)(Layout);

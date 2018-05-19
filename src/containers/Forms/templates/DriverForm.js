@@ -18,11 +18,11 @@ class DriverForm extends Component {
         email: '',
         driver_license_number: '',
         licenses_issuing_state: '',
-        exempt_driver_configuration: '',
-        time_zone_offset_utc: '',
+        exempt_driver_configuration: '0',
+        time_zone_offset_utc: '4',
         starting_time_24_hour_period: '',
-        move_yards_use: '',
-        personal_use: '',
+        move_yards_use: '0',
+        personal_use: '0',
         username: '',
         password: '',
         passwordConfirmation: '',
@@ -138,22 +138,29 @@ class DriverForm extends Component {
     } else if (String(data.licenses_issuing_state).length !== 2) {
       errors.licenses_issuing_state = 'Not a valid state';
     }
+    /*
     if (_.isEmpty(String(data.exempt_driver_configuration))) {
       errors.exempt_driver_configuration = 'This field is required';
     } else if (!['E', '0'].includes(this.exempt_driver_configuration)) {
-      errors.exempt_driver_configuration = "Must be 'E', '0' or '1'";
+      errors.exempt_driver_configuration = "Must be 'E', '0'";
     }
-    if (_.isEmpty(String(data.time_zone_offset_utc))) {
-      errors.time_zone_offset_utc = 'This field is required';
-    } else if (!validator.isInt(String(this.time_zone_offset_utc), { min: 4, max: 11 })) {
-      errors.time_zone_offset_utc = 'Must be an integer between 4 and 11';
-    }
+    */
     if (_.isEmpty(String(data.starting_time_24_hour_period))) {
       errors.starting_time_24_hour_period = 'This field is required';
     }
+    /*
+    if (_.isEmpty(String(data.time_zone_offset_utc))) {
+      errors.time_zone_offset_utc = 'This field is required';
+    }
+    else if (!validator.isInt(String(this.time_zone_offset_utc), { min: 4, max: 11 })) {
+      errors.time_zone_offset_utc = 'Must be an integer between 4 and 11';
+    }
+    */
+    /*
     if (_.isEmpty(String(data.personal_use))) {
       errors.personal_use = 'This field is required';
     }
+    */
     return {
       errors,
       isValid: _.isEmpty(errors),
@@ -168,8 +175,8 @@ class DriverForm extends Component {
 
   createSelectItems(min, max) {
     const items = [];
-    for (let i = min; i <= max; i++) {
-      items.push(<option value={i}>{i}</option>);
+    for (let i = min; i <= max; i += 1) {
+      items.push(<option key={i} value={i}>{i}</option>);
     }
     return items;
   }
@@ -263,15 +270,15 @@ class DriverForm extends Component {
         </FormGroup>
         <FormGroup>
           <Input
-              placeholder="Password Confirmation"
-              type={!showPassword ? 'password' : 'text'}
-              name="passwordConfirmation"
-              autoComplete="new-password"
-              value={data.passwordConfirmation}
-              onChange={this.onChange}
-              valid={!this.emptyErrors() && !errors.passwordConfirmation}
-              invalid={errors.passwordConfirmation}
-            />
+            placeholder="Password Confirmation"
+            type={!showPassword ? 'password' : 'text'}
+            name="passwordConfirmation"
+            autoComplete="new-password"
+            value={data.passwordConfirmation}
+            onChange={this.onChange}
+            valid={!this.emptyErrors() && !errors.passwordConfirmation}
+            invalid={errors.passwordConfirmation}
+          />
           <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
         </FormGroup>
         <FormGroup check>
@@ -328,7 +335,6 @@ class DriverForm extends Component {
             invalid={errors.exempt_driver_configuration}
           >
             <option value="0">0</option>
-            <option value="1">1</option>
             <option value="E">E</option>
           </Input>
           <FormFeedback>{errors.exempt_driver_configuration}</FormFeedback>

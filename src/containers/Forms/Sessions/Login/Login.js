@@ -135,6 +135,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onAuth: (email, password) => dispatch(actions.login(email, password)),
   resetError: () => dispatch(actions.errorReset()),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,14 +1,13 @@
 import React from 'react';
 import { ListGroup } from 'reactstrap';
+import { connect } from 'react-redux';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import VehicleRow from './VehicleRow';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/vehicles';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Input } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import styles from '../../assets/styles/forms.css';
+import '../../assets/styles/forms.css';
 
 class VehicleInfo extends React.Component {
   constructor(props) {
@@ -29,10 +28,14 @@ class VehicleInfo extends React.Component {
 
 
   render() {
-    const filtered_vehicles = this.props.vehicles.filter(vehicle => (vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+    if (this.props.isLoading === true) return <Loader />;
+
+    const filteredVehicles = this.props.vehicles.filter(vehicle => (
+      vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+
     return (
       <div>
 
@@ -44,13 +47,11 @@ class VehicleInfo extends React.Component {
           </div>
         </div>
 
-
-        {this.props.loading && <Loader />}
-        {console.log(filtered_vehicles)}
         <ListGroup>
           {
-              filtered_vehicles.sort((a, b) => {return a.car_maker > b.car_maker}).map(truck => (<VehicleRow
+              filteredVehicles.sort((a, b) => (a.car_maker > b.car_maker)).map(truck => (<VehicleRow
                 key={truck.id}
+                id={truck.id}
                 vin={truck.vin}
                 CMV_power_unit_number={truck.CMV_power_unit_number}
                 model={truck.model}
@@ -58,7 +59,7 @@ class VehicleInfo extends React.Component {
                 plaque={truck.plaque}
                 state={truck.state}
                 IMEI_ELD={truck.IMEI_ELD}
-                picture="https://wsa1.pakwheels.com/assets/default-display-image-car-638815e7606c67291ff77fd17e1dbb16.png"
+                image={truck.image}
               />))
             }
         </ListGroup>
@@ -67,11 +68,21 @@ class VehicleInfo extends React.Component {
   }
 }
 
+VehicleInfo.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  vehicles: PropTypes.array.isRequired,
+  getVehicles: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+};
+
+// VehicleInfo.defaultProps = { };
+
 const mapStateToProps = state => ({
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,
   vehicles: state.vehicles.vehicles,
-  loading: state.vehicles.loading,
+  isLoading: state.vehicles.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Alert } from 'react-bootstrap';
-import { Button, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Alert } from 'reactstrap';
 import Loader from '../../../../components/Loader/Loader';
 import LoginForm from './LoginForm';
 import * as actions from '../../../../store/actions/index';
@@ -15,7 +14,7 @@ class LoginView extends Component {
     this.state = {
       errors: {},
       redirectTo: false,
-      pathname: '',
+      // pathname: '',
     };
   // this.submit = this.submit.bind(this);
   }
@@ -87,7 +86,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: credentials => dispatch(actions.login(credentials)),
+  onAuth: (email, password) => dispatch(actions.login(email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginView);

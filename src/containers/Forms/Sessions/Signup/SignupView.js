@@ -12,69 +12,66 @@ import SignupForm from './SignupForm';
 
 class SignupView extends Component {
   constructor(props) {
-  super(props);
-  this.state = {
-    errors: {},
-    redirectTo: false,
-    pathname: ''
+    super(props);
+    this.state = {};
   }
-}
 
   componentDidMount() {
     this.props.resetError();
   }
 
-    render() {
-      if (this.props.isLoading === true) return <Loader />;
+  render() {
+    if (this.props.isLoading === true) return <Loader />;
 
-      const h1Style = {
-        marginTop: '2rem',
-        textAlign: 'center',
-        marginBottom: '2rem',
-      };
+    const h1Style = {
+      marginTop: '2rem',
+      textAlign: 'center',
+      marginBottom: '2rem',
+    };
 
-      let authRedirect = null;
-      if (this.props.isAuthenticated) {
-        if (!this.props.isAdmin) {
-          authRedirect = <Redirect to="/dashboard" />;
-        }
-      } else {
-        authRedirect = <Redirect to="/" />;
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      if (!this.props.isAdmin) {
+        authRedirect = <Redirect to="/dashboard" />;
       }
-
-      let alert;
-
-      if (this.props.error === null) {
-        alert = null;
-      } else if (this.props.error.status === 200) {
-        alert = (<Alert alertType="SUCCESS" />);
-        // this.props.resetError();
-      } else {
-        alert = (<Alert alertType="FAIL" />);
-        // this.props.resetError();
-      }
-
-      /* Dispatch action to reset status to null */
-
-
-      return (
-
-        <Container>
-          <Row>
-            <Col sm="12" md={{ size: 12 }}>
-              { alert }
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="12" md={{ size: 5, offset: 3 }}>
-              { authRedirect }
-              <h1 style={h1Style}>Register Supervisor</h1>
-              <SignupForm submit={this.props.onAuth}/>
-            </Col>
-          </Row>
-        </Container>
-      );
+    } else {
+      authRedirect = <Redirect to="/" />;
     }
+
+    /* Alert */
+    let alert;
+    let msg = '';
+    if (this.props.error === null) {
+      alert = null;
+    } else if (this.props.error.status === 200) {
+      msg = 'Supervisor was created successfully';
+      alert = (<Alert alertType="SUCCESS" message={msg} />);
+    } else {
+      msg = 'Error the supervisor could not be created';
+      alert = (<Alert alertType="FAIL" message={msg} />);
+    }
+
+    return (
+
+      <Container>
+        <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 5, offset: 3 }}>
+            { authRedirect }
+            <h1 style={h1Style}>Register Supervisor</h1>
+            <SignupForm
+              submit={this.props.onAuth}
+              token={this.props.token}
+            />
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 }
 
 
@@ -104,7 +101,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: (data) => dispatch(actions.signup(data)),
+  onAuth: data => dispatch(actions.signup(data)),
   resetError: () => dispatch(actions.errorReset()),
 });
 

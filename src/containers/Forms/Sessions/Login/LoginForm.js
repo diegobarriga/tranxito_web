@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 
 const _ = require('lodash');
@@ -69,7 +69,7 @@ class LoginForm extends Component {
     if (this.isValidLogin()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      this.props.login(this.state.data);
+      this.props.login(this.state.data.email, this.state.data.password);
       // .catch(
       //   (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
       // );
