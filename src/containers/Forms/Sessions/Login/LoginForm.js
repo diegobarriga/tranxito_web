@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import validator from 'validator';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import * as actions from '../../../../store/actions/index';
 
 const _ = require('lodash');
 
