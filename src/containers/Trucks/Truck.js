@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Aux from '../../hoc/Aux';
-import VehicleInfo from './VehicleInfo';
-
+import VehicleInfo from './Truck-info';
 
 class Vehicle extends React.Component {
   render() {

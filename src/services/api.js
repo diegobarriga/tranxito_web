@@ -95,7 +95,7 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/events/count`),
     getTrackingsMotorCarrier: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking?access_token=${token}`),
-      // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
+    // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
 
   },
   events: {

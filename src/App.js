@@ -28,7 +28,7 @@ import './assets/styles/App.css';
 import Drivers from './containers/Users/Users';
 import Driver from './containers/Users/User';
 import Vehicles from './containers/Trucks/Trucks';
-import Vehicle from './containers/Trucks/Vehicle';
+import Vehicle from './containers/Trucks/Truck';
 
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
