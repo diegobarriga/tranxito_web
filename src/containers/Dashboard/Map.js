@@ -41,7 +41,7 @@ const MapWithAMarkerClusterer = compose(
   }),
   withGoogleMap,
 )(props => (
-  <GoogleMap defaultZoom={3} center={getDefaultPosition(props.markers)}>
+  <GoogleMap defaultZoom={1} center={getDefaultPosition(props.markers)}>
     <MarkerClusterer
       onClick={props.onMarkerClustererClick}
       averageCenter
@@ -49,7 +49,7 @@ const MapWithAMarkerClusterer = compose(
       gridSize={60}
     >
 
-      {props.markers.map(marker => (
+      {Object.values(props.markers).map(marker => (
         <InfoWindowMarker
           key={marker.id}
           id={marker.id}
@@ -59,7 +59,7 @@ const MapWithAMarkerClusterer = compose(
           timestamp={marker.timestamp}
           userId={marker.personId}
           vehicleId={marker.vehicleId}
-          eventCode={marker.eventCode}
+          eventCode={marker.eventCode ? marker.eventCode : 5}
         />
       ))}
     </MarkerClusterer>
@@ -88,7 +88,7 @@ Map.propTypes = {
   getTrackings: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
-  trackings: PropTypes.array.isRequired,
+  trackings: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

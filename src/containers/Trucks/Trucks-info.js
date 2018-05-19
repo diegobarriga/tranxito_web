@@ -5,8 +5,6 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TruckRow from './Truck-row';
-import Loader from '../../components/Loader/Loader';
-import * as actions from '../../store/actions/vehicles';
 import '../../assets/styles/forms.css';
 
 class TrucksInfo extends React.Component {
@@ -18,19 +16,18 @@ class TrucksInfo extends React.Component {
     this.updateSearch = this.updateSearch.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getVehicles(this.props.token, this.props.motorCarrierId);
-  }
+  // componentDidMount() {
+  //   this.props.getVehicles(this.props.token, this.props.motorCarrierId);
+  // }
 
   updateSearch(event) {
     this.setState({ search: event.target.value });
   }
 
-
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    // if (this.props.isLoading === true) return <Loader />;
 
-    const filteredVehicles = this.props.vehicles.filter(vehicle => (
+    const filteredVehicles = Object.values(this.props.vehicles).filter(vehicle => (
       vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
@@ -69,26 +66,12 @@ class TrucksInfo extends React.Component {
 }
 
 TrucksInfo.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  vehicles: PropTypes.array.isRequired,
-  getVehicles: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.number.isRequired,
-};
-
-TrucksInfo.defaultProps = {
-
+  vehicles: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  token: state.auth.token,
-  motorCarrierId: state.auth.motorCarrierId,
-  vehicles: state.vehicles.vehicles,
-  isLoading: state.vehicles.loading,
+  vehicles: state.auth.vehicles,
+
 });
 
-const mapDispatchToProps = dispatch => ({
-  getVehicles: (token, motorCarrierId) => dispatch(actions.getVehicles(token, motorCarrierId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TrucksInfo);
+export default connect(mapStateToProps)(TrucksInfo);

@@ -8,6 +8,8 @@ const initialState = {
   loading: false,
   role: null,
   motorCarrierId: null,
+  vehicles: null,
+  users: null,
 };
 
 const authStart = state => updateObject(state, { error: null, loading: true });
@@ -23,6 +25,9 @@ const authLogout = state => updateObject(state, {
   token: null,
   userId: null,
   role: null,
+  motorCarrierId: null,
+  vehicles: null,
+  users: null,
 });
 
 const authSuccess = (state, action) => updateObject(state, {
@@ -32,6 +37,8 @@ const authSuccess = (state, action) => updateObject(state, {
   error: null,
   loading: false,
   motorCarrierId: action.motorCarrierId,
+  vehicles: action.vehicles,
+  users: action.users,
 });
 
 
