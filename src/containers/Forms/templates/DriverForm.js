@@ -262,18 +262,18 @@ class DriverForm extends Component {
           <FormFeedback>{errors.password}</FormFeedback>
         </FormGroup>
         <FormGroup>
-            <Input
-            placeholder="Password Confirmation"
-            type={!showPassword ? 'password' : 'text'}
-            name="passwordConfirmation"
-            autoComplete="new-password"
-            value={data.passwordConfirmation}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.passwordConfirmation}
-            invalid={errors.passwordConfirmation}
-          />
-            <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
-          </FormGroup>
+          <Input
+              placeholder="Password Confirmation"
+              type={!showPassword ? 'password' : 'text'}
+              name="passwordConfirmation"
+              autoComplete="new-password"
+              value={data.passwordConfirmation}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.passwordConfirmation}
+              invalid={errors.passwordConfirmation}
+            />
+          <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
+        </FormGroup>
         <FormGroup check>
           <Label check>
             <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
