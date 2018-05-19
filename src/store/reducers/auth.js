@@ -25,6 +25,9 @@ const authLogout = state => updateObject(state, {
   token: null,
   userId: null,
   role: null,
+  motorCarrierId: null,
+  vehicles: null,
+  users: null,
 });
 
 const authSuccess = (state, action) => updateObject(state, {

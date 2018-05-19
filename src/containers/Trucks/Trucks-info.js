@@ -66,7 +66,7 @@ class TrucksInfo extends React.Component {
 }
 
 TrucksInfo.propTypes = {
-  vehicles: PropTypes.array.isRequired,
+  vehicles: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
