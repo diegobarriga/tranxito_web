@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import VehicleInfo from './VehicleInfo';
+import Heatmap from './Heatmap';
 
 class Vehicle extends React.Component {
   render() {
     const { id } = this.props.match.params;
     return (
       <Aux>
-        <VehicleInfo id={id} />
+        <Container>
+          <VehicleInfo id={id} />
+          <Heatmap id={id} />
+        </Container>
       </Aux>
-
     );
   }
 }
@@ -23,6 +27,5 @@ Vehicle.propTypes = {
 Vehicle.defaultProps = {
   id: undefined,
 };
-
 
 export default Vehicle;
