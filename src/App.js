@@ -24,6 +24,7 @@ import './assets/styles/App.css';
 import Users from './containers/Users/Users';
 import User from './containers/Users/User';
 import Vehicles from './containers/Vehicles/Vehicles';
+import Vehicle from './containers/Vehicles/Vehicle';
 import Logs from './containers/Logs/Logs';
 import Dashboard from './containers/Dashboard/Dashboard';
 import LoginView from './containers/Forms/Sessions/Login/LoginView';
@@ -60,10 +61,8 @@ class App extends Component {
           <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
           <Route path="/vehicles/new_vehicle" component={CreateVehicle} />
           <Route path="/vehicles/:id/edit" component={EditVehicle} />
+          <Route path="/vehicles/:id" component={Vehicle} />
           <Route path="/vehicles" component={Vehicles} />
-          <Route path="/vehicles/new_vehicles" component={CreateVehicles} />
-          <Route path="/vehicles/new_vehicle" component={CreateVehicleView} />
-          <Route path="/vehicles/:id/edit" component={EditVehicleView} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={SignupView} />

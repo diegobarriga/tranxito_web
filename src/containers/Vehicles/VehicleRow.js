@@ -33,10 +33,9 @@ class VehicleRow extends React.Component {
           </figure>
           <div className="right">
             <ul>
-              <li>{this.props.car_maker} {this.props.model} - {this.props.plaque}</li>
+              <li><Link to={`/vehicles/${this.props.id}`}>{this.props.car_maker} {this.props.model} - {this.props.plaque}</Link></li>
               <li>State: {this.props.state}</li>
               <li>VIN: {this.props.vin}</li>
-              <li>ELD: {this.props.IMEI_ELD}</li>
             </ul>
           </div>
         </div>
@@ -49,6 +48,7 @@ class VehicleRow extends React.Component {
   }
 }
 
+
 const mapStateToProps = state => ({
   token: state.auth.token,
 });
@@ -57,13 +57,13 @@ const mapDispatchToProps = dispatch => ({
   deleteVehicle: (vehicleId, token) => dispatch(actions.onVehicleDelete(vehicleId, token)),
 });
 
+
 VehicleRow.propTypes = {
   vin: PropTypes.string.isRequired,
   model: PropTypes.string.isRequired,
   car_maker: PropTypes.string.isRequired,
   plaque: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
-  IMEI_ELD: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   deleteVehicle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,

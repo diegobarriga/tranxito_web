@@ -1,5 +1,4 @@
 import React from 'react';
-import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import '../../../assets/styles/forms.css';
