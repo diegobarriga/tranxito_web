@@ -52,6 +52,7 @@ const MapWithAMarkerClusterer = compose(
     >
 
       {Object.values(props.markers).map(marker => (
+        marker != null &&
         <InfoWindowMarker
           key={marker.id}
           id={marker.id}
