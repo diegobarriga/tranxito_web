@@ -17,7 +17,7 @@ class Legend extends React.Component {
         <div className="legend-row"><img src={marker4} alt="OC" height="15" width="15" /> ON DUTTY</div>
         <div className="legend-row"><img src={marker5} alt="OC2" height="15" width="15" /> UNDEFINED</div>
       </div>
-    )
+    );
   }
 }
 
