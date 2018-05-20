@@ -8,6 +8,8 @@ import { compose, withProps, withHandlers } from 'recompose';
 import InfoWindowMarker from './Marker';
 import * as actions from '../../store/actions/tracking';
 import Loader from '../../components/Loader/Loader';
+import MapControl from './MapControl';
+import Legend from './Legend';
 
 const { MarkerClusterer } = require('react-google-maps/lib/components/addons/MarkerClusterer');
 
@@ -63,6 +65,11 @@ const MapWithAMarkerClusterer = compose(
         />
       ))}
     </MarkerClusterer>
+
+    <MapControl position={google.maps.ControlPosition.RIGHT_CENTER}>
+      <Legend />
+    </MapControl>
+
   </GoogleMap>
 ));
 
