@@ -52,17 +52,18 @@ const MapWithAMarkerClusterer = compose(
     >
 
       {Object.values(props.markers).map(marker => (
-        <InfoWindowMarker
-          key={marker.id}
-          id={marker.id}
-          lat={marker.coordinates.lat}
-          lng={marker.coordinates.lng}
-          speed={marker.speed}
-          timestamp={marker.timestamp}
-          userId={marker.personId}
-          vehicleId={marker.vehicleId}
-          eventCode={marker.eventCode ? marker.eventCode : 5}
-        />
+        marker != null &&
+          <InfoWindowMarker
+            key={marker.id}
+            id={marker.id}
+            lat={marker.coordinates.lat}
+            lng={marker.coordinates.lng}
+            speed={marker.speed}
+            timestamp={marker.timestamp}
+            userId={marker.personId}
+            vehicleId={marker.vehicleId}
+            eventCode={marker.eventCode ? marker.eventCode : 5}
+          />
       ))}
     </MarkerClusterer>
 

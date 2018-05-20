@@ -18,7 +18,7 @@ const markers = {
   2: marker2,
   3: marker3,
   4: marker4,
-  5: marker5
+  5: marker5,
 };
 
 class InfoWindowMarker extends Component {
