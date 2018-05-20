@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import UserRow from './User-row';
-import Loader from '../../components/Loader/Loader';
+import UserRow from './UserRow';
 import '../../assets/styles/forms.css';
+import Loader from '../../components/Loader/Loader';
 
 
 class UsersInfo extends React.Component {

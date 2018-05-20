@@ -62,7 +62,7 @@ class MotorCarriers extends React.Component {
 
                       <div>
                         <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/new_supervisor`} ><FontAwesomeIcon icon="user" color="white" /> Add Supervisor</Link>
-                        <Link className="btn btn-sm green spacing" to="/motor_carriers" ><FontAwesomeIcon icon="trash" color="white" /> Edit</Link>
+                        <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/edit`} ><FontAwesomeIcon icon="trash" color="white" /> Edit</Link>
                         <Link className="btn btn-sm green spacing" to="/motor_carriers" ><FontAwesomeIcon icon="trash" color="white" /> Delete</Link>
                       </div>
                     </div>

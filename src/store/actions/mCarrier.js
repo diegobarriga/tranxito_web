@@ -33,21 +33,28 @@ export const initMCarriers = token => (dispatch) => {
 };
 
 
-export const carrierRegister = (name, usdotNumber, multidayBasisUsed, token) => (dispatch) => {
+export const carrierRegister = (data, token, isCreate, id) => (dispatch) => {
   dispatch(createMCarrierStart());
-  const regData = {
-    name,
-    USDOT_number: usdotNumber,
-    multiday_basis_used: multidayBasisUsed,
-  };
 
-  api.motorCarriers.createMotorCarrier(regData, token)
-    .then((response) => {
-      console.log(response);
-      dispatch(createMCSuccess(regData, response));
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch(createMCFail());
-    });
+  if (isCreate) {
+    api.motorCarriers.createMotorCarrier(data, token)
+      .then((response) => {
+        console.log(response);
+        dispatch(createMCSuccess(data, response));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(createMCFail());
+      });
+  } else {
+    api.motorCarriers.updateMotorCarrier(id, data, token)
+      .then((response) => {
+        console.log(response);
+        // dispatch(createMCSuccess(data, response));
+      })
+      .catch((err) => {
+        console.log(err);
+        // dispatch(createMCFail());
+      });
+  }
 };

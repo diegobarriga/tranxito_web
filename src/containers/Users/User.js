@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Aux from '../../hoc/Aux';
 import Graph from './graph';
-import UserLogs from './User-logs';
-import UserInfo from './User-info';
+import UserLogs from './UserLogs';
+import UserInfo from './UserInfo';
 
 
 class User extends React.Component {

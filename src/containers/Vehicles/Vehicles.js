@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import VehiclesInfo from './VehiclesInfo';
 import Aux from '../../hoc/Aux';
-import TrucksInfo from './Trucks-info';
 import '../../assets/styles/forms.css';
 import Alert from '../Alert/Alert';
 
-class Trucks extends React.Component {
+class Vehicles extends React.Component {
+  // onDeleteBtnClick() {
+  // }
+
   render() {
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
@@ -34,7 +37,7 @@ class Trucks extends React.Component {
         { alert }
         <h1> Vehicles </h1>
         <Container>
-          <TrucksInfo />
+          <VehiclesInfo motor_carrier_id={0} />
         </Container>
       </Aux>
 
@@ -42,12 +45,12 @@ class Trucks extends React.Component {
   }
 }
 
-Trucks.propTypes = {
+Vehicles.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   error: PropTypes.object,
 };
 
-Trucks.defaultProps = {
+Vehicles.defaultProps = {
   error: null,
 };
 
@@ -56,4 +59,4 @@ const mapStateToProps = state => ({
   error: state.vehicles.error,
 });
 
-export default connect(mapStateToProps)(Trucks);
+export default connect(mapStateToProps)(Vehicles);

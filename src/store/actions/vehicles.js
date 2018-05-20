@@ -29,6 +29,7 @@ export const delVErrorReset = () => ({
 
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
   api.vehicles.deleteVehcle(vehicleId, token)
+
     .then((response) => {
       dispatch(delVErrorReset());
       dispatch(onVehicleDeleteSuccess(vehicleId, response));

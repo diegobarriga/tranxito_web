@@ -15,6 +15,7 @@
     "d3-request": "^1.0.6",
     "eslint": "^4.19.1",
     "font-awesome": "^4.7.0",
+    "lodash": "^4.17.10",
     "node-sass": "^4.8.3",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
@@ -23,6 +24,7 @@
     "react": "^16.3.2",
     "react-alert": "^4.0.2",
     "react-alert-template-basic": "^1.0.0",
+    "react-bootstrap": "^0.32.1",
     "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.3.2",
     "react-file-reader": "^1.1.4",
@@ -41,6 +43,8 @@
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^7.0.1",
+    "semantic-ui-react": "^0.79.1",
+    "validator": "^9.4.1",
     "yarn": "^1.6.0"
   },
   "scripts": {

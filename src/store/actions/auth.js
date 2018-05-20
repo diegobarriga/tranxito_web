@@ -49,28 +49,21 @@ export const logoutToken = (token) => {
 };
 
 
-export const signup = (
-  email,
-  password,
-  firstName,
-  lastName,
-  username,
-  accounType,
-  motorCarrierId,
-  token,
-) => (dispatch) => {
+export const signup = data => (dispatch) => {
   dispatch(authStart());
   const authData = {
-    email,
-    password,
-    first_name: firstName,
-    last_name: lastName,
-    username,
-    account_type: accounType,
-    motorCarrierId,
+    email: data.email,
+    password: data.password,
+    first_name: data.firstName,
+    last_name: data.lastName,
+    username: data.username,
+    account_type: data.accountType,
+    motorCarrierId: data.motorCarrierId,
   };
+  console.log(data);
+  console.log(authData);
 
-  api.people.signup(authData, token)
+  api.people.signup(authData, data.token)
     .then((response) => {
       dispatch(createSuccess(response));
       console.log(response);

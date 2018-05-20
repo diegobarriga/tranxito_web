@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../../assets/styles/forms.css';
-import DriverForm from '../templates/driver_form';
+import DriverFormView from '../templates/DriverFormView';
 
-class CreateDriver extends React.Component {
+class EditDriver extends React.Component {
   render() {
     return (
-      <DriverForm title="Create New Driver" isCreate={true} />
+      <DriverFormView title="Edit Driver" isCreate={false} />
     );
   }
 }
@@ -16,4 +16,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps)(CreateDriver);
+export default connect(mapStateToProps)(EditDriver);

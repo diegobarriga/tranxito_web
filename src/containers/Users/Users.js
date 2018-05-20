@@ -3,10 +3,10 @@ import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Aux from '../../hoc/Aux';
-import UsersInfo from './Users-info';
-import '../../assets/styles/forms.css';
+import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
+import Aux from '../../hoc/Aux';
+import '../../assets/styles/forms.css';
 
 class Users extends React.Component {
   render() {

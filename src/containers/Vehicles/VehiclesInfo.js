@@ -1,13 +1,14 @@
+
 import React from 'react';
 import { ListGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import TruckRow from './Truck-row';
+import VehicleRow from './VehicleRow';
 import '../../assets/styles/forms.css';
 
-class TrucksInfo extends React.Component {
+class VehiclesInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +47,7 @@ class TrucksInfo extends React.Component {
 
         <ListGroup>
           {
-              filteredVehicles.sort((a, b) => a.car_maker > b.car_maker).map(truck => (<TruckRow
+              filteredVehicles.sort((a, b) => a.car_maker > b.car_maker).map(truck => (<VehicleRow
                 key={truck.id}
                 id={truck.id}
                 vin={truck.vin}
@@ -65,7 +66,7 @@ class TrucksInfo extends React.Component {
   }
 }
 
-TrucksInfo.propTypes = {
+VehiclesInfo.propTypes = {
   vehicles: PropTypes.object.isRequired,
 };
 
@@ -74,4 +75,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps)(TrucksInfo);
+export default connect(mapStateToProps)(VehiclesInfo);

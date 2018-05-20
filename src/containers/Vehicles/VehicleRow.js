@@ -7,7 +7,7 @@ import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
 import api from '../../services/api';
 
-class TruckRow extends React.Component {
+class VehicleRow extends React.Component {
   onDeleteBtnClick(userId, token) {
     const confirmDelete = window.confirm('Are you sure you want to delete this vehicle?');
     if (confirmDelete) {
@@ -58,7 +58,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-TruckRow.propTypes = {
+VehicleRow.propTypes = {
   vin: PropTypes.string.isRequired,
   model: PropTypes.string.isRequired,
   car_maker: PropTypes.string.isRequired,
@@ -70,4 +70,4 @@ TruckRow.propTypes = {
   image: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TruckRow);
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleRow);
