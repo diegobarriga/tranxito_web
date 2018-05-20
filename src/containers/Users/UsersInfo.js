@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import UserRow from './UserRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
-import * as actions from '../../store/actions/users';
 
 
 class UsersInfo extends React.Component {

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ListGroup } from 'reactstrap';
 import { connect } from 'react-redux';
@@ -5,11 +6,9 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import VehicleRow from './VehicleRow';
-import Loader from '../../components/Loader/Loader';
-import * as actions from '../../store/actions/vehicles';
 import '../../assets/styles/forms.css';
 
-class VehicleInfo extends React.Component {
+class VehiclesInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,19 +17,18 @@ class VehicleInfo extends React.Component {
     this.updateSearch = this.updateSearch.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getVehicles(this.props.token, this.props.motorCarrierId);
-  }
+  // componentDidMount() {
+  //   this.props.getVehicles(this.props.token, this.props.motorCarrierId);
+  // }
 
   updateSearch(event) {
     this.setState({ search: event.target.value });
   }
 
-
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    // if (this.props.isLoading === true) return <Loader />;
 
-    const filteredVehicles = this.props.vehicles.filter(vehicle => (
+    const filteredVehicles = Object.values(this.props.vehicles).filter(vehicle => (
       vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
@@ -49,7 +47,7 @@ class VehicleInfo extends React.Component {
 
         <ListGroup>
           {
-              filteredVehicles.sort((a, b) => (a.car_maker > b.car_maker)).map(truck => (<VehicleRow
+              filteredVehicles.sort((a, b) => a.car_maker > b.car_maker).map(truck => (<VehicleRow
                 key={truck.id}
                 id={truck.id}
                 vin={truck.vin}
@@ -68,25 +66,13 @@ class VehicleInfo extends React.Component {
   }
 }
 
-VehicleInfo.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  vehicles: PropTypes.array.isRequired,
-  getVehicles: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.number.isRequired,
+VehiclesInfo.propTypes = {
+  vehicles: PropTypes.object.isRequired,
 };
 
-// VehicleInfo.defaultProps = { };
-
 const mapStateToProps = state => ({
-  token: state.auth.token,
-  motorCarrierId: state.auth.motorCarrierId,
-  vehicles: state.vehicles.vehicles,
-  isLoading: state.vehicles.loading,
+  vehicles: state.auth.vehicles,
+
 });
 
-const mapDispatchToProps = dispatch => ({
-  getVehicles: (token, motorCarrierId) => dispatch(actions.getVehicles(token, motorCarrierId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(VehicleInfo);
+export default connect(mapStateToProps)(VehiclesInfo);
