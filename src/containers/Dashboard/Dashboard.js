@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import Map from './Map';
+import Summary from './Summary';
 
 
 class Dashboard extends React.Component {
@@ -21,7 +22,7 @@ class Dashboard extends React.Component {
         { alert }
         { authRedirect }
         <Container>
-          <h1> Dashboard </h1>
+          <Summary />
           <Map />
         </Container>
 
