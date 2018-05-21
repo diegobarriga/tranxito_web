@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const apiPath = 'https://eld-test.azurewebsites.net/explorer/';
-const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
+const apiPath = 'https://eld-test.azurewebsites.net/api';
+// const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
 // These are most of the API endpoints
 // TODO: 1) check if the responses are ok
