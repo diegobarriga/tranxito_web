@@ -12,7 +12,11 @@ class Layout extends Component {
       <Aux>
         <div className="app">
           <header className="appNavbar" >
-            <Navibar isAuth={this.props.isAuthenticated} />
+            <Navibar
+              isAuth={this.props.isAuthenticated}
+              userId={this.props.userId}
+              token={this.props.token}
+            />
           </header>
           <main className="appBody">
             <div className="appMain">
@@ -36,12 +40,16 @@ class Layout extends Component {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  userId: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
+  userId: state.auth.userId,
+  token: state.auth.token,
   isAdmin: state.auth.role === 'A',
 });
 
