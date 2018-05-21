@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// const apiPath = 'https://eld-test.azurewebsites.net/explorer/';
 const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
 // These are most of the API endpoints
@@ -125,4 +126,3 @@ export default {
       axios.post(`${apiPath}/People/upload?access_token=${token}`, formData, config),
   },
 };
-
