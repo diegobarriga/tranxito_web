@@ -11,11 +11,11 @@ import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
 import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle';
 import faClock from '@fortawesome/fontawesome-free-solid/faClock';
 import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow';
-// import faUserCog from '@fortawesome/fontawesome-free-solid/faUserCog';
+import faUserCog from '@fortawesome/fontawesome-free-solid/faUserCog';
 import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt';
-// import faUserTie from '@fortawesome/fontawesome-free-solid/faUserTie';
+import faUserTie from '@fortawesome/fontawesome-free-solid/faUserTie';
 import faChartLine from '@fortawesome/fontawesome-free-solid/faChartLine';
-// import faBluetooth from '@fortawesome/fontawesome-free-brands/faBluetooth';
+import faBluetooth from '@fortawesome/fontawesome-free-brands/faBluetooth';
 import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
 
@@ -33,9 +33,9 @@ import Logout from './containers/Forms/Sessions/Logout/Logout';
 import CreateDriver from './containers/Forms/drivers/CreateDriver';
 import EditDriver from './containers/Forms/drivers/EditDriver';
 import CreateDrivers from './containers/Forms/drivers/CreateDrivers';
-import CreateVehicle from './containers/Forms/Vehicles/CreateVehicle';
-import CreateVehicles from './containers/Forms/Vehicles/CreateVehicles';
-import EditVehicle from './containers/Forms/Vehicles/EditVehicle';
+import CreateVehicle from './containers/Forms/vehicles/CreateVehicle';
+import CreateVehicles from './containers/Forms/vehicles/CreateVehicles';
+import EditVehicle from './containers/Forms/vehicles/EditVehicle';
 import CreateMotorCarrier from './containers/Forms/MotorCarriers/CreateMotorCarrier';
 import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
@@ -45,7 +45,7 @@ fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
   faLocationArrow, faTachometerAlt, faInfoCircle,
   faChartLine, faSignInAlt, faSignOutAlt,
-  // faUserCog, faUserTie, faBluetooth,
+  faUserCog, faUserTie, faBluetooth,
 );
 
 class App extends Component {
