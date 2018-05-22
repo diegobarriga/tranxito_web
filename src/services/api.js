@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
+const apiPath = 'https://eld-test.azurewebsites.net/api';
 
 // These are most of the API endpoints
 // TODO: 1) check if the responses are ok
@@ -123,6 +123,7 @@ export default {
   file: {
     csvFileUpload: (formData, config, token) =>
       axios.post(`${apiPath}/People/upload?access_token=${token}`, formData, config),
+    getfileUploads: filters => axios.get(`${apiPath}/file-uploads`, { params: { filter: filters } }),
+    getFileUploadErrors: id => axios.get(`${apiPath}/file-uploads/${id}/errors`),
   },
 };
-

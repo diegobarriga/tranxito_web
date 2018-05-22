@@ -17,11 +17,12 @@ class SimpleReactFileUpload extends React.Component {
       message: '',
       isValid: null,
       loading: false,
-
+      errors: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
+    this.getUploadStatus = this.getUploadStatus.bind(this);
   }
   componentDidMount() {
     this.setState({ isValid: null });
@@ -96,8 +97,17 @@ class SimpleReactFileUpload extends React.Component {
   loadHandler = (event) => {
     const csv = event.target.result;
     const arr = csv.split('\n');
+    console.log('CSV array');
+    console.log(arr);
     const drivers = [];
+    if (arr[arr.length - 1] === '') {
+      arr.pop();
+    }
     const headers = arr[0].split(',');
+    if (arr.length <= 1) {
+      this.setState({ ...this.state, loading: false });
+      this.setState({ type: 'danger', message: 'Your file was empty. Please try again later.' });
+    }
     for (let i = 1; i < arr.length; i += 1) {
       const data = arr[i].split(',');
       const obj = {};
@@ -118,8 +128,21 @@ class SimpleReactFileUpload extends React.Component {
         console.log(response.data);
         console.log(response.status);
         if (response.status === 204) {
-          this.setState({ ...this.state, loading: false });
-          this.setState({ type: 'success', message: `We have created all the new ${this.props.type}.` });
+          this.getUploadStatus().then((res) => {
+            console.log('UPLOAD STATUS');
+            console.log(res);
+            const { status } = res.data[0];
+            console.log('STATUS');
+            console.log(status);
+            if (status === 'SUCCESS') {
+              this.setState({ ...this.state, loading: false });
+              this.setState({ type: 'success', message: `We have created all the new ${this.props.type}.` });
+            } else {
+              this.getErrors().then((resp) => {
+                this.setState({ errors: resp.data });
+              });
+            }
+          });
         } else {
           this.setState({ ...this.state, loading: false });
           this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
@@ -142,6 +165,15 @@ class SimpleReactFileUpload extends React.Component {
     return api.file.csvFileUpload(formData, config, this.props.token);
   }
 
+  getUploadStatus() {
+    const filter = `{"where": {"personId": ${this.props.userId}}, "order" : "date DESC", "limit": 1}`;
+    return api.file.getfileUploads(filter);
+  }
+
+  getErrors() {
+    return api.file.getFileUploadErrors(this.props.userId);
+  }
+
   render() {
     if (this.state.loading === true) return <Loader />;
     let alert;
@@ -157,6 +189,10 @@ class SimpleReactFileUpload extends React.Component {
       <div>
         <div>{ alert }</div>
         <div className="aligner">
+          { this.state.errors &&
+            <ul>
+              {this.state.errors.map(error => (<li>{ error.message }</li>))}
+            </ul> }
           <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>
           <div className="aligner-item"><p>The template below has the structure the csv file must have. You can download it, fill it and then upload it. That simple!</p></div>
           <div className="aligner-item"><TemplateCSV type={this.props.type} /></div>
@@ -176,11 +212,13 @@ class SimpleReactFileUpload extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.auth.token,
+  userId: state.auth.userId,
 });
 
 SimpleReactFileUpload.propTypes = {
   type: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
+  userId: PropTypes.number.isRequired,
 };
 
 
