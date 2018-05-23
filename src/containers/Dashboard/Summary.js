@@ -78,7 +78,7 @@ class Summary extends Component {
     const trackingArray = Object.values(this.props.trackings);
     for (let i = 0; i < trackingArray.length; i += 1) {
       const value = trackingArray[i];
-      if (value.eventCode != null) {
+      if (value && value.eventCode != null) {
         numberPerDutyStatus[value.eventCode] += 1;
       } else {
         numberPerDutyStatus[5] += 1;

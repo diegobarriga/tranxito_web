@@ -28,8 +28,8 @@ class Dashboard extends React.Component {
         { alert }
         { authRedirect }
         <Container>
-          <DoughnutChart />
           <Summary />
+          <DoughnutChart />
           <Map />
         </Container>
 

@@ -61,17 +61,20 @@ const MapWithAMarkerClusterer = compose(
 class Map extends React.Component {
   getDefaultPosition() {
     const trackingArray = Object.values(this.props.trackings);
+    console.log(trackingArray);
     const bound = new google.maps.LatLngBounds();
     let i;
     for (i = 0; i < trackingArray.length; i += 1) {
-      bound.extend(new google.maps.LatLng(
-        trackingArray[i].coordinates.lat,
-        trackingArray[i].coordinates.lng,
-      ));
+      if (trackingArray[i]) {
+        bound.extend(new google.maps.LatLng(
+          trackingArray[i].coordinates.lat,
+          trackingArray[i].coordinates.lng,
+        ));
+      }
     }
     const lat = bound.getCenter().lat();
     const lng = bound.getCenter().lng();
-    console.log(lat, lng);
+    // console.log(lat, lng);
     return { lat, lng };
   }
 
