@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const apiPath = 'https://eld-test.azurewebsites.net/explorer/';
 const apiPath = 'https://eld-test.azurewebsites.net/api';
+// const apiPath = 'https://eld-test.azurewebsites.net/api';
 
 // These are most of the API endpoints
 // TODO: 1) check if the responses are ok
@@ -100,7 +100,9 @@ export default {
     getTrackingsMotorCarrier: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking?access_token=${token}`),
     // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
-
+    // GET /MotorCarriers/{id}/people/count
+    countMotorCarrierSP: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count?access_token=${token}`, { params: { where: { account_type: 'S' } } }),
   },
   events: {
     getEvents: () =>
