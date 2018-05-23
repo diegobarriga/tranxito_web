@@ -50,7 +50,6 @@ Users.defaultProps = {
   error: null,
 };
 
-
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   error: state.users.error,

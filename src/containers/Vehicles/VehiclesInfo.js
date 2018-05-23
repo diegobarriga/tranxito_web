@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import VehicleRow from './VehicleRow';
 import '../../assets/styles/forms.css';
+import Loader from '../../components/Loader/Loader';
 
 class VehiclesInfo extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class VehiclesInfo extends React.Component {
   }
 
   render() {
-    // if (this.props.isLoading === true) return <Loader />;
+    if (this.props.isLoading === true) return <Loader />;
 
     const filteredVehicles = Object.values(this.props.vehicles).filter(vehicle => (
       vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
@@ -68,10 +69,12 @@ class VehiclesInfo extends React.Component {
 
 VehiclesInfo.propTypes = {
   vehicles: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   vehicles: state.auth.vehicles,
+  isLoading: state.vehicles.loading,
 
 });
 

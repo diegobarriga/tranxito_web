@@ -26,19 +26,18 @@ export const delVErrorReset = () => ({
   type: actionTypes.DELV_ERROR_RESET,
 });
 
-
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
-  api.vehicles.deleteVehcle(vehicleId, token)
-
+  console.log(vehicleId);
+  api.vehicles.deleteVehicle(vehicleId, token)
     .then((response) => {
-      dispatch(delVErrorReset());
+      console.log(response);
       dispatch(onVehicleDeleteSuccess(vehicleId, response));
+      dispatch(delVErrorReset());
     })
     .catch((err) => {
       console.log(err);
     });
 };
-
 
 export const getVehicles = (token, motorCarrierId) => (dispatch) => {
   dispatch(getVehiclesStart());

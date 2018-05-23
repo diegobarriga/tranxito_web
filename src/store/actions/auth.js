@@ -66,6 +66,7 @@ export const signup = data => (dispatch) => {
   api.people.signup(authData, data.token)
     .then((response) => {
       dispatch(createSuccess(response));
+      dispatch(errorReset());
       console.log(response);
     })
     .catch((err) => {

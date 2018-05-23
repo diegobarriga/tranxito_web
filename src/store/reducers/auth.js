@@ -21,14 +21,17 @@ const createSuccess = (state, action) => updateObject(state, {
   error: action.response,
 });
 
-const authLogout = state => updateObject(state, {
-  token: null,
-  userId: null,
-  role: null,
-  motorCarrierId: null,
-  vehicles: null,
-  users: null,
-});
+const authLogout = (state) => {
+  localStorage.clear();
+  return updateObject(state, {
+    token: null,
+    userId: null,
+    role: null,
+    motorCarrierId: null,
+    vehicles: null,
+    users: null,
+  });
+};
 
 const authSuccess = (state, action) => updateObject(state, {
   token: action.token,
@@ -47,6 +50,27 @@ const authFail = (state, action) => updateObject(state, {
   loading: false,
 });
 
+/* borrar driver de la store */
+const onDeleteSuccess = (state, action) => {
+  const tmpUsers = { ...state.users };
+  delete tmpUsers[action.userId];
+  return updateObject(state, {
+    error: action.response,
+    loading: false,
+    users: tmpUsers,
+  });
+};
+
+const onVehicleDeleteSuccess = (state, action) => {
+  const tmpVehicles = { ...state.vehicles };
+  delete tmpVehicles[action.vehicleId];
+  return updateObject(state, {
+    error: action.response,
+    loading: false,
+    vehicles: tmpVehicles,
+  });
+};
+
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -56,6 +80,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
     case actionTypes.AUTH_FAIL: return authFail(state, action);
     case actionTypes.AUTH_LOGOUT: return authLogout(state);
+    case actionTypes.DELETE_USER: return onDeleteSuccess(state, action);
+    case actionTypes.DELETE_VEHICLE: return onVehicleDeleteSuccess(state, action);
 
     default:
       return state;

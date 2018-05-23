@@ -28,8 +28,8 @@ export default {
       axios.patch(`${apiPath}/People/${userId}?access_token=${token}`, data),
     setImage: (userId, url) =>
       axios.put(`${apiPath}/People/${userId}/setImage`, { url }),
-    deleteUser: (userId, deleteData) =>
-      axios.put(`${apiPath}/People/${userId}`, { deleteData }),
+    deleteUser: (userId, token) =>
+      axios.delete(`${apiPath}/People/${userId}?access_token=${token}`),
     verifyUser: userId =>
       axios.post(`${apiPath}/People/${userId}/verify`),
     confirm: (userId, token) =>
@@ -50,7 +50,7 @@ export default {
       axios.get(`${apiPath}/Vehicles`),
     getVehicle: (vehicleId, token) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
-    deleteVehcle: (vehicleId, token) =>
+    deleteVehicle: (vehicleId, token) =>
       axios.delete(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
     updateVehicle: (vehicleId, token, data) =>
       axios.patch(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`, data),

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 // import validator from 'validator';
-import { withRouter } from 'react-router';
 import { Button, Label, Form, FormGroup, FormFeedback, Input } from 'reactstrap';
 import api from '../../../services/api';
 import '../../../assets/styles/forms.css';
 
-let _ = require('lodash');
+const _ = require('lodash');
 
 
 class MotorCarrierForm extends Component {
@@ -30,6 +28,25 @@ class MotorCarrierForm extends Component {
     this.emptyErrors = this.emptyErrors.bind(this);
   }
 
+  componentDidMount() {
+    // Si estamos editando el documento cargamos los datos del usuario para completar el form
+    if (!this.props.isCreate) {
+      this.getMotorCarrierInfo().then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          const newData = {
+            name: response.data.name,
+            USDOT_number: response.data.USDOT_number,
+            multiday_basis_used: response.data.multiday_basis_used,
+          };
+          this.setState({ ...this.state, data: newData });
+        } else {
+          console.log('Error loading mcinfo info');
+        }
+      });
+    }
+  }
+
   onChange(event) {
     this.setState({
       ...this.state,
@@ -38,7 +55,7 @@ class MotorCarrierForm extends Component {
   }
 
   getMotorCarrierInfo() {
-    return api.motorCarriers.getMotorCarrier(this.props.match.params.id, this.props.token);
+    return api.motorCarriers.getMotorCarrier(this.props.id, this.props.token);
   }
 
   validateInput(data) {
@@ -137,12 +154,8 @@ class MotorCarrierForm extends Component {
 MotorCarrierForm.propTypes = {
   submit: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  isCreate: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.token !== null,
-  isAdmin: state.auth.role === 'A',
-  token: state.auth.token,
-});
-
-export default withRouter(connect(mapStateToProps)(MotorCarrierForm));
+export default MotorCarrierForm;

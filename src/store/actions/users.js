@@ -6,7 +6,6 @@ export const getUsersStart = () => ({
   type: actionTypes.GET_USERS_START,
 });
 
-
 export const getUsersSuccess = users => ({
   type: actionTypes.GET_USERS_SUCCESS,
   users,
@@ -17,33 +16,27 @@ export const getUsersFail = error => ({
   error,
 });
 
+export const delErrorReset = () => ({
+  type: actionTypes.DEL_ERROR_RESET,
+});
+
 export const onDeleteSuccess = (userId, response) => ({
   type: actionTypes.DELETE_USER,
   userId,
   response,
 });
 
-export const delErrorReset = () => ({
-  type: actionTypes.DEL_ERROR_RESET,
-});
-
-
 export const onDelete = (userId, token) => (dispatch) => {
-  const data = {
-    account_status: false,
-  };
-
-  api.people.updateUser(userId, token, data)
+  api.people.deleteUser(userId, token)
     .then((response) => {
       console.log(response);
-      dispatch(delErrorReset());
       dispatch(onDeleteSuccess(userId, response));
+      dispatch(delErrorReset());
     })
     .catch((err) => {
       console.log(err);
     });
 };
-
 
 export const getUsers = (token, motorCarrierId) => (dispatch) => {
   dispatch(getUsersStart());
