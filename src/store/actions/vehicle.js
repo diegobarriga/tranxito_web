@@ -21,7 +21,7 @@ export const getVehicle = (token, vehicleId) => (dispatch) => {
   api.vehicles.getVehicle(vehicleId, token)
     .then((response) => {
       console.log(response);
-      console.log("get vehicle response");
+      console.log('get vehicle response');
       try {
         const vehicle = response.data;
         dispatch(getVehicleSuccess(vehicle));

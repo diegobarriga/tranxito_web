@@ -35,6 +35,7 @@ class VehicleFormView extends React.Component {
             this.postData(submitData).then((response) => {
               if (response.status === 200) {
                 this.setState({ type: 'success', message: 'We have created the new vehicle.' });
+                console.log(response);
               } else {
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }

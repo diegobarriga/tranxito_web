@@ -23,9 +23,6 @@ class SimpleReactFileUpload extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
   }
-  componentDidMount() {
-    this.setState({ isValid: null });
-  }
 
   onFormSubmit(e) {
     this.setState({ ...this.state, loading: true });
@@ -129,6 +126,7 @@ class SimpleReactFileUpload extends React.Component {
       this.setState({ ...this.state, loading: false });
       console.log('invalid');
     }
+    this.setState({ isValid: null });
   }
 
   fileUpload(file) {
