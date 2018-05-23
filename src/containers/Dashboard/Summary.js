@@ -17,6 +17,7 @@ class Summary extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMounted: false,
       numberSP: null,
       loading: true,
       numberDrivers: null,
@@ -26,28 +27,44 @@ class Summary extends Component {
   }
 
   componentDidMount() {
+    this.setState({
+      isMounted: true,
+    })
+    this.getMetrics();
+  }
+
+  componentWillUnmount() {
+   this.setState({
+     isMounted: false,
+   })
+ }
+
+  getMetrics() {
     const numberDrivers = this.getNumberDrivers();
     const numberTrucks = this.getNumberTrucks();
     const numberPerDutyStatus = this.getNumberPerDutyStatus();
-    console.log("didmount", numberPerDutyStatus);
 
     this.getNumberSP()
       .then((response) => {
         if (response.status === 200) {
-          this.setState({
-            numberSP: response.data.count,
-            loading: false,
-            numberDrivers,
-            numberTrucks,
-            numberPerDutyStatus,
-          });
+          if (this.state.isMounted) {
+            this.setState({
+              numberSP: response.data.count,
+              loading: false,
+              numberDrivers,
+              numberTrucks,
+              numberPerDutyStatus,
+            });
+          }
         } else {
-          this.setState({
-            loading: false,
-            numberDrivers,
-            numberTrucks,
-            numberPerDutyStatus,
-          });
+          if (this.state.isMounted) {
+            this.setState({
+              loading: false,
+              numberDrivers,
+              numberTrucks,
+              numberPerDutyStatus,
+            });
+          }
         }
       });
   }

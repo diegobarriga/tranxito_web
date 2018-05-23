@@ -94,7 +94,7 @@ class Map extends React.Component {
 
   render() {
     if (this.props.isLoading === true || this.state.loading_cords === true) return <Loader />;
-    console.log()
+
     return (
       <MapWithAMarkerClusterer
         markers={this.props.trackings}
