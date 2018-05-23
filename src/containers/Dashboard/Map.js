@@ -23,11 +23,12 @@ const MapWithAMarkerClusterer = compose(
     onMarkerClustererClick: () => (markerClusterer) => {
       const clickedMarkers = markerClusterer.getMarkers();
       console.log(`Current clicked markers length: ${clickedMarkers.length}`);
+      console.log(clickedMarkers);
     },
   }),
   withGoogleMap,
 )(props => (
-  <GoogleMap defaultZoom={1} center={props.position}>
+  <GoogleMap defaultZoom={3} center={props.cords}>
     <MarkerClusterer
       onClick={props.onMarkerClustererClick}
       averageCenter
@@ -59,11 +60,23 @@ const MapWithAMarkerClusterer = compose(
 ));
 
 class Map extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      center_cords: null,
+      loading_cords: true,
+    };
+  }
+
+  componentDidMount() {
+    this.getDefaultPosition();
+  }
+
   getDefaultPosition() {
-    const trackingArray = Object.values(this.props.trackings);
-    console.log(trackingArray);
+    console.log();
     const bound = new google.maps.LatLngBounds();
     let i;
+    const trackingArray = Object.values(this.props.trackings);
     for (i = 0; i < trackingArray.length; i += 1) {
       if (trackingArray[i]) {
         bound.extend(new google.maps.LatLng(
@@ -71,20 +84,21 @@ class Map extends React.Component {
           trackingArray[i].coordinates.lng,
         ));
       }
+      // console.log(trackingArray[i].coordinates.lat, trackingArray[i].coordinates.lng);
     }
     const lat = bound.getCenter().lat();
     const lng = bound.getCenter().lng();
-    // console.log(lat, lng);
-    return { lat, lng };
+    console.log(lat, lng);
+    this.setState({ center_cords: { lat, lng }, loading_cords: false });
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
-    const positions = this.getDefaultPosition();
+    if (this.props.isLoading === true || this.state.loading_cords === true) return <Loader />;
+    console.log()
     return (
       <MapWithAMarkerClusterer
         markers={this.props.trackings}
-        center={positions}
+        cords={this.state.center_cords}
       />
     );
   }
