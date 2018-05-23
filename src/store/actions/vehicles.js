@@ -5,7 +5,6 @@ export const getVehiclesStart = () => ({
   type: actionTypes.GET_VEHICLES_START,
 });
 
-
 export const getVehiclesSuccess = vehicles => ({
   type: actionTypes.GET_VEHICLES_SUCCESS,
   vehicles,
@@ -32,7 +31,6 @@ export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
     .then((response) => {
       console.log(response);
       dispatch(onVehicleDeleteSuccess(vehicleId, response));
-      dispatch(delVErrorReset());
     })
     .catch((err) => {
       console.log(err);

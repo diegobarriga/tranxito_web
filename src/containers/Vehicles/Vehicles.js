@@ -9,15 +9,13 @@ import '../../assets/styles/forms.css';
 import Alert from '../Alert/Alert';
 
 class Vehicles extends React.Component {
-  // onDeleteBtnClick() {
-  // }
-
   render() {
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
     }
 
+    console.log('alert');
     /* Alert */
     let alert;
     let msg = '';
@@ -56,7 +54,7 @@ Vehicles.defaultProps = {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
-  error: state.vehicles.error,
+  error: state.auth.error,
 });
 
 export default connect(mapStateToProps)(Vehicles);

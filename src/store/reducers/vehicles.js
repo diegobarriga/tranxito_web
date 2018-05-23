@@ -16,8 +16,6 @@ const getVehiclesSuccess = (state, action) => updateObject(state, {
   loading: false,
 });
 
-const delVErrorReset = state => updateObject(state, { error: null });
-
 const getVehiclesStart = state => updateObject(state, { error: null, loading: true });
 
 const reducer = (state = initialState, action) => {
@@ -25,7 +23,6 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_VEHICLES_START: return getVehiclesStart(state);
     case actionTypes.GET_VEHICLES_SUCCESS: return getVehiclesSuccess(state, action);
     case actionTypes.GET_VEHICLES_FAIL: return getVehiclesFail(state, action);
-    case actionTypes.DELV_ERROR_RESET: return delVErrorReset(state);
     default:
       return state;
   }

@@ -16,6 +16,8 @@ const authStart = state => updateObject(state, { error: null, loading: true });
 
 const errorReset = state => updateObject(state, { error: null });
 
+const delVErrorReset = state => updateObject(state, { error: null });
+
 const createSuccess = (state, action) => updateObject(state, {
   loading: false,
   error: action.response,
@@ -82,6 +84,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_LOGOUT: return authLogout(state);
     case actionTypes.DELETE_USER: return onDeleteSuccess(state, action);
     case actionTypes.DELETE_VEHICLE: return onVehicleDeleteSuccess(state, action);
+    case actionTypes.DELV_ERROR_RESET: return delVErrorReset(state);
 
     default:
       return state;
