@@ -25,7 +25,7 @@
     "react-alert": "^4.0.2",
     "react-alert-template-basic": "^1.0.0",
     "react-bootstrap": "^0.32.1",
-    "react-chartjs-2": "^2.7.0",
+    "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.3.2",
     "react-file-reader": "^1.1.4",
     "react-google-maps": "^9.4.5",

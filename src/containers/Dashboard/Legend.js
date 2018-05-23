@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../assets/styles/legend.css';
+import { DUTY_STATUS } from '../../utils/eventTypes';
 
 const marker1 = require('../../assets/images/truck_marker_1.svg');
 const marker2 = require('../../assets/images/truck_marker_2.svg');
@@ -11,11 +12,11 @@ class Legend extends React.Component {
   render() {
     return (
       <div className="legend">
-        <div className="legend-row"><img src={marker1} alt="OD" height="15" width="15" /> OFF</div>
-        <div className="legend-row"><img src={marker2} alt="ODD" height="15" width="15" /> SB</div>
-        <div className="legend-row"><img src={marker3} alt="SB" height="15" width="15" /> D</div>
-        <div className="legend-row"><img src={marker4} alt="OC" height="15" width="15" /> ON</div>
-        <div className="legend-row"><img src={marker5} alt="OC2" height="15" width="15" /> UND</div>
+        <div className="legend-row"><img src={marker1} alt="OD" height="15" width="15" /> {DUTY_STATUS[1]}</div>
+        <div className="legend-row"><img src={marker2} alt="ODD" height="15" width="15" /> {DUTY_STATUS[2]}</div>
+        <div className="legend-row"><img src={marker3} alt="SB" height="15" width="15" /> {DUTY_STATUS[3]}</div>
+        <div className="legend-row"><img src={marker4} alt="OC" height="15" width="15" /> {DUTY_STATUS[4]}</div>
+        <div className="legend-row"><img src={marker5} alt="OC2" height="15" width="15" /> UNDEF</div>
       </div>
     );
   }

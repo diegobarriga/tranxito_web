@@ -6,26 +6,11 @@ import PropTypes from 'prop-types';
 import { withGoogleMap, GoogleMap } from 'react-google-maps';
 import { compose, withProps, withHandlers } from 'recompose';
 import InfoWindowMarker from './Marker';
-import * as actions from '../../store/actions/tracking';
 import Loader from '../../components/Loader/Loader';
 import MapControl from './MapControl';
 import Legend from './Legend';
 
 const { MarkerClusterer } = require('react-google-maps/lib/components/addons/MarkerClusterer');
-
-function getDefaultPosition(data) {
-  console.log(data);
-  const bound = new google.maps.LatLngBounds();
-  let i;
-  for (i = 0; i < data.length; i += 1) {
-    bound.extend(new google.maps.LatLng(data[i].coordinates.lat, data[i].coordinates.lng));
-    console.log(data[i].coordinates.lat, data[i].coordinates.lng);
-  }
-  const lat = bound.getCenter().lat();
-  const lng = bound.getCenter().lng();
-  console.log(lat, lng);
-  return { lat, lng };
-}
 
 const MapWithAMarkerClusterer = compose(
   withProps({
@@ -38,12 +23,11 @@ const MapWithAMarkerClusterer = compose(
     onMarkerClustererClick: () => (markerClusterer) => {
       const clickedMarkers = markerClusterer.getMarkers();
       console.log(`Current clicked markers length: ${clickedMarkers.length}`);
-      console.log(clickedMarkers);
     },
   }),
   withGoogleMap,
 )(props => (
-  <GoogleMap defaultZoom={1} center={getDefaultPosition(props.markers)}>
+  <GoogleMap defaultZoom={1} center={props.position}>
     <MarkerClusterer
       onClick={props.onMarkerClustererClick}
       averageCenter
@@ -75,17 +59,30 @@ const MapWithAMarkerClusterer = compose(
 ));
 
 class Map extends React.Component {
-  componentDidMount() {
-    this.props.getTrackings(this.props.token, this.props.motorCarrierId);
-
-    // this.getDefaultPosition();
+  getDefaultPosition() {
+    const trackingArray = Object.values(this.props.trackings);
+    const bound = new google.maps.LatLngBounds();
+    let i;
+    for (i = 0; i < trackingArray.length; i += 1) {
+      bound.extend(new google.maps.LatLng(
+        trackingArray[i].coordinates.lat,
+        trackingArray[i].coordinates.lng,
+      ));
+    }
+    const lat = bound.getCenter().lat();
+    const lng = bound.getCenter().lng();
+    console.log(lat, lng);
+    return { lat, lng };
   }
 
   render() {
     if (this.props.isLoading === true) return <Loader />;
-
+    const positions = this.getDefaultPosition();
     return (
-      <MapWithAMarkerClusterer markers={this.props.trackings} />
+      <MapWithAMarkerClusterer
+        markers={this.props.trackings}
+        center={positions}
+      />
     );
   }
 }
@@ -93,9 +90,6 @@ class Map extends React.Component {
 
 Map.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  getTrackings: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.number.isRequired,
   trackings: PropTypes.object.isRequired,
 };
 
@@ -107,8 +101,4 @@ const mapStateToProps = state => ({
   trackings: state.trackings.tracking,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getTrackings: (token, motorCarrierId) => dispatch(actions.getTrackings(token, motorCarrierId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps)(Map);
