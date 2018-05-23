@@ -44,6 +44,9 @@ export default {
       axios.post(`${apiPath}/People/${userId}/events`, { eventData }),
     getUserMotorCarrier: userId =>
       axios.get(`${apiPath}/People/${userId}/motorCarrier`),
+    getUserDutyStatusChange: (userId, token) =>
+      axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/People/${userId}/dutyStatusChange?access_token=${token}`),
+    // axios.get(`${apiPath}/People/${userId}/dutyStatusChange?access_token=${token}`),
   },
   vehicles: {
     getVehicles: () =>
