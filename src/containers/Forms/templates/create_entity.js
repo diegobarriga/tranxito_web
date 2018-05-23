@@ -122,7 +122,7 @@ class SimpleReactFileUpload extends React.Component {
     /* check isValid */
     this.checkValid(drivers);
 
-    if (this.state.isValid === true) {
+    if (this.state.isValid === true && this.state.loading === true) {
       console.log('valid');
       this.fileUpload(this.state.file).then((response) => {
         console.log(response.data);
