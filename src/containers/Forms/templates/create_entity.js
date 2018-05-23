@@ -138,8 +138,12 @@ class SimpleReactFileUpload extends React.Component {
               this.setState({ ...this.state, loading: false });
               this.setState({ type: 'success', message: `We have created all the new ${this.props.type}.` });
             } else {
-              this.getErrors().then((resp) => {
+              const { id } = res.data[0];
+              this.getErrors(id).then((resp) => {
+                console.log(resp);
                 this.setState({ errors: resp.data });
+                this.setState({ ...this.state, loading: false });
+                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               });
             }
           });
@@ -170,8 +174,8 @@ class SimpleReactFileUpload extends React.Component {
     return api.file.getfileUploads(filter);
   }
 
-  getErrors() {
-    return api.file.getFileUploadErrors(this.props.userId);
+  getErrors(uploadId) {
+    return api.file.getFileUploadErrors(uploadId);
   }
 
   render() {
