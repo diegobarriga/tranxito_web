@@ -245,7 +245,7 @@ class VehicleForm extends React.Component {
 VehicleForm.propTypes = {
   isCreate: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
-  match: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
   submit: PropTypes.func.isRequired,
 };
 

@@ -15,6 +15,11 @@ export const getVehicleFail = error => ({
   error,
 });
 
+export const createVehicle = vehicle => ({
+  type: actionTypes.CREATE_VEHICLE,
+  vehicle,
+});
+
 export const getVehicle = (token, vehicleId) => (dispatch) => {
   console.log('entor a getvehicle');
   dispatch(getVehicleStart());

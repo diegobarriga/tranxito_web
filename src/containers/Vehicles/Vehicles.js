@@ -15,7 +15,6 @@ class Vehicles extends React.Component {
       authRedirect = <Redirect to="/" />;
     }
 
-    console.log('alert');
     /* Alert */
     let alert;
     let msg = '';

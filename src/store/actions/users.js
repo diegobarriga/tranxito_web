@@ -38,6 +38,11 @@ export const onDelete = (userId, token) => (dispatch) => {
     });
 };
 
+export const createUser = user => ({
+  type: actionTypes.CREATE_USER,
+  user,
+});
+
 export const getUsers = (token, motorCarrierId) => (dispatch) => {
   dispatch(getUsersStart());
 

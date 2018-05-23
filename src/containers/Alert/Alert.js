@@ -44,7 +44,7 @@ class Alert extends React.Component {
 Alert.propTypes = {
   alertType: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  errorDelete: PropTypes.string.isRequired,
+  errorDelete: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
