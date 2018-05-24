@@ -52,3 +52,19 @@ export const EVENT_CODES = {
     4: 'Data diagnostic cleared',
   },
 };
+
+export const DUTY_STATUS = {
+  1: 'OFF',
+  2: 'SB',
+  3: 'D',
+  4: 'ON',
+  5: 'UNDEF',
+};
+
+export const EVENT_COLORS = {
+  1: '#ED2024',
+  2: '#2EC1D8',
+  3: '#282D74',
+  4: '#76C043',
+  5: '#6B6B6B',
+}
