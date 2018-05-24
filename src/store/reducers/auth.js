@@ -10,6 +10,8 @@ const initialState = {
   motorCarrierId: null,
   vehicles: null,
   users: null,
+  chunkedUsers: null,
+  chunkedVehicles: null,
 };
 
 const authStart = state => updateObject(state, { error: null, loading: true });

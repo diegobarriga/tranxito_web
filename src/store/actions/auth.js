@@ -108,7 +108,11 @@ export const login = (email, password) => (dispatch) => {
                 userResponse.data.motorCarrierId,
                 response.data.id,
               ).then((peopleResponse) => {
-                const chunkedUsers = functions.arraySplit(peopleResponse.data, 5);
+                const filteredUsers = peopleResponse.data.filter(driver => (
+                  driver.account_type === 'D'
+                ));
+                console.log(filteredUsers);
+                const chunkedUsers = functions.arraySplit(filteredUsers, 5);
                 const chunkedVehicles = functions.arraySplit(vehiclesResponse.data, 5);
 
                 const usersObject = functions.arrayToObject(peopleResponse.data);

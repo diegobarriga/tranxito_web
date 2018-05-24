@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, PaginationItem, PaginationLink } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Pagination from 'react-js-pagination';
@@ -20,7 +20,6 @@ class Users extends React.Component {
   }
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
     this.setState({ currentPage: pageNumber - 1 });
   }
 
@@ -61,7 +60,7 @@ class Users extends React.Component {
               <Pagination
                 activePage={this.state.currentPage + 1}
                 itemsCountPerPage={5}
-                totalItemsCount={12}
+                totalItemsCount={16}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange}
                 itemClass="page-item"
