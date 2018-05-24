@@ -28,8 +28,8 @@ export default {
       axios.patch(`${apiPath}/People/${userId}?access_token=${token}`, data),
     setImage: (userId, url) =>
       axios.put(`${apiPath}/People/${userId}/setImage`, { url }),
-    deleteUser: (userId, deleteData) =>
-      axios.put(`${apiPath}/People/${userId}`, { deleteData }),
+    deleteUser: (userId, token) =>
+      axios.delete(`${apiPath}/People/${userId}?access_token=${token}`),
     verifyUser: userId =>
       axios.post(`${apiPath}/People/${userId}/verify`),
     confirm: (userId, token) =>
@@ -44,13 +44,16 @@ export default {
       axios.post(`${apiPath}/People/${userId}/events`, { eventData }),
     getUserMotorCarrier: userId =>
       axios.get(`${apiPath}/People/${userId}/motorCarrier`),
+    getUserDutyStatusChange: (userId, token) =>
+      axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/People/${userId}/dutyStatusChange?access_token=${token}`),
+    // axios.get(`${apiPath}/People/${userId}/dutyStatusChange?access_token=${token}`),
   },
   vehicles: {
     getVehicles: () =>
       axios.get(`${apiPath}/Vehicles`),
     getVehicle: (vehicleId, token) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
-    deleteVehcle: (vehicleId, token) =>
+    deleteVehicle: (vehicleId, token) =>
       axios.delete(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
     updateVehicle: (vehicleId, token, data) =>
       axios.patch(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`, data),
@@ -97,7 +100,9 @@ export default {
     getTrackingsMotorCarrier: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking?access_token=${token}`),
     // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
-
+    // GET /MotorCarriers/{id}/people/count
+    countMotorCarrierSP: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count?access_token=${token}`, { params: { where: { account_type: 'S' } } }),
   },
   events: {
     getEvents: () =>

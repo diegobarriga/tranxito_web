@@ -2,10 +2,13 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Alert } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import VehicleForm from './VehicleForm';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
+import Alert from '../../Alert/Alert';
+import Loader from '../../../components/Loader/Loader';
+import * as actions from '../../../store/actions/index';
 
 class VehicleFormView extends React.Component {
   constructor(props) {
@@ -13,6 +16,7 @@ class VehicleFormView extends React.Component {
     this.state = {
       type: '',
       message: '',
+      isLoading: false,
     };
     this.postData = this.postData.bind(this);
     this.patchData = this.patchData.bind(this);
@@ -21,6 +25,7 @@ class VehicleFormView extends React.Component {
   }
 
   onFormSubmit(formData) {
+    this.setState({ isLoading: true });
     if (formData.picture !== '') {
       this.imgUpload(formData.picture).then((imgResponse) => {
         if (imgResponse.status === 200) {
@@ -29,13 +34,15 @@ class VehicleFormView extends React.Component {
             ...formData.data,
             image: imgResponse.data.result.files.file[0].name,
           };
-          console.log(submitData);
           // Si estamos creando un usuario
           if (this.props.isCreate) {
             this.postData(submitData).then((response) => {
               if (response.status === 200) {
+                this.props.createVehicle(response.data);
+                this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: 'We have created the new vehicle.' });
               } else {
+                this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
             });
@@ -43,13 +50,17 @@ class VehicleFormView extends React.Component {
           } else {
             this.patchData(submitData).then((response) => {
               if (response.status === 200) {
+                this.props.createVehicle(response.data);
+                this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: 'We have edited the vehicle.' });
               } else {
+                this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
             });
           }
         } else {
+          this.setState({ isLoading: false });
           this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
         }
       });
@@ -58,8 +69,11 @@ class VehicleFormView extends React.Component {
       if (this.props.isCreate) {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
+            this.props.createVehicle(response.data);
+            this.setState({ isLoading: false });
             this.setState({ type: 'success', message: 'We have created the new vehicle.' });
           } else {
+            this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
         });
@@ -67,8 +81,11 @@ class VehicleFormView extends React.Component {
       } else {
         this.patchData(formData.data).then((response) => {
           if (response.status === 200) {
+            this.props.createVehicle(response.data);
+            this.setState({ isLoading: false });
             this.setState({ type: 'success', message: 'We have edited the vehicle.' });
           } else {
+            this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
         });
@@ -99,10 +116,9 @@ class VehicleFormView extends React.Component {
     return api.images.vehicleImageUpload(formData, config, this.props.token);
   }
 
-
   render() {
+    if (this.state.isLoading === true) return <Loader />;
     let alert;
-
     const {
       title,
       isCreate,
@@ -146,7 +162,8 @@ VehicleFormView.propTypes = {
   isCreate: PropTypes.bool.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
-  match: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  createVehicle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -154,4 +171,8 @@ const mapStateToProps = state => ({
   motorCarrierId: state.auth.motorCarrierId,
 });
 
-export default withRouter(connect(mapStateToProps)(VehicleFormView));
+const mapDispatchToProps = dispatch => ({
+  createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VehicleFormView));

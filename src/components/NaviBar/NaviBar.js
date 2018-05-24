@@ -28,10 +28,12 @@ class Navibar extends React.Component {
 
   render() {
     const { isAuth, userId } = this.props;
+    /*
     this.getUserInfo().then((res) => {
       const firstName = res.data.first_name;
       this.setState({ firstName });
     });
+    */
     return (
       <Navbar fixed="top" className="navbar" light expand="md">
         <img src={path} className="logo" alt="E2E Performance" />

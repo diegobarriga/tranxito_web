@@ -6211,7 +6211,7 @@ react-bootstrap@^0.32.1:
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
-react-chartjs-2@^2.7.0:
+react-chartjs-2@^2.7.2:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-2.7.2.tgz#9a9499f2943126b6ef89e7c8b93193879feb2597"
   dependencies:
