@@ -33,7 +33,7 @@ const HeatMapComponent = compose(
   }),
   withGoogleMap,
 )(props => (
-  <GoogleMap defaultZoom={10} center={{ lat: 37.782551, lng: -122.445368 }}>
+  <GoogleMap defaultZoom={3} center={props.center}>
     <HeatmapLayer
       data={props.data}
     />
@@ -47,6 +47,7 @@ class HeatMap extends React.Component {
       trackings: [],
       loading: true,
       data: null,
+      center_cords: null,
     };
   }
 
@@ -56,7 +57,6 @@ class HeatMap extends React.Component {
         if (response.status === 200) {
           this.state.data = response.data;
           this.createData();
-          this.setState({ loading: false });
         } else {
           this.setState({ loading: false });
         }
@@ -69,13 +69,22 @@ class HeatMap extends React.Component {
 
   createData() {
     let i;
+    const bound = new google.maps.LatLngBounds();
     for (i = 0; i < this.state.data.length; i += 1) {
-      console.log(this.state.data[i].coordinates.lat, this.state.data[i].coordinates.lng);
-      this.state.trackings.push(new google.maps.LatLng(
-        this.state.data[i].coordinates.lat,
-        this.state.data[i].coordinates.lng,
-      ));
+      if (this.state.data[i]) {
+        bound.extend(new google.maps.LatLng(
+          this.state.data[i].coordinates.lat,
+          this.state.data[i].coordinates.lng,
+        ));
+        this.state.trackings.push(new google.maps.LatLng(
+          this.state.data[i].coordinates.lat,
+          this.state.data[i].coordinates.lng,
+        ));
+      }
     }
+    const lat = bound.getCenter().lat();
+    const lng = bound.getCenter().lng();
+    this.setState({ center_cords: { lat, lng }, loading: false });
   }
 
   render() {
@@ -83,7 +92,10 @@ class HeatMap extends React.Component {
 
     // if (this.state.trackings === null) return <div><h2>Could not load the heatmap</h2></div>;
     return (
-      <HeatMapComponent data={this.state.trackings} />
+      <HeatMapComponent
+        data={this.state.trackings}
+        center={this.state.center_cords}
+      />
     );
   }
 }

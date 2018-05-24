@@ -1,20 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container } from 'reactstrap';
-import Aux from '../../hoc/Aux';
+import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import classnames from 'classnames';
 import VehicleInfo from './VehicleInfo';
 import Heatmap from './Heatmap';
+import '../../assets/styles/tabs.css';
 
 class Vehicle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      activeTab: '1',
+    };
+  }
+
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab,
+      });
+    }
+  }
   render() {
     const { id } = this.props.match.params;
     return (
-      <Aux>
-        <Container>
-          <VehicleInfo id={id} />
-          <Heatmap id={id} />
-        </Container>
-      </Aux>
+      <div>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '1' })}
+              onClick={() => { this.toggle('1'); }}
+            >
+              General Information
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => { this.toggle('2'); }}
+            >
+              Heatmap
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <div className="tabDiv">
+              <Container>
+                <VehicleInfo id={id} />
+              </Container>
+            </div>
+          </TabPane>
+          <TabPane tabId="2">
+            <div className="tabDiv">
+              <Container>
+                <Heatmap id={id} />
+              </Container>
+            </div>
+          </TabPane>
+        </TabContent>
+      </div>
     );
   }
 }

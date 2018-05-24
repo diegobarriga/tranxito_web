@@ -1,5 +1,6 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
 import { EVENT_COLORS, DUTY_STATUS } from '../../utils/eventTypes';
 import '../../assets/styles/legend.css';
 
@@ -7,8 +8,8 @@ const options = {
   legend: {
     position: 'bottom',
     labels: {
-      boxWidth: 10
-    }
+      boxWidth: 10,
+    },
   },
   maintainAspectRatio: false,
 };
@@ -37,6 +38,8 @@ const data = {
 
 class DoughnutChart extends React.Component {
   render() {
+    if (this.props.activeTab !== '2') return <div />;
+
     return (
       <div className="doughnutChart">
         <Doughnut
@@ -49,5 +52,9 @@ class DoughnutChart extends React.Component {
     );
   }
 }
+
+DoughnutChart.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+};
 
 export default DoughnutChart;
