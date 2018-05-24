@@ -5,7 +5,6 @@ export const getVehiclesStart = () => ({
   type: actionTypes.GET_VEHICLES_START,
 });
 
-
 export const getVehiclesSuccess = vehicles => ({
   type: actionTypes.GET_VEHICLES_SUCCESS,
   vehicles,
@@ -26,19 +25,17 @@ export const delVErrorReset = () => ({
   type: actionTypes.DELV_ERROR_RESET,
 });
 
-
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
-  api.vehicles.deleteVehcle(vehicleId, token)
-
+  console.log(vehicleId);
+  api.vehicles.deleteVehicle(vehicleId, token)
     .then((response) => {
-      dispatch(delVErrorReset());
+      console.log(response);
       dispatch(onVehicleDeleteSuccess(vehicleId, response));
     })
     .catch((err) => {
       console.log(err);
     });
 };
-
 
 export const getVehicles = (token, motorCarrierId) => (dispatch) => {
   dispatch(getVehiclesStart());

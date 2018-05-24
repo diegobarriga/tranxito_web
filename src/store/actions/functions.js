@@ -1,5 +1,18 @@
-export const arrayToObject = array => // eslint-disable-line
-  array.reduce((obj, item) => { // eslint-disable-line
-    obj[item.id] = item; // eslint-disable-line
-    return obj; // eslint-disable-line
-  }, {}); // eslint-disable-line
+export const arrayToObject = array =>
+  array.reduce((obj, item) => {
+    obj[item.id] = item;
+    return obj;
+  }, {});
+
+
+export const arraySplit = (inputArray, chunks) => {
+  const arr = inputArray.reduce((resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / chunks);
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = []; // start a new chunk
+    }
+    resultArray[chunkIndex].push(item);
+    return resultArray;
+  }, []);
+  return arr;
+};

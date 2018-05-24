@@ -91,7 +91,6 @@ SignupView.defaultProps = {
   error: null,
 };
 
-
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   isAdmin: state.auth.role === 'A',
@@ -99,7 +98,6 @@ const mapStateToProps = state => ({
   error: state.auth.error,
   isLoading: state.auth.loading,
 });
-
 
 const mapDispatchToProps = dispatch => ({
   onAuth: data => dispatch(actions.signup(data)),

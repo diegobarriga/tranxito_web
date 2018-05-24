@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const apiPath = 'https://eld-test.azurewebsites.net/explorer/';
 const apiPath = 'https://eld-test.azurewebsites.net/api';
+// const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
 // These are most of the API endpoints
 // TODO: 1) check if the responses are ok
@@ -28,8 +28,8 @@ export default {
       axios.patch(`${apiPath}/People/${userId}?access_token=${token}`, data),
     setImage: (userId, url) =>
       axios.put(`${apiPath}/People/${userId}/setImage`, { url }),
-    deleteUser: (userId, deleteData) =>
-      axios.put(`${apiPath}/People/${userId}`, { deleteData }),
+    deleteUser: (userId, token) =>
+      axios.delete(`${apiPath}/People/${userId}?access_token=${token}`),
     verifyUser: userId =>
       axios.post(`${apiPath}/People/${userId}/verify`),
     confirm: (userId, token) =>
@@ -53,7 +53,7 @@ export default {
       axios.get(`${apiPath}/Vehicles`),
     getVehicle: (vehicleId, token) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
-    deleteVehcle: (vehicleId, token) =>
+    deleteVehicle: (vehicleId, token) =>
       axios.delete(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`),
     updateVehicle: (vehicleId, token, data) =>
       axios.patch(`${apiPath}/Vehicles/${vehicleId}?access_token=${token}`, data),
@@ -77,6 +77,8 @@ export default {
       axios.patch(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`, data),
     getMotorCarrierPeople: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`),
+    getMotorCarrierDrivers: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/drivers?access_token=${token}`),
     getMotorCarrierPerson: (motorCarrierId, userId) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/userId/${userId}`),
     createMotorCarrierPeople: (motorCarrierId, token, user) =>
@@ -100,6 +102,14 @@ export default {
     getTrackingsMotorCarrier: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking?access_token=${token}`),
     // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
+    countMotorCarrierSP: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count?access_token=${token}`, { params: { where: { account_type: 'S' } } }),
+    getDriverAlerts: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/driverAlerts?access_token=${token}`, { params: { span: `${span}` } }),
+    getDriversDutyStats: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/driversDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
+    getDutyStats: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
 
   },
   events: {
