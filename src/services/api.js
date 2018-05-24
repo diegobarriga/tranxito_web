@@ -45,8 +45,8 @@ export default {
     getUserMotorCarrier: userId =>
       axios.get(`${apiPath}/People/${userId}/motorCarrier`),
     getUserDutyStatusChange: (userId, token) =>
-      axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/People/${userId}/dutyStatusChange?access_token=${token}`),
-    // axios.get(`${apiPath}/People/${userId}/dutyStatusChange?access_token=${token}`),
+      // axios.get(`https://private-8f8d7c-elde2e.apiary-mock.com/People/${userId}/dutyStatusChange?access_token=${token}`),
+      axios.get(`${apiPath}/People/${userId}/dutyStatusChange?access_token=${token}`),
   },
   vehicles: {
     getVehicles: () =>
@@ -103,6 +103,16 @@ export default {
     // GET /MotorCarriers/{id}/people/count
     countMotorCarrierSP: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count?access_token=${token}`, { params: { where: { account_type: 'S' } } }),
+
+    driverAlerts: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/driverAlerts?access_token=${token}`, { params: { span: `${span}` } }),
+
+    driversDutyStats: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/driversDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
+
+    dutyStats: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
+
   },
   events: {
     getEvents: () =>

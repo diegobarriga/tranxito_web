@@ -3,7 +3,7 @@ import { Scatter } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
-import { EVENT_CODES } from '../../utils/eventTypes';
+import { EVENT_COLORS, EVENT_CODES } from '../../utils/eventTypes';
 import Loader from '../../components/Loader/Loader';
 
 class Graph extends React.Component {
@@ -21,12 +21,13 @@ class Graph extends React.Component {
             label: 'Population',
             data: [],
             backgroundColor: ['rgba(255, 255, 255, 0.6)'],
-            borderColor: '#c7d41e',
+            borderColor: [EVENT_COLORS[1], EVENT_COLORS[2], EVENT_COLORS[3], EVENT_COLORS[4]],
             showLine: true,
           },
         ],
       },
       api_logs: null,
+      firstLog: null,
     };
     this.getData = this.getData.bind(this);
     this.processData = this.processData.bind(this);
@@ -40,8 +41,17 @@ class Graph extends React.Component {
     this.setState({ loading: true });
     api.people.getUserDutyStatusChange(this.props.id, this.props.token)
       .then((response) => {
-        const logs = response.data;
-        this.setState({ loading: false, api_logs: logs }, this.processData);
+        console.log(response);
+        const logs = Object.values(response.data.data[1]);
+
+        logs.sort(function(a,b){
+          return new Date(b.event_timestamp) - new Date(a.event_timestamp);
+        });
+
+        const firstLog = response.data.data[0];
+        console.log(logs);
+        console.log(firstLog);
+        this.setState({ loading: false, api_logs: logs, firstLog }, this.processData);
       })
       .catch((error) => {
         this.setState({ loading: false });
@@ -56,9 +66,9 @@ class Graph extends React.Component {
     // Agregar el estado inicial
     graphData.datasets[0].data.push({
       x: 0,
-      y: EVENT_CODES[1][this.state.api_logs[0].event_code],
+      y: EVENT_CODES[1][this.state.firstLog.event_code],
     });
-    this.state.api_logs[1].map((event) => {
+    this.state.api_logs.map((event) => {
       graphData.datasets[0].data.push({
         x: parseFloat(event.event_timestamp.substring(11, 13)) +
            (parseFloat(event.event_timestamp.substring(14, 16)) / 60),

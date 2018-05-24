@@ -20,7 +20,7 @@ class Summary extends Component {
       isMounted: false,
       numberSP: null,
       loading: true,
-      numberDrivers: null,
+      numberUsers: null,
       numberTrucks: null,
       numberPerDutyStatus: null,
     };
@@ -40,7 +40,7 @@ class Summary extends Component {
  }
 
   getMetrics() {
-    const numberDrivers = this.getNumberDrivers();
+    const numberUsers = this.getNumberUsers();
     const numberTrucks = this.getNumberTrucks();
     const numberPerDutyStatus = this.getNumberPerDutyStatus();
 
@@ -51,7 +51,7 @@ class Summary extends Component {
             this.setState({
               numberSP: response.data.count,
               loading: false,
-              numberDrivers,
+              numberUsers,
               numberTrucks,
               numberPerDutyStatus,
             });
@@ -60,7 +60,7 @@ class Summary extends Component {
           if (this.state.isMounted) {
             this.setState({
               loading: false,
-              numberDrivers,
+              numberUsers,
               numberTrucks,
               numberPerDutyStatus,
             });
@@ -73,8 +73,8 @@ class Summary extends Component {
     return api.motorCarriers.countMotorCarrierSP(this.props.motorCarrierId, this.props.token);
   }
 
-  getNumberDrivers() {
-    console.log(Object.keys(this.props.users).length);
+  getNumberUsers() {
+    // console.log(Object.keys(this.props.users).length);
     return Object.keys(this.props.users).length;
   }
 
@@ -111,7 +111,7 @@ class Summary extends Component {
     return (
       <div className="summary">
         <p><FontAwesomeIcon icon="user-cog" />: {this.state.numberSP}</p>
-        <p><FontAwesomeIcon icon="user" />: {this.state.numberDrivers}</p>
+        <p><FontAwesomeIcon icon="user" />: {this.state.numberUsers - this.state.numberSP}</p>
         <p><FontAwesomeIcon icon="car" />: {this.state.numberTrucks}</p>
         <p><img src={icon1} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[1]}</p>
         <p><img src={icon2} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[2]}</p>
