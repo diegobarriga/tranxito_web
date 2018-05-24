@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container } from 'reactstrap';
+import { Container, Col, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import VehiclesInfo from './VehiclesInfo';
@@ -34,7 +34,11 @@ class Vehicles extends React.Component {
         { alert }
         <h1> Vehicles </h1>
         <Container>
-          <VehiclesInfo motor_carrier_id={0} />
+          <Row>
+            <Col md="11">
+              <VehiclesInfo motor_carrier_id={0} />
+            </Col>
+          </Row>
         </Container>
       </Aux>
 
