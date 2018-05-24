@@ -61,6 +61,13 @@ export const DUTY_STATUS = {
   5: 'UNDEF',
 };
 
+export const COLORS = {
+  1: 'danger',
+  2: 'success',
+  3: 'primary',
+  4: 'secondary',
+};
+
 export const EVENT_COLORS = {
   1: '#ED2024',
   2: '#2EC1D8',
@@ -68,3 +75,4 @@ export const EVENT_COLORS = {
   4: '#76C043',
   5: '#6B6B6B',
 }
+
