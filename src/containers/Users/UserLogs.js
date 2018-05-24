@@ -1,15 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Table } from 'reactstrap';
+import { Container, Table, Badge } from 'reactstrap';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/userLogs';
-import { EVENT_TYPES, EVENT_CODES } from '../../utils/eventTypes';
+import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS, COLORS } from '../../utils/eventTypes';
 
 const styles = {
   userLogsContainer: {
     maxHeight: `${50 * 6}px`,
     overflow: 'scroll',
+  },
+  badge: {
+    width: '40px',
   },
 };
 
@@ -34,7 +37,10 @@ class UserLogs extends React.Component {
           <tbody>
             {this.props.logs.map(event => (
               <tr key={event.id}>
-                <td>{EVENT_TYPES[event.event_type]}</td>
+                <td>{event.event_type === 1 &&
+                  <Badge color={COLORS[event.event_code]} style={styles.badge}>{DUTY_STATUS[event.event_code]}</Badge>}
+                  {'  '}{EVENT_TYPES[event.event_type]}
+                </td>
                 <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
                 <td>{event.event_timestamp}</td>
               </tr>

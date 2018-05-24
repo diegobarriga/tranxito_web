@@ -52,3 +52,17 @@ export const EVENT_CODES = {
     4: 'Data diagnostic cleared',
   },
 };
+
+export const DUTY_STATUS = {
+  1: 'OFF',
+  2: 'SB',
+  3: 'D',
+  4: 'ND',
+};
+
+export const COLORS = {
+  1: 'danger',
+  2: 'success',
+  3: 'primary',
+  4: 'secondary',
+};
