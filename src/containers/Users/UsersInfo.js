@@ -70,7 +70,6 @@ UsersInfo.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  users: state.auth.users,
   isLoading: state.users.loading,
 });
 

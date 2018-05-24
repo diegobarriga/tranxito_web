@@ -77,6 +77,8 @@ export default {
       axios.patch(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`, data),
     getMotorCarrierPeople: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`),
+    getMotorCarrierDrivers: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/drivers?access_token=${token}`),
     getMotorCarrierPerson: (motorCarrierId, userId) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/userId/${userId}`),
     createMotorCarrierPeople: (motorCarrierId, token, user) =>

@@ -30,6 +30,7 @@
     "react-dom": "^16.3.2",
     "react-file-reader": "^1.1.4",
     "react-google-maps": "^9.4.5",
+    "react-js-pagination": "^3.0.2",
     "react-modal": "^3.4.4",
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.7",

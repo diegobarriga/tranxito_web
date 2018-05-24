@@ -73,9 +73,7 @@ VehiclesInfo.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  vehicles: state.auth.vehicles,
   isLoading: state.vehicles.loading,
-
 });
 
 export default connect(mapStateToProps)(VehiclesInfo);

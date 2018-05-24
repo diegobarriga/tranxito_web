@@ -7,7 +7,17 @@ export const authStart = () => ({
 });
 
 
-export const authSuccess = (token, userId, role, response, motorCarrierId, vehicles, users) => ({
+export const authSuccess = (
+  token,
+  userId,
+  role,
+  response,
+  motorCarrierId,
+  vehicles,
+  users,
+  chunkedUsers,
+  chunkedVehicles,
+) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
   userId,
@@ -16,6 +26,8 @@ export const authSuccess = (token, userId, role, response, motorCarrierId, vehic
   motorCarrierId,
   vehicles,
   users,
+  chunkedUsers,
+  chunkedVehicles,
 });
 
 export const authFail = error => ({
@@ -96,6 +108,13 @@ export const login = (email, password) => (dispatch) => {
                 userResponse.data.motorCarrierId,
                 response.data.id,
               ).then((peopleResponse) => {
+                const filteredUsers = peopleResponse.data.filter(driver => (
+                  driver.account_type === 'D'
+                ));
+                console.log(filteredUsers);
+                const chunkedUsers = functions.arraySplit(filteredUsers, 5);
+                const chunkedVehicles = functions.arraySplit(vehiclesResponse.data, 5);
+
                 const usersObject = functions.arrayToObject(peopleResponse.data);
                 const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
                 dispatch(authSuccess(
@@ -106,6 +125,8 @@ export const login = (email, password) => (dispatch) => {
                   userResponse.data.motorCarrierId,
                   vehiclesObject,
                   usersObject,
+                  chunkedUsers,
+                  chunkedVehicles,
                 ));
               });
             });
@@ -115,6 +136,8 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.id,
               userResponse.data.account_type,
               response,
+              null,
+              null,
               null,
               null,
               null,
