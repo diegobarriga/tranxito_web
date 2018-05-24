@@ -6,6 +6,8 @@ import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/userLogs';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS, COLORS } from '../../utils/eventTypes';
 
+const moment = require('moment');
+
 const styles = {
   userLogsContainer: {
     maxHeight: `${50 * 6}px`,
@@ -19,6 +21,10 @@ const styles = {
 class UserLogs extends React.Component {
   componentDidMount() {
     this.props.getUserLogs(this.props.token, this.props.id);
+  }
+
+  formatDate(datetime) {
+    return moment(datetime).calendar();
   }
 
   render() {
@@ -44,7 +50,7 @@ class UserLogs extends React.Component {
                   {'  '}{EVENT_TYPES[event.event_type]}
                 </td>
                 <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
-                <td>{event.event_timestamp}</td>
+                <td>{this.formatDate(event.event_timestamp)}</td>
               </tr>
 
                   ))}
