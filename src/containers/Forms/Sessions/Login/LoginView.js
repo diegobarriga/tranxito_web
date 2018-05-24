@@ -2,37 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Alert } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import Loader from '../../../../components/Loader/Loader';
 import LoginForm from './LoginForm';
 import * as actions from '../../../../store/actions/index';
+import Alert from '../../../Alert/Alert';
 
 
 class LoginView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: {},
-      redirectTo: false,
-      // pathname: '',
-    };
-  // this.submit = this.submit.bind(this);
-  }
-
-  // login(event) {
-  //   // prevents reloading of the page
-  //   event.preventDefault();
-  //   this.props.onAuth(data).then(() => {
-  //     this.props.addFlashMessage({
-  //       type: 'success',
-  //       text: 'Login successful'
-  //     });
-  //     this.setState({ redirectTo: true, pathname: '/companies'});
-  //   });
-  // }
-
   render() {
-    const { errors, redirectTo } = this.state;
     if (this.props.isLoading === true) return <Loader />;
 
     const h1Style = {
@@ -46,17 +24,31 @@ class LoginView extends Component {
       if (this.props.isAdmin) {
         authRedirect = <Redirect to="/motor_carriers" />;
       } else {
-        authRedirect = <Redirect to="/dashboard" />;
+        authRedirect = <Redirect to="/drivers" />;
       }
+    }
+
+    /* Alerts */
+    let alert;
+    let msg = '';
+    if (this.props.error === null) {
+      alert = null;
+    } else if (this.props.error.response.status === 401) {
+      msg = 'Error invalid username or password';
+      alert = (<Alert alertType="FAIL" message={msg} />);
     }
 
     return (
       <Container>
         <Row>
+          <Col md="12">
+            { alert }
+          </Col>
+        </Row>
+        <Row>
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             { authRedirect }
             <h1 style={h1Style}>Login</h1>
-            {errors.form && <Alert bsStyle="danger">{errors.form}</Alert>}
             <LoginForm login={this.props.onAuth} />
           </Col>
         </Row>
@@ -70,13 +62,12 @@ LoginView.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  // error: PropTypes.object,
+  error: PropTypes.object,
 };
-/*
+
 LoginView.defaultProps = {
   error: null,
 };
-*/
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
