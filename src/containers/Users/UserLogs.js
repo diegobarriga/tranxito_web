@@ -23,8 +23,8 @@ class UserLogs extends React.Component {
 
   render() {
     if (this.props.logs == null) return <Loader />;
+    this.props.logs.reverse();
     return (
-
       <Container style={styles.userLogsContainer}>
         <Table striped>
           <thead>
@@ -38,7 +38,9 @@ class UserLogs extends React.Component {
             {this.props.logs.map(event => (
               <tr key={event.id}>
                 <td>{event.event_type === 1 &&
-                  <Badge color={COLORS[event.event_code]} style={styles.badge}>{DUTY_STATUS[event.event_code]}</Badge>}
+                  <Badge color={COLORS[event.event_code]} style={styles.badge}>
+                    {DUTY_STATUS[event.event_code]}
+                  </Badge>}
                   {'  '}{EVENT_TYPES[event.event_type]}
                 </td>
                 <td>{EVENT_CODES[event.event_type][event.event_code]}</td>
