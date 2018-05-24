@@ -1,14 +1,29 @@
 import React from 'react';
-import { Container } from 'reactstrap';
+import { Container, Row, Col, PaginationItem, PaginationLink } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Pagination from 'react-js-pagination';
 import { Redirect } from 'react-router-dom';
 import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
 
+
 class Users extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: '0',
+    };
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({ currentPage: pageNumber - 1 });
+  }
+
   render() {
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
@@ -31,10 +46,29 @@ class Users extends React.Component {
     return (
       <Aux>
         { authRedirect }
+        { alert }
+        <h1> Drivers </h1>
         <Container>
-          { alert }
-          <h1> Drivers </h1>
-          <UsersInfo />
+          <Row>
+            <Col md="11">
+              <UsersInfo users={this.props.users[this.state.currentPage]} />
+            </Col>
+          </Row>
+          <br />
+          <br />
+          <Row>
+            <Col sm="12" md={{ size: 6, offset: 4 }}>
+              <Pagination
+                activePage={this.state.currentPage + 1}
+                itemsCountPerPage={5}
+                totalItemsCount={12}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </Col>
+          </Row>
         </Container>
       </Aux>
 
@@ -43,6 +77,7 @@ class Users extends React.Component {
 }
 Users.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  users: PropTypes.array.isRequired,
   error: PropTypes.object,
 };
 
@@ -51,6 +86,7 @@ Users.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  users: state.auth.chunkedUsers,
   isAuthenticated: state.auth.token !== null,
   error: state.users.error,
 });

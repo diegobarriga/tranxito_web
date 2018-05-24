@@ -30,6 +30,8 @@ const authLogout = (state) => {
     motorCarrierId: null,
     vehicles: null,
     users: null,
+    chunkedUsers: null,
+    chunkedVehicles: null,
   });
 };
 
@@ -58,6 +60,8 @@ const authSuccess = (state, action) => updateObject(state, {
   motorCarrierId: action.motorCarrierId,
   vehicles: action.vehicles,
   users: action.users,
+  chunkedUsers: action.chunkedUsers,
+  chunkedVehicles: action.chunkedVehicles,
 });
 
 const authFail = (state, action) => updateObject(state, {
