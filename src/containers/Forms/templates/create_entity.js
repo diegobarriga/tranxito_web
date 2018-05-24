@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button, Form, Input } from 'reactstrap';
+import { Button, Form, Input, Table } from 'reactstrap';
 import TemplateCSV from '../templates/template_csv';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
@@ -194,9 +194,11 @@ class SimpleReactFileUpload extends React.Component {
         <div>{ alert }</div>
         <div className="aligner">
           { this.state.errors &&
-            <ul>
-              {this.state.errors.map(error => (<li>{ error.message }</li>))}
-            </ul> }
+            <Table>
+              <tbody>
+                {this.state.errors.map(error => (<tr>{ error.message }</tr>))}
+              </tbody>
+            </Table> }
           <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>
           <div className="aligner-item"><p>The template below has the structure the csv file must have. You can download it, fill it and then upload it. That simple!</p></div>
           <div className="aligner-item"><TemplateCSV type={this.props.type} /></div>
