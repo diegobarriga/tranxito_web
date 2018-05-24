@@ -13,7 +13,7 @@ export const MCARRIER_CREATE_FAIL = 'CREATEMC_SUCCESS';
 export const GET_USERS_START = 'GET_USERS_START';
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
 export const GET_USERS_FAIL = 'GET_USERS_FAIL';
-export const DELETE_USER = 'DELETE_USER';
+export const USER_DELETE = 'USER_DELETE';
 export const DEL_ERROR_RESET = 'DEL_ERROR_RESET';
 export const CREATE_USER = 'CREATE_USER';
 

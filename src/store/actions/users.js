@@ -16,12 +16,8 @@ export const getUsersFail = error => ({
   error,
 });
 
-export const delErrorReset = () => ({
-  type: actionTypes.DEL_ERROR_RESET,
-});
-
-export const onDeleteSuccess = (userId, response) => ({
-  type: actionTypes.DELETE_USER,
+export const onDeleteUserSuccess = (userId, response) => ({
+  type: actionTypes.USER_DELETE,
   userId,
   response,
 });
@@ -30,8 +26,7 @@ export const onDelete = (userId, token) => (dispatch) => {
   api.people.deleteUser(userId, token)
     .then((response) => {
       console.log(response);
-      dispatch(onDeleteSuccess(userId, response));
-      dispatch(delErrorReset());
+      dispatch(onDeleteUserSuccess(userId, response));
     })
     .catch((err) => {
       console.log(err);

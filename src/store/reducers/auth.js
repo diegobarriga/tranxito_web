@@ -71,14 +71,14 @@ const authFail = (state, action) => updateObject(state, {
   loading: false,
 });
 
-/* borrar driver de la store */
-const onDeleteSuccess = (state, action) => {
-  const tmpUsers = { ...state.users };
-  delete tmpUsers[action.userId];
+/* Arreglar actualizar chunks */
+const onDeleteUserSuccess = (state, action) => {
+  const usersCpy = { ...state.users };
+  delete usersCpy[action.userId];
   return updateObject(state, {
     error: action.response,
     loading: false,
-    users: tmpUsers,
+    users: usersCpy,
   });
 };
 
@@ -92,7 +92,6 @@ const onVehicleDeleteSuccess = (state, action) => {
   });
 };
 
-
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START: return authStart(state);
@@ -101,7 +100,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
     case actionTypes.AUTH_FAIL: return authFail(state, action);
     case actionTypes.AUTH_LOGOUT: return authLogout(state);
-    case actionTypes.DELETE_USER: return onDeleteSuccess(state, action);
+    case actionTypes.USER_DELETE: return onDeleteUserSuccess(state, action);
     case actionTypes.DELETE_VEHICLE: return onVehicleDeleteSuccess(state, action);
     case actionTypes.CREATE_VEHICLE: return createVehicle(state, action);
     case actionTypes.CREATE_USER: return createUser(state, action);
