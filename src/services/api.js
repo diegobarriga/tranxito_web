@@ -3,6 +3,7 @@ import axios from 'axios';
 const apiPath = 'https://eld-test.azurewebsites.net/api';
 // const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
+
 // These are most of the API endpoints
 // TODO: 1) check if the responses are ok
 //        2) handle delete
@@ -135,7 +136,9 @@ export default {
       axios.post(`${apiPath}/imageContainers/Vehicles/upload?access_token=${token}`, formData, config),
   },
   file: {
-    csvFileUpload: (formData, config, token) =>
-      axios.post(`${apiPath}/People/upload?access_token=${token}`, formData, config),
+    csvFileUpload: (formData, config, token, id, type) =>
+      axios.post(`${apiPath}/MotorCarriers/${id}/${type}/csvUpload?access_token=${token}`, formData, config),
+    getfileUploads: filters => axios.get(`${apiPath}/file-uploads`, { params: { filter: filters } }),
+    getFileUploadErrors: id => axios.get(`${apiPath}/file-uploads/${id}/errors`),
   },
 };
