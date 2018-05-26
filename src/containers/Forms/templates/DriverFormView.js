@@ -2,10 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Alert } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import DriverForm from './DriverForm';
+import Alert from '../../Alert/Alert';
+import Loader from '../../../components/Loader/Loader';
+import * as actions from '../../../store/actions/index';
 
 class DriverFormView extends React.Component {
   constructor(props) {
@@ -13,6 +16,7 @@ class DriverFormView extends React.Component {
     this.state = {
       type: '',
       message: '',
+      isLoading: false,
     };
     this.postData = this.postData.bind(this);
     this.patchData = this.patchData.bind(this);
@@ -21,6 +25,7 @@ class DriverFormView extends React.Component {
   }
 
   onFormSubmit(formData) {
+    this.setState({ isLoading: true });
     if (formData.picture !== '') {
       this.imgUpload(formData.picture).then((imgResponse) => {
         if (imgResponse.status === 200) {
@@ -34,8 +39,11 @@ class DriverFormView extends React.Component {
           if (this.props.isCreate) {
             this.postData(submitData).then((response) => {
               if (response.status === 200) {
+                this.props.createUser(response.data);
+                this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: 'We have created the new driver.' });
               } else {
+                this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
             });
@@ -43,13 +51,17 @@ class DriverFormView extends React.Component {
           } else {
             this.patchData(submitData).then((response) => {
               if (response.status === 200) {
+                this.props.createUser(response.data);
+                this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: 'We have edited the driver.' });
               } else {
+                this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
             });
           }
         } else {
+          this.setState({ isLoading: false });
           this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
         }
       });
@@ -58,7 +70,9 @@ class DriverFormView extends React.Component {
       if (this.props.isCreate) {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
+            this.setState({ isLoading: false });
             this.setState({ type: 'success', message: 'We have created the new driver.' });
+            this.props.createUser(response.data);
           } else {
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
@@ -67,8 +81,11 @@ class DriverFormView extends React.Component {
       } else {
         this.patchData(formData.data).then((response) => {
           if (response.status === 200) {
+            this.props.createUser(response.data);
+            this.setState({ isLoading: false });
             this.setState({ type: 'success', message: 'We have edited the driver.' });
           } else {
+            this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
         });
@@ -109,6 +126,8 @@ class DriverFormView extends React.Component {
 
 
   render() {
+    if (this.state.isLoading === true) return <Loader />;
+
     let alert;
     if (this.state.type && this.state.message) {
       if (this.state.type === 'success') {
@@ -158,6 +177,7 @@ DriverFormView.propTypes = {
   motorCarrierId: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
+  createUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -165,4 +185,8 @@ const mapStateToProps = state => ({
   motorCarrierId: state.auth.motorCarrierId,
 });
 
-export default withRouter(connect(mapStateToProps)(DriverFormView));
+const mapDispatchToProps = dispatch => ({
+  createUser: user => dispatch(actions.createUser(user)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DriverFormView));

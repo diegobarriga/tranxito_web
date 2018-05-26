@@ -14,6 +14,9 @@ export {
 export {
   onDelete,
   delErrorReset,
+  createUser,
 } from './users';
 
 export { onVehicleDelete } from './vehicles';
+
+export { createVehicle } from './vehicle';

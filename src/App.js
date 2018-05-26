@@ -44,8 +44,8 @@ import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
   faLocationArrow, faTachometerAlt, faInfoCircle,
-  faChartLine, faSignInAlt, faSignOutAlt, faUserCog, faUserTie,
-  faBluetooth,
+  faChartLine, faSignInAlt, faSignOutAlt,
+  faUserCog, faUserTie, faBluetooth,
 );
 
 class App extends Component {

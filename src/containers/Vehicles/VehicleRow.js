@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { ListGroupItem, Button } from 'reactstrap';
 import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
@@ -40,8 +41,8 @@ class VehicleRow extends React.Component {
           </div>
         </div>
         <div style={pStyle}>
-          <Link className="btn btn-secondary btn-sm" to={`/vehicles/${this.props.id}/edit`}>Edit</Link>{' '}
-          <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}>Delete</Button>
+          <Link className="btn btn-secondary btn-sm" to={`/vehicles/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
+          <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
         </div>
       </ListGroupItem>
     );

@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Aux from '../../hoc/Aux';
+import * as actions from '../../store/actions/index';
 import '../../assets/styles/alert.css';
 
 class Alert extends React.Component {
@@ -13,6 +15,9 @@ class Alert extends React.Component {
       this.setState({
         visible: false,
       });
+      setTimeout(() => {
+        this.props.errorDelete();
+      }, 3999);
     }, 4000);
   }
 
@@ -41,7 +46,11 @@ class Alert extends React.Component {
 Alert.propTypes = {
   alertType: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-
+  errorDelete: PropTypes.func.isRequired,
 };
 
-export default Alert;
+const mapDispatchToProps = dispatch => ({
+  errorDelete: () => dispatch(actions.errorReset()),
+});
+
+export default connect(null, mapDispatchToProps)(Alert);

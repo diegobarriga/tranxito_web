@@ -50,11 +50,11 @@ export const carrierRegister = (data, token, isCreate, id) => (dispatch) => {
     api.motorCarriers.updateMotorCarrier(id, data, token)
       .then((response) => {
         console.log(response);
-        // dispatch(createMCSuccess(data, response));
+        dispatch(createMCSuccess(data, response));
       })
       .catch((err) => {
         console.log(err);
-        // dispatch(createMCFail());
+        dispatch(createMCFail());
       });
   }
 };

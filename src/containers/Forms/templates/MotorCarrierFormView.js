@@ -30,12 +30,15 @@ class MotorCarrierFormView extends React.Component {
     if (this.props.isLoading === true) return <Loader />;
 
     let alert;
-    if (this.state.type && this.state.message) {
-      if (this.state.type === 'success') {
-        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
-      } else if (this.state.type === 'danger') {
-        alert = (<Alert alertType="FAIL" message={this.state.message} />);
-      }
+    let msg = '';
+    if (this.props.error === null) {
+      alert = null;
+    } else if (this.props.error.status === 200) {
+      msg = 'The Motor Carrier was created successfully';
+      alert = (<Alert alertType="SUCCESS" message={msg} />);
+    } else {
+      msg = 'Error the Motor Carrier could not be created';
+      alert = (<Alert alertType="FAIL" message={msg} />);
     }
 
     const h1Style = {
@@ -69,6 +72,8 @@ class MotorCarrierFormView extends React.Component {
             <MotorCarrierForm
               submit={this.onFormSubmit}
               token={this.props.token}
+              isCreate={this.props.isCreate}
+              id={this.props.match.params.id}
             />
           </Col>
         </Row>
@@ -87,6 +92,11 @@ MotorCarrierFormView.propTypes = {
   match: PropTypes.object.isRequired,
   isCreate: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+};
+
+MotorCarrierFormView.defaultProps = {
+  error: null,
 };
 
 
@@ -94,15 +104,17 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   isAdmin: state.auth.role === 'A',
   token: state.auth.token,
-  isLoading: state.auth.loading,
+  isLoading: state.mCarrier.loading,
+  error: state.mCarrier.error,
 });
 
 
 const mapDispatchToProps = dispatch => ({
-  onRegister: (data, token, isCreate) => dispatch(actions.carrierRegister(
+  onRegister: (data, token, isCreate, id) => dispatch(actions.carrierRegister(
     data,
     token,
     isCreate,
+    id,
   )),
 
 });

@@ -27,7 +27,7 @@ class VehicleInfo extends React.Component {
         <Row style={styles.userProfile}>
           <img src={api.images.vehicleImageLink(this.props.vehicles[this.props.id].image)} alt="vehicleImg" />
           <div style={styles.userData}>
-            <div>Plaque: {this.props.vehicles[this.props.id].palque}</div>
+            <div>Plaque: {this.props.vehicles[this.props.id].plaque}</div>
             <div>VIN: {this.props.vehicles[this.props.id].vin}</div>
             <div>ELD: {this.props.vehicles[this.props.id].IMEI_ELD}</div>
             <div>State: {this.props.vehicles[this.props.id].state}</div>
