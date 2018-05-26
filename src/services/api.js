@@ -110,7 +110,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/driversDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
-
+    getVehiclesDutyStats: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
   },
   events: {
     getEvents: () =>

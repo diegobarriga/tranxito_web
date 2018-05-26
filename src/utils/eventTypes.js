@@ -61,6 +61,14 @@ export const DUTY_STATUS = {
   5: 'UNDEF',
 };
 
+export const DUTY_STATUS_LONG = {
+  1: 'OFF DUTTY',
+  2: 'SLEEPER BERTH',
+  3: 'DRIVING',
+  4: 'ON DUTY NOT DRIVING',
+  5: 'UNDEFINED',
+};
+
 export const COLORS = {
   1: 'danger',
   2: 'success',
@@ -75,4 +83,3 @@ export const EVENT_COLORS = {
   4: '#76C043',
   5: '#6B6B6B',
 }
-

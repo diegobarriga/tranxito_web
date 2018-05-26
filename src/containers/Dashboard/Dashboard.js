@@ -8,6 +8,7 @@ import Aux from '../../hoc/Aux';
 import Map from './Map';
 import Summary from './Summary';
 import DoughnutChart from './DoughnutChart';
+import Charts from './Charts';
 import * as actions from '../../store/actions/tracking';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/tabs.css';
@@ -59,7 +60,15 @@ class Dashboard extends React.Component {
               className={classnames({ active: this.state.activeTab === '2' })}
               onClick={() => { this.toggle('2'); }}
             >
-              Charts
+              Duty Status Stats
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              Alerts Stats
             </NavLink>
           </NavItem>
         </Nav>
@@ -75,7 +84,14 @@ class Dashboard extends React.Component {
           <TabPane tabId="2">
             <div className="tabDiv">
               <Container>
-                <DoughnutChart activeTab={this.state.activeTab} />
+                <Charts activeTab={this.state.activeTab} />
+              </Container>
+            </div>
+          </TabPane>
+          <TabPane tabId="3">
+            <div className="tabDiv">
+              <Container>
+                <Charts activeTab={this.state.activeTab} />
               </Container>
             </div>
           </TabPane>
