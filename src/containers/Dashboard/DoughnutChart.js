@@ -12,11 +12,19 @@ const options = {
     },
   },
   maintainAspectRatio: false,
+  title: {
+    display: true,
+    text: '',
+    fontSize: 20,
+    fontStyle: 'normal',
+  },
 };
 
 class DoughnutChart extends React.Component {
   render() {
     // if (this.props.activeTab !== '2') return <div />;
+    options.title.text = this.props.title;
+    console.log('options', options);
     return (
       <div className="doughnutChart">
         <Doughnut
@@ -32,6 +40,7 @@ class DoughnutChart extends React.Component {
 
 DoughnutChart.propTypes = {
   data: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default DoughnutChart;

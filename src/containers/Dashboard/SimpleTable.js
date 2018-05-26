@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { Container, Table, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
 // import Loader from '../../components/Loader/Loader';
-import { DUTY_STATUS, COLORS } from '../../utils/eventTypes';
+import { DUTY_STATUS } from '../../utils/eventTypes';
 import * as functions from './functions';
+import '../../assets/styles/buttons.css';
 
 const styles = {
   container: {
     maxHeight: `${50 * 6}px`,
     overflow: 'scroll',
+    marginTop: '20px',
   },
   badge: {
     width: '40px',
@@ -30,22 +32,22 @@ class SimpleTable extends React.Component {
             <tr>
               <th>{this.props.type}</th>
               <th>
-                <Badge color={COLORS[1]} style={styles.badge}>
+                <Badge className="event1" style={styles.badge}>
                   {DUTY_STATUS[1]}
                 </Badge>
               </th>
               <th>
-                <Badge color={COLORS[2]} style={styles.badge}>
+                <Badge className="event2" style={styles.badge}>
                   {DUTY_STATUS[2]}
                 </Badge>
               </th>
               <th>
-                <Badge color={COLORS[3]} style={styles.badge}>
+                <Badge className="event3" style={styles.badge}>
                   {DUTY_STATUS[3]}
                 </Badge>
               </th>
               <th>
-                <Badge color={COLORS[4]} style={styles.badge}>
+                <Badge className="event4" style={styles.badge}>
                   {DUTY_STATUS[4]}
                 </Badge>
               </th>
@@ -56,10 +58,10 @@ class SimpleTable extends React.Component {
               Object.keys(this.props.stats).map(key => (
                 <tr key={key}>
                   <td><Link to={`/drivers/${this.props.users[key].id}`}>{this.props.users[key].first_name} {this.props.users[key].last_name}</Link></td>
-                  <td>{functions.round(this.props.stats[key]['1'])}</td>
-                  <td>{functions.round(this.props.stats[key]['2'])}</td>
-                  <td>{functions.round(this.props.stats[key]['3'])}</td>
-                  <td>{functions.round(this.props.stats[key]['4'])}</td>
+                  <td>{functions.round(this.props.stats[key]['1'])} hours</td>
+                  <td>{functions.round(this.props.stats[key]['2'])} hours</td>
+                  <td>{functions.round(this.props.stats[key]['3'])} hours</td>
+                  <td>{functions.round(this.props.stats[key]['4'])} hours</td>
                 </tr>
               ))
             }

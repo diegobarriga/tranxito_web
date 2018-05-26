@@ -7,6 +7,7 @@ import api from '../../services/api';
 import DoughnutChart from './DoughnutChart';
 import SimpleTable from './SimpleTable';
 import * as functions from './functions';
+import Loader from '../../components/Loader/Loader';
 
 const dataDutyStats = {
   labels: [
@@ -112,19 +113,21 @@ class Charts extends React.Component {
   render() {
     console.log(dataDutyStats);
     console.log('loadingduty: ', this.state.loadingDutyStats, 'loadingDrivers', this.state.loadingDriversDutyStats, 'activetab: ', this.props.activeTab);
-    if (
+    if (this.props.activeTab !== '2') return <div />;
+
+    else if (
       this.state.loadingDriversDutyStats ||
-      this.state.loadingDutyStats ||
+      this.state.loadingDutyStats
       // this.state.loadingVehiclesDutyStats ||
-      this.props.activeTab !== '2') return <div />;
+    ) return <Loader />;
 
     console.log(dataDutyStats);
     console.log('driversDutyStats', this.state.driversDutyStats);
     return (
       <div className="doughnutChart">
-        <h4>Accumulated Duty Status type for the motorcarrier </h4>
         <DoughnutChart
           data={dataDutyStats}
+          title="Accumulated Duty Status per Type"
         />
         <SimpleTable
           type="Drivers"
