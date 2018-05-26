@@ -14,6 +14,7 @@ class UsersInfo extends React.Component {
     super(props);
     this.state = {
       search: '',
+      pages: '5',
     };
     this.updateSearch = this.updateSearch.bind(this);
   }
@@ -48,7 +49,12 @@ class UsersInfo extends React.Component {
 
         <ListGroup>
           {
-              filteredUsers.sort((a, b) => a.last_name > b.last_name).map(user => (<UserRow
+              filteredUsers.sort((a, b) => a.last_name > b.last_name)
+              .slice(
+                ((this.props.pageNumber * this.state.pages) - 5),
+                 this.props.pageNumber * this.state.pages,
+                )
+              .map(user => (<UserRow
                 key={user.id}
                 id={user.id}
                 first_name={user.first_name}
@@ -67,10 +73,12 @@ class UsersInfo extends React.Component {
 UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
+  pageNumber: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   isLoading: state.users.loading,
+  users: state.auth.users,
 });
 
 export default connect(mapStateToProps)(UsersInfo);

@@ -14,6 +14,7 @@ class VehiclesInfo extends React.Component {
     super(props);
     this.state = {
       search: '',
+      pages: '5',
     };
     this.updateSearch = this.updateSearch.bind(this);
   }
@@ -48,7 +49,12 @@ class VehiclesInfo extends React.Component {
 
         <ListGroup>
           {
-              filteredVehicles.sort((a, b) => a.car_maker > b.car_maker).map(truck => (<VehicleRow
+              filteredVehicles.sort((a, b) => a.car_maker > b.car_maker)
+              .slice(
+              ((this.props.pageNumber * this.state.pages) - 5),
+               this.props.pageNumber * this.state.pages,
+              )
+              .map(truck => (<VehicleRow
                 key={truck.id}
                 id={truck.id}
                 vin={truck.vin}
@@ -70,10 +76,12 @@ class VehiclesInfo extends React.Component {
 VehiclesInfo.propTypes = {
   vehicles: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  pageNumber: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   isLoading: state.vehicles.loading,
+  vehicles: state.auth.vehicles,
 });
 
 export default connect(mapStateToProps)(VehiclesInfo);
