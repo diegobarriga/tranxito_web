@@ -45,7 +45,7 @@ class UserLogs extends React.Component {
             {this.props.logs.map(event => (
               <tr key={event.id}>
                 <td>{event.event_type === 1 &&
-                  <Badge className={`event + ${event.event_code}`} style={styles.badge}>
+                  <Badge className={`event${event.event_code}`} style={styles.badge}>
                     {DUTY_STATUS[event.event_code]}
                   </Badge>}
                   {'  '}{EVENT_TYPES[event.event_type]}
