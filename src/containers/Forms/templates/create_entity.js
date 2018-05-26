@@ -41,56 +41,28 @@ class SimpleReactFileUpload extends React.Component {
     console.log(e.target.files[0]);
   }
 
-  checkValid(drivers) {
-    console.log(drivers);
-    for (let i = 0; i < drivers.length; i += 1) {
-      if (drivers[i].first_name.length < 2 && drivers[i].first_name.length > 30) {
-        this.setState({ isValid: false });
-        console.log('firstname');
-        return;
-      } else if (drivers[i].last_name.length < 2 && drivers[i].last_name.length > 30) {
-        this.setState({ isValid: false });
-        console.log('lastname');
-        return;
-      } else if (drivers[i].email.length < 2 && drivers[i].email.length > 30) {
-        this.setState({ isValid: false });
-        console.log('email');
-        return;
-      } else if (drivers[i].licenses_issuing_state.length === 0) {
-        this.setState({ isValid: false });
-        console.log('license');
-        return;
-      } else if (drivers[i].driver_license_number.length === 0) {
-        this.setState({ isValid: false });
-        console.log('driverlicensenumber');
-        return;
-      } else if (drivers[i].move_yards_use.length !== 1) {
-        this.setState({ isValid: false });
-        console.log('move_yards');
-        return;
-      } else if (drivers[i].default_use.length !== 1) {
-        this.setState({ isValid: false });
-        console.log('defaultuse');
-        return;
-      } else if (drivers[i].personal_use.length !== 1) {
-        this.setState({ isValid: false });
-        console.log('personaluse');
-        return;
-      } else if (drivers[i].exempt_driver_configuration.length === 0) {
-        this.setState({ isValid: false });
-        console.log('driverconfig');
-        return;
-      } else if (drivers[i].time_zone_offset_utc.length === 0) {
-        this.setState({ isValid: false });
-        console.log('time');
-        return;
-      } else if (drivers[i].starting_time_24_hour_period.length === 0) {
-        this.setState({ isValid: false });
-        console.log('24period');
-        return;
-      }
-      this.setState({ isValid: true });
+  getUploadStatus() {
+    const filter = `{"where": {"personId": ${this.props.userId}}, "order" : "date DESC", "limit": 1}`;
+    return api.file.getfileUploads(filter);
+  }
+
+  getErrors(uploadId) {
+    return api.file.getFileUploadErrors(uploadId);
+  }
+
+  fileUpload(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+
+    if (this.props.type === 'drivers') {
+      this.props.type = 'people';
     }
+    return api.file.csvFileUpload(formData, config, this.props.token, this.props.motorCarrierId, this.props.type);
   }
 
 
@@ -158,24 +130,56 @@ class SimpleReactFileUpload extends React.Component {
     }
   }
 
-  fileUpload(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
-    return api.file.csvFileUpload(formData, config, this.props.token);
-  }
-
-  getUploadStatus() {
-    const filter = `{"where": {"personId": ${this.props.userId}}, "order" : "date DESC", "limit": 1}`;
-    return api.file.getfileUploads(filter);
-  }
-
-  getErrors(uploadId) {
-    return api.file.getFileUploadErrors(uploadId);
+  checkValid(drivers) {
+    console.log(drivers);
+    for (let i = 0; i < drivers.length; i += 1) {
+      if (drivers[i].first_name.length < 2 && drivers[i].first_name.length > 30) {
+        this.setState({ isValid: false });
+        console.log('firstname');
+        return;
+      } else if (drivers[i].last_name.length < 2 && drivers[i].last_name.length > 30) {
+        this.setState({ isValid: false });
+        console.log('lastname');
+        return;
+      } else if (drivers[i].email.length < 2 && drivers[i].email.length > 30) {
+        this.setState({ isValid: false });
+        console.log('email');
+        return;
+      } else if (drivers[i].licenses_issuing_state.length === 0) {
+        this.setState({ isValid: false });
+        console.log('license');
+        return;
+      } else if (drivers[i].driver_license_number.length === 0) {
+        this.setState({ isValid: false });
+        console.log('driverlicensenumber');
+        return;
+      } else if (drivers[i].move_yards_use.length !== 1) {
+        this.setState({ isValid: false });
+        console.log('move_yards');
+        return;
+      } else if (drivers[i].default_use.length !== 1) {
+        this.setState({ isValid: false });
+        console.log('defaultuse');
+        return;
+      } else if (drivers[i].personal_use.length !== 1) {
+        this.setState({ isValid: false });
+        console.log('personaluse');
+        return;
+      } else if (drivers[i].exempt_driver_configuration.length === 0) {
+        this.setState({ isValid: false });
+        console.log('driverconfig');
+        return;
+      } else if (drivers[i].time_zone_offset_utc.length === 0) {
+        this.setState({ isValid: false });
+        console.log('time');
+        return;
+      } else if (drivers[i].starting_time_24_hour_period.length === 0) {
+        this.setState({ isValid: false });
+        console.log('24period');
+        return;
+      }
+      this.setState({ isValid: true });
+    }
   }
 
   render() {
@@ -219,12 +223,14 @@ class SimpleReactFileUpload extends React.Component {
 const mapStateToProps = state => ({
   token: state.auth.token,
   userId: state.auth.userId,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
 SimpleReactFileUpload.propTypes = {
   type: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   userId: PropTypes.number.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 

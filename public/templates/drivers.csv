@@ -1,1 +1,1 @@
-first_name(string),last_name(string),email(string),driver_license_number(string),licenses_issuing_state(string),exempt_driver_configuration(string),time_zone_offset_utc(int),starting_time_24_hour_period(date),move_yards_use(0-1),default_use(0-1),personal_use(0-1),username(string),password(string)
+first_name,last_name,email,driver_license_number,licenses_issuing_state,exempt_driver_configuration,time_zone_offset_utc,starting_time_24_hour_period,move_yards_use,default_use,personal_use,username,password

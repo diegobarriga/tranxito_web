@@ -121,8 +121,8 @@ export default {
       axios.post(`${apiPath}/imageContainers/Vehicles/upload?access_token=${token}`, formData, config),
   },
   file: {
-    csvFileUpload: (formData, config, token) =>
-      axios.post(`${apiPath}/People/upload?access_token=${token}`, formData, config),
+    csvFileUpload: (formData, config, token, id, type) =>
+      axios.post(`${apiPath}/MotorCarriers/${id}/${type}/csvUpload?access_token=${token}`, formData, config),
     getfileUploads: filters => axios.get(`${apiPath}/file-uploads`, { params: { filter: filters } }),
     getFileUploadErrors: id => axios.get(`${apiPath}/file-uploads/${id}/errors`),
   },
