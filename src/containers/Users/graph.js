@@ -6,6 +6,8 @@ import api from '../../services/api';
 import { EVENT_COLORS, EVENT_CODES } from '../../utils/eventTypes';
 import Loader from '../../components/Loader/Loader';
 
+const moment = require('moment');
+
 class Graph extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ class Graph extends React.Component {
             label: 'Population',
             data: [],
             backgroundColor: ['rgba(255, 255, 255, 0.6)'],
-            borderColor: [EVENT_COLORS[1], EVENT_COLORS[2], EVENT_COLORS[3], EVENT_COLORS[4]],
+            borderColor: '#c7d41e',
             showLine: true,
           },
         ],
@@ -44,13 +46,11 @@ class Graph extends React.Component {
         console.log(response);
         const logs = Object.values(response.data.data[1]);
 
-        logs.sort(function(a,b){
-          return new Date(b.event_timestamp) - new Date(a.event_timestamp);
-        });
+        logs.sort((a, b) => new Date(b.event_timestamp) - new Date(a.event_timestamp));
 
         const firstLog = response.data.data[0];
-        console.log(logs);
         console.log(firstLog);
+        console.log(logs);
         this.setState({ loading: false, api_logs: logs, firstLog }, this.processData);
       })
       .catch((error) => {
@@ -61,6 +61,7 @@ class Graph extends React.Component {
 
   processData = () => {
     const graphData = this.state.chartData;
+    let laststatus = null;
     graphData.datasets[0].data = [];
 
     // Agregar el estado inicial
@@ -68,12 +69,22 @@ class Graph extends React.Component {
       x: 0,
       y: EVENT_CODES[1][this.state.firstLog.event_code],
     });
+    laststatus = EVENT_CODES[1][this.state.firstLog.event_code];
     this.state.api_logs.map((event) => {
       graphData.datasets[0].data.push({
         x: parseFloat(event.event_timestamp.substring(11, 13)) +
            (parseFloat(event.event_timestamp.substring(14, 16)) / 60),
         y: EVENT_CODES[1][event.event_code],
       });
+      laststatus = EVENT_CODES[1][event.event_code];
+    });
+    // AGREGAR UN DATO DEL ULTIMO DUTY STATUS CON LA HORA ACTUAL
+    const now = moment();
+    const nownumber = now.hour() + (now.minute() / 60);
+    console.log(nownumber);
+    graphData.datasets[0].data.push({
+      x: nownumber,
+      y: laststatus,
     });
     this.setState({ chartData: graphData });
   }
