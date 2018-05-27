@@ -9,6 +9,7 @@ import { compose, withProps } from 'recompose';
 import api from '../../services/api';
 // import * as actions from '../../store/actions/tracking';
 import Loader from '../../components/Loader/Loader';
+import '../../assets/styles/forms.css';
 
 // function getDefaultPosition(data) {
 //   console.log(data);
@@ -33,7 +34,7 @@ const HeatMapComponent = compose(
   }),
   withGoogleMap,
 )(props => (
-  <GoogleMap defaultZoom={3} center={props.center}>
+  <GoogleMap defaultZoom={6} center={props.center}>
     <HeatmapLayer
       data={props.data}
     />
@@ -45,16 +46,24 @@ class HeatMap extends React.Component {
     super(props);
     this.state = {
       trackings: [],
-      loading: true,
+      loading: false,
       data: null,
       center_cords: null,
+      span: 'week',
     };
+    this.updateSpan = this.updateSpan.bind(this);
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
+    this.getData();
+  }
+
+  getData() {
     this.getTrackings()
       .then((response) => {
         if (response.status === 200) {
+          console.log(response.data);
           this.state.data = response.data;
           this.createData();
         } else {
@@ -64,7 +73,25 @@ class HeatMap extends React.Component {
   }
 
   getTrackings() {
-    return api.vehicles.getTrackings(this.props.id, this.props.token);
+    const TODAY = Date.now();
+    let nSpan = 0;
+    switch (this.state.span) {
+      case 'day':
+        nSpan = 24 * 60 * 60 * 1000;
+        break;
+      case 'week':
+        nSpan = 7 * 24 * 60 * 60 * 1000;
+        break;
+      case 'month':
+        nSpan = 30 * 24 * 60 * 60 * 1000;
+        break;
+      default:
+        nSpan = 0;
+        break;
+    }
+    const condition = { timestamp: { gt: TODAY - nSpan } };
+    console.log("condition", condition, nSpan);
+    return api.vehicles.getTrackings(this.props.id, this.props.token, condition);
   }
 
   createData() {
@@ -87,15 +114,36 @@ class HeatMap extends React.Component {
     this.setState({ center_cords: { lat, lng }, loading: false });
   }
 
+  async updateSpan(event) {
+    console.log('old span: ', this.state.span);
+    console.log('recieved span: ', event.target.value);
+    // this.state.span = event.target.value;
+    await this.setState({ span: event.target.value, loading: true });
+    console.log('new span: ', this.state.span);
+    this.getData();
+  }
+
   render() {
     if (this.state.loading === true) return <Loader />;
 
     // if (this.state.trackings === null) return <div><h2>Could not load the heatmap</h2></div>;
     return (
-      <HeatMapComponent
-        data={this.state.trackings}
-        center={this.state.center_cords}
-      />
+      <div>
+        <div className="inlineBoxRight paddingBottom">
+          <div className="content">
+            <span>Time interval </span>
+            <select name="time" onChange={this.updateSpan} value={this.state.span}>
+              <option value="day">Day</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+            </select>
+          </div>
+        </div>
+        <HeatMapComponent
+          data={this.state.trackings}
+          center={this.state.center_cords}
+        />
+      </div>
     );
   }
 }

@@ -63,8 +63,8 @@ export default {
       axios.get(`${apiPath}/Vehicles/${vehicleId}/motorCarrier`),
     exists: vehicleId =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/exists`),
-    getTrackings: (vehicleId, token) =>
-      axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`),
+    getTrackings: (vehicleId, token, conditions) =>
+      axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
   motorCarriers: {
     getMotorCarriers: token =>
