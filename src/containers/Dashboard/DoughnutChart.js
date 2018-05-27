@@ -26,7 +26,7 @@ class DoughnutChart extends React.Component {
     options.title.text = this.props.title;
     console.log('options', options);
     return (
-      <div className="doughnutChart">
+      <div>
         <Doughnut
           data={this.props.data}
           options={options}

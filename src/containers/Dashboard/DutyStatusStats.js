@@ -28,7 +28,7 @@ const dataDutyStats = {
   ],
 };
 
-class Charts extends React.Component {
+class DutyStatusStats extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -124,10 +124,10 @@ class Charts extends React.Component {
     console.log(dataDutyStats);
     console.log('driversDutyStats', this.state.driversDutyStats);
     return (
-      <div className="doughnutChart">
+      <div>
         <DoughnutChart
           data={dataDutyStats}
-          title="Accumulated Duty Status per Type"
+          title="Accumulated Duty Status Hours Per Type"
         />
         <SimpleTable
           type="Drivers"
@@ -139,7 +139,7 @@ class Charts extends React.Component {
   }
 }
 
-Charts.propTypes = {
+DutyStatusStats.propTypes = {
   token: PropTypes.string.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   activeTab: PropTypes.string.isRequired,
@@ -151,4 +151,4 @@ const mapStateToProps = state => ({
   motorCarrierId: state.auth.motorCarrierId,
 });
 
-export default connect(mapStateToProps)(Charts);
+export default connect(mapStateToProps)(DutyStatusStats);

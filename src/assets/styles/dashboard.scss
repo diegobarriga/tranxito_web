@@ -14,5 +14,10 @@
 
 .summary p{
   margin-bottom: 0px;
+}
 
+.barChart{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }

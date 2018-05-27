@@ -7,8 +7,8 @@ import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstra
 import Aux from '../../hoc/Aux';
 import Map from './Map';
 import Summary from './Summary';
-import DoughnutChart from './DoughnutChart';
-import Charts from './Charts';
+import DutyStatusStats from './DutyStatusStats';
+import AlertsStats from './AlertsStats';
 import * as actions from '../../store/actions/tracking';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/tabs.css';
@@ -84,14 +84,14 @@ class Dashboard extends React.Component {
           <TabPane tabId="2">
             <div className="tabDiv">
               <Container>
-                <Charts activeTab={this.state.activeTab} />
+                <DutyStatusStats activeTab={this.state.activeTab} />
               </Container>
             </div>
           </TabPane>
           <TabPane tabId="3">
             <div className="tabDiv">
               <Container>
-                <Charts activeTab={this.state.activeTab} />
+                <AlertsStats activeTab={this.state.activeTab} />
               </Container>
             </div>
           </TabPane>
