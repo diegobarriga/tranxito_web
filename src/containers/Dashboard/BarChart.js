@@ -44,7 +44,7 @@ class BarChart extends React.Component {
         <Bar
           data={this.props.data}
           options={this.state.options}
-          width={400}
+          width={450}
           height={250}
         />
       </div>
