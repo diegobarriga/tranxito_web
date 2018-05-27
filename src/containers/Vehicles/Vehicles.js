@@ -13,16 +13,19 @@ class Vehicles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: '0',
+      currentPage: '1',
     };
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   handlePageChange(pageNumber) {
-    this.setState({ currentPage: pageNumber - 1 });
+    this.setState({ currentPage: pageNumber });
   }
 
+  countItems
+
   render() {
+    const totalVehicles = Object.keys(this.props.vehicles).length;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -48,7 +51,7 @@ class Vehicles extends React.Component {
         <Container>
           <Row>
             <Col md="11">
-              <VehiclesInfo vehicles={this.props.vehicles[this.state.currentPage]} />
+              <VehiclesInfo pageNumber={this.state.currentPage} />
             </Col>
           </Row>
           <br />
@@ -56,10 +59,10 @@ class Vehicles extends React.Component {
           <Row>
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
-                activePage={this.state.currentPage + 1}
+                activePage={this.state.currentPage}
                 itemsCountPerPage={5}
-                totalItemsCount={12}
-                pageRangeDisplayed={5}
+                totalItemsCount={totalVehicles}
+                pageRangeDisplayed={4}
                 onChange={this.handlePageChange}
                 itemClass="page-item"
                 linkClass="page-link"
@@ -75,7 +78,7 @@ class Vehicles extends React.Component {
 
 Vehicles.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  vehicles: PropTypes.array.isRequired,
+  vehicles: PropTypes.object.isRequired,
   error: PropTypes.object,
 };
 
@@ -84,7 +87,7 @@ Vehicles.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  vehicles: state.auth.chunkedVehicles,
+  vehicles: state.auth.vehicles,
   isAuthenticated: state.auth.token !== null,
   error: state.auth.error,
 });

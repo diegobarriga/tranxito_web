@@ -14,16 +14,17 @@ class Users extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: '0',
+      currentPage: '1',
     };
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   handlePageChange(pageNumber) {
-    this.setState({ currentPage: pageNumber - 1 });
+    this.setState({ currentPage: pageNumber });
   }
 
   render() {
+    const totalUsers = Object.keys(this.props.users).length;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -50,7 +51,7 @@ class Users extends React.Component {
         <Container>
           <Row>
             <Col md="11">
-              <UsersInfo users={this.props.users[this.state.currentPage]} />
+              <UsersInfo pageNumber={this.state.currentPage} />
             </Col>
           </Row>
           <br />
@@ -58,9 +59,9 @@ class Users extends React.Component {
           <Row>
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
-                activePage={this.state.currentPage + 1}
+                activePage={this.state.currentPage}
                 itemsCountPerPage={5}
-                totalItemsCount={16}
+                totalItemsCount={totalUsers}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange}
                 itemClass="page-item"
@@ -76,7 +77,7 @@ class Users extends React.Component {
 }
 Users.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.object.isRequired,
   error: PropTypes.object,
 };
 
@@ -85,7 +86,7 @@ Users.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  users: state.auth.chunkedUsers,
+  users: state.auth.users,
   isAuthenticated: state.auth.token !== null,
   error: state.users.error,
 });
