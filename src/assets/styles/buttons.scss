@@ -1,0 +1,33 @@
+@import './colors.scss';
+
+.event1{
+  background-color: $OFF;
+}
+
+.event2{
+  background-color: $SB;
+}
+
+.event3{
+  background-color: $D;
+}
+
+.event4{
+  background-color: $ON;
+}
+
+
+.speedButton{
+  background-color: $speed;
+}
+
+.timeButton{
+  background-color: $time;
+}
+
+.speedButton, .timeButton{
+  border-radius: 2px;
+  padding: 2px 7px;
+  color: white;
+  font-size: 90%;
+  }

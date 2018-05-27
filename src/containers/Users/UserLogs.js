@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { Container, Table, Badge } from 'reactstrap';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/userLogs';
-import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS, COLORS } from '../../utils/eventTypes';
+import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../utils/eventTypes';
+import '../../assets/styles/buttons.css';
 
 const moment = require('moment');
 
@@ -44,7 +45,7 @@ class UserLogs extends React.Component {
             {this.props.logs.map(event => (
               <tr key={event.id}>
                 <td>{event.event_type === 1 &&
-                  <Badge color={COLORS[event.event_code]} style={styles.badge}>
+                  <Badge className={`event${event.event_code}`} style={styles.badge}>
                     {DUTY_STATUS[event.event_code]}
                   </Badge>}
                   {'  '}{EVENT_TYPES[event.event_type]}

@@ -34,10 +34,10 @@ class Summary extends Component {
   }
 
   componentWillUnmount() {
-   this.setState({
-     isMounted: false,
-   })
- }
+    this.setState({
+      isMounted: false,
+    })
+  }
 
   getMetrics() {
     const numberUsers = this.getNumberUsers();

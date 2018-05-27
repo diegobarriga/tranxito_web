@@ -63,8 +63,8 @@ export default {
       axios.get(`${apiPath}/Vehicles/${vehicleId}/motorCarrier`),
     exists: vehicleId =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/exists`),
-    getTrackings: (vehicleId, token) =>
-      axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`),
+    getTrackings: (vehicleId, token, conditions) =>
+      axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
   motorCarriers: {
     getMotorCarriers: token =>
@@ -110,7 +110,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/driversDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
-
+    getVehiclesDutyStats: (motorCarrierId, token, span) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
   },
   events: {
     getEvents: () =>
