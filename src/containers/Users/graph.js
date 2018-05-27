@@ -69,6 +69,7 @@ class Graph extends React.Component {
       x: 0,
       y: EVENT_CODES[1][this.state.firstLog.event_code],
     });
+    laststatus = EVENT_CODES[1][this.state.firstLog.event_code];
     this.state.api_logs.map((event) => {
       graphData.datasets[0].data.push({
         x: parseFloat(event.event_timestamp.substring(11, 13)) +
