@@ -17,6 +17,7 @@ export const authSuccess = (
   users,
   chunkedUsers,
   chunkedVehicles,
+  supervisors,
 ) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
@@ -28,6 +29,7 @@ export const authSuccess = (
   users,
   chunkedUsers,
   chunkedVehicles,
+  supervisors,
 });
 
 export const authFail = error => ({
@@ -111,12 +113,16 @@ export const login = (email, password) => (dispatch) => {
                 const filteredUsers = peopleResponse.data.filter(driver => (
                   driver.account_type === 'D'
                 ));
+                const supervisors = peopleResponse.data.filter(user => (
+                  user.account_type === 'S'
+                ));
                 console.log(filteredUsers);
                 const chunkedUsers = functions.arraySplit(filteredUsers, 5);
                 const chunkedVehicles = functions.arraySplit(vehiclesResponse.data, 5);
 
                 const usersObject = functions.arrayToObject(peopleResponse.data);
                 const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+                const supervisorsObject = functions.arrayToObject(supervisors);
                 dispatch(authSuccess(
                   response.data.id,
                   userResponse.data.id,
@@ -127,6 +133,7 @@ export const login = (email, password) => (dispatch) => {
                   usersObject,
                   chunkedUsers,
                   chunkedVehicles,
+                  supervisorsObject,
                 ));
               });
             });
@@ -136,6 +143,7 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.id,
               userResponse.data.account_type,
               response,
+              null,
               null,
               null,
               null,
