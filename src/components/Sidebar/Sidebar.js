@@ -18,6 +18,7 @@ class sidebar extends Component {
     this.setState({ dashboardClicked: false });
     this.setState({ driversClicked: false });
     this.setState({ vehiclesClicked: false });
+    this.setState({ supervisorsClicked: false });
 
     if (name === 'dashboards') {
       this.setState({ dashboardClicked: true });
@@ -25,6 +26,8 @@ class sidebar extends Component {
       this.setState({ driversClicked: true });
     } else if (name === 'vechicles') {
       this.setState({ vehiclesClicked: true });
+    } else if (name === 'supervisors') {
+      this.setState({ supervisorsClicked: true });
     }
   }
 
@@ -32,6 +35,7 @@ class sidebar extends Component {
     const vehiclesColor = this.state.vehiclesClicked ? '#dedede' : 'white';
     const driversColor = this.state.driversClicked ? '#dedede' : 'white';
     const dashboardColor = this.state.dashboardClicked ? '#dedede' : 'white';
+    const supervisorsColor = this.state.supervisorsClicked ? '#dedede' : 'white';
 
     return (
       <div className="sidebar">
@@ -45,7 +49,7 @@ class sidebar extends Component {
                 <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> Drivers</Link>
                 <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> Vehicles</Link>
                 <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon={['fab', 'bluetooth']} /> Devices</Link>
-                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon="user-cog" /> Supervisors</Link>
+                <Link style={{ backgroundColor: supervisorsColor }} className="btn list-group-item-action list-group-item" to="/supervisors" onClick={() => this.changeColor('supervisors')}><FontAwesomeIcon icon="user-cog" /> Supervisors</Link>
 
               </Aux> }
 

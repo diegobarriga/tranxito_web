@@ -34,6 +34,7 @@ const authLogout = (state) => {
     users: null,
     chunkedUsers: null,
     chunkedVehicles: null,
+    supervisors: {},
   });
 };
 
@@ -64,6 +65,7 @@ const authSuccess = (state, action) => updateObject(state, {
   users: action.users,
   chunkedUsers: action.chunkedUsers,
   chunkedVehicles: action.chunkedVehicles,
+  supervisors: action.supervisors,
 });
 
 const authFail = (state, action) => updateObject(state, {

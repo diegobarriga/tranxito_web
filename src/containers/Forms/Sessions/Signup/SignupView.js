@@ -31,7 +31,7 @@ class SignupView extends Component {
 
     let authRedirect = null;
     if (this.props.isAuthenticated) {
-      if (!this.props.isAdmin) {
+      if (this.props.isAdmin === 'D') {
         authRedirect = <Redirect to="/dashboard" />;
       }
     } else {
@@ -77,13 +77,12 @@ class SignupView extends Component {
 
 
 SignupView.propTypes = {
-  isAdmin: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.object,
-  // resetError: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
 };
 
@@ -93,7 +92,7 @@ SignupView.defaultProps = {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
-  isAdmin: state.auth.role === 'A',
+  isAdmin: state.auth.role,
   token: state.auth.token,
   error: state.auth.error,
   isLoading: state.auth.loading,
