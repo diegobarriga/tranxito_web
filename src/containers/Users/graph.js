@@ -21,7 +21,7 @@ class Graph extends React.Component {
             label: 'Population',
             data: [],
             backgroundColor: ['rgba(255, 255, 255, 0.6)'],
-            borderColor: [EVENT_COLORS[1], EVENT_COLORS[2], EVENT_COLORS[3], EVENT_COLORS[4]],
+            borderColor: '#c7d41e',
             showLine: true,
           },
         ],
@@ -44,13 +44,11 @@ class Graph extends React.Component {
         console.log(response);
         const logs = Object.values(response.data.data[1]);
 
-        logs.sort(function(a,b){
-          return new Date(b.event_timestamp) - new Date(a.event_timestamp);
-        });
+        logs.sort((a, b) => new Date(b.event_timestamp) - new Date(a.event_timestamp));
 
         const firstLog = response.data.data[0];
-        console.log(logs);
         console.log(firstLog);
+        console.log(logs);
         this.setState({ loading: false, api_logs: logs, firstLog }, this.processData);
       })
       .catch((error) => {
