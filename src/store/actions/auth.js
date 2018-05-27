@@ -102,9 +102,11 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.motorCarrierId,
               response.data.id,
             ).then((vehiclesResponse) => {
+              const filter = '{"where": {"account_status": "true"}}';
               api.motorCarriers.getMotorCarrierPeople(
                 userResponse.data.motorCarrierId,
                 response.data.id,
+                filter,
               ).then((peopleResponse) => {
                 const supervisors = peopleResponse.data.filter(user => (
                   user.account_type === 'S'

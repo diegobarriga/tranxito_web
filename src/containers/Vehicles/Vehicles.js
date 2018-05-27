@@ -56,7 +56,7 @@ class Vehicles extends React.Component {
           <br />
           <br />
           <Row>
-            { totalVehicles !== '0' &&
+            { totalVehicles !== 0 &&
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
                 activePage={this.state.currentPage}
