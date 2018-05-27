@@ -6,6 +6,8 @@ import api from '../../services/api';
 import { EVENT_COLORS, EVENT_CODES } from '../../utils/eventTypes';
 import Loader from '../../components/Loader/Loader';
 
+const moment = require('moment');
+
 class Graph extends React.Component {
   constructor(props) {
     super(props);
@@ -59,6 +61,7 @@ class Graph extends React.Component {
 
   processData = () => {
     const graphData = this.state.chartData;
+    let laststatus = null;
     graphData.datasets[0].data = [];
 
     // Agregar el estado inicial
@@ -72,6 +75,15 @@ class Graph extends React.Component {
            (parseFloat(event.event_timestamp.substring(14, 16)) / 60),
         y: EVENT_CODES[1][event.event_code],
       });
+      laststatus = EVENT_CODES[1][event.event_code];
+    });
+    // AGREGAR UN DATO DEL ULTIMO DUTY STATUS CON LA HORA ACTUAL
+    const now = moment();
+    const nownumber = now.hour() + (now.minute() / 60);
+    console.log(nownumber);
+    graphData.datasets[0].data.push({
+      x: nownumber,
+      y: laststatus,
     });
     this.setState({ chartData: graphData });
   }
