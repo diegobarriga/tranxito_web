@@ -42,7 +42,6 @@ class Users extends React.Component {
       msg = 'Error the driver was not deleted';
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-
     return (
       <Aux>
         { authRedirect }
@@ -89,7 +88,7 @@ Users.defaultProps = {
 const mapStateToProps = state => ({
   users: state.auth.users,
   isAuthenticated: state.auth.token !== null,
-  error: state.users.error,
+  error: state.auth.error,
 });
 
 export default connect(mapStateToProps)(Users);
