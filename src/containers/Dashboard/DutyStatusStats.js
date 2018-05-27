@@ -8,6 +8,7 @@ import DoughnutChart from './DoughnutChart';
 import SimpleTable from './SimpleTable';
 import * as functions from './functions';
 import Loader from '../../components/Loader/Loader';
+import '../../assets/styles/forms.css';
 
 const dataDutyStats = {
   labels: [
@@ -35,15 +36,17 @@ class DutyStatusStats extends React.Component {
       isMounted: false,
       span: 'week',
       vehiclesDutyStats: null,
-      loadingVehiclesDutyStats: true,
       driversDutyStats: null,
-      loadingDriversDutyStats: true,
+      loadingStats: false,
       dutyStats: null,
-      loadingDutyStats: true,
+      loadingDutyStats: false,
+      type: 'Driver',
     };
     this.setDutyStats = this.setDutyStats.bind(this);
     this.setDriversDutyStats = this.setDriversDutyStats.bind(this);
     this.setVehiclesDutyStats = this.setVehiclesDutyStats.bind(this);
+    this.updateSpan = this.updateSpan.bind(this);
+    this.updateType = this.updateType.bind(this);
   }
 
   componentDidMount() {
@@ -61,11 +64,23 @@ class DutyStatusStats extends React.Component {
   }
 
   getData() {
-    // this.getDataByFunction(api.motorCarriers.getDriverAlerts, this.setDriverAlerts);
+    this.setState({ loadingDutyStats: true });
     this.getDataByFunction(api.motorCarriers.getDutyStats, this.setDutyStats);
-    this.getDataByFunction(api.motorCarriers.getDriversDutyStats, this.setDriversDutyStats);
-    // this.getDataByFunction(api.motorCarriers.getVehiclesDutyStats, this.setVehiclesDutyStats);
+    this.getTableData();
   }
+
+  getTableData() {
+    if (this.state.type === 'Driver') {
+      console.log("entro al getTableData de drivers");
+      this.setState({ loadingStats: true });
+      this.getDataByFunction(api.motorCarriers.getDriversDutyStats, this.setDriversDutyStats);
+    } else {
+      console.log("entro al getTableData de vehiculos");
+      this.setState({ loadingStats: true });
+      this.getDataByFunction(api.motorCarriers.getVehiclesDutyStats, this.setVehiclesDutyStats);
+    }
+  }
+
 
   getDataByFunction(method, trigger) {
     method(this.props.motorCarrierId, this.props.token, this.state.span)
@@ -76,14 +91,18 @@ class DutyStatusStats extends React.Component {
       .catch((error) => {
         console.log(error.message);
         if (this.state.isMounted) {
-          this.setState({ loading: false });
+          this.setState({ loadingStats: false });
+
         }
       });
   }
 
   setVehiclesDutyStats(data) {
+    console.log("entro al trigger de drvier");
+    console.log("datavehiculo", data);
     if (this.state.isMounted) {
-      this.setState({ vehiclesDutyStats: data.data, loadingVehiclesDutyStats: false });
+      console.log("vehicle is mounted");
+      this.setState({ vehiclesDutyStats: data.data, loadingStats: false });
     }
   }
 
@@ -91,7 +110,7 @@ class DutyStatusStats extends React.Component {
     console.log("entro al trigger de drvier");
     if (this.state.isMounted) {
       console.log('entro al setstate drviers');
-      this.setState({ driversDutyStats: data.data, loadingDriversDutyStats: false });
+      this.setState({ driversDutyStats: data.data, loadingStats: false });
     }
   }
 
@@ -110,29 +129,78 @@ class DutyStatusStats extends React.Component {
     }
   }
 
+  async updateSpan(event) {
+    console.log('old span: ', this.state.span);
+    console.log('recieved span: ', event.target.value);
+    // this.state.span = event.target.value;
+    await this.setState({
+      span: event.target.value,
+      loadingStats: true,
+    });
+    console.log('new span: ', this.state.span);
+    this.getTableData();
+  }
+
+  async updateType(event) {
+    console.log('old type: ', this.state.type);
+    console.log('recieved type: ', event.target.value);
+    // this.state.span = event.target.value;
+    await this.setState({
+      type: event.target.value,
+      loadingStats: true,
+    });
+    console.log('new type: ', this.state.type);
+    this.getTableData();
+  }
+
   render() {
     console.log(dataDutyStats);
-    console.log('loadingduty: ', this.state.loadingDutyStats, 'loadingDrivers', this.state.loadingDriversDutyStats, 'activetab: ', this.props.activeTab);
+    console.log('loadingduty: ', this.state.loadingDutyStats, 'loadingentity', this.state.loadingStats, 'activetab: ', this.props.activeTab);
     if (this.props.activeTab !== '2') return <div />;
 
     else if (
-      this.state.loadingDriversDutyStats ||
+      this.state.loadingStats ||
       this.state.loadingDutyStats
-      // this.state.loadingVehiclesDutyStats ||
     ) return <Loader />;
 
     console.log(dataDutyStats);
     console.log('driversDutyStats', this.state.driversDutyStats);
+
+    let data = [];
+
+    if (this.state.type === 'Driver') {
+      data = this.state.driversDutyStats;
+    } else {
+      data = this.state.vehiclesDutyStats;
+    }
+    console.log('data1', data);
     return (
       <div>
         <DoughnutChart
           data={dataDutyStats}
           title="Accumulated Duty Status Hours Per Type"
         />
-        <SimpleTable
-          type="Drivers"
-          stats={this.state.driversDutyStats}
-        />
+        <div className="padding margin">
+          <div className="inlineBoxRight">
+            <div className="content">
+              <span>Type </span>
+              <select name="time" onChange={this.updateType} value={this.state.type}>
+                <option value="Driver">Driver</option>
+                <option value="Vehicle">Vehicle</option>
+              </select>
+              <span>Time interval </span>
+              <select name="time" onChange={this.updateSpan} value={this.state.span}>
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+              </select>
+            </div>
+          </div>
+          <SimpleTable
+            type={this.state.type}
+            stats={data}
+          />
+        </div>
       </div>
 
     );

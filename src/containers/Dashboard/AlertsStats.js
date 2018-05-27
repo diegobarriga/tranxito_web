@@ -141,13 +141,16 @@ class AlertsStats extends React.Component {
     console.log(this.state.alertsStats);
 
     return (
-      <div>
-        <div className="inlineBox">
-          <select name="time" onChange={this.updateSpan} value={this.state.span}>
+      <div className="margin">
+        <div className="inlineBoxRight">
+          <div className="content">
+            <span>Time interval </span>
+            <select name="time" onChange={this.updateSpan} value={this.state.span}>
               <option value="day">Day</option>
               <option value="week">Week</option>
               <option value="month">Month</option>
             </select>
+          </div>
         </div>
         <div className="barChart">
           <BarChart

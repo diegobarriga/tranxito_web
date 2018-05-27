@@ -31,8 +31,8 @@ class AlertsTable extends React.Component {
           <thead>
             <tr>
               <th>Driver</th>
-              <th>Amount of Excess Speed</th>
-              <th>Amount of Excess Hours of Driving</th>
+              <th><span className="speedButton">Amount of Excess Speed</span></th>
+              <th><span className="timeButton">Amount of Excess Hours of Driving</span></th>
             </tr>
           </thead>
           <tbody>
