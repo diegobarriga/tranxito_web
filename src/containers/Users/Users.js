@@ -57,6 +57,7 @@ class Users extends React.Component {
           <br />
           <br />
           <Row>
+            { totalUsers !== '0' &&
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
                 activePage={this.state.currentPage}
@@ -67,7 +68,7 @@ class Users extends React.Component {
                 itemClass="page-item"
                 linkClass="page-link"
               />
-            </Col>
+            </Col>}
           </Row>
         </Container>
       </Aux>

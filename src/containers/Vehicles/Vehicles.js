@@ -22,7 +22,6 @@ class Vehicles extends React.Component {
     this.setState({ currentPage: pageNumber });
   }
 
-  countItems
 
   render() {
     const totalVehicles = Object.keys(this.props.vehicles).length;
@@ -57,6 +56,7 @@ class Vehicles extends React.Component {
           <br />
           <br />
           <Row>
+            { totalVehicles !== '0' &&
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
                 activePage={this.state.currentPage}
@@ -67,7 +67,7 @@ class Vehicles extends React.Component {
                 itemClass="page-item"
                 linkClass="page-link"
               />
-            </Col>
+            </Col>}
           </Row>
         </Container>
       </Aux>

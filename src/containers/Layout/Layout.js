@@ -40,10 +40,15 @@ class Layout extends Component {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  userId: PropTypes.number.isRequired,
-  token: PropTypes.string.isRequired,
+  userId: PropTypes.number,
+  token: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+};
+
+Layout.defaultProps = {
+  userId: null,
+  token: null,
 };
 
 const mapStateToProps = state => ({

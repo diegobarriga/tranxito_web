@@ -102,7 +102,7 @@ class SignupForm extends Component {
 
   render() {
     const {
-      errors, isLoading, redirectTo, showPassword,
+      errors, redirectTo, showPassword,
     } = this.state;
     // Change redirect link
     if (redirectTo) {
@@ -179,7 +179,7 @@ class SignupForm extends Component {
             Show password
           </Label>
         </FormGroup>
-        <Button type="submit" loading={isLoading}>Submit</Button>
+        <Button type="submit" >Submit</Button>
       </Form>
     );
   }

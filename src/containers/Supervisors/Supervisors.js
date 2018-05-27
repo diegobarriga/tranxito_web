@@ -57,7 +57,7 @@ class Supervisors extends React.Component {
           <br />
           <br />
           <Row>
-            { totalUsers === '0' &&
+            { totalUsers !== '0' &&
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
                 activePage={this.state.currentPage}
@@ -79,7 +79,7 @@ class Supervisors extends React.Component {
 Supervisors.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   supervisors: PropTypes.object.isRequired,
-  mcId: PropTypes.string.isRequired,
+  mcId: PropTypes.any.isRequired,
   error: PropTypes.object,
 };
 
