@@ -77,7 +77,7 @@ class LoginForm extends Component {
 
   render() {
     const {
-      errors, isLoading, redirectTo, showPassword,
+      errors, redirectTo, showPassword,
     } = this.state;
     // if (redirectTo) {
     //   this.setState({redirectTo: false});
@@ -113,7 +113,7 @@ class LoginForm extends Component {
             Show password
           </Label>
         </FormGroup>
-        <Button type="submit" loading={isLoading}>Submit</Button>
+        <Button type="submit" >Submit</Button>
       </Form>
     );
   }

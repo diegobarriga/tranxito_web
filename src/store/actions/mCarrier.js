@@ -42,9 +42,9 @@ export const carrierRegister = (data, token, isCreate, id) => (dispatch) => {
         console.log(response);
         dispatch(createMCSuccess(data, response));
       })
-      .catch((err) => {
-        console.log(err);
-        dispatch(createMCFail());
+      .catch((error) => {
+        console.log(error);
+        dispatch(createMCFail(error));
       });
   } else {
     api.motorCarriers.updateMotorCarrier(id, data, token)
@@ -52,9 +52,9 @@ export const carrierRegister = (data, token, isCreate, id) => (dispatch) => {
         console.log(response);
         dispatch(createMCSuccess(data, response));
       })
-      .catch((err) => {
-        console.log(err);
-        dispatch(createMCFail());
+      .catch((error) => {
+        console.log(error);
+        dispatch(createMCFail(error));
       });
   }
 };
