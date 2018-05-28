@@ -51,7 +51,7 @@ class MotorCarriers extends React.Component {
           <Row >
             <Col sm="12" md={{ size: 6 }}>
               <ListGroup>
-                {
+                {this.props.mCarrierList !== null &&
                   this.props.mCarrierList.map(carrier => (
                     <div key={carrier.id} style={flexContainer} className="list-group-item-action list-group-item">
                       <div key={carrier.id} style={containedObject}>

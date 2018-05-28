@@ -28,12 +28,7 @@ class Navibar extends React.Component {
 
   render() {
     const { isAuth, userId } = this.props;
-    /*
-    this.getUserInfo().then((res) => {
-      const firstName = res.data.first_name;
-      this.setState({ firstName });
-    });
-    */
+
     return (
       <Navbar fixed="top" className="navbar" light expand="md">
         <img src={path} className="logo" alt="E2E Performance" />
@@ -68,8 +63,13 @@ class Navibar extends React.Component {
 
 Navibar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-  userId: PropTypes.number.isRequired,
-  token: PropTypes.string.isRequired,
+  userId: PropTypes.number,
+  token: PropTypes.string,
+};
+
+Navibar.defaultProps = {
+  userId: null,
+  token: null,
 };
 
 export default Navibar;

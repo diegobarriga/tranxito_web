@@ -10,8 +10,7 @@ const initialState = {
   motorCarrierId: null,
   vehicles: null,
   users: null,
-  chunkedUsers: null,
-  chunkedVehicles: null,
+  supervisors: {},
 };
 
 const authStart = state => updateObject(state, { error: null, loading: true });
@@ -32,8 +31,6 @@ const authLogout = (state) => {
     motorCarrierId: null,
     vehicles: null,
     users: null,
-    chunkedUsers: null,
-    chunkedVehicles: null,
     supervisors: {},
   });
 };

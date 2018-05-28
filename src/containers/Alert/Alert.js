@@ -17,8 +17,8 @@ class Alert extends React.Component {
       });
       setTimeout(() => {
         this.props.errorDelete();
-      }, 3999);
-    }, 4000);
+      }, 500);
+    }, 3500);
   }
 
   render() {

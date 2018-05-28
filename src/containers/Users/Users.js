@@ -42,7 +42,6 @@ class Users extends React.Component {
       msg = 'Error the driver was not deleted';
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-
     return (
       <Aux>
         { authRedirect }
@@ -57,6 +56,7 @@ class Users extends React.Component {
           <br />
           <br />
           <Row>
+            { totalUsers !== 0 &&
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
                 activePage={this.state.currentPage}
@@ -67,7 +67,7 @@ class Users extends React.Component {
                 itemClass="page-item"
                 linkClass="page-link"
               />
-            </Col>
+            </Col>}
           </Row>
         </Container>
       </Aux>
@@ -88,7 +88,7 @@ Users.defaultProps = {
 const mapStateToProps = state => ({
   users: state.auth.users,
   isAuthenticated: state.auth.token !== null,
-  error: state.users.error,
+  error: state.auth.error,
 });
 
 export default connect(mapStateToProps)(Users);

@@ -19,11 +19,6 @@ const styles = {
 };
 
 class UserInfo extends React.Component {
-  //
-  // componentWillMount() {
-  //   this.setState({ user: this.props.users[this.props.id], loading: false });
-  // }
-
   render() {
     // if (this.state.loading === true) return <Loader />;
     console.log(this.props.users);

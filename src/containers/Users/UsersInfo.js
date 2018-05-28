@@ -73,7 +73,7 @@ class UsersInfo extends React.Component {
 UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
-  pageNumber: PropTypes.string.isRequired,
+  pageNumber: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = state => ({
