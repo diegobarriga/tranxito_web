@@ -8,6 +8,7 @@ import store from './store/store';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+require('dotenv').config();
 
 const app = (
   <Provider store={store}>
@@ -20,4 +21,3 @@ const app = (
 
 ReactDOM.render(app, document.getElementById('root'));
 registerServiceWorker();
-
