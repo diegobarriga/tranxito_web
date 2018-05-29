@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 
@@ -146,98 +146,127 @@ class VehicleForm extends React.Component {
       data,
     } = this.state;
     return (
-      <Form onSubmit={this.submitHandler}>
-        <FormGroup>
-          <Input
-            type="text"
-            name="vin"
-            placeholder="VIN Number"
-            onChange={this.onChange}
-            value={data.vin}
-            valid={!this.emptyErrors() && !errors.vin}
-            invalid={errors.vin}
-          />
-          <FormFeedback>{errors.vin}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="CMV_power_unit_number"
-            placeholder="CMV Power Unit Number"
-            value={data.CMV_power_unit_number}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.CMV_power_unit_number}
-            invalid={errors.CMV_power_unit_number}
-          />
-          <FormFeedback>{errors.CMV_power_unit_number}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="model"
-            placeholder="Vehicle Model"
-            value={data.model}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.model}
-            invalid={errors.model}
-          />
-          <FormFeedback>{errors.model}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="car_maker"
-            placeholder="Car Maker"
-            value={data.car_maker}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.car_maker}
-            invalid={errors.car_maker}
-          />
-          <FormFeedback>{errors.car_maker}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="plaque"
-            placeholder="Plaque"
-            value={data.plaque}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.plaque}
-            invalid={errors.plaque}
-          />
-          <FormFeedback>{errors.plaque}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="state"
-            placeholder="State"
-            value={data.state}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.state}
-            invalid={errors.state}
-          />
-          <FormFeedback>{errors.state}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="number"
-            min={0}
-            name="IMEI_ELD"
-            placeholder="IMEI ELD"
-            value={data.IMEI_ELD}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.IMEI_ELD}
-            invalid={errors.IMEI_ELD}
-          />
-          <FormFeedback>{errors.IMEI_ELD}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
+      <form className="ui form" onSubmit={this.submitHandler}>
+        <div className="field">
+          <Label>VIN number</Label>
+          <FormGroup>
+            <Input
+              type="text"
+              name="vin"
+              placeholder="VIN number"
+              onChange={this.onChange}
+              value={data.vin}
+              valid={!this.emptyErrors() && !errors.vin}
+              invalid={errors.vin}
+            />
+            <FormFeedback>{errors.vin}</FormFeedback>
+          </FormGroup>
+        </div>
+        <div className="field">
+          <Label>CMV Power Unit Number</Label>
+          <FormGroup>
+            <Input
+              type="text"
+              name="CMV_power_unit_number"
+              placeholder="CMV Power Unit Number"
+              value={data.CMV_power_unit_number}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.CMV_power_unit_number}
+              invalid={errors.CMV_power_unit_number}
+            />
+            <FormFeedback>{errors.CMV_power_unit_number}</FormFeedback>
+          </FormGroup>
+        </div>
+
+        <div className="unstackable two fields">
+          <div className="field">
+            <Label>Vehicle Model</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="model"
+                placeholder="Vehicle Model"
+                value={data.model}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.model}
+                invalid={errors.model}
+              />
+              <FormFeedback>{errors.model}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
+            <Label>Car Maker</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="car_maker"
+                placeholder="Car Maker"
+                value={data.car_maker}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.car_maker}
+                invalid={errors.car_maker}
+              />
+              <FormFeedback>{errors.car_maker}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+
+        <div className="unstackable two fields">
+          <div className="field">
+            <Label>Plaque</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="plaque"
+                placeholder="Plaque"
+                value={data.plaque}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.plaque}
+                invalid={errors.plaque}
+              />
+              <FormFeedback>{errors.plaque}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
+            <Label>State</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="state"
+                placeholder="State"
+                value={data.state}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.state}
+                invalid={errors.state}
+              />
+              <FormFeedback>{errors.state}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+        <div className="field">
+          <Label>IMEI ELD</Label>
+          <FormGroup>
+            <Input
+              type="number"
+              min={0}
+              name="IMEI_ELD"
+              placeholder="IMEI ELD"
+              value={data.IMEI_ELD}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.IMEI_ELD}
+              invalid={errors.IMEI_ELD}
+            />
+            <FormFeedback>{errors.IMEI_ELD}</FormFeedback>
+          </FormGroup>
+        </div>
+        <div className="field">
           <Label for="image">Image</Label>
-          <Input type="file" name="picture" className="center-item" onChange={this.onChange} />
-        </FormGroup>
-        <Button type="submit" loading={isLoading}>Submit</Button>
-      </Form>
+          <FormGroup>
+            <Input type="file" name="picture" className="center-item" onChange={this.onChange} />
+          </FormGroup>
+        </div>
+        <button className="ui button" type="submit">Submit</button>
+      </form>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import api from '../../../services/api';
 import '../../../assets/styles/forms.css';
 
@@ -201,213 +201,263 @@ class DriverForm extends Component {
   render() {
     const {
       errors,
-      isLoading,
       showPassword,
       data,
     } = this.state;
 
     return (
-      <Form onSubmit={this.submitHandler}>
-        <FormGroup widths="equal">
-          <Input
-            type="text"
-            name="first_name"
-            placeholder="First Name"
-            value={data.first_name}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.first_name}
-            invalid={errors.first_name}
-          />
-          <FormFeedback>{errors.first_name}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="last_name"
-            placeholder="Last Name"
-            value={data.last_name}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.last_name}
-            invalid={errors.last_name}
-          />
-          <FormFeedback>{errors.last_name}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={data.username}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.username}
-            invalid={errors.username}
-          />
-          <FormFeedback>{errors.username}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={data.email}
-            onChange={this.onChange}
-            invalid={errors.email}
-          />
-          <FormFeedback>{errors.email}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="Password"
-            type={!showPassword ? 'password' : 'text'}
-            name="password"
-            autoComplete="new-password"
-            onChange={this.onChange}
-            value={data.password}
-            valid={!this.emptyErrors() && !errors.password}
-            invalid={errors.password}
-          />
-          <FormFeedback>{errors.password}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="Password Confirmation"
-            type={!showPassword ? 'password' : 'text'}
-            name="passwordConfirmation"
-            autoComplete="new-password"
-            value={data.passwordConfirmation}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.passwordConfirmation}
-            invalid={errors.passwordConfirmation}
-          />
-          <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
-        </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
-            Show password
-          </Label>
-        </FormGroup>
-        <FormGroup>
+      <form className="ui form" onSubmit={this.submitHandler}>
+        <div className="unstackable two fields">
+          <div className="field">
+            <Label>First name</Label>
+            <FormGroup widths="equal">
+              <Input
+                type="text"
+                name="first_name"
+                placeholder="First name"
+                value={data.first_name}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.first_name}
+                invalid={errors.first_name}
+              />
+              <FormFeedback>{errors.first_name}</FormFeedback>
+            </FormGroup>
+          </div>
+
+          <div className="field">
+            <Label>Last name</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="last_name"
+                placeholder="Last name"
+                value={data.last_name}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.last_name}
+                invalid={errors.last_name}
+              />
+              <FormFeedback>{errors.last_name}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+
+        <div className="unstackable two fields">
+          <div className="field">
+            <Label>Username</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={data.username}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.username}
+                invalid={errors.username}
+              />
+              <FormFeedback>{errors.username}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
+            <Label>Email</Label>
+            <FormGroup>
+              <Input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={data.email}
+                onChange={this.onChange}
+                invalid={errors.email}
+              />
+              <FormFeedback>{errors.email}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+
+
+        <div className="field">
+          <Label>Password</Label>
+          <FormGroup>
+            <Input
+              placeholder="Password"
+              type={!showPassword ? 'password' : 'text'}
+              name="password"
+              autoComplete="new-password"
+              onChange={this.onChange}
+              value={data.password}
+              valid={!this.emptyErrors() && !errors.password}
+              invalid={errors.password}
+            />
+            <FormFeedback>{errors.password}</FormFeedback>
+          </FormGroup>
+        </div>
+        <div className="field">
+          <Label>Password confirmation </Label>
+          <FormGroup>
+            <Input
+              placeholder="Password confirmation"
+              type={!showPassword ? 'password' : 'text'}
+              name="passwordConfirmation"
+              autoComplete="new-password"
+              value={data.passwordConfirmation}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.passwordConfirmation}
+              invalid={errors.passwordConfirmation}
+            />
+            <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
+          </FormGroup>
+        </div>
+
+        <div className="field">
           <Label for="image">Image</Label>
-          <Input
-            type="file"
-            name="picture"
-            className="center-item"
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.picture}
-            invalid={errors.picture}
-          />
-          <FormFeedback>{errors.picture}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="driver_license_number"
-            placeholder="Driver License Number"
-            value={data.driver_license_number}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.driver_license_number}
-            invalid={errors.driver_license_number}
-          />
-          <FormFeedback>{errors.driver_license_number}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="licenses_issuing_state"
-            placeholder="Licenses Issuing State"
-            value={data.licenses_issuing_state}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.licenses_issuing_state}
-            invalid={errors.licenses_issuing_state}
-          />
-          <FormFeedback>{errors.licenses_issuing_state}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label>Exempt Driver Configuration</Label>
-          <Input
-            label="Exempt Driver Configuration"
-            type="select"
-            name="exempt_driver_configuration"
-            value={data.exempt_driver_configuration}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.exempt_driver_configuration}
-            invalid={errors.exempt_driver_configuration}
-          >
-            <option value="0">0</option>
-            <option value="E">E</option>
-          </Input>
-          <FormFeedback>{errors.exempt_driver_configuration}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label>Time Zone Offset in UTC</Label>
-          <Input
-            type="select"
-            name="time_zone_offset_utc"
-            value={data.time_zone_offset_utc}
-            onChange={this.onChange}
-            valid={errors.time_zone_offset_utc}
-            invalid={!this.emptyErrors() && !errors.time_zone_offset_utc}
-          >
-            {this.createSelectItems(4, 11)}
-          </Input>
-          <FormFeedback>{errors.time_zone_offset_utc}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
+          <FormGroup>
+            <Input
+              type="file"
+              name="picture"
+              className="center-item"
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.picture}
+              invalid={errors.picture}
+            />
+            <FormFeedback>{errors.picture}</FormFeedback>
+          </FormGroup>
+        </div>
+
+        <div className="unstackable two fields">
+          <div className="field">
+            <Label>Driver license number</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="driver_license_number"
+                placeholder="Driver license number"
+                value={data.driver_license_number}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.driver_license_number}
+                invalid={errors.driver_license_number}
+              />
+              <FormFeedback>{errors.driver_license_number}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
+            <Label>Licenses issuing state</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="licenses_issuing_state"
+                placeholder="Licenses issuing state"
+                value={data.licenses_issuing_state}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.licenses_issuing_state}
+                invalid={errors.licenses_issuing_state}
+              />
+              <FormFeedback>{errors.licenses_issuing_state}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+
+        <div className="unstackable two fields">
+          <div className="field">
+            <Label>Exempt driver configuration</Label>
+            <FormGroup>
+              <Input
+                label="Exempt Driver Configuration"
+                type="select"
+                name="exempt_driver_configuration"
+                value={data.exempt_driver_configuration}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.exempt_driver_configuration}
+                invalid={errors.exempt_driver_configuration}
+              >
+                <option value="0">0</option>
+                <option value="E">E</option>
+              </Input>
+              <FormFeedback>{errors.exempt_driver_configuration}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
+            <Label>Time Zone Offset in UTC</Label>
+            <FormGroup>
+              <Input
+                type="select"
+                name="time_zone_offset_utc"
+                value={data.time_zone_offset_utc}
+                onChange={this.onChange}
+                valid={errors.time_zone_offset_utc}
+                invalid={!this.emptyErrors() && !errors.time_zone_offset_utc}
+              >
+                {this.createSelectItems(4, 11)}
+              </Input>
+              <FormFeedback>{errors.time_zone_offset_utc}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+
+        <div className="field">
           <Label>Starting Time 24 Hour Period</Label>
-          <Input
-            type="datetime-local"
-            name="starting_time_24_hour_period"
-            value={data.starting_time_24_hour_period}
-            valid={!this.emptyErrors() && !errors.starting_time_24_hour_period}
-            invalid={errors.starting_time_24_hour_period}
-            onChange={this.onChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Move Yards Use</Label>
-          <Input
-            type="select"
-            name="move_yards_use"
-            value={data.move_yards_use}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.move_yards_use}
-            invalid={errors.move_yards_use}
-          >
-            {this.createSelectItems(0, 1)}
-          </Input>
-          <FormFeedback>{errors.move_yards_use}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label>Default Use</Label>
-          <Input
-            type="select"
-            name="default_use"
-            value={data.default_use}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.default_use}
-            invalid={errors.default_use}
-          >
-            {this.createSelectItems(0, 1)}
-          </Input>
-          <FormFeedback>{errors.default_use}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label>Personal Use</Label>
-          <Input
-            type="select"
-            name="personal_use"
-            value={data.personal_use}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.personal_use}
-            invalid={errors.personal_use}
-          >
-            {this.createSelectItems(0, 1)}
-          </Input>
-          <FormFeedback>{errors.personal_use}</FormFeedback>
-        </FormGroup>
-        <Button type="submit" loading={isLoading}>Submit</Button>
-      </Form>
+          <FormGroup>
+            <Input
+              type="datetime-local"
+              name="starting_time_24_hour_period"
+              value={data.starting_time_24_hour_period}
+              valid={!this.emptyErrors() && !errors.starting_time_24_hour_period}
+              invalid={errors.starting_time_24_hour_period}
+              onChange={this.onChange}
+            />
+          </FormGroup>
+        </div>
+
+        <div className="unstackable three fields">
+          <div className="field">
+            <Label>Move Yards Use</Label>
+            <FormGroup>
+              <Input
+                type="select"
+                name="move_yards_use"
+                value={data.move_yards_use}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.move_yards_use}
+                invalid={errors.move_yards_use}
+              >
+                {this.createSelectItems(0, 1)}
+              </Input>
+              <FormFeedback>{errors.move_yards_use}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
+            <Label>Default Use</Label>
+            <FormGroup>
+              <Input
+                type="select"
+                name="default_use"
+                value={data.default_use}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.default_use}
+                invalid={errors.default_use}
+              >
+                {this.createSelectItems(0, 1)}
+              </Input>
+              <FormFeedback>{errors.default_use}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
+            <Label>Personal Use</Label>
+            <FormGroup>
+              <Input
+                type="select"
+                name="personal_use"
+                value={data.personal_use}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.personal_use}
+                invalid={errors.personal_use}
+              >
+                {this.createSelectItems(0, 1)}
+              </Input>
+              <FormFeedback>{errors.personal_use}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+        <button className="ui button" type="submit">Submit</button>
+      </form>
     );
   }
 }

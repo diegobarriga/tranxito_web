@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 
 const _ = require('lodash');
 
@@ -110,77 +110,96 @@ class SignupForm extends Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <Form onSubmit={this.submitHandler}>
-        <FormGroup widths="equal">
-          <Input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            onChange={this.onChange}
-            invalid={errors.firstName}
-          />
-          <FormFeedback>{errors.firstName}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            onChange={this.onChange}
-            invalid={errors.lastName}
-          />
-          <FormFeedback>{errors.lastName}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={this.onChange}
-            invalid={errors.username}
-          />
-          <FormFeedback>{errors.username}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="email"
-            name="email"
-            onChange={this.onChange}
-            placeholder="Email"
-            invalid={errors.email}
-          />
-          <FormFeedback>{errors.email}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="Password"
-            type={!showPassword ? 'password' : 'text'}
-            name="password"
-            autoComplete="new-password"
-            onChange={this.onChange}
-            invalid={errors.password}
-          />
-          <FormFeedback>{errors.password}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            placeholder="Password Confirmation"
-            type={!showPassword ? 'password' : 'text'}
-            name="passwordConfirmation"
-            autoComplete="new-password"
-            onChange={this.onChange}
-            invalid={errors.passwordConfirmation}
-          />
-          <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
-        </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
-            Show password
-          </Label>
-        </FormGroup>
-        <Button type="submit" >Submit</Button>
-      </Form>
+
+      <form className="ui form" onSubmit={this.submitHandler}>
+        <div className="unstackable two fields">
+          <div className="field">
+            <Label>First name</Label>
+            <FormGroup widths="equal">
+              <Input
+                type="text"
+                name="firstName"
+                placeholder="First name"
+                onChange={this.onChange}
+                invalid={errors.firstName}
+              />
+              <FormFeedback>{errors.firstName}</FormFeedback>
+            </FormGroup>
+          </div>
+
+          <div className="field">
+            <Label>Last name</Label>
+            <FormGroup>
+              <Input
+                type="text"
+                name="lastName"
+                placeholder="Last name"
+                onChange={this.onChange}
+                invalid={errors.lastName}
+              />
+              <FormFeedback>{errors.lastName}</FormFeedback>
+            </FormGroup>
+          </div>
+        </div>
+        <div className="field">
+          <Label>Username</Label>
+          <FormGroup>
+            <Input
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={this.onChange}
+              invalid={errors.username}
+            />
+            <FormFeedback>{errors.username}</FormFeedback>
+          </FormGroup>
+        </div>
+
+        <div className="field">
+          <Label>Email</Label>
+          <FormGroup>
+            <Input
+              type="email"
+              name="email"
+              onChange={this.onChange}
+              placeholder="Email"
+              invalid={errors.email}
+            />
+            <FormFeedback>{errors.email}</FormFeedback>
+          </FormGroup>
+        </div>
+
+        <div className="field">
+          <Label>Password</Label>
+          <FormGroup>
+            <Input
+              placeholder="Password"
+              type={!showPassword ? 'password' : 'text'}
+              name="password"
+              autoComplete="new-password"
+              onChange={this.onChange}
+              invalid={errors.password}
+            />
+            <FormFeedback>{errors.password}</FormFeedback>
+          </FormGroup>
+        </div>
+
+        <div className="field">
+          <Label>Password confirmation</Label>
+          <FormGroup>
+            <Input
+              placeholder="Password Confirmation"
+              type={!showPassword ? 'password' : 'text'}
+              name="passwordConfirmation"
+              autoComplete="new-password"
+              onChange={this.onChange}
+              invalid={errors.passwordConfirmation}
+            />
+            <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
+          </FormGroup>
+        </div>
+        <button className="ui button" type="submit">Submit</button>
+      </form>
     );
   }
 }

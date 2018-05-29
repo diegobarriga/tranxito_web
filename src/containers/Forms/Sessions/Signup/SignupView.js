@@ -24,8 +24,7 @@ class SignupView extends Component {
     if (this.props.isLoading === true) return <Loader />;
 
     const h1Style = {
-      marginTop: '2rem',
-      textAlign: 'center',
+      marginTop: '1rem',
       marginBottom: '2rem',
     };
 
@@ -60,7 +59,7 @@ class SignupView extends Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12" md={{ size: 5, offset: 3 }}>
+          <Col sm="12" md={{ size: 8 }}>
             { authRedirect }
             <h1 style={h1Style}>Register Supervisor</h1>
             <SignupForm

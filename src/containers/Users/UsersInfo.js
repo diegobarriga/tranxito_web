@@ -1,5 +1,4 @@
 import React from 'react';
-import { ListGroup } from 'reactstrap';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
@@ -47,7 +46,7 @@ class UsersInfo extends React.Component {
           </div>
         </div>
 
-        <ListGroup>
+        <div className="ui divided items">
           {
               filteredUsers.sort((a, b) => a.last_name > b.last_name)
               .slice(
@@ -64,7 +63,7 @@ class UsersInfo extends React.Component {
                 image={user.image}
               />))
             }
-        </ListGroup>
+        </div>
       </div>
     );
   }
