@@ -142,7 +142,6 @@ class VehicleForm extends React.Component {
   render() {
     const {
       errors,
-      isLoading,
       data,
     } = this.state;
     return (
