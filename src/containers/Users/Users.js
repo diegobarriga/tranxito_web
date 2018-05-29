@@ -42,21 +42,26 @@ class Users extends React.Component {
       msg = 'Error the driver was not deleted';
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
+    const h1Style = {
+      marginTop: '1rem',
+      marginBottom: '2rem',
+    };
+
     return (
       <Aux>
         { authRedirect }
         { alert }
-        <h1> Drivers </h1>
         <Container>
           <Row>
-            <Col md="11">
+            <Col sm="12" md={{ size: 11 }}>
+              <h1 style={h1Style}> Drivers </h1>
               <UsersInfo pageNumber={this.state.currentPage} />
             </Col>
           </Row>
           <br />
           <br />
           <Row>
-            { totalUsers !== 0 &&
+            { totalUsers > 5 &&
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
                 activePage={this.state.currentPage}

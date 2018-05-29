@@ -134,6 +134,11 @@ class VehicleFormView extends React.Component {
       }
     }
 
+    const h1Style = {
+      marginTop: '1rem',
+      marginBottom: '2rem',
+    };
+
     return (
       <Container>
         <Row>
@@ -142,8 +147,8 @@ class VehicleFormView extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12" md={{ size: 5, offset: 3 }}>
-            <h1>{title}</h1>
+          <Col sm="12" md={{ size: 8 }}>
+            <h1 style={h1Style}>{title}</h1>
             <VehicleForm
               submit={this.onFormSubmit}
               isCreate={isCreate}

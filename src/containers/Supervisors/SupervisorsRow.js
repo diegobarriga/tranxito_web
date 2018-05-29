@@ -1,22 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { ListGroupItem } from 'reactstrap';
 import '../../assets/styles/users.css';
 import api from '../../services/api';
 
 class SupervisorsRow extends React.Component {
   render() {
-    const divStyle = {
-      display: 'flex',
-      flexDirection: 'row',
-    };
-
     return (
-      <ListGroupItem style={divStyle} className="justify-content-between">
+      <div className="item">
         <div className="user_wrapper">
           <figure className="left">
-            <img className="media-object" alt="profile-pic" width="100px" src={api.images.userImageLink(this.props.image)} />
+            <img style={{ borderRadius: '50%' }} alt="profile-pic" height="100" width="100" src={api.images.userImageLink(this.props.image)} />
           </figure>
           <div className="right">
             <ul>
@@ -25,7 +19,7 @@ class SupervisorsRow extends React.Component {
             </ul>
           </div>
         </div>
-      </ListGroupItem>
+      </div>
     );
   }
 }

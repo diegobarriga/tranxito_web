@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { ListGroupItem, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 import '../../assets/styles/users.css';
 import * as actions from '../../store/actions/index';
 import api from '../../services/api';
@@ -21,16 +21,12 @@ class UserRow extends React.Component {
       justifyContent: 'flex-end',
     };
 
-    const divStyle = {
-      display: 'flex',
-      flexDirection: 'row',
-    };
 
     return (
-      <ListGroupItem style={divStyle} className="justify-content-between">
+      <div className="item">
         <div className="user_wrapper">
           <figure className="left">
-            <img className="media-object" alt="profile-pic" width="100px" src={api.images.userImageLink(this.props.image)} />
+            <img style={{ borderRadius: '50%' }} alt="profile-pic" height="100" width="100" src={api.images.userImageLink(this.props.image)} />
           </figure>
           <div className="right">
             <ul>
@@ -44,7 +40,7 @@ class UserRow extends React.Component {
           <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
           <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
         </div>
-      </ListGroupItem>
+      </div>
     );
   }
 }

@@ -156,7 +156,7 @@ class DriverFormView extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12" md={{ size: 5, offset: 3 }}>
+          <Col sm="12" md={{ size: 9 }}>
             <h1 style={h1Style}> { title }</h1>
             <DriverForm
               submit={this.onFormSubmit}

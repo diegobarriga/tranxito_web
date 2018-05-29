@@ -42,22 +42,25 @@ class Supervisors extends React.Component {
       msg = 'Error the driver was not deleted';
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-
+    const h1Style = {
+      marginTop: '1rem',
+      marginBottom: '2rem',
+    };
     return (
       <Aux>
         { authRedirect }
         { alert }
-        <h1> Supervisors </h1>
         <Container>
           <Row>
             <Col md="11">
+              <h1 style={h1Style}> Supervisors </h1>
               <UsersInfo id={this.props.mcId} pageNumber={this.state.currentPage} />
             </Col>
           </Row>
           <br />
           <br />
           <Row>
-            { totalUsers !== 0 &&
+            { totalUsers > 5 &&
             <Col sm="12" md={{ size: 6, offset: 4 }}>
               <Pagination
                 activePage={this.state.currentPage}

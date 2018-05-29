@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { ListGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -47,7 +46,7 @@ class VehiclesInfo extends React.Component {
           </div>
         </div>
 
-        <ListGroup>
+        <div className="ui divided items">
           {
               filteredVehicles.sort((a, b) => a.car_maker > b.car_maker)
               .slice(
@@ -67,7 +66,7 @@ class VehiclesInfo extends React.Component {
                 image={truck.image}
               />))
             }
-        </ListGroup>
+        </div>
       </div>
     );
   }

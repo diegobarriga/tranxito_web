@@ -42,7 +42,7 @@ class SupervisorsInfo extends React.Component {
           </div>
         </div>
 
-        <ListGroup>
+        <div className="ui divided items">
           {
               filteredUsers.sort((a, b) => a.last_name > b.last_name)
               .slice(
@@ -58,7 +58,7 @@ class SupervisorsInfo extends React.Component {
                 image={user.image}
               />))
             }
-        </ListGroup>
+        </div>
       </div>
     );
   }
