@@ -31,3 +31,39 @@
   color: white;
   font-size: 90%;
   }
+
+
+table {
+  margin-top: 2rem;
+
+}
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+content: ' ';
+display: block;
+visibility: hidden;
+clear: both;
+}
+
+thead th {
+height: 40px;
+
+/*text-align: left;*/
+}
+
+tbody {
+height: 300px;
+overflow-y: auto;
+}
+
+thead {
+/* fallback */
+}
+
+
+tbody td, thead th {
+width: 33%;
+float: left;
+}

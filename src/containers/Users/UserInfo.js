@@ -24,7 +24,9 @@ class UserInfo extends React.Component {
     console.log(this.props.users);
     return (
       <Aux>
-        <h1>{`${this.props.users[this.props.id].first_name} ${this.props.users[this.props.id].last_name}`}</h1>
+        <Row>
+          <h1>{`${this.props.users[this.props.id].first_name} ${this.props.users[this.props.id].last_name}`}</h1>
+        </Row>
         <Row style={styles.userProfile}>
           <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
           <div style={styles.userData}>

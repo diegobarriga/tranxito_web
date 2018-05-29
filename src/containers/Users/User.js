@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Aux from '../../hoc/Aux';
+import { Container } from 'reactstrap';
 import Graph from './graph';
 import UserLogs from './UserLogs';
 import UserInfo from './UserInfo';
@@ -10,12 +10,11 @@ class User extends React.Component {
   render() {
     const { id } = this.props.match.params;
     return (
-      <Aux>
+      <Container>
         <UserInfo id={id} />
         <Graph id={id} />
         <UserLogs id={id} />
-      </Aux>
-
+      </Container>
     );
   }
 }
