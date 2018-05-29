@@ -30,7 +30,7 @@ class SupervisorsInfo extends React.Component {
       user.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       user.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) &&
-      user.account_status === null && user.account_type === 'S'));
+      user.account_status === true && user.account_type === 'S'));
 
     console.log(typeof (filteredUsers));
     return (
