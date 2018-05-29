@@ -13,6 +13,8 @@ const marker3 = require('../../assets/images/truck_marker_3.svg');
 const marker4 = require('../../assets/images/truck_marker_4.svg');
 const marker5 = require('../../assets/images/truck_marker.svg');
 
+const moment = require('moment');
+
 const markers = {
   1: marker1,
   2: marker2,
@@ -41,6 +43,10 @@ class InfoWindowMarker extends Component {
     });
   }
 
+  formatDate(datetime) {
+    return moment(datetime).calendar();
+  }
+
   render() {
     // if (this.state.vehicleLoading === true || this.state.userLoading === true) return <div />;
     return (
@@ -65,9 +71,9 @@ class InfoWindowMarker extends Component {
                 this.props.users[this.props.userId] != null &&
                 <p><FontAwesomeIcon icon="user" /><Link to={`/drivers/${this.props.users[this.props.userId].id}`}> {this.props.users[this.props.userId].first_name} {this.props.users[this.props.userId].last_name}</Link></p>
               }
-              <p><FontAwesomeIcon icon="location-arrow" /> {this.props.lat}, {this.props.lng}</p>
-              <p><FontAwesomeIcon icon="clock" /> {this.props.timestamp}</p>
+              <p><FontAwesomeIcon icon="clock" /> {this.formatDate(this.props.timestamp)}</p>
               <p><FontAwesomeIcon icon="tachometer-alt" /> {this.props.speed} mph</p>
+              <p><FontAwesomeIcon icon="location-arrow" /> {this.props.lat}, {this.props.lng}</p>
             </div>
           </InfoWindow>
         }

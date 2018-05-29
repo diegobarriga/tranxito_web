@@ -53,7 +53,7 @@ class DutyStatusStats extends React.Component {
     this.setState({
       isMounted: true,
     })
-    console.log("didmount");
+    // console.log("didmount");
     this.getData();
   }
 
@@ -71,11 +71,11 @@ class DutyStatusStats extends React.Component {
 
   getTableData() {
     if (this.state.type === 'Driver') {
-      console.log("entro al getTableData de drivers");
+      // console.log("entro al getTableData de drivers");
       this.setState({ loadingStats: true });
       this.getDataByFunction(api.motorCarriers.getDriversDutyStats, this.setDriversDutyStats);
     } else {
-      console.log("entro al getTableData de vehiculos");
+      // console.log("entro al getTableData de vehiculos");
       this.setState({ loadingStats: true });
       this.getDataByFunction(api.motorCarriers.getVehiclesDutyStats, this.setVehiclesDutyStats);
     }
@@ -92,22 +92,21 @@ class DutyStatusStats extends React.Component {
         console.log(error.message);
         if (this.state.isMounted) {
           this.setState({ loadingStats: false });
-
         }
       });
   }
 
   setVehiclesDutyStats(data) {
-    console.log("entro al trigger de drvier");
-    console.log("datavehiculo", data);
+    // console.log("entro al trigger de drvier");
+    // console.log("datavehiculo", data);
     if (this.state.isMounted) {
-      console.log("vehicle is mounted");
+      // console.log("vehicle is mounted");
       this.setState({ vehiclesDutyStats: data.data, loadingStats: false });
     }
   }
 
   setDriversDutyStats(data) {
-    console.log("entro al trigger de drvier");
+    // console.log("entro al trigger de drvier");
     if (this.state.isMounted) {
       console.log('entro al setstate drviers');
       this.setState({ driversDutyStats: data.data, loadingStats: false });
@@ -115,12 +114,12 @@ class DutyStatusStats extends React.Component {
   }
 
   setDutyStats(data) {
-    console.log("entro al trigger de duty");
+    // console.log("entro al trigger de duty");
     dataDutyStats.datasets[0].data = [
       functions.round(data.data[1]),
       functions.round(data.data[2]),
       functions.round(data.data[3]),
-      functions.round(data.data[4])
+      functions.round(data.data[4]),
     ];
     console.log(dataDutyStats.datasets[0].data);
     if (this.state.isMounted) {
@@ -130,32 +129,34 @@ class DutyStatusStats extends React.Component {
   }
 
   async updateSpan(event) {
-    console.log('old span: ', this.state.span);
-    console.log('recieved span: ', event.target.value);
+    // console.log('old span: ', this.state.span);
+    // console.log('recieved span: ', event.target.value);
     // this.state.span = event.target.value;
     await this.setState({
       span: event.target.value,
       loadingStats: true,
+      loadingDutyStats: true,
     });
-    console.log('new span: ', this.state.span);
-    this.getTableData();
+    // console.log('new span: ', this.state.span);
+    this.getData();
   }
 
   async updateType(event) {
-    console.log('old type: ', this.state.type);
-    console.log('recieved type: ', event.target.value);
+    // console.log('old type: ', this.state.type);
+    // console.log('recieved type: ', event.target.value);
     // this.state.span = event.target.value;
     await this.setState({
       type: event.target.value,
       loadingStats: true,
+      // loadingDutyStats: true,
     });
-    console.log('new type: ', this.state.type);
+    // console.log('new type: ', this.state.type);
     this.getTableData();
   }
 
   render() {
-    console.log(dataDutyStats);
-    console.log('loadingduty: ', this.state.loadingDutyStats, 'loadingentity', this.state.loadingStats, 'activetab: ', this.props.activeTab);
+    // console.log(dataDutyStats);
+    // console.log('loadingduty: ', this.state.loadingDutyStats, 'loadingentity', this.state.loadingStats, 'activetab: ', this.props.activeTab);
     if (this.props.activeTab !== '2') return <div />;
 
     else if (
@@ -163,8 +164,8 @@ class DutyStatusStats extends React.Component {
       this.state.loadingDutyStats
     ) return <Loader />;
 
-    console.log(dataDutyStats);
-    console.log('driversDutyStats', this.state.driversDutyStats);
+    // console.log(dataDutyStats);
+    // console.log('driversDutyStats', this.state.driversDutyStats);
 
     let data = [];
 
@@ -173,29 +174,29 @@ class DutyStatusStats extends React.Component {
     } else {
       data = this.state.vehiclesDutyStats;
     }
-    console.log('data1', data);
+    // console.log('data1', data);
     return (
-      <div>
+      <div className="margin">
+        <div className="inlineBoxRight">
+          <div className="content">
+            <span>Type </span>
+            <select name="time" onChange={this.updateType} value={this.state.type}>
+              <option value="Driver">Driver</option>
+              <option value="Vehicle">Vehicle</option>
+            </select>
+            <span>Time interval </span>
+            <select name="time" onChange={this.updateSpan} value={this.state.span}>
+              <option value="day">Day</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+            </select>
+          </div>
+        </div>
         <DoughnutChart
           data={dataDutyStats}
           title="Accumulated Duty Status Hours Per Type"
         />
         <div className="padding margin">
-          <div className="inlineBoxRight">
-            <div className="content">
-              <span>Type </span>
-              <select name="time" onChange={this.updateType} value={this.state.type}>
-                <option value="Driver">Driver</option>
-                <option value="Vehicle">Vehicle</option>
-              </select>
-              <span>Time interval </span>
-              <select name="time" onChange={this.updateSpan} value={this.state.span}>
-                <option value="day">Day</option>
-                <option value="week">Week</option>
-                <option value="month">Month</option>
-              </select>
-            </div>
-          </div>
           <SimpleTable
             type={this.state.type}
             stats={data}
