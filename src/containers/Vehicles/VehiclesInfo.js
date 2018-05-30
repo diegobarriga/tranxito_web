@@ -39,7 +39,7 @@ class VehiclesInfo extends React.Component {
       <div>
 
         <div className="inlineBox">
-          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" value={this.state.search} onChange={this.updateSearch} />
+          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder="Search" value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
             <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> Create vehicle</Link>
             <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> Create multiple vehicles</Link>

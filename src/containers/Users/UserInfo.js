@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Row } from 'reactstrap';
-import Aux from '../../hoc/Aux';
 import Avatar from '../../components/Avatar';
 import api from '../../services/api';
+import '../../assets/styles/users.css';
 
 const styles = {
   userProfile: {
@@ -23,21 +24,47 @@ class UserInfo extends React.Component {
     // if (this.state.loading === true) return <Loader />;
     console.log(this.props.users);
     return (
-      <Aux>
-        <h1>{`${this.props.users[this.props.id].first_name} ${this.props.users[this.props.id].last_name}`}</h1>
-        <Row style={styles.userProfile}>
-          <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
+      <div className="user-card">
+
+        <Row style={styles.userProfile} className="user-profile-info">
+          <div className="profile-image">
+            <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
+          </div>
           <div style={styles.userData}>
+            <h5>{`${this.props.users[this.props.id].first_name} ${this.props.users[this.props.id].last_name}`}</h5>
             <div>
-              Driver license number: {this.props.users[this.props.id].driver_license_number}
+              <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
+              {this.props.users[this.props.id].driver_license_number}
             </div>
-            <div>Email: {this.props.users[this.props.id].email}</div>
+            <div>
+              <FontAwesomeIcon icon="envelope" className="customIcon" />{'   '}
+              {this.props.users[this.props.id].email}
+            </div>
           </div>
         </Row>
-      </Aux>
+      </div>
     );
   }
 }
+
+//
+// <div class="item">
+//     <div class="image">
+//       <img src="/images/wireframe/image.png">
+//     </div>
+//     <div class="content">
+//       <a class="header">Header</a>
+//       <div class="meta">
+//         <span>Description</span>
+//       </div>
+//       <div class="description">
+//         <p></p>
+//       </div>
+//       <div class="extra">
+//         Additional Details
+//       </div>
+//     </div>
+//   </div>
 
 UserInfo.propTypes = {
   users: PropTypes.object.isRequired,
