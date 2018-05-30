@@ -40,10 +40,10 @@ class Navibar extends React.Component {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  <NavLink href={`/drivers/${userId}/`}>Profile</NavLink>
+                  <NavLink >Profile</NavLink>
                 </DropdownItem>
                 <DropdownItem>
-                  <NavLink href={`/drivers/${userId}/edit`}>Settings</NavLink>
+                  <NavLink>Settings</NavLink>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>

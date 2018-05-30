@@ -3,28 +3,13 @@ import PropTypes from 'prop-types';
 import { Container, Col, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Pagination from 'react-js-pagination';
 import VehiclesInfo from './VehiclesInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
 import Alert from '../Alert/Alert';
 
 class Vehicles extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: '1',
-    };
-    this.handlePageChange = this.handlePageChange.bind(this);
-  }
-
-  handlePageChange(pageNumber) {
-    this.setState({ currentPage: pageNumber });
-  }
-
-
   render() {
-    const totalVehicles = Object.keys(this.props.vehicles).length;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -54,24 +39,8 @@ class Vehicles extends React.Component {
           <Row>
             <Col md="11">
               <h1 style={h1Style}> Vehicles </h1>
-              <VehiclesInfo pageNumber={this.state.currentPage} />
+              <VehiclesInfo />
             </Col>
-          </Row>
-          <br />
-          <br />
-          <Row>
-            { totalVehicles > 5 &&
-            <Col sm="12" md={{ size: 6, offset: 4 }}>
-              <Pagination
-                activePage={this.state.currentPage}
-                itemsCountPerPage={5}
-                totalItemsCount={totalVehicles}
-                pageRangeDisplayed={4}
-                onChange={this.handlePageChange}
-                itemClass="page-item"
-                linkClass="page-link"
-              />
-            </Col>}
           </Row>
         </Container>
       </Aux>
@@ -82,7 +51,6 @@ class Vehicles extends React.Component {
 
 Vehicles.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  vehicles: PropTypes.object.isRequired,
   error: PropTypes.object,
 };
 

@@ -16,7 +16,7 @@
 }
 
 .centerArea{
-  flex: 1 1 40em;
+  flex: 1 1 auto;
   margin-top: 2rem;
 }
 .leftSidebar{
@@ -25,12 +25,10 @@
   margin-right: 2rem;
 }
 
-@media (max-width: 550px) {
-  .appMain{
-    flex-direction: column;
-  }
+@media (max-width: 680px) {
   .leftSidebar{
-    order: 0;
+    width: 116px;
+    flex: 0 1 50px;
+    position: relative;
   }
 }
-
