@@ -42,10 +42,7 @@ class Vehicles extends React.Component {
       msg = 'Error the vehicle was not deleted';
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-    const h1Style = {
-      marginTop: '1rem',
-      marginBottom: '2rem',
-    };
+
     return (
       <Aux>
         { authRedirect }
@@ -53,7 +50,6 @@ class Vehicles extends React.Component {
         <Container>
           <Row>
             <Col md="11">
-              <h1 style={h1Style}> Vehicles </h1>
               <VehiclesInfo pageNumber={this.state.currentPage} />
             </Col>
           </Row>

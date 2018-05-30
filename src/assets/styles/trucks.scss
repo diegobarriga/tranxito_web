@@ -29,4 +29,12 @@
 .profile-image{
   padding-right: 10px;
   border-right: 1px solid #dee2e6;
+  img{
+    height: 100px;
+    width: auto;
+  }
+}
+
+.vehicle-card p{
+  margin-bottom: 5px;
 }
