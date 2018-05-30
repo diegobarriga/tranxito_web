@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const styles = {
   avatar: {
-    borderRadius: '50%',
     height: '100px',
     width: '100px',
   },
