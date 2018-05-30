@@ -22,18 +22,17 @@ class VehicleRow extends React.Component {
     };
 
     return (
-      <div className="item">
+      <div className="item no-padding">
         <div className="truck_wrapper">
           <figure className="left">
             <Link to={`/vehicles/${this.props.id}`}>
-              <img style={{ borderRadius: '50%' }} className="media-object" alt="vehicle-img" width="70" src={api.images.vehicleImageLink(this.props.image)} />
+              <img style={{ borderRadius: '50%' }} className="media-object" alt="vehicle-img" width="100" src={api.images.vehicleImageLink(this.props.image)} />
             </Link>
           </figure>
           <div className="right">
             <ul>
               <li><Link to={`/vehicles/${this.props.id}`}>{this.props.car_maker} {this.props.model} - {this.props.plaque}</Link></li>
               <li>State: {this.props.state}</li>
-              <li>VIN: {this.props.vin}</li>
             </ul>
           </div>
         </div>
@@ -57,7 +56,6 @@ const mapDispatchToProps = dispatch => ({
 
 
 VehicleRow.propTypes = {
-  vin: PropTypes.string.isRequired,
   model: PropTypes.string.isRequired,
   car_maker: PropTypes.string.isRequired,
   plaque: PropTypes.string.isRequired,

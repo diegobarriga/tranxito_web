@@ -23,11 +23,11 @@ class UserRow extends React.Component {
 
 
     return (
-      <div className="item">
+      <div className="item no-padding">
         <div className="user_wrapper">
           <figure className="left">
             <Link to={`/drivers/${this.props.id}`}>
-              <img style={{ borderRadius: '50%' }} alt="profile-pic" height="50" width="50" src={api.images.userImageLink(this.props.image)} />
+              <img style={{ borderRadius: '50%' }} alt="profile-pic" height="70" width="70" src={api.images.userImageLink(this.props.image)} />
             </Link>
           </figure>
           <div className="right">
