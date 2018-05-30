@@ -25,7 +25,9 @@ class VehicleRow extends React.Component {
       <div className="item">
         <div className="truck_wrapper">
           <figure className="left">
-            <img className="media-object" alt="vehicle-img" width="100px" src={api.images.vehicleImageLink(this.props.image)} />
+            <Link to={`/vehicles/${this.props.id}`}>
+              <img style={{ borderRadius: '50%' }} className="media-object" alt="vehicle-img" width="70" src={api.images.vehicleImageLink(this.props.image)} />
+            </Link>
           </figure>
           <div className="right">
             <ul>
