@@ -46,7 +46,7 @@ class LoginView extends Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12" md={{ size: 6, offset: 3 }}>
+          <Col sm="12" md={{ size: 5, offset: 3 }}>
             { authRedirect }
             <h1 style={h1Style}>Login</h1>
             <LoginForm login={this.props.onAuth} />

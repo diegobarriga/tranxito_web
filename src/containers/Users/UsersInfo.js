@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
+import { Col } from 'reactstrap';
+import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
 import UserRow from './UserRow';
 import '../../assets/styles/forms.css';
@@ -14,14 +16,15 @@ class UsersInfo extends React.Component {
     this.state = {
       search: '',
       pages: '5',
+      currentPage: '1',
     };
     this.updateSearch = this.updateSearch.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.props.getUsers(this.props.token, this.props.motorCarrierId);
-  // }
-
+  handlePageChange(pageNumber) {
+    this.setState({ currentPage: pageNumber });
+  }
   updateSearch(event) {
     this.setState({ search: event.target.value });
   }
@@ -35,7 +38,7 @@ class UsersInfo extends React.Component {
       user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) &&
       user.account_status === true && user.account_type === 'D'));
 
-    console.log(typeof (filteredUsers));
+    const totalUsers = filteredUsers.length;
     return (
       <div>
         <div className="inlineBox">
@@ -50,8 +53,8 @@ class UsersInfo extends React.Component {
           {
               filteredUsers.sort((a, b) => a.last_name > b.last_name)
               .slice(
-                ((this.props.pageNumber * this.state.pages) - 5),
-                 this.props.pageNumber * this.state.pages,
+                ((this.state.currentPage * this.state.pages) - 5),
+                 this.state.currentPage * this.state.pages,
                 )
               .map(user => (<UserRow
                 key={user.id}
@@ -64,6 +67,18 @@ class UsersInfo extends React.Component {
               />))
             }
         </div>
+        <Col sm="12" md={{ size: 5, offset: 4 }}>
+          { totalUsers > 5 &&
+            <Pagination
+              activePage={this.state.currentPage}
+              itemsCountPerPage={5}
+              totalItemsCount={totalUsers}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange}
+              itemClass="page-item"
+              linkClass="page-link"
+            />}
+        </Col>
       </div>
     );
   }
@@ -72,7 +87,6 @@ class UsersInfo extends React.Component {
 UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
-  pageNumber: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = state => ({

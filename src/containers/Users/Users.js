@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Pagination from 'react-js-pagination';
 import { Redirect } from 'react-router-dom';
 import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
@@ -11,20 +10,7 @@ import '../../assets/styles/forms.css';
 
 
 class Users extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: '1',
-    };
-    this.handlePageChange = this.handlePageChange.bind(this);
-  }
-
-  handlePageChange(pageNumber) {
-    this.setState({ currentPage: pageNumber });
-  }
-
   render() {
-    const totalUsers = Object.keys(this.props.users).length;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -55,24 +41,8 @@ class Users extends React.Component {
           <Row>
             <Col sm="12" md={{ size: 11 }}>
               <h1 style={h1Style}> Drivers </h1>
-              <UsersInfo pageNumber={this.state.currentPage} />
+              <UsersInfo />
             </Col>
-          </Row>
-          <br />
-          <br />
-          <Row>
-            { totalUsers > 5 &&
-            <Col sm="12" md={{ size: 6, offset: 4 }}>
-              <Pagination
-                activePage={this.state.currentPage}
-                itemsCountPerPage={5}
-                totalItemsCount={totalUsers}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-                itemClass="page-item"
-                linkClass="page-link"
-              />
-            </Col>}
           </Row>
         </Container>
       </Aux>
@@ -82,7 +52,6 @@ class Users extends React.Component {
 }
 Users.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  users: PropTypes.object.isRequired,
   error: PropTypes.object,
 };
 

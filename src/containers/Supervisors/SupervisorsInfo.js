@@ -1,8 +1,9 @@
 import React from 'react';
-import { ListGroup } from 'reactstrap';
 import PropTypes from 'prop-types';
+import Pagination from 'react-js-pagination';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
+import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import UserRow from './SupervisorsRow';
 import '../../assets/styles/forms.css';
@@ -15,8 +16,14 @@ class SupervisorsInfo extends React.Component {
     this.state = {
       search: '',
       pages: '5',
+      currentPage: '1',
     };
     this.updateSearch = this.updateSearch.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  handlePageChange(pageNumber) {
+    this.setState({ currentPage: pageNumber });
   }
 
   updateSearch(event) {
@@ -32,7 +39,7 @@ class SupervisorsInfo extends React.Component {
       user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) &&
       user.account_status === true && user.account_type === 'S'));
 
-    console.log(typeof (filteredUsers));
+    const totalUsers = filteredUsers.length;
     return (
       <div>
         <div className="inlineBox">
@@ -46,8 +53,8 @@ class SupervisorsInfo extends React.Component {
           {
               filteredUsers.sort((a, b) => a.last_name > b.last_name)
               .slice(
-                ((this.props.pageNumber * this.state.pages) - 5),
-                 this.props.pageNumber * this.state.pages,
+                ((this.state.currentPage * this.state.pages) - 5),
+                 this.state.currentPage * this.state.pages,
                 )
               .map(user => (<UserRow
                 key={user.id}
@@ -59,6 +66,18 @@ class SupervisorsInfo extends React.Component {
               />))
             }
         </div>
+        <Col sm="12" md={{ size: 5, offset: 4 }}>
+          { totalUsers > 5 &&
+            <Pagination
+              activePage={this.state.currentPage}
+              itemsCountPerPage={5}
+              totalItemsCount={totalUsers}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange}
+              itemClass="page-item"
+              linkClass="page-link"
+            />}
+        </Col>
       </div>
     );
   }
@@ -67,7 +86,6 @@ class SupervisorsInfo extends React.Component {
 SupervisorsInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
-  pageNumber: PropTypes.string.isRequired,
   id: PropTypes.any.isRequired,
 };
 
