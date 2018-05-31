@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import XLSX from 'xlsx';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Alert } from 'reactstrap';
 import TemplateCSV from '../templates/template_csv';
+import TemplateXLSX from '../templates/template_xlsx';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert2 from '../../Alert/Alert';
@@ -29,8 +31,13 @@ class SimpleReactFileUpload extends React.Component {
     this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     const reader = new FileReader();
-    reader.readAsText(this.state.file);
-    reader.onload = this.loadHandler;
+
+    if (this.state.file.name.split('.')[1] === 'csv') {
+      reader.readAsText(this.state.file);
+      reader.onload = this.loadHandler;
+    } else if (this.state.file.name.split('.')[1] === 'xlsx') {
+      this.excelToCSV(reader);
+    }
   }
 
   onChange(e) {
@@ -60,7 +67,11 @@ class SimpleReactFileUpload extends React.Component {
     if (this.props.type === 'drivers') {
       type = 'people';
     }
-    return api.file.csvFileUpload(formData, config, this.props.token, this.props.motorCarrierId, type);
+    return api.file.csvFileUpload(
+      formData, config,
+      this.props.token,
+      this.props.motorCarrierId, type,
+    );
   }
 
   sleep(milliseconds) {
@@ -74,6 +85,7 @@ class SimpleReactFileUpload extends React.Component {
 
 
   loadHandler = (event) => {
+    console.log('Dentro loadHandler');
     const csv = event.target.result;
     const arr = csv.split('\n');
     console.log('CSV array');
@@ -139,6 +151,47 @@ class SimpleReactFileUpload extends React.Component {
       console.log('invalid');
     }
     this.setState({ isValid: null });
+  }
+
+  excelToCSV(reader) {
+    const read = reader;
+    const rABS = !!reader.readAsBinaryString;
+    let dataString = '';
+    read.onload = (e) => {
+      /* Parse data */
+      const bstr = e.target.result;
+      const wb = XLSX.read(bstr, { type: rABS ? 'binary' : 'array' });
+      /* Get first worksheet */
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      /* Convert array of arrays */
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      /* Update state */
+      this.setState({ data });
+      console.log(this.state.data);
+
+      // console.log("Valid: "+this.state.isValid)
+      this.checkValid(this.state.file);
+      // console.log("Valid: "+this.state.isValid)
+
+      dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]},${d[9]},${d[10]},${d[11]},${d[12]}\n`).join('');
+      // console.log("String: "+dataString)
+      const csv = new Blob([dataString], { type: 'text/csv' });
+
+      // console.log("STATE EXCEL: "+this.state.file)
+
+      const reader1 = new FileReader();
+      reader1.readAsText(csv);
+      // reader1.onload = (e) => {
+      // // console.log("CSV " + e.target.result)
+      // }
+
+      this.setState({ file: csv });
+      // console.log("STATE CSV: "+this.state.file)
+      reader1.onload = this.loadHandler;
+    };
+    if (rABS) reader.readAsBinaryString(this.state.file);
+    else reader.readAsArrayBuffer(this.state.file);
   }
 
   checkValid(data) {
@@ -229,13 +282,16 @@ class SimpleReactFileUpload extends React.Component {
                 {this.state.errors.map(error => (<li key={error.id}>{ error.message }</li>))}
               </ul>
             </Alert>}
-          <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>
-          <div className="aligner-item"><p>The template below has the structure the csv file must have. You can download it, fill it and then upload it. That simple!</p></div>
-          <div className="aligner-item"><TemplateCSV type={this.props.type} /></div>
+          <div className="aligner-item"><h1>Create multiple {this.props.type} through an Excel or CSV file</h1></div>
+          <div className="aligner-item"><p>The templates below have the structure the file must have. You can download it, fill it and then upload it.</p></div>
+          <div className="aligner-item padding-csv">
+            <TemplateCSV type={this.props.type} />
+            <TemplateXLSX type={this.props.type} />
+          </div>
           <div className="aligner-item">
             <div className="upload-form">
               <Form onSubmit={this.onFormSubmit}>
-                <Input name="file" type="file" accept=".csv" className="center-item" onChange={this.onChange} />
+                <Input name="file" type="file" accept=".csv, .xlsx" className="center-item" onChange={this.onChange} />
                 <Button type="submit" className="center-item" disabled={!this.state.file}>Upload</Button>
               </Form>
             </div>

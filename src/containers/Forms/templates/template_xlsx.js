@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import '../../../assets/styles/forms.css';
 
-class TemplateCSV extends React.Component {
+class TemplateXLSX extends React.Component {
   render() {
-    const path = `${process.env.PUBLIC_URL}/templates/${this.props.type}.csv`;
-    const name = `${this.props.type}.csv`;
+    const path = `${process.env.PUBLIC_URL}/templates/${this.props.type}.xlsx`;
+    const name = `${this.props.type}.xlsx`;
     return (
       <a href={path} download={name} className="file">
-        <FontAwesomeIcon icon="file-excel" size="2x" /> Download.csv
+        <FontAwesomeIcon icon="file-excel" size="2x" /> Download.xlsx
       </a>
     );
   }
 }
 
-TemplateCSV.propTypes = {
+TemplateXLSX.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-export default TemplateCSV;
+export default TemplateXLSX;
