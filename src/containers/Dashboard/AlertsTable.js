@@ -9,11 +9,6 @@ import { Link } from 'react-router-dom';
 import '../../assets/styles/buttons.css';
 
 const styles = {
-  container: {
-    maxHeight: `${50 * 6}px`,
-    overflow: 'scroll',
-    marginTop: '20px',
-  },
   badge: {
     width: '40px',
   },
@@ -26,7 +21,7 @@ class AlertsTable extends React.Component {
     });
 
     return (
-      <Container style={styles.container}>
+      <Container>
         <Table striped>
           <thead>
             <tr>

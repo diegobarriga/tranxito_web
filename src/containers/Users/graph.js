@@ -2,6 +2,7 @@ import React from 'react';
 import { Scatter } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Row, Col } from 'reactstrap';
 import api from '../../services/api';
 import { EVENT_CODES } from '../../utils/eventTypes';
 import Loader from '../../components/Loader/Loader';
@@ -97,48 +98,50 @@ class Graph extends React.Component {
     if (this.state.loading === true) return <Loader />;
 
     return (
-      <Scatter
-        data={this.state.chartData}
-        height={75}
-        options={{
-              title: {
-                display: true,
-                text: 'Last 24 hours',
-                fontSize: 25,
-              },
-              legend: {
-                display: false,
-              },
-              scales: {
-                        xAxes: [{
-                          display: true,
-                          ticks: {
-                            min: 0,
-                            max: 24,
-                            stepSize: 1,
+      <Row>
+        <Col sm="12" md={{ size: 11 }}>
+          <Scatter
+            data={this.state.chartData}
+            height={75}
+            options={{
+                  title: {
+                    display: true,
+                    text: 'Last 24 hours',
+                    fontSize: 25,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  scales: {
+                            xAxes: [{
+                              display: true,
+                              ticks: {
+                                min: 0,
+                                max: 24,
+                                stepSize: 1,
+                              },
+                              scaleLabel: {
+                                display: true,
+                                labelString: 'Time',
+                              },
+                            }],
+                            yAxes: [{
+                              type: 'category',
+                              position: 'left',
+                              display: true,
+                              scaleLabel: {
+                                display: true,
+                                labelString: 'Duty status',
+                              },
+                            }],
+                            gridLines: [{
+                              display: true,
+                            }],
                           },
-                          scaleLabel: {
-                            display: true,
-                            labelString: 'Time',
-                          },
-                        }],
-                        yAxes: [{
-                          type: 'category',
-                          position: 'left',
-                          display: true,
-                          scaleLabel: {
-                            display: true,
-                            labelString: 'Duty status',
-                          },
-                        }],
-                        gridLines: [{
-                          display: true,
-                        }],
-                      },
-            }}
-      />
-
-
+                }}
+          />
+        </Col>
+      </Row>
     );
   }
 }

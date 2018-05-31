@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Col } from 'reactstrap';
+import Pagination from 'react-js-pagination';
 import VehicleRow from './VehicleRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
@@ -14,13 +16,15 @@ class VehiclesInfo extends React.Component {
     this.state = {
       search: '',
       pages: '5',
+      currentPage: '1',
     };
     this.updateSearch = this.updateSearch.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.props.getVehicles(this.props.token, this.props.motorCarrierId);
-  // }
+  handlePageChange(pageNumber) {
+    this.setState({ currentPage: pageNumber });
+  }
 
   updateSearch(event) {
     this.setState({ search: event.target.value });
@@ -34,6 +38,8 @@ class VehiclesInfo extends React.Component {
       vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+
+    const totalVehicles = filteredVehicles.length;
 
     return (
       <div>
@@ -50,8 +56,8 @@ class VehiclesInfo extends React.Component {
           {
               filteredVehicles.sort((a, b) => a.car_maker > b.car_maker)
               .slice(
-              ((this.props.pageNumber * this.state.pages) - 5),
-               this.props.pageNumber * this.state.pages,
+              ((this.state.currentPage * this.state.pages) - 5),
+               this.state.currentPage * this.state.pages,
               )
               .map(truck => (<VehicleRow
                 key={truck.id}
@@ -67,6 +73,19 @@ class VehiclesInfo extends React.Component {
               />))
             }
         </div>
+        <Col sm="12" md={{ size: 5, offset: 4 }}>
+          { totalVehicles > 5 &&
+            <Pagination
+              activePage={this.state.currentPage}
+              itemsCountPerPage={5}
+              totalItemsCount={totalVehicles}
+              pageRangeDisplayed={4}
+              onChange={this.handlePageChange}
+              itemClass="page-item"
+              linkClass="page-link"
+            />}
+        </Col>
+
       </div>
     );
   }
@@ -75,7 +94,6 @@ class VehiclesInfo extends React.Component {
 VehiclesInfo.propTypes = {
   vehicles: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  pageNumber: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = state => ({

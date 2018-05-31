@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Pagination from 'react-js-pagination';
 import { Redirect } from 'react-router-dom';
 import UsersInfo from './SupervisorsInfo';
 import Alert from '../Alert/Alert';
@@ -11,20 +10,7 @@ import '../../assets/styles/forms.css';
 
 
 class Supervisors extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: '1',
-    };
-    this.handlePageChange = this.handlePageChange.bind(this);
-  }
-
-  handlePageChange(pageNumber) {
-    this.setState({ currentPage: pageNumber });
-  }
-
   render() {
-    const totalUsers = Object.keys(this.props.supervisors).length;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -50,24 +36,8 @@ class Supervisors extends React.Component {
         <Container>
           <Row>
             <Col md="11">
-              <UsersInfo id={this.props.mcId} pageNumber={this.state.currentPage} />
+              <UsersInfo id={this.props.mcId} />
             </Col>
-          </Row>
-          <br />
-          <br />
-          <Row>
-            { totalUsers > 5 &&
-            <Col sm="12" md={{ size: 6, offset: 4 }}>
-              <Pagination
-                activePage={this.state.currentPage}
-                itemsCountPerPage={5}
-                totalItemsCount={totalUsers}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-                itemClass="page-item"
-                linkClass="page-link"
-              />
-            </Col>}
           </Row>
         </Container>
       </Aux>
@@ -77,7 +47,6 @@ class Supervisors extends React.Component {
 }
 Supervisors.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  supervisors: PropTypes.object.isRequired,
   mcId: PropTypes.any.isRequired,
   error: PropTypes.object,
 };
