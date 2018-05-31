@@ -37,7 +37,7 @@ class Users extends React.Component {
       <Aux>
         { authRedirect }
         { alert }
-        <Container>
+        <Container >
           <Row>
             <Col sm="12" md={{ size: 11 }}>
               <h1 style={h1Style}> Drivers </h1>

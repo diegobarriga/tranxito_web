@@ -43,18 +43,31 @@ class sidebar extends Component {
         <div>
           <ListGroup>
             {this.props.isAdm ?
-              <Link className="list-group-item-action list-group-item" to="/motor_carriers">Motor Carriers</Link>
+              <Aux>
+                <UserView
+                  image={this.props.profileImage}
+                  isAdm={this.props.isAdm}
+                  name={this.props.name}
+                  last={this.props.last}
+                  mc={this.props.mc}
+                />
+                <Link className="list-group-item-action list-group-item" to="/motor_carriers">Motor Carriers</Link>
+              </Aux>
               :
               <Aux>
-                <UserView />
+                <UserView
+                  image={this.props.profileImage}
+                  isAdm={this.props.isAdm}
+                  name={this.props.name}
+                  last={this.props.last}
+                  mc={this.props.mc}
+                />
                 <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}><FontAwesomeIcon icon="chart-line" /> Dashboard</Link>
                 <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> Drivers</Link>
                 <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> Vehicles</Link>
                 <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon={['fab', 'bluetooth']} /> Devices</Link>
                 <Link style={{ backgroundColor: supervisorsColor }} className="btn list-group-item-action list-group-item" to="/supervisors" onClick={() => this.changeColor('supervisors')}><FontAwesomeIcon icon="user-cog" /> Supervisors</Link>
-
               </Aux> }
-
           </ListGroup>
         </div>
       </div>
@@ -65,6 +78,10 @@ class sidebar extends Component {
 
 sidebar.propTypes = {
   isAdm: PropTypes.bool.isRequired,
+  profileImage: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  last: PropTypes.string.isRequired,
+  mc: PropTypes.string.isRequired,
 };
 
 export default sidebar;

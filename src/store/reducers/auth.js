@@ -11,6 +11,9 @@ const initialState = {
   vehicles: null,
   users: null,
   supervisors: {},
+  image: null,
+  first_name: null,
+  last_name: null,
 };
 
 const authStart = state => updateObject(state, { error: null, loading: true });
@@ -32,6 +35,9 @@ const authLogout = (state) => {
     vehicles: null,
     users: null,
     supervisors: {},
+    image: null,
+    first_name: null,
+    last_name: null,
   });
 };
 
@@ -63,6 +69,10 @@ const authSuccess = (state, action) => updateObject(state, {
   chunkedUsers: action.chunkedUsers,
   chunkedVehicles: action.chunkedVehicles,
   supervisors: action.supervisors,
+  image: action.image,
+  first_name: action.first_name,
+  last_name: action.last_name,
+
 });
 
 const authFail = (state, action) => updateObject(state, {

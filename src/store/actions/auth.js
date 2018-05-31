@@ -16,6 +16,9 @@ export const authSuccess = (
   vehicles,
   users,
   supervisors,
+  image,
+  first_name,
+  last_name,
 ) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
@@ -26,6 +29,9 @@ export const authSuccess = (
   vehicles,
   users,
   supervisors,
+  image,
+  first_name,
+  last_name,
 });
 
 export const authFail = error => ({
@@ -123,6 +129,9 @@ export const login = (email, password) => (dispatch) => {
                   vehiclesObject,
                   usersObject,
                   supervisorsObject,
+                  userResponse.data.image,
+                  userResponse.data.first_name,
+                  userResponse.data.last_name,
                 ));
               });
             });
@@ -136,6 +145,9 @@ export const login = (email, password) => (dispatch) => {
               null,
               null,
               null,
+              userResponse.data.image,
+              userResponse.data.first_name,
+              userResponse.data.last_name,
             ));
           }
         })
