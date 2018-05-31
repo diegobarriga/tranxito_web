@@ -1,21 +1,47 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import api from '../../services/api';
 
+const style = {
+  image: {
+    border: '.5rem solid rgba(255,255,255,.2)',
+    borderRadius: '50%',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  center: {
+    textAlign: 'center',
+  },
+};
 
-const userView = () => (
+const userView = props => (
   <div className="userWrapper">
     <div className="userMotorCarrier">
-      <p>userMotorCarrier</p>
+      <h4 style={style.center}>{props.mc}</h4>
     </div>
     <div className="profileImage">
-      <p>Image</p>
+      <img style={style.image} alt="profile-pic" height="100" width="100" src={api.images.userImageLink(props.image)} />
     </div>
     <div className="userName">
-      <p>Username</p>
+      <h6 style={style.center}>{props.name} {props.last}</h6>
     </div>
     <div className="userRole">
-      <p>Role</p>
+      { props.isAdm ?
+        <p style={style.center}> Administrator </p>
+        :
+        <p style={style.center}> Supervisor </p>
+      }
     </div>
   </div>
 );
 
 export default userView;
+
+userView.propTypes = {
+  image: PropTypes.string.isRequired,
+  isAdm: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  last: PropTypes.string.isRequired,
+  mc: PropTypes.string.isRequired,
+};

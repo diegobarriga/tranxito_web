@@ -5,8 +5,21 @@ import Aux from '../../hoc/Aux';
 import Navibar from '../../components/NaviBar/NaviBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import '../../assets/styles/layout.css';
+import api from '../../services/api';
 
 class Layout extends Component {
+  state = {
+    mcName: '',
+  }
+
+  componentDidMount() {
+    api.motorCarriers.getMotorCarrier(
+      this.props.motorCarrierId,
+      this.props.token,
+    ).then((response) => {
+      this.setState({ mcName: response.data.name });
+    });
+  }
   render() {
     return (
       <Aux>
@@ -25,14 +38,19 @@ class Layout extends Component {
               </div>
               { this.props.isAuthenticated &&
               <div className="leftSidebar">
-                <Sidebar isAdm={this.props.isAdmin} />
+                <Sidebar
+                  isAdm={this.props.isAdmin}
+                  profileImage={this.props.image}
+                  name={this.props.name}
+                  last={this.props.last}
+                  mc={this.state.mcName}
+                />
               </div>
               }
             </div>
             <footer />
           </main>
         </div>
-
       </Aux>
     );
   }
@@ -44,6 +62,10 @@ Layout.propTypes = {
   token: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  last: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.string.isRequired,
 };
 
 Layout.defaultProps = {
@@ -56,6 +78,10 @@ const mapStateToProps = state => ({
   userId: state.auth.userId,
   token: state.auth.token,
   isAdmin: state.auth.role === 'A',
+  image: state.auth.image,
+  name: state.auth.first_name,
+  last: state.auth.last_name,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
 export default connect(mapStateToProps)(Layout);
