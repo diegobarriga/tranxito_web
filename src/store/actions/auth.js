@@ -66,7 +66,6 @@ export const logoutToken = (token) => {
     });
 };
 
-
 export const signup = data => (dispatch) => {
   dispatch(authStart());
   const authData = {
@@ -76,22 +75,20 @@ export const signup = data => (dispatch) => {
     last_name: data.lastName,
     username: data.username,
     account_type: data.accountType,
-    motorCarrierId: data.motorCarrierId,
   };
   console.log(data);
   console.log(authData);
 
-  api.people.signup(authData, data.token)
+  api.motorCarriers.createMotorCarrierPeople(data.motorCarrierId, data.token, authData)
     .then((response) => {
+      console.log(response);
       dispatch(createSuccess(response));
-      dispatch(errorReset());
       console.log(response);
     })
     .catch((err) => {
       console.log(err);
     });
 };
-
 
 export const login = (email, password) => (dispatch) => {
   dispatch(authStart());
