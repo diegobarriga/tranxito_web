@@ -5,23 +5,9 @@ import Aux from '../../hoc/Aux';
 import Navibar from '../../components/NaviBar/NaviBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import '../../assets/styles/layout.css';
-import api from '../../services/api';
+
 
 class Layout extends Component {
-  state = {
-    mcName: '',
-  }
-
-  componentDidMount() {
-    if (this.props.token !== null) {
-      api.motorCarriers.getMotorCarrier(
-        this.props.motorCarrierId,
-        this.props.token,
-      ).then((response) => {
-        this.setState({ mcName: response.data.name });
-      });
-    }
-  }
   render() {
     return (
       <Aux>
@@ -45,7 +31,7 @@ class Layout extends Component {
                   profileImage={this.props.image}
                   name={this.props.name}
                   last={this.props.last}
-                  mc={this.state.mcName}
+                  mc={this.props.mcName}
                 />
               </div>
               }
@@ -67,7 +53,7 @@ Layout.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
   last: PropTypes.string,
-  motorCarrierId: PropTypes.any,
+  mcName: PropTypes.string,
 };
 
 Layout.defaultProps = {
@@ -75,7 +61,7 @@ Layout.defaultProps = {
   token: null,
   name: null,
   last: null,
-  motorCarrierId: null,
+  mcName: null,
   image: null,
 };
 
@@ -87,9 +73,7 @@ const mapStateToProps = state => ({
   image: state.auth.image,
   name: state.auth.first_name,
   last: state.auth.last_name,
-  motorCarrierId: state.auth.motorCarrierId,
+  mcName: state.auth.mcName,
 });
-
-
 
 export default connect(mapStateToProps)(Layout);

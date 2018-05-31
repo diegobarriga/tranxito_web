@@ -38,6 +38,7 @@ const authLogout = (state) => {
     image: null,
     first_name: null,
     last_name: null,
+    mcName: null,
   });
 };
 
@@ -72,6 +73,7 @@ const authSuccess = (state, action) => updateObject(state, {
   image: action.image,
   first_name: action.first_name,
   last_name: action.last_name,
+  mcName: action.mcName,
 
 });
 

@@ -19,6 +19,7 @@ export const authSuccess = (
   image,
   first_name,
   last_name,
+  mcName,
 ) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
@@ -32,6 +33,7 @@ export const authSuccess = (
   image,
   first_name,
   last_name,
+  mcName,
 });
 
 export const authFail = error => ({
@@ -120,19 +122,25 @@ export const login = (email, password) => (dispatch) => {
                 const usersObject = functions.arrayToObject(peopleResponse.data);
                 const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
                 const supervisorsObject = functions.arrayToObject(supervisors);
-                dispatch(authSuccess(
-                  response.data.id,
-                  userResponse.data.id,
-                  userResponse.data.account_type,
-                  response,
+                api.motorCarriers.getMotorCarrier(
                   userResponse.data.motorCarrierId,
-                  vehiclesObject,
-                  usersObject,
-                  supervisorsObject,
-                  userResponse.data.image,
-                  userResponse.data.first_name,
-                  userResponse.data.last_name,
-                ));
+                  response.data.id,
+                ).then((mCresponse) => {
+                  dispatch(authSuccess(
+                    response.data.id,
+                    userResponse.data.id,
+                    userResponse.data.account_type,
+                    response,
+                    userResponse.data.motorCarrierId,
+                    vehiclesObject,
+                    usersObject,
+                    supervisorsObject,
+                    userResponse.data.image,
+                    userResponse.data.first_name,
+                    userResponse.data.last_name,
+                    mCresponse.data.name,
+                  ));
+                });
               });
             });
           } else {
