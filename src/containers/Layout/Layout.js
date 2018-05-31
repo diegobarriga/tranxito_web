@@ -13,12 +13,14 @@ class Layout extends Component {
   }
 
   componentDidMount() {
-    api.motorCarriers.getMotorCarrier(
-      this.props.motorCarrierId,
-      this.props.token,
-    ).then((response) => {
-      this.setState({ mcName: response.data.name });
-    });
+    if (this.props.token !== null) {
+      api.motorCarriers.getMotorCarrier(
+        this.props.motorCarrierId,
+        this.props.token,
+      ).then((response) => {
+        this.setState({ mcName: response.data.name });
+      });
+    }
   }
   render() {
     return (
@@ -62,15 +64,19 @@ Layout.propTypes = {
   token: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  last: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  name: PropTypes.string,
+  last: PropTypes.string,
+  motorCarrierId: PropTypes.any,
 };
 
 Layout.defaultProps = {
   userId: null,
   token: null,
+  name: null,
+  last: null,
+  motorCarrierId: null,
+  image: null,
 };
 
 const mapStateToProps = state => ({
@@ -83,5 +89,7 @@ const mapStateToProps = state => ({
   last: state.auth.last_name,
   motorCarrierId: state.auth.motorCarrierId,
 });
+
+
 
 export default connect(mapStateToProps)(Layout);
