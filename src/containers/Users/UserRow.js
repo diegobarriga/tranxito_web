@@ -21,7 +21,6 @@ class UserRow extends React.Component {
       justifyContent: 'flex-end',
     };
 
-
     return (
       <div className="item no-padding">
         <div className="user_wrapper">

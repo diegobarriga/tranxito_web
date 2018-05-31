@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import validator from 'validator';
-import { Button, Label, Form, FormGroup, FormFeedback, Input } from 'reactstrap';
+import { Label, FormGroup, FormFeedback, Input } from 'reactstrap';
 import api from '../../../services/api';
 import '../../../assets/styles/forms.css';
 
@@ -99,54 +99,61 @@ class MotorCarrierForm extends Component {
   }
 
   render() {
-    const { errors, isLoading, data } = this.state;
+    const { errors, data } = this.state;
     return (
-      <Form onSubmit={this.submitHandler}>
-        <FormGroup>
-          <Label>Name</Label>
-          <Input
-            type="text"
-            name="name"
-            onChange={this.onChange}
-            placeholder="Name"
-            value={data.name}
-            valid={!this.emptyErrors() && !errors.name}
-            invalid={errors.name}
-          />
-          <FormFeedback>{errors.Numberame}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label>USDOT Number</Label>
-          <Input
-            type="number"
-            name="USDOT_number"
-            min={0}
-            value={data.USDOT_number}
-            onChange={this.onChange}
-            placeholder="USDOT Number"
-            valid={!this.emptyErrors() && !errors.USDOT_number}
-            invalid={errors.USDOT_number}
-          />
-          <FormFeedback>{errors.USDOT_number}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label>Multiday basis used</Label>
-          <Input
-            type="select"
-            name="multiday_basis_used"
-            value={data.multiday_basis_used}
-            onChange={this.onChange}
-            valid={!this.emptyErrors() && !errors.multiday_basis_used}
-            invalid={errors.multiday_basis_used}
-          >
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </Input>
-          <FormFeedback>{errors.multiday_basis_used}</FormFeedback>
-        </FormGroup>
+      <form className="ui form" onSubmit={this.submitHandler}>
 
-        <Button type="submit" loading={isLoading}>Submit</Button>
-      </Form>
+        <div className="field">
+          <Label>Name</Label>
+          <FormGroup>
+            <Input
+              type="text"
+              name="name"
+              onChange={this.onChange}
+              placeholder="Name"
+              value={data.name}
+              valid={!this.emptyErrors() && !errors.name}
+              invalid={errors.name}
+            />
+            <FormFeedback>{errors.Numberame}</FormFeedback>
+          </FormGroup>
+        </div>
+        <div className="field">
+          <Label>USDOT Number</Label>
+          <FormGroup>
+            <Input
+              type="number"
+              name="USDOT_number"
+              min={0}
+              value={data.USDOT_number}
+              onChange={this.onChange}
+              placeholder="USDOT Number"
+              valid={!this.emptyErrors() && !errors.USDOT_number}
+              invalid={errors.USDOT_number}
+            />
+            <FormFeedback>{errors.USDOT_number}</FormFeedback>
+          </FormGroup>
+        </div>
+        <div className="field">
+          <Label>Multiday basis used</Label>
+          <FormGroup>
+            <Input
+              type="select"
+              name="multiday_basis_used"
+              value={data.multiday_basis_used}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.multiday_basis_used}
+              invalid={errors.multiday_basis_used}
+            >
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </Input>
+            <FormFeedback>{errors.multiday_basis_used}</FormFeedback>
+          </FormGroup>
+        </div>
+
+        <button className="ui button" type="submit">Submit</button>
+      </form>
     );
   }
 }

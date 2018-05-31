@@ -43,8 +43,7 @@ class MotorCarrierFormView extends React.Component {
     }
 
     const h1Style = {
-      marginTop: '5rem',
-      textAlign: 'center',
+      marginTop: '1rem',
       marginBottom: '2rem',
     };
 
@@ -67,7 +66,7 @@ class MotorCarrierFormView extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12" md={{ size: 5, offset: 3 }}>
+          <Col sm="12" md={{ size: 7 }}>
             { authRedirect }
             <h1 style={h1Style}>{ this.props.title }</h1>
             <MotorCarrierForm
