@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Alert } from 'reactstrap';
 import TemplateCSV from '../templates/template_csv';
+import TemplateXLSX from '../templates/template_xlsx';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert2 from '../../Alert/Alert';
@@ -171,7 +172,7 @@ class SimpleReactFileUpload extends React.Component {
         console.log("Valid: "+this.state.isValid)
 
   			//Data en String
-  			dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]},${d[9]},${d[10]},${d[11]}\n`).join('');
+  			dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]},${d[9]},${d[10]},${d[11]},${d[12]}\n`).join('');
   			console.log("String: "+dataString)
         let csv = new Blob([dataString], {type: 'text/csv'});
          // this.state.file
@@ -285,9 +286,10 @@ class SimpleReactFileUpload extends React.Component {
                 {this.state.errors.map(error => (<li key={error.id}>{ error.message }</li>))}
               </ul>
             </Alert>}
-          <div className="aligner-item"><h1>Create multiple {this.props.type} through a csv file</h1></div>
-          <div className="aligner-item"><p>The template below has the structure the csv file must have. You can download it, fill it and then upload it. That simple!</p></div>
-          <div className="aligner-item"><TemplateCSV type={this.props.type} /></div>
+          <div className="aligner-item"><h1>Create multiple {this.props.type} through an Excel or CSV file</h1></div>
+          <div className="aligner-item"><p>The templates below have the structure the file must have. You can download it, fill it and then upload it.</p></div>
+          <div className="aligner-item"><TemplateCSV type={this.props.type} />
+          <TemplateXLSX type={this.props.type} /></div>
           <div className="aligner-item">
             <div className="upload-form">
               <Form onSubmit={this.onFormSubmit}>
