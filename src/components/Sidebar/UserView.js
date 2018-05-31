@@ -39,9 +39,16 @@ const userView = props => (
 export default userView;
 
 userView.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   isAdm: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  last: PropTypes.string.isRequired,
-  mc: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  last: PropTypes.string,
+  mc: PropTypes.string,
+};
+
+userView.defaultProps = {
+  name: null,
+  last: null,
+  mc: null,
+  image: null,
 };
