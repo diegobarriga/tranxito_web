@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row } from 'reactstrap';
-import Aux from '../../hoc/Aux';
 import api from '../../services/api';
+import '../../assets/styles/trucks.css';
 
 const styles = {
   userProfile: {
@@ -22,18 +22,20 @@ class VehicleInfo extends React.Component {
   // if (this.state.vehicle === null) return <div><h2>Could not get the vehicle</h2></div>;
 
     return (
-      <Aux>
-        <h1>{`${this.props.vehicles[this.props.id].car_maker} ${this.props.vehicles[this.props.id].model}`}</h1>
-        <Row style={styles.userProfile}>
-          <img src={api.images.vehicleImageLink(this.props.vehicles[this.props.id].image)} alt="vehicleImg" />
+      <div className="vehicle-card">
+        <Row style={styles.userProfile} className="profile-info">
+          <div className="profile-image">
+            <img src={api.images.vehicleImageLink(this.props.vehicles[this.props.id].image)} alt="vehicleImg" />
+          </div>
           <div style={styles.userData}>
-            <div>Plaque: {this.props.vehicles[this.props.id].plaque}</div>
-            <div>VIN: {this.props.vehicles[this.props.id].vin}</div>
-            <div>ELD: {this.props.vehicles[this.props.id].IMEI_ELD}</div>
-            <div>State: {this.props.vehicles[this.props.id].state}</div>
+            <h4>{`${this.props.vehicles[this.props.id].car_maker} ${this.props.vehicles[this.props.id].model}`}</h4>
+            <p><strong>Plaque:</strong> {this.props.vehicles[this.props.id].plaque}</p>
+            <p><strong>State:</strong> {this.props.vehicles[this.props.id].state}</p>
+            <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
+            <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].IMEI_ELD}</p>
           </div>
         </Row>
-      </Aux>
+      </div>
     );
   }
 }

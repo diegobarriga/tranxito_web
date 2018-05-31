@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import VehicleInfo from './VehicleInfo';
+import VehicleLogs from './VehicleLogs';
 import Heatmap from './Heatmap';
 import '../../assets/styles/tabs.css';
 
@@ -49,6 +50,7 @@ class Vehicle extends React.Component {
             <div className="tabDiv">
               <Container>
                 <VehicleInfo id={id} />
+                <VehicleLogs id={id} />
               </Container>
             </div>
           </TabPane>

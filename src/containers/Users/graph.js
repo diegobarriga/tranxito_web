@@ -62,7 +62,7 @@ class Graph extends React.Component {
 
   processData = () => {
     const graphData = this.state.chartData;
-    let laststatus = null;
+    const logs = this.state.api_logs.reverse();
     graphData.datasets[0].data = [];
 
     // Agregar el estado inicial
@@ -70,24 +70,28 @@ class Graph extends React.Component {
       x: 0,
       y: EVENT_CODES[1][this.state.firstLog.event_code],
     });
-    laststatus = EVENT_CODES[1][this.state.firstLog.event_code];
-    this.state.api_logs.map((event) => {
+    logs.forEach((event) => {
+      const hour = parseInt(moment(event.event_timestamp).format('H'), 10);
+      const minutes = parseInt(moment(event.event_timestamp).format('m'), 10);
+      const tiempo = hour + (minutes / 60);
+      console.log(tiempo);
       graphData.datasets[0].data.push({
-        x: parseFloat(event.event_timestamp.substring(11, 13)) +
-           (parseFloat(event.event_timestamp.substring(14, 16)) / 60),
+        x: (hour + (minutes / 60)),
         y: EVENT_CODES[1][event.event_code],
       });
-      laststatus = EVENT_CODES[1][event.event_code];
     });
+
     // AGREGAR UN DATO DEL ULTIMO DUTY STATUS CON LA HORA ACTUAL
-    const now = moment();
-    const nownumber = now.hour() + (now.minute() / 60);
-    console.log(nownumber);
-    graphData.datasets[0].data.push({
-      x: nownumber,
-      y: laststatus,
-    });
-    this.setState({ chartData: graphData });
+    console.log(logs);
+    if (logs.length > 0) {
+      const now = moment();
+      const nownumber = now.hour() + (now.minute() / 60);
+      graphData.datasets[0].data.push({
+        x: nownumber,
+        y: EVENT_CODES[1][logs[logs.length - 1].event_code],
+      });
+      this.setState({ chartData: graphData });
+    }
   }
 
   render() {

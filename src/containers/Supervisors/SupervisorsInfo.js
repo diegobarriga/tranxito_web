@@ -43,7 +43,7 @@ class SupervisorsInfo extends React.Component {
     return (
       <div>
         <div className="inlineBox">
-          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" value={this.state.search} onChange={this.updateSearch} />
+          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" placeholder="Search" type="text" value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
             <Link className="btn btn-sm green spacing" to={`/supervisors/${this.props.id}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
           </div>

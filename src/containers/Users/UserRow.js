@@ -23,16 +23,17 @@ class UserRow extends React.Component {
 
 
     return (
-      <div className="item">
+      <div className="item no-padding">
         <div className="user_wrapper">
           <figure className="left">
-            <img style={{ borderRadius: '50%' }} alt="profile-pic" height="100" width="100" src={api.images.userImageLink(this.props.image)} />
+            <Link to={`/drivers/${this.props.id}`}>
+              <img style={{ borderRadius: '50%' }} alt="profile-pic" height="70" width="70" src={api.images.userImageLink(this.props.image)} />
+            </Link>
           </figure>
           <div className="right">
             <ul>
               <li><Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name}</Link></li>
               <li>Username: {this.props.username}</li>
-              <li>License Number: {this.props.license_number}</li>
             </ul>
           </div>
         </div>
@@ -61,7 +62,6 @@ UserRow.propTypes = {
   username: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   deleteUser: PropTypes.func.isRequired,
-  license_number: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
 };

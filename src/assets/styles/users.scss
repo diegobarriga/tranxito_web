@@ -8,10 +8,12 @@
 }
 
 .left {
+  padding-left: 15px;
   flex: 0 0 13%;
 }
 
 .right {
+  padding-top: 14px;
   flex: 1;
 }
 
@@ -39,4 +41,20 @@
   color: #6b757c;
   background-color: #fff;
   border: 1px solid #dee2e6;
+}
+
+.no-padding{
+  padding-bottom:0px !important;
+}
+
+.user-card{
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  margin-bottom: 15px;
+
+}
+
+.profile-image{
+  padding-right: 10px;
+  border-right: 1px solid #dee2e6;
 }

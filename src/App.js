@@ -18,6 +18,8 @@ import faChartLine from '@fortawesome/fontawesome-free-solid/faChartLine';
 import faBluetooth from '@fortawesome/fontawesome-free-brands/faBluetooth';
 import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
+import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
+import faAddressCard from '@fortawesome/fontawesome-free-solid/faAddressCard';
 
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
@@ -46,7 +48,7 @@ fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
   faLocationArrow, faTachometerAlt, faInfoCircle,
   faChartLine, faSignInAlt, faSignOutAlt,
-  faUserCog, faUserTie, faBluetooth,
+  faUserCog, faUserTie, faBluetooth, faEnvelope, faAddressCard,
 );
 
 class App extends Component {
