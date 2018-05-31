@@ -284,7 +284,7 @@ class SimpleReactFileUpload extends React.Component {
             </Alert>}
           <div className="aligner-item"><h1>Create multiple {this.props.type} through an Excel or CSV file</h1></div>
           <div className="aligner-item"><p>The templates below have the structure the file must have. You can download it, fill it and then upload it.</p></div>
-          <div className="aligner-item">
+          <div className="aligner-item padding-csv">
             <TemplateCSV type={this.props.type} />
             <TemplateXLSX type={this.props.type} />
           </div>
