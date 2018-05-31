@@ -10,10 +10,6 @@ import '../../assets/styles/buttons.css';
 const moment = require('moment');
 
 const styles = {
-  userLogsContainer: {
-    maxHeight: `${50 * 6}px`,
-    overflow: 'scroll',
-  },
   badge: {
     width: '40px',
   },
@@ -59,7 +55,7 @@ class VehicleLogs extends React.Component {
   render() {
     if (this.state.loading === true) return <Loader />;
     return (
-      <Container style={styles.userLogsContainer}>
+      <Container >
         <Table striped>
           <thead>
             <tr>

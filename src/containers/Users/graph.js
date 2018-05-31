@@ -114,7 +114,7 @@ class Graph extends React.Component {
 
     return (
       <Row>
-        <Col sm="12" md={{ size: 11 }}>
+        <Col sm="12" md={{ size: 12 }}>
           <Scatter
             data={this.state.chartData}
             height={75}

@@ -33,7 +33,7 @@ class UserLogs extends React.Component {
     this.props.logs.reverse();
     return (
       <Row>
-        <Col sm="12" md={{ size: 11 }}>
+        <Col sm="12" md={{ size: 12 }}>
           <Table striped>
             <thead>
               <tr>
