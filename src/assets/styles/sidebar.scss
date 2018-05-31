@@ -2,11 +2,12 @@
 
 .sidebar {
   background: lighten($e2e-grey, 45%);
-  color: lighten($e2e-grey, 50%);
-  min-height: 700px;
+  // color: lighten($e2e-grey, 50%);
+  height: 700px;
   position: fixed;
   width: 220px;
  }
+
 
 .nav-button:hover {
   background-color: black; }
@@ -24,6 +25,10 @@
 
 .sidebarBtn:hover {
   background-color:#dedede;
+}
+
+.userWrapper {
+  
 }
 
 @media (max-width: 800px) {

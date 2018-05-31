@@ -5,6 +5,7 @@ import { ListGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/sidebar.css';
 import Aux from '../../hoc/Aux';
+import UserView from './UserView';
 
 class sidebar extends Component {
   state = {
@@ -45,6 +46,7 @@ class sidebar extends Component {
               <Link className="list-group-item-action list-group-item" to="/motor_carriers">Motor Carriers</Link>
               :
               <Aux>
+                <UserView />
                 <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}><FontAwesomeIcon icon="chart-line" /> Dashboard</Link>
                 <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> Drivers</Link>
                 <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> Vehicles</Link>

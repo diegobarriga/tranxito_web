@@ -21,7 +21,6 @@ class UserRow extends React.Component {
       justifyContent: 'flex-end',
     };
 
-
     return (
       <div className="item">
         <div className="user_wrapper">

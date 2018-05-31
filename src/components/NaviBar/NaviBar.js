@@ -27,7 +27,7 @@ class Navibar extends React.Component {
   }
 
   render() {
-    const { isAuth, userId } = this.props;
+    const { isAuth } = this.props;
 
     return (
       <Navbar fixed="top" className="navbar" light expand="md">

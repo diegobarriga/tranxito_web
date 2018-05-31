@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { ListGroup, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
 import * as actions from '../../store/actions/index';
@@ -14,10 +14,16 @@ class MotorCarriers extends React.Component {
   componentDidMount() {
     this.props.onInitMC(this.props.token);
   }
+  onDeleteBtnClick() {
+    const confirmDelete = window.confirm('Are you sure you want to delete this driver?');
+    if (confirmDelete) {
+      // this.props.deleteUser(userId, token);
+    }
+  }
 
   render() {
     const h1Style = {
-      marginBottom: '1rem',
+      marginBottom: '4rem',
     };
 
     const flexContainer = {
@@ -26,6 +32,10 @@ class MotorCarriers extends React.Component {
 
     const containedObject = {
       flexGrow: '1',
+    };
+
+    const bStyle = {
+      marginTop: '10px',
     };
 
 
@@ -43,17 +53,22 @@ class MotorCarriers extends React.Component {
     return (
       <Aux>
         { authRedirect }
-        <h1 style={h1Style}> MotorCarriers </h1>
-        <div className="buttons">
-          <Link className="btn btn-sm green spacing" to="/motor_carriers/create"><FontAwesomeIcon icon="user" color="white" /> Create MotorCarrier</Link>
-        </div>
+
         <Container>
-          <Row >
+          <Row>
+            <Col sm="12" md={{ size: 3 }}>
+              <h1 style={h1Style}> MotorCarriers </h1>
+            </Col>
             <Col sm="12" md={{ size: 6 }}>
-              <ListGroup>
+              <Link style={bStyle} className="btn btn-sm green spacing" to="/motor_carriers/create"><FontAwesomeIcon icon="user" color="white" /> Create MotorCarrier</Link>
+            </Col>
+          </Row>
+          <Row >
+            <Col sm="12" md={{ size: 11 }}>
+              <div className="ui divided items">
                 {this.props.mCarrierList !== null &&
                   this.props.mCarrierList.map(carrier => (
-                    <div key={carrier.id} style={flexContainer} className="list-group-item-action list-group-item">
+                    <div key={carrier.id} style={flexContainer} className="item">
                       <div key={carrier.id} style={containedObject}>
                         <Link key={carrier.id} to="/">
                           {carrier.name}
@@ -62,14 +77,14 @@ class MotorCarriers extends React.Component {
 
                       <div>
                         <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/new_supervisor`} ><FontAwesomeIcon icon="user" color="white" /> Add Supervisor</Link>
-                        <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/edit`} ><FontAwesomeIcon icon="trash" color="white" /> Edit</Link>
-                        <Link className="btn btn-sm green spacing" to="/motor_carriers" ><FontAwesomeIcon icon="trash" color="white" /> Delete</Link>
+                        <Link className="btn btn-secondary btn-sm" to={`/motor_carriers/${carrier.id}/edit`} ><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
+                        <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}><FontAwesomeIcon icon="trash" color="white" /></Button>
                       </div>
                     </div>
 
                   ))
                 }
-              </ListGroup>
+              </div>
             </Col>
           </Row>
         </Container>
