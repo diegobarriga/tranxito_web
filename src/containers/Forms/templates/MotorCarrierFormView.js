@@ -2,11 +2,12 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Alert } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import MotorCarrierForm from './MotorCarrierForm';
+import Alert from '../../Alert/Alert';
 
 
 class MotorCarrierFormView extends React.Component {

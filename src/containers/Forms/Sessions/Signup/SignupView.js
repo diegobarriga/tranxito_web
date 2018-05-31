@@ -15,11 +15,7 @@ class SignupView extends Component {
     super(props);
     this.state = {};
   }
-  /*
-  componentDidMount() {
-    this.props.resetError();
-  }
-  */
+
   render() {
     if (this.props.isLoading === true) return <Loader />;
 

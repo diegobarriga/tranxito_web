@@ -20,10 +20,17 @@ const authStart = state => updateObject(state, { error: null, loading: true });
 
 const errorReset = state => updateObject(state, { error: null });
 
-const createSuccess = (state, action) => updateObject(state, {
-  loading: false,
-  error: action.response,
-});
+const createSuccess = (state, action) => {
+  const newSupervisor = { ...state.supervisors };
+  const newUser = action.response.data;
+  newUser["account_status"] = true;
+  newSupervisor[action.response.data.id] = newUser;
+  return updateObject(state, {
+    supervisors: newSupervisor,
+    loading: false,
+    error: action.response,
+  });
+};
 
 const authLogout = (state) => {
   localStorage.clear();
