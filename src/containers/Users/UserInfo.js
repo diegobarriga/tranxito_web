@@ -21,7 +21,7 @@ const styles = {
   },
   pStyle: {
     flexGrow: 2,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
 };
 
