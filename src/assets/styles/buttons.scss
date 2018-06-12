@@ -40,8 +40,16 @@
   background-color: $speed;
 }
 
+.speed_color_icon{
+  color: $speed;
+}
+
 .timeButton{
   background-color: $time;
+}
+
+.hours_color_icon{
+  color: $time;
 }
 
 .speedButton, .timeButton{

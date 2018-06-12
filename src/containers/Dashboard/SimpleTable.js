@@ -39,7 +39,6 @@ class SimpleTable extends React.Component {
     this.sortZAFunction = this.sortZAFunction.bind(this);
   }
 
-
   objToArr(stats) {
     const statsArray = [];
     Object.keys(stats).forEach((key) => {
@@ -52,14 +51,14 @@ class SimpleTable extends React.Component {
   }
 
   sortByColumnDown(column) {
-    let stats = this.state.stats;
+    const { stats } = this.state;
 
     stats.sort((a, b) => a[column] - b[column]);
     this.setState({ stats, selectedSortId: column, selectedTypeSort: '0' });
   }
 
   sortByColumnUp(column) {
-    let stats = this.state.stats;
+    const { stats } = this.state;
 
     stats.sort((a, b) => b[column] - a[column]);
     this.setState({ stats, selectedSortId: column, selectedTypeSort: '1' });
