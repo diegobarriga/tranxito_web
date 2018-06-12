@@ -16,6 +16,25 @@
   background-color: $ON;
 }
 
+.event1_icon{
+  color: $OFF;
+}
+
+.event2_icon{
+  color: $SB;
+}
+
+.event3_icon{
+  color: $D;
+}
+
+.event4_icon{
+  color: $ON;
+}
+
+.event0_icon{
+  color: $e2e-grey;
+}
 
 .speedButton{
   background-color: $speed;
@@ -67,4 +86,17 @@ thead {
 tbody td, thead th {
 width: 33%;
 float: left;
+}
+
+.default {
+  background: none;
+  border: none;
+}
+
+button{
+  padding-right: 0px !important;
+}
+
+button:focus {
+  outline:0 !important;
 }

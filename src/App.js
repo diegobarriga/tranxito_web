@@ -20,6 +20,10 @@ import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
 import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
 import faAddressCard from '@fortawesome/fontawesome-free-solid/faAddressCard';
+import faSortNumericDown from '@fortawesome/fontawesome-free-solid/faSortNumericDown';
+import faSortNumericUp from '@fortawesome/fontawesome-free-solid/faSortNumericUp';
+import faSortAlphaUp from '@fortawesome/fontawesome-free-solid/faSortAlphaUp';
+import faSortAlphaDown from '@fortawesome/fontawesome-free-solid/faSortAlphaDown';
 
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
@@ -46,8 +50,8 @@ import Supervisors from './containers/Supervisors/Supervisors';
 
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
-  faLocationArrow, faTachometerAlt, faInfoCircle,
-  faChartLine, faSignInAlt, faSignOutAlt,
+  faLocationArrow, faTachometerAlt, faInfoCircle, faSortAlphaUp, faSortAlphaDown,
+  faChartLine, faSignInAlt, faSignOutAlt, faSortNumericDown, faSortNumericUp,
   faUserCog, faUserTie, faBluetooth, faEnvelope, faAddressCard,
 );
 
