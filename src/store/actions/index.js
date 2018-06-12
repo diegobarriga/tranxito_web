@@ -17,6 +17,16 @@ export {
   createUser,
 } from './users';
 
-export { onVehicleDelete } from './vehicles';
+export {
+  addNewBreadCrumb,
+  deleteCrumbs,
+} from './breadcrumbs';
+
+export {
+  updateSidebarState,
+  unmarkSidebar,
+} from './sidebar';
 
 export { createVehicle } from './vehicle';
+export { onVehicleDelete } from './vehicles';
+

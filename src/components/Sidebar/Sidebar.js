@@ -2,41 +2,41 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { ListGroup } from 'reactstrap';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/sidebar.css';
+import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
 import UserView from './UserView';
 
 class sidebar extends Component {
-  state = {
-    dashboardClicked: false,
-    driversClicked: false,
-    vehiclesClicked: false,
-  }
-
   changeColor(name) {
     // Unmark all
-    this.setState({ dashboardClicked: false });
-    this.setState({ driversClicked: false });
-    this.setState({ vehiclesClicked: false });
-    this.setState({ supervisorsClicked: false });
+    this.props.updateSidebar('dashboard', false);
+    this.props.updateSidebar('drivers', false);
+    this.props.updateSidebar('vehicles', false);
+    this.props.updateSidebar('supervisors', false);
 
     if (name === 'dashboards') {
-      this.setState({ dashboardClicked: true });
+      this.props.updateSidebar('dashboard', true);
+      this.props.newBreadCrumb('dashboard', true);
     } else if (name === 'drivers') {
-      this.setState({ driversClicked: true });
+      this.props.updateSidebar('drivers', true);
+      this.props.newBreadCrumb('drivers', true);
     } else if (name === 'vechicles') {
-      this.setState({ vehiclesClicked: true });
+      this.props.updateSidebar('vehicles', true);
+      this.props.newBreadCrumb('vehicles', true);
     } else if (name === 'supervisors') {
-      this.setState({ supervisorsClicked: true });
+      this.props.updateSidebar('supervisors', true);
+      this.props.newBreadCrumb('supervisors', true);
     }
   }
 
   render() {
-    const vehiclesColor = this.state.vehiclesClicked ? '#dedede' : 'white';
-    const driversColor = this.state.driversClicked ? '#dedede' : 'white';
-    const dashboardColor = this.state.dashboardClicked ? '#dedede' : 'white';
-    const supervisorsColor = this.state.supervisorsClicked ? '#dedede' : 'white';
+    const vehiclesColor = this.props.sidebarState.vehiclesClicked ? '#dedede' : 'white';
+    const driversColor = this.props.sidebarState.driversClicked ? '#dedede' : 'white';
+    const dashboardColor = this.props.sidebarState.dashboardClicked ? '#dedede' : 'white';
+    const supervisorsColor = this.props.sidebarState.supervisorsClicked ? '#dedede' : 'white';
 
     return (
       <div className="sidebar">
@@ -82,6 +82,18 @@ sidebar.propTypes = {
   name: PropTypes.string.isRequired,
   last: PropTypes.string.isRequired,
   mc: PropTypes.string.isRequired,
+  newBreadCrumb: PropTypes.func.isRequired,
+  updateSidebar: PropTypes.func.isRequired,
+  sidebarState: PropTypes.object.isRequired,
 };
 
-export default sidebar;
+const mapDispatchToProps = dispatch => ({
+  newBreadCrumb: (urlString, restart) => dispatch(actions.addNewBreadCrumb(urlString, restart)),
+  updateSidebar: (tabName, clicked) => dispatch(actions.updateSidebarState(tabName, clicked)),
+});
+
+const mapStateToProps = state => ({
+  sidebarState: state.sidebar,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(sidebar);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -7,9 +8,15 @@ import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
+import * as actions from '../../store/actions/index';
 
 
 class Users extends React.Component {
+  componentDidMount() {
+    const auxArray = this.props.location.pathname.split('/');
+    const newCrumb = auxArray[auxArray.length - 1];
+    this.props.addBreadCrumb(newCrumb, false);
+  }
   render() {
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
@@ -48,6 +55,8 @@ class Users extends React.Component {
 }
 Users.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  addBreadCrumb: PropTypes.func.isRequired,
   error: PropTypes.object,
 };
 
@@ -56,9 +65,12 @@ Users.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  users: state.auth.users,
   isAuthenticated: state.auth.token !== null,
   error: state.auth.error,
 });
 
-export default connect(mapStateToProps)(Users);
+const mapDispatchToProps = dispatch => ({
+  addBreadCrumb: (urlString, restart) => dispatch(actions.addNewBreadCrumb(urlString, restart)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users));
