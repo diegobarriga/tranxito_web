@@ -19,14 +19,13 @@ class DriverForm extends Component {
         driverLicenseNumber: '',
         licenseIssuingState: '',
         exemptDriverConfiguration: '0',
-        timeZoneOffsetUtc: '4',
+        timeZoneOffsetUtc: '',
         startingTime24HourPeriod: '',
         moveYardsUse: '0',
         personalUse: '0',
         username: '',
         password: '',
         passwordConfirmation: '',
-        // image: 'personDefaultProfilePicture.jpeg',
         accountType: 'D',
         accountStatus: true,
       },
@@ -151,8 +150,7 @@ class DriverForm extends Component {
     /*
     if (_.isEmpty(String(data.timeZoneOffsetUtc))) {
       errors.timeZoneOffsetUtc = 'This field is required';
-    }
-    else if (!validator.isInt(String(this.timeZoneOffsetUtc), { min: 4, max: 11 })) {
+    } else if (!validator.isInt(String(this.timeZoneOffsetUtc), { min: 4, max: 11 })) {
       errors.timeZoneOffsetUtc = 'Must be an integer between 4 and 11';
     }
     */

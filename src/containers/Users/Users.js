@@ -51,7 +51,7 @@ class Users extends React.Component {
                 <Link className="section" to="/">Home</Link>
                 {
                   this.props.navigation.map((x, i) => (
-                    <Aux>
+                    <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
                         <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
