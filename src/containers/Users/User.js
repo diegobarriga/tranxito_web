@@ -27,7 +27,7 @@ class User extends React.Component {
     const auxArray = this.props.location.pathname.split('/');
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
-    const driverName = this.props.users[newCrumb].first_name;
+    const driverName = this.props.users[newCrumb].firstName;
     this.props.addBreadCrumb(driverName, false, crumbUrl);
   }
 

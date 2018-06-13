@@ -60,10 +60,10 @@ class SimpleTable extends React.Component {
               Object.keys(this.props.stats).map(key => (
                 <tr key={key}>
                   { this.props.type === 'Driver' &&
-                  <td style={styles.table}><Link to={`/drivers/${this.props.users[key].id}`}>{this.props.users[key].first_name} {this.props.users[key].last_name}</Link></td>
+                  <td style={styles.table}><Link to={`/drivers/${this.props.users[key].id}`}>{this.props.users[key].firstName} {this.props.users[key].lastName}</Link></td>
                   }
                   { this.props.type === 'Vehicle' &&
-                  <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[key].id}`}>{this.props.vehicles[key].car_maker} {this.props.vehicles[key].model}</Link></td>
+                  <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[key].id}`}>{this.props.vehicles[key].carMaker} {this.props.vehicles[key].model}</Link></td>
                   }
                   <td style={styles.table}>{functions.round(this.props.stats[key]['1'])} hours</td>
                   <td style={styles.table}>{functions.round(this.props.stats[key]['2'])} hours</td>

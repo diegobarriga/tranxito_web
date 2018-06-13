@@ -27,7 +27,7 @@ class Vehicle extends React.Component {
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     const vehicleModel = this.props.vehicles[newCrumb].model;
-    const vehicleMaker = this.props.vehicles[newCrumb].car_maker;
+    const vehicleMaker = this.props.vehicles[newCrumb].carMaker;
     const vehiclePlaque = this.props.vehicles[newCrumb].plaque;
     const vehicleName = `${vehicleModel} ${vehicleMaker} ${vehiclePlaque}`;
     this.props.addBreadCrumb(vehicleName, false, crumbUrl);

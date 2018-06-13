@@ -13,22 +13,22 @@ class DriverForm extends Component {
     this.state = {
       errors: {},
       data: {
-        first_name: '',
-        last_name: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        driver_license_number: '',
-        licenses_issuing_state: '',
-        exempt_driver_configuration: '0',
-        time_zone_offset_utc: '4',
-        starting_time_24_hour_period: '',
-        move_yards_use: '0',
-        personal_use: '0',
+        driverLicenseNumber: '',
+        licenseIssuingState: '',
+        exemptDriverConfiguration: '0',
+        timeZoneOffsetUtc: '4',
+        startingTime24HourPeriod: '',
+        moveYardsUse: '0',
+        personalUse: '0',
         username: '',
         password: '',
         passwordConfirmation: '',
         // image: 'personDefaultProfilePicture.jpeg',
-        account_type: 'D',
-        account_status: true,
+        accountType: 'D',
+        accountStatus: true,
       },
       picture: '',
       isLoading: false,
@@ -49,22 +49,22 @@ class DriverForm extends Component {
       this.getUserInfo().then((response) => {
         if (response.status === 200) {
           const newData = {
-            first_name: response.data.first_name,
-            last_name: response.data.last_name,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
             email: response.data.email,
-            driver_license_number: response.data.driver_license_number,
-            licenses_issuing_state: response.data.licenses_issuing_state,
-            exempt_driver_configuration: response.data.exempt_driver_configuration,
-            time_zone_offset_utc: response.data.time_zone_offset_utc,
-            starting_time_24_hour_period: response.data.starting_time_24_hour_period,
-            move_yards_use: response.data.move_yards_use,
-            default_use: response.data.default_use,
-            personal_use: response.data.personal_use,
+            driverLicenseNumber: response.data.driverLicenseNumber,
+            licenseIssuingState: response.data.licenseIssuingState,
+            exemptDriverConfiguration: response.data.exemptDriverConfiguration,
+            timeZoneOffsetUtc: response.data.timeZoneOffsetUtc,
+            startingTime24HourPeriod: response.data.startingTime24HourPeriod,
+            moveYardsUse: response.data.moveYardsUse,
+            defaultUse: response.data.defaultUse,
+            personalUse: response.data.personalUse,
             image: response.data.image,
             username: response.data.username,
             password: '',
-            account_type: 'D',
-            account_status: true,
+            accountType: 'D',
+            accountStatus: true,
           };
           this.setState({ data: newData });
         } else {
@@ -97,15 +97,15 @@ class DriverForm extends Component {
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
   validateInput(data) {
     const errors = {};
-    if (_.isEmpty(String(data.first_name))) {
-      errors.first_name = 'This field is required';
-    } else if (String(data.first_name.length) > 30 || String(data.first_name).length < 2) {
-      errors.first_name = 'First name must have between 2-30 characters';
+    if (_.isEmpty(String(data.firstName))) {
+      errors.firstName = 'This field is required';
+    } else if (String(data.firstName.length) > 30 || String(data.firstName).length < 2) {
+      errors.firstName = 'First name must have between 2-30 characters';
     }
-    if (_.isEmpty(String(data.last_name))) {
-      errors.last_name = 'This field is required';
-    } else if (String(data.last_name.length) > 30 || String(data.last_name).length < 2) {
-      errors.last_name = 'Last name must have between 2-30 characters';
+    if (_.isEmpty(String(data.lastName))) {
+      errors.lastName = 'This field is required';
+    } else if (String(data.lastName.length) > 30 || String(data.lastName).length < 2) {
+      errors.lastName = 'Last name must have between 2-30 characters';
     }
     if (_.isEmpty(String(data.username))) {
       errors.username = 'This field is required';
@@ -126,39 +126,39 @@ class DriverForm extends Component {
     if (!_.isEmpty(data.picture) && !validator.isMimeType(String(data.picture))) {
       errors.picture = 'Invalid file format';
     }
-    if (_.isEmpty(String(data.driver_license_number))) {
-      errors.driver_license_number = 'This field is required';
-    } else if (!validator.isAlphanumeric(String(data.driver_license_number))) {
-      errors.driver_license_number = 'Must only contain numbers and letters (0-9/A-Z)';
-    } else if (String(data.driver_license_number).length > 20) {
-      errors.driver_license_number = 'Must have ≤ 20 characters';
+    if (_.isEmpty(String(data.driverLicenseNumber))) {
+      errors.driverLicenseNumber = 'This field is required';
+    } else if (!validator.isAlphanumeric(String(data.driverLicenseNumber))) {
+      errors.driverLicenseNumber = 'Must only contain numbers and letters (0-9/A-Z)';
+    } else if (String(data.driverLicenseNumber).length > 20) {
+      errors.driverLicenseNumber = 'Must have ≤ 20 characters';
     }
-    if (_.isEmpty(String(data.licenses_issuing_state))) {
-      errors.licenses_issuing_state = 'This field is required';
-    } else if (String(data.licenses_issuing_state).length !== 2) {
-      errors.licenses_issuing_state = 'Not a valid state';
+    if (_.isEmpty(String(data.licenseIssuingState))) {
+      errors.licenseIssuingState = 'This field is required';
+    } else if (String(data.licenseIssuingState).length !== 2) {
+      errors.licenseIssuingState = 'Not a valid state';
     }
     /*
-    if (_.isEmpty(String(data.exempt_driver_configuration))) {
-      errors.exempt_driver_configuration = 'This field is required';
-    } else if (!['E', '0'].includes(this.exempt_driver_configuration)) {
-      errors.exempt_driver_configuration = "Must be 'E', '0'";
+    if (_.isEmpty(String(data.exemptDriverConfiguration))) {
+      errors.exemptDriverConfiguration = 'This field is required';
+    } else if (!['E', '0'].includes(this.exemptDriverConfiguration)) {
+      errors.exemptDriverConfiguration = "Must be 'E', '0'";
     }
     */
-    if (_.isEmpty(String(data.starting_time_24_hour_period))) {
-      errors.starting_time_24_hour_period = 'This field is required';
+    if (_.isEmpty(String(data.startingTime24HourPeriod))) {
+      errors.startingTime24HourPeriod = 'This field is required';
     }
     /*
-    if (_.isEmpty(String(data.time_zone_offset_utc))) {
-      errors.time_zone_offset_utc = 'This field is required';
+    if (_.isEmpty(String(data.timeZoneOffsetUtc))) {
+      errors.timeZoneOffsetUtc = 'This field is required';
     }
-    else if (!validator.isInt(String(this.time_zone_offset_utc), { min: 4, max: 11 })) {
-      errors.time_zone_offset_utc = 'Must be an integer between 4 and 11';
+    else if (!validator.isInt(String(this.timeZoneOffsetUtc), { min: 4, max: 11 })) {
+      errors.timeZoneOffsetUtc = 'Must be an integer between 4 and 11';
     }
     */
     /*
-    if (_.isEmpty(String(data.personal_use))) {
-      errors.personal_use = 'This field is required';
+    if (_.isEmpty(String(data.personalUse))) {
+      errors.personalUse = 'This field is required';
     }
     */
     return {
@@ -213,14 +213,14 @@ class DriverForm extends Component {
             <FormGroup widths="equal">
               <Input
                 type="text"
-                name="first_name"
+                name="firstName"
                 placeholder="First name"
-                value={data.first_name}
+                value={data.firstName}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.first_name}
-                invalid={errors.first_name}
+                valid={!this.emptyErrors() && !errors.firstName}
+                invalid={errors.firstName}
               />
-              <FormFeedback>{errors.first_name}</FormFeedback>
+              <FormFeedback>{errors.firstName}</FormFeedback>
             </FormGroup>
           </div>
 
@@ -229,14 +229,14 @@ class DriverForm extends Component {
             <FormGroup>
               <Input
                 type="text"
-                name="last_name"
+                name="lastName"
                 placeholder="Last name"
-                value={data.last_name}
+                value={data.lastName}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.last_name}
-                invalid={errors.last_name}
+                valid={!this.emptyErrors() && !errors.lastName}
+                invalid={errors.lastName}
               />
-              <FormFeedback>{errors.last_name}</FormFeedback>
+              <FormFeedback>{errors.lastName}</FormFeedback>
             </FormGroup>
           </div>
         </div>
@@ -328,14 +328,14 @@ class DriverForm extends Component {
             <FormGroup>
               <Input
                 type="text"
-                name="driver_license_number"
+                name="driverLicenseNumber"
                 placeholder="Driver license number"
-                value={data.driver_license_number}
+                value={data.driverLicenseNumber}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.driver_license_number}
-                invalid={errors.driver_license_number}
+                valid={!this.emptyErrors() && !errors.driverLicenseNumber}
+                invalid={errors.driverLicenseNumber}
               />
-              <FormFeedback>{errors.driver_license_number}</FormFeedback>
+              <FormFeedback>{errors.driverLicenseNumber}</FormFeedback>
             </FormGroup>
           </div>
           <div className="field">
@@ -343,14 +343,14 @@ class DriverForm extends Component {
             <FormGroup>
               <Input
                 type="text"
-                name="licenses_issuing_state"
+                name="licenseIssuingState"
                 placeholder="Licenses issuing state"
-                value={data.licenses_issuing_state}
+                value={data.licenseIssuingState}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.licenses_issuing_state}
-                invalid={errors.licenses_issuing_state}
+                valid={!this.emptyErrors() && !errors.licenseIssuingState}
+                invalid={errors.licenseIssuingState}
               />
-              <FormFeedback>{errors.licenses_issuing_state}</FormFeedback>
+              <FormFeedback>{errors.licenseIssuingState}</FormFeedback>
             </FormGroup>
           </div>
         </div>
@@ -362,16 +362,16 @@ class DriverForm extends Component {
               <Input
                 label="Exempt Driver Configuration"
                 type="select"
-                name="exempt_driver_configuration"
-                value={data.exempt_driver_configuration}
+                name="exemptDriverConfiguration"
+                value={data.exemptDriverConfiguration}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.exempt_driver_configuration}
-                invalid={errors.exempt_driver_configuration}
+                valid={!this.emptyErrors() && !errors.exemptDriverConfiguration}
+                invalid={errors.exemptDriverConfiguration}
               >
                 <option value="0">0</option>
                 <option value="E">E</option>
               </Input>
-              <FormFeedback>{errors.exempt_driver_configuration}</FormFeedback>
+              <FormFeedback>{errors.exemptDriverConfiguration}</FormFeedback>
             </FormGroup>
           </div>
           <div className="field">
@@ -379,15 +379,15 @@ class DriverForm extends Component {
             <FormGroup>
               <Input
                 type="select"
-                name="time_zone_offset_utc"
-                value={data.time_zone_offset_utc}
+                name="timeZoneOffsetUtc"
+                value={data.timeZoneOffsetUtc}
                 onChange={this.onChange}
-                valid={errors.time_zone_offset_utc}
-                invalid={!this.emptyErrors() && !errors.time_zone_offset_utc}
+                valid={errors.timeZoneOffsetUtc}
+                invalid={!this.emptyErrors() && !errors.timeZoneOffsetUtc}
               >
                 {this.createSelectItems(4, 11)}
               </Input>
-              <FormFeedback>{errors.time_zone_offset_utc}</FormFeedback>
+              <FormFeedback>{errors.timeZoneOffsetUtc}</FormFeedback>
             </FormGroup>
           </div>
         </div>
@@ -397,10 +397,10 @@ class DriverForm extends Component {
           <FormGroup>
             <Input
               type="datetime-local"
-              name="starting_time_24_hour_period"
-              value={data.starting_time_24_hour_period}
-              valid={!this.emptyErrors() && !errors.starting_time_24_hour_period}
-              invalid={errors.starting_time_24_hour_period}
+              name="startingTime24HourPeriod"
+              value={data.startingTime24HourPeriod}
+              valid={!this.emptyErrors() && !errors.startingTime24HourPeriod}
+              invalid={errors.startingTime24HourPeriod}
               onChange={this.onChange}
             />
           </FormGroup>
@@ -412,15 +412,15 @@ class DriverForm extends Component {
             <FormGroup>
               <Input
                 type="select"
-                name="move_yards_use"
-                value={data.move_yards_use}
+                name="moveYardsUse"
+                value={data.moveYardsUse}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.move_yards_use}
-                invalid={errors.move_yards_use}
+                valid={!this.emptyErrors() && !errors.moveYardsUse}
+                invalid={errors.moveYardsUse}
               >
                 {this.createSelectItems(0, 1)}
               </Input>
-              <FormFeedback>{errors.move_yards_use}</FormFeedback>
+              <FormFeedback>{errors.moveYardsUse}</FormFeedback>
             </FormGroup>
           </div>
           <div className="field">
@@ -428,15 +428,15 @@ class DriverForm extends Component {
             <FormGroup>
               <Input
                 type="select"
-                name="default_use"
-                value={data.default_use}
+                name="defaultUse"
+                value={data.defaultUse}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.default_use}
-                invalid={errors.default_use}
+                valid={!this.emptyErrors() && !errors.defaultUse}
+                invalid={errors.defaultUse}
               >
                 {this.createSelectItems(0, 1)}
               </Input>
-              <FormFeedback>{errors.default_use}</FormFeedback>
+              <FormFeedback>{errors.defaultUse}</FormFeedback>
             </FormGroup>
           </div>
           <div className="field">
@@ -444,15 +444,15 @@ class DriverForm extends Component {
             <FormGroup>
               <Input
                 type="select"
-                name="personal_use"
-                value={data.personal_use}
+                name="personalUse"
+                value={data.personalUse}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.personal_use}
-                invalid={errors.personal_use}
+                valid={!this.emptyErrors() && !errors.personalUse}
+                invalid={errors.personalUse}
               >
                 {this.createSelectItems(0, 1)}
               </Input>
-              <FormFeedback>{errors.personal_use}</FormFeedback>
+              <FormFeedback>{errors.personalUse}</FormFeedback>
             </FormGroup>
           </div>
         </div>

@@ -198,11 +198,11 @@ class SimpleReactFileUpload extends React.Component {
     if (this.props.type === 'drivers') {
       console.log(data);
       for (let i = 0; i < data.length; i += 1) {
-        if (data[i].first_name.length < 2 && data[i].first_name.length > 30) {
+        if (data[i].firstName.length < 2 && data[i].firstName.length > 30) {
           this.setState({ isValid: false });
           console.log('firstname');
           return;
-        } else if (data[i].last_name.length < 2 && data[i].last_name.length > 30) {
+        } else if (data[i].lastName.length < 2 && data[i].lastName.length > 30) {
           this.setState({ isValid: false });
           console.log('lastname');
           return;
@@ -210,35 +210,35 @@ class SimpleReactFileUpload extends React.Component {
           this.setState({ isValid: false });
           console.log('email');
           return;
-        } else if (data[i].licenses_issuing_state.length === 0) {
+        } else if (data[i].licenseIssuingState.length === 0) {
           this.setState({ isValid: false });
           console.log('license');
           return;
-        } else if (data[i].driver_license_number.length === 0) {
+        } else if (data[i].driverLicenseNumber.length === 0) {
           this.setState({ isValid: false });
           console.log('driverlicensenumber');
           return;
-        } else if (data[i].move_yards_use.length !== 1) {
+        } else if (data[i].moveYardsUse.length !== 1) {
           this.setState({ isValid: false });
           console.log('move_yards');
           return;
-        } else if (data[i].default_use.length !== 1) {
+        } else if (data[i].defaultUse.length !== 1) {
           this.setState({ isValid: false });
           console.log('defaultuse');
           return;
-        } else if (data[i].personal_use.length !== 1) {
+        } else if (data[i].personalUse.length !== 1) {
           this.setState({ isValid: false });
           console.log('personaluse');
           return;
-        } else if (data[i].exempt_driver_configuration.length === 0) {
+        } else if (data[i].exemptDriverConfiguration.length === 0) {
           this.setState({ isValid: false });
           console.log('driverconfig');
           return;
-        } else if (data[i].time_zone_offset_utc.length === 0) {
+        } else if (data[i].timeZoneOffsetUtc.length === 0) {
           this.setState({ isValid: false });
           console.log('time');
           return;
-        } else if (data[i].starting_time_24_hour_period.length === 0) {
+        } else if (data[i].startingTime24HourPeriod.length === 0) {
           this.setState({ isValid: false });
           console.log('24period');
           return;

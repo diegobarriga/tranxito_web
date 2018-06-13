@@ -47,7 +47,7 @@ class Graph extends React.Component {
         console.log(response);
         const logs = Object.values(response.data.data[1]);
 
-        logs.sort((a, b) => new Date(b.event_timestamp) - new Date(a.event_timestamp));
+        logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
         const firstLog = response.data.data[0];
         console.log(firstLog);
@@ -70,18 +70,18 @@ class Graph extends React.Component {
     // Agregar el estado inicial
     graphData.datasets[0].data.push({
       x: 0,
-      y: EVENT_CODES[1][this.state.firstLog.event_code],
+      y: EVENT_CODES[1][this.state.firstLog.code],
     });
     console.log(graphData.datasets[0].data);
 
     logs.forEach((event) => {
-      const hour = parseInt(moment(event.event_timestamp).format('H'), 10);
-      const minutes = parseInt(moment(event.event_timestamp).format('m'), 10);
+      const hour = parseInt(moment(event.timestamp).format('H'), 10);
+      const minutes = parseInt(moment(event.timestamp).format('m'), 10);
       const tiempo = hour + (minutes / 60);
       console.log(tiempo);
       graphData.datasets[0].data.push({
         x: (hour + (minutes / 60)),
-        y: EVENT_CODES[1][event.event_code],
+        y: EVENT_CODES[1][event.code],
       });
     });
 
@@ -92,17 +92,17 @@ class Graph extends React.Component {
       const nownumber = now.hour() + (now.minute() / 60);
       graphData.datasets[0].data.push({
         x: nownumber,
-        y: EVENT_CODES[1][logs[logs.length - 1].event_code],
+        y: EVENT_CODES[1][logs[logs.length - 1].code],
       });
     } else {
       if (this.state.firstLog !== undefined) {
         const now = moment();
         const nownumber = now.hour() + (now.minute() / 60);
         console.log(nownumber);
-        console.log(this.state.firstLog.event_code);
+        console.log(this.state.firstLog.code);
         graphData.datasets[0].data.push({
           x: nownumber,
-          y: EVENT_CODES[1][this.state.firstLog.event_code],
+          y: EVENT_CODES[1][this.state.firstLog.event],
         });
       }
     }

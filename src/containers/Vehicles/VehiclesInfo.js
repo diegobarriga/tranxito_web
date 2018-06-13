@@ -36,7 +36,7 @@ class VehiclesInfo extends React.Component {
     const filteredVehicles = Object.values(this.props.vehicles).filter(vehicle => (
       vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      vehicle.car_maker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      vehicle.carMaker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
 
     const totalVehicles = filteredVehicles.length;
@@ -54,7 +54,7 @@ class VehiclesInfo extends React.Component {
 
         <div className="ui divided items">
           {
-              filteredVehicles.sort((a, b) => a.car_maker > b.car_maker)
+              filteredVehicles.sort((a, b) => a.carMaker > b.carMaker)
               .slice(
               ((this.state.currentPage * this.state.pages) - 5),
                this.state.currentPage * this.state.pages,
@@ -63,12 +63,12 @@ class VehiclesInfo extends React.Component {
                 key={truck.id}
                 id={truck.id}
                 vin={truck.vin}
-                CMV_power_unit_number={truck.CMV_power_unit_number}
+                CmvPowerUnitNumber={truck.CmvPowerUnitNumber}
                 model={truck.model}
-                car_maker={truck.car_maker}
+                carMaker={truck.carMaker}
                 plaque={truck.plaque}
                 state={truck.state}
-                IMEI_ELD={truck.IMEI_ELD}
+                imeiEld={truck.imeiEld}
                 image={truck.image}
               />))
             }

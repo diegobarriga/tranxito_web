@@ -15,8 +15,8 @@ class MotorCarrierForm extends Component {
       errors: {},
       data: {
         name: '',
-        USDOT_number: '',
-        multiday_basis_used: '7',
+        usdotNumber: '',
+        multidayBasisUsed: '7',
       },
       isLoading: false,
       redirectTo: false,
@@ -36,8 +36,8 @@ class MotorCarrierForm extends Component {
           console.log(response);
           const newData = {
             name: response.data.name,
-            USDOT_number: response.data.USDOT_number,
-            multiday_basis_used: response.data.multiday_basis_used,
+            usdotNumber: response.data.usdotNumber,
+            multidayBasisUsed: response.data.multidayBasisUsed,
           };
           this.setState({ ...this.state, data: newData });
         } else {
@@ -66,13 +66,13 @@ class MotorCarrierForm extends Component {
       errors.name = 'Name must be between 4-120 characters long';
     }
     /* NEED FIX */
-    if (_.isEmpty(String(data.USDOT_number))) {
-      errors.USDOT_number = 'This field is required';
-    } else if (Number(this.USDOT_number) < 0 || Number(this.USDOT_number) > 999999999) {
-      errors.USDOT_number = 'USDOT number must be between 0-999,999,999';
+    if (_.isEmpty(String(data.usdotNumber))) {
+      errors.usdotNumber = 'This field is required';
+    } else if (Number(this.usdotNumber) < 0 || Number(this.usdotNumber) > 999999999) {
+      errors.usdotNumber = 'USDOT number must be between 0-999,999,999';
     }
-    if (_.isEmpty(String(data.multiday_basis_used))) {
-      errors.multiday_basis_used = 'This field is required';
+    if (_.isEmpty(String(data.multidayBasisUsed))) {
+      errors.multidayBasisUsed = 'This field is required';
     }
     return {
       errors,
@@ -123,15 +123,15 @@ class MotorCarrierForm extends Component {
           <FormGroup>
             <Input
               type="number"
-              name="USDOT_number"
+              name="usdotNumber"
               min={0}
-              value={data.USDOT_number}
+              value={data.usdotNumber}
               onChange={this.onChange}
               placeholder="USDOT Number"
-              valid={!this.emptyErrors() && !errors.USDOT_number}
-              invalid={errors.USDOT_number}
+              valid={!this.emptyErrors() && !errors.usdotNumber}
+              invalid={errors.usdotNumber}
             />
-            <FormFeedback>{errors.USDOT_number}</FormFeedback>
+            <FormFeedback>{errors.usdotNumber}</FormFeedback>
           </FormGroup>
         </div>
         <div className="field">
@@ -139,16 +139,16 @@ class MotorCarrierForm extends Component {
           <FormGroup>
             <Input
               type="select"
-              name="multiday_basis_used"
-              value={data.multiday_basis_used}
+              name="multidayBasisUsed"
+              value={data.multidayBasisUsed}
               onChange={this.onChange}
-              valid={!this.emptyErrors() && !errors.multiday_basis_used}
-              invalid={errors.multiday_basis_used}
+              valid={!this.emptyErrors() && !errors.multidayBasisUsed}
+              invalid={errors.multidayBasisUsed}
             >
               <option value="7">7</option>
               <option value="8">8</option>
             </Input>
-            <FormFeedback>{errors.multiday_basis_used}</FormFeedback>
+            <FormFeedback>{errors.multidayBasisUsed}</FormFeedback>
           </FormGroup>
         </div>
 
