@@ -27,6 +27,7 @@ export {
   unmarkSidebar,
 } from './sidebar';
 
+export { getTrackings } from './tracking';
 export { createVehicle } from './vehicle';
 export { onVehicleDelete } from './vehicles';
 

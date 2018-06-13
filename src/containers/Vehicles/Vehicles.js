@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Col, Row } from 'reactstrap';
 import { withRouter } from 'react-router';
+import { Breadcrumb } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import VehiclesInfo from './VehiclesInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
@@ -15,7 +16,7 @@ class Vehicles extends React.Component {
     const auxArray = this.props.location.pathname.split('/');
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
-    this.props.addBreadCrumb(newCrumb, false, crumbUrl);
+    this.props.addBreadCrumb(newCrumb, true, crumbUrl);
   }
 
   render() {
@@ -43,6 +44,25 @@ class Vehicles extends React.Component {
         { alert }
         <Container>
           <Row>
+            <Col md={{ size: 8 }}>
+              <Breadcrumb>
+                <Link className="section" to="/">Home</Link>
+                {
+                  this.props.navigation.map((x, i) => (
+                    <Aux>
+                      <Breadcrumb.Divider icon="right chevron" />
+                      { this.props.len - 1 > i ?
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        :
+                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                      }
+                    </Aux>
+                  ))
+                }
+              </Breadcrumb>
+            </Col>
+          </Row>
+          <Row>
             <Col md="11">
               <VehiclesInfo />
             </Col>
@@ -58,6 +78,9 @@ Vehicles.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
+  navigation: PropTypes.array.isRequired,
+  naviLinks: PropTypes.array.isRequired,
+  len: PropTypes.number.isRequired,
   error: PropTypes.object,
 };
 
@@ -69,6 +92,9 @@ const mapStateToProps = state => ({
   vehicles: state.auth.vehicles,
   isAuthenticated: state.auth.token !== null,
   error: state.auth.error,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
 });
 
 const mapDispatchToProps = dispatch => ({

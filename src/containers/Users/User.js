@@ -53,9 +53,9 @@ class User extends React.Component {
                     <Aux>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
                         :
-                        <Breadcrumb.Section active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
