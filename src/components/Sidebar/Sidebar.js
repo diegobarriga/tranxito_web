@@ -19,16 +19,16 @@ class sidebar extends Component {
 
     if (name === 'dashboards') {
       this.props.updateSidebar('dashboard', true);
-      this.props.newBreadCrumb('dashboard', true);
+      this.props.newBreadCrumb('dashboard', true, '/dashboard');
     } else if (name === 'drivers') {
       this.props.updateSidebar('drivers', true);
-      this.props.newBreadCrumb('drivers', true);
+      this.props.newBreadCrumb('drivers', true, '/drivers');
     } else if (name === 'vechicles') {
       this.props.updateSidebar('vehicles', true);
-      this.props.newBreadCrumb('vehicles', true);
+      this.props.newBreadCrumb('vehicles', true, '/vehicles');
     } else if (name === 'supervisors') {
       this.props.updateSidebar('supervisors', true);
-      this.props.newBreadCrumb('supervisors', true);
+      this.props.newBreadCrumb('supervisors', true, '/supervisors');
     }
   }
 
@@ -88,7 +88,11 @@ sidebar.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  newBreadCrumb: (urlString, restart) => dispatch(actions.addNewBreadCrumb(urlString, restart)),
+  newBreadCrumb: (urlString, restart, url) => dispatch(actions.addNewBreadCrumb(
+    urlString,
+    restart,
+    url,
+  )),
   updateSidebar: (tabName, clicked) => dispatch(actions.updateSidebarState(tabName, clicked)),
 });
 

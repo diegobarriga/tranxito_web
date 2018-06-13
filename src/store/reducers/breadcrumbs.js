@@ -3,19 +3,24 @@ import updateObject from '../utility';
 
 const initialState = {
   breadcrumbs: [],
+  links: [],
 };
 
 const resetBreadCrumbs = (state, action) => {
   const newArr = [];
+  const newLinks = [];
   newArr.push(action.basePath);
+  newLinks.push(action.url);
   return updateObject(state, {
     breadcrumbs: newArr,
+    links: newLinks,
   });
 };
 
 const addBreadCrumbs = (state, action) => {
   let noItemInArray = true;
   const newArr = [...state.breadcrumbs];
+  const newLinkArr = [...state.links];
   newArr.forEach((url) => {
     if (url === action.lastCrumb) {
       noItemInArray = false;
@@ -24,15 +29,18 @@ const addBreadCrumbs = (state, action) => {
 
   if (noItemInArray) {
     newArr.push(action.lastCrumb);
+    newLinkArr.push(action.links);
   }
   return updateObject(state, {
     breadcrumbs: newArr,
+    links: newLinkArr,
   });
 };
 
 const deleteCrumbs = (state) => { // eslint-disable-line
   return updateObject(state, {
     breadcrumbs: [],
+    links: [],
   });
 };
 

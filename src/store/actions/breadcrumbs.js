@@ -1,25 +1,27 @@
 import * as actionTypes from './actionTypes';
 
 
-export const resetBreadCrumbs = basePath => ({
+export const resetBreadCrumbs = (basePath, url) => ({
   type: actionTypes.RESET_BREADCRUMBS,
   basePath,
+  url,
 });
 
-export const addBreadCrumbs = lastCrumb => ({
+export const addBreadCrumbs = (lastCrumb, links) => ({
   type: actionTypes.ADD_BREADCRUMBS,
   lastCrumb,
+  links,
 });
 
 export const deleteCrumbs = () => ({
   type: actionTypes.DELETE_CRUMBS,
 });
 
-export const addNewBreadCrumb = (urlString, restart) => (dispatch) => {
+export const addNewBreadCrumb = (urlString, restart, url) => (dispatch) => {
   // Si hace click en la sidebar
   if (restart) {
-    dispatch(resetBreadCrumbs(urlString));
+    dispatch(resetBreadCrumbs(urlString, url));
   } else {
-    dispatch(addBreadCrumbs(urlString));
+    dispatch(addBreadCrumbs(urlString, url));
   }
 };
