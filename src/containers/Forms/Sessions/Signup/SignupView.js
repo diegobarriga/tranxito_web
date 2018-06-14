@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
+import api from '../../../../services/api';
 import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
 import Alert from '../../../Alert/Alert';
@@ -13,11 +14,53 @@ import SignupForm from './SignupForm';
 class SignupView extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      type: '',
+      message: '',
+      isLoading: false,
+    };
+  }
+
+  onFormSubmit(formData) {
+    this.setState({ isLoading: true });
+    // Si estamos creando un usuario
+    if (this.props.isCreate) {
+      this.postData(formData.data).then((response) => {
+        if (response.status === 200) {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'success', message: 'We have created the new supervisor.' });
+        } else {
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+        }
+      });
+    // Si estamos editando un usuario
+    } else {
+      this.patchData(formData.data).then((response) => {
+        if (response.status === 200) {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'success', message: 'We have edited the supervisor.' });
+        } else {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+        }
+      });
+    }
+  }
+
+  postData(data) {
+    return api.motorCarriers.createMotorCarrierPeople(
+      this.props.match.params.id,
+      this.props.token,
+      data,
+    );
+  }
+
+  patchData(data) {
+    return api.people.updateUser(this.props.match.params.id, this.props.token, data);
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    if (this.state.isLoading === true) return <Loader />;
 
     const h1Style = {
       marginTop: '1rem',
@@ -35,15 +78,12 @@ class SignupView extends Component {
 
     /* Alert */
     let alert;
-    let msg = '';
-    if (this.props.error === null) {
-      alert = null;
-    } else if (this.props.error.status === 200) {
-      msg = 'Supervisor was created successfully';
-      alert = (<Alert alertType="SUCCESS" message={msg} />);
-    } else {
-      msg = 'Error the supervisor could not be created';
-      alert = (<Alert alertType="FAIL" message={msg} />);
+    if (this.state.type && this.state.message) {
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
 
     const {
@@ -62,9 +102,9 @@ class SignupView extends Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             { authRedirect }
-            <h1 style={h1Style}>Register Supervisor</h1>
+            <h1 style={h1Style}>{ this.props.title }</h1>
             <SignupForm
-              submit={this.props.onAuth}
+              submit={this.onFormSubmit}
               token={this.props.token}
               motorCarrierId={this.props.match.params.id}
               match={match}
@@ -79,18 +119,12 @@ class SignupView extends Component {
 
 
 SignupView.propTypes = {
+  title: PropTypes.string.isRequired,
   isAdmin: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  onAuth: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
   match: PropTypes.object.isRequired,
   isCreate: PropTypes.bool.isRequired,
-};
-
-SignupView.defaultProps = {
-  error: null,
 };
 
 const mapStateToProps = state => ({

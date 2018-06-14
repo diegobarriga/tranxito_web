@@ -42,8 +42,8 @@ class SignupForm extends Component {
             email: response.data.email,
             password: '',
             passwordConfirmation: '',
-            firstName: response.data.first_name,
-            lastName: response.data.last_name,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
             username: response.data.username,
             accountType: 'S',
           };
