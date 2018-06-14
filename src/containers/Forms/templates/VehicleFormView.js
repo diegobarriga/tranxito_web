@@ -3,12 +3,15 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
+import { Breadcrumb } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import VehicleForm from './VehicleForm';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert from '../../Alert/Alert';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
+import Aux from '../../../hoc/Aux';
 
 class VehicleFormView extends React.Component {
   constructor(props) {
@@ -22,6 +25,13 @@ class VehicleFormView extends React.Component {
     this.patchData = this.patchData.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.imgUpload = this.imgUpload.bind(this);
+  }
+
+  componentDidMount() {
+    const auxArray = this.props.location.pathname.split('/');
+    const crumbUrl = this.props.location.pathname;
+    const newCrumb = auxArray[auxArray.length - 1].split('_').join(' ');
+    this.props.addBreadCrumb(newCrumb, false, crumbUrl);
   }
 
   onFormSubmit(formData) {
@@ -148,6 +158,25 @@ class VehicleFormView extends React.Component {
         </Row>
         <Row>
           <Col sm="12" md={{ size: 8 }}>
+            <Breadcrumb>
+              <Link className="section" to="/drivers">Home</Link>
+              {
+                this.props.navigation.map((x, i) => (
+                  <Aux key={i}>
+                    <Breadcrumb.Divider icon="right chevron" />
+                    { this.props.len - 1 > i ?
+                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                      :
+                      <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                    }
+                  </Aux>
+                ))
+              }
+            </Breadcrumb>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 8 }}>
             <h1 style={h1Style}>{title}</h1>
             <VehicleForm
               submit={this.onFormSubmit}
@@ -169,15 +198,28 @@ VehicleFormView.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   createVehicle: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  addBreadCrumb: PropTypes.func.isRequired,
+  navigation: PropTypes.array.isRequired,
+  naviLinks: PropTypes.array.isRequired,
+  len: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
 });
 
 const mapDispatchToProps = dispatch => ({
   createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
+  addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
+    urlString,
+    restart,
+    crumbUrl,
+  )),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VehicleFormView));
