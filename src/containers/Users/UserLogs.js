@@ -81,7 +81,7 @@ class UserLogs extends React.Component {
     let filteredLogs;
     console.log(event.target.value);
     console.log(logs);
-    if (event.target.value === -1) {
+    if (String(event.target.value) === String(-1)) {
       filteredLogs = logs;
     } else {
       filteredLogs = logs.filter(log => ((
