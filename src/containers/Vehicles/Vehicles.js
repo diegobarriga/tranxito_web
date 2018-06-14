@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 import { Breadcrumb } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../Users/i18n';
 import VehiclesInfo from './VehiclesInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
@@ -64,7 +66,9 @@ class Vehicles extends React.Component {
           </Row>
           <Row>
             <Col md="11">
+              <I18nextProvider i18n={i18n}>
               <VehiclesInfo />
+              </I18nextProvider>
             </Col>
           </Row>
         </Container>

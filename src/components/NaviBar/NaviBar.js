@@ -43,7 +43,7 @@ class Navibar extends React.Component {
                   <NavLink >Profile</NavLink>
                 </DropdownItem>
                 <DropdownItem>
-                  <NavLink>Settings</NavLink>
+                  <Link className="nav-link" to="/logout"><FontAwesomeIcon icon="fas fa-flag" />  Idioma</Link>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>

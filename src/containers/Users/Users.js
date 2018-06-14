@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
 import Aux from '../../hoc/Aux';
@@ -66,7 +68,9 @@ class Users extends React.Component {
           </Row>
           <Row>
             <Col sm="12" md={{ size: 11 }}>
-              <UsersInfo />
+              <I18nextProvider i18n={i18n}>
+                <UsersInfo />
+              </I18nextProvider>
             </Col>
           </Row>
         </Container>

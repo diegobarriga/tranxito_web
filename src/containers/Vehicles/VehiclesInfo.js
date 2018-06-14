@@ -9,6 +9,7 @@ import Pagination from 'react-js-pagination';
 import VehicleRow from './VehicleRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
+import { translate, Trans } from 'react-i18next';
 
 class VehiclesInfo extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class VehiclesInfo extends React.Component {
       vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
 
     const totalVehicles = filteredVehicles.length;
+    const { t, i18n } = this.props;
 
     return (
       <div>
@@ -47,8 +49,8 @@ class VehiclesInfo extends React.Component {
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder="Search" value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
-            <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> Create vehicle</Link>
-            <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> Create multiple vehicles</Link>
+            <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> {t('Create vehicle')} </Link>
+            <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> {t('Create multiple vehicles')} </Link>
           </div>
         </div>
 
@@ -101,4 +103,5 @@ const mapStateToProps = state => ({
   vehicles: state.auth.vehicles,
 });
 
-export default connect(mapStateToProps)(VehiclesInfo);
+const translateApp = translate('translations')(VehiclesInfo);
+export default connect(mapStateToProps)(translateApp);
