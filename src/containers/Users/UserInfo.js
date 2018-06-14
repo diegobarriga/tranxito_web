@@ -31,10 +31,10 @@ class UserInfo extends React.Component {
             <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
           </div>
           <div style={styles.userData}>
-            <h5>{`${this.props.users[this.props.id].first_name} ${this.props.users[this.props.id].last_name}`}</h5>
+            <h5>{`${this.props.users[this.props.id].firstName} ${this.props.users[this.props.id].lastName}`}</h5>
             <div>
               <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
-              {this.props.users[this.props.id].driver_license_number}
+              {this.props.users[this.props.id].driverLicenseNumber}
             </div>
             <div>
               <FontAwesomeIcon icon="envelope" className="customIcon" />{'   '}

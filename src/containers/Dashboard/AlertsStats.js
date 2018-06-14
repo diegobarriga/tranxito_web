@@ -90,12 +90,12 @@ class AlertsStats extends React.Component {
     const timeData = [];
 
     data.data.topDrivers.speedLimit.forEach((id) => {
-      speedLabels.push(`${this.props.users[id].first_name.charAt(0)}. ${this.props.users[id].last_name}`);
+      speedLabels.push(`${this.props.users[id].firstName.charAt(0)}. ${this.props.users[id].lastName}`);
       speedData.push(data.data.driversAlerts[id].speedLimit);
     });
 
     data.data.topDrivers.timeLimit.forEach((id) => {
-      timeLabels.push(`${this.props.users[id].first_name.charAt(0)}. ${this.props.users[id].last_name}`);
+      timeLabels.push(`${this.props.users[id].firstName.charAt(0)}. ${this.props.users[id].lastName}`);
       timeData.push(data.data.driversAlerts[id].timeLimit);
     });
 

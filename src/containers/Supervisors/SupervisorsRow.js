@@ -14,7 +14,7 @@ class SupervisorsRow extends React.Component {
           </figure>
           <div className="right">
             <ul>
-              <li>{this.props.first_name} {this.props.last_name}</li>
+              <li>{this.props.firstName} {this.props.lastName}</li>
               <li>Username: {this.props.username}</li>
             </ul>
           </div>
@@ -31,8 +31,8 @@ const mapStateToProps = state => ({
 
 
 SupervisorsRow.propTypes = {
-  first_name: PropTypes.string.isRequired,
-  last_name: PropTypes.string.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
 };

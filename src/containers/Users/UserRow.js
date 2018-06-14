@@ -31,7 +31,7 @@ class UserRow extends React.Component {
           </figure>
           <div className="right">
             <ul>
-              <li><Link to={`/drivers/${this.props.id}`}>{this.props.first_name} {this.props.last_name}</Link></li>
+              <li><Link to={`/drivers/${this.props.id}`}>{this.props.firstName} {this.props.lastName}</Link></li>
               <li>Username: {this.props.username}</li>
             </ul>
           </div>
@@ -56,8 +56,8 @@ const mapDispatchToProps = dispatch => ({
 
 
 UserRow.propTypes = {
-  first_name: PropTypes.string.isRequired,
-  last_name: PropTypes.string.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   deleteUser: PropTypes.func.isRequired,

@@ -27,7 +27,7 @@ class User extends React.Component {
     const auxArray = this.props.location.pathname.split('/');
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
-    const driverName = this.props.users[newCrumb].first_name;
+    const driverName = this.props.users[newCrumb].firstName;
     this.props.addBreadCrumb(driverName, false, crumbUrl);
   }
 
@@ -50,7 +50,7 @@ class User extends React.Component {
                 <Link className="section" to="/">Home</Link>
                 {
                   this.props.navigation.map((x, i) => (
-                    <Aux>
+                    <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
                         <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>

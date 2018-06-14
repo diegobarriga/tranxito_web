@@ -9,11 +9,6 @@ import { Link } from 'react-router-dom';
 // import * as functions from './functions';
 import '../../assets/styles/buttons.css';
 
-const styles = {
-  badge: {
-    width: '40px',
-  },
-};
 
 class AlertsTable extends React.Component {
   constructor(props) {

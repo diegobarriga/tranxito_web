@@ -33,10 +33,10 @@ class UsersInfo extends React.Component {
     if (this.props.isLoading === true) return <Loader />;
 
     const filteredUsers = Object.values(this.props.users).filter(user => ((
-      user.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      user.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      user.firstName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      user.lastName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1) &&
-      user.account_status === true && user.account_type === 'D'));
+      user.accountStatus === true && user.accountType === 'D'));
 
     const totalUsers = filteredUsers.length;
     return (
@@ -59,10 +59,10 @@ class UsersInfo extends React.Component {
               .map(user => (<UserRow
                 key={user.id}
                 id={user.id}
-                first_name={user.first_name}
-                last_name={user.last_name}
+                firstName={user.firstName}
+                lastName={user.lastName}
                 username={user.username}
-                license_number={user.driver_license_number}
+                license_number={user.driverLicenseNumber}
                 image={user.image}
               />))
             }
