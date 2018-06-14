@@ -20,8 +20,8 @@ const styles = {
     marginLeft: '12px',
   },
   pStyle: {
-    flexGrow: 2,
-    justifyContent: 'flex-start',
+    alignSelf: 'flex-start',
+    justifyContent: 'flex-end',
   },
 };
 
@@ -38,18 +38,20 @@ class UserInfo extends React.Component {
       <div className="item user-card">
 
         <Row style={styles.userProfile} className="user-profile-info">
-          <div className="profile-image">
-            <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
-          </div>
-          <div style={styles.userData}>
-            <h5>{`${this.props.users[this.props.id].firstName} ${this.props.users[this.props.id].lastName}`}</h5>
-            <div>
-              <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
-              {this.props.users[this.props.id].driverLicenseNumber}
+          <div className="user_wrapper">
+            <div className="profile-image">
+              <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
             </div>
-            <div>
-              <FontAwesomeIcon icon="envelope" className="customIcon" />{'   '}
-              {this.props.users[this.props.id].email}
+            <div style={styles.userData}>
+              <h5>{`${this.props.users[this.props.id].firstName} ${this.props.users[this.props.id].lastName}`}</h5>
+              <div>
+                <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
+                {this.props.users[this.props.id].driverLicenseNumber}
+              </div>
+              <div>
+                <FontAwesomeIcon icon="envelope" className="customIcon" />{'   '}
+                {this.props.users[this.props.id].email}
+              </div>
             </div>
           </div>
           <div style={styles.pStyle}>

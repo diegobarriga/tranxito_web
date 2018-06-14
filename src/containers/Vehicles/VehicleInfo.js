@@ -19,8 +19,8 @@ const styles = {
     marginLeft: '12px',
   },
   pStyle: {
-    justifyContent: 'flex-start',
-    flexGrow: 2,
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-start',
   },
 };
 
@@ -36,15 +36,17 @@ class VehicleInfo extends React.Component {
     return (
       <div className="vehicle-card">
         <Row style={styles.userProfile} className="profile-info">
-          <div className="profile-image">
-            <img src={api.images.vehicleImageLink(this.props.vehicles[this.props.id].image)} alt="vehicleImg" />
-          </div>
-          <div style={styles.userData}>
-            <h4>{`${this.props.vehicles[this.props.id].carMaker} ${this.props.vehicles[this.props.id].model}`}</h4>
-            <p><strong>Plaque:</strong> {this.props.vehicles[this.props.id].plaque}</p>
-            <p><strong>State:</strong> {this.props.vehicles[this.props.id].state}</p>
-            <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
-            <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p>
+          <div className="truck_wrapper">
+            <div className="profile-image">
+              <img src={api.images.vehicleImageLink(this.props.vehicles[this.props.id].image)} alt="vehicleImg" />
+            </div>
+            <div style={styles.userData}>
+              <h4>{`${this.props.vehicles[this.props.id].carMaker} ${this.props.vehicles[this.props.id].model}`}</h4>
+              <p><strong>Plaque:</strong> {this.props.vehicles[this.props.id].plaque}</p>
+              <p><strong>State:</strong> {this.props.vehicles[this.props.id].state}</p>
+              <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
+              <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p>
+            </div>
           </div>
           <div style={styles.pStyle}>
             <Link className="btn btn-secondary btn-sm" to={`/vehicles/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
