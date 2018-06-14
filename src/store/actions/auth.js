@@ -75,6 +75,7 @@ export const signup = data => (dispatch) => {
     last_name: data.lastName,
     username: data.username,
     account_type: data.accountType,
+    account_status: true,
   };
   console.log(data);
   console.log(authData);
