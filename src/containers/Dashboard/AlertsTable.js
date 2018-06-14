@@ -34,7 +34,7 @@ class AlertsTable extends React.Component {
             {
               Object.keys(this.props.stats.driversAlerts).map(key => (
                 <tr key={key}>
-                  <td><Link to={`/drivers/${this.props.users[key].id}`}>{this.props.users[key].first_name} {this.props.users[key].last_name}</Link></td>
+                  <td><Link to={`/drivers/${this.props.users[key].id}`}>{this.props.users[key].firstName} {this.props.users[key].lastName}</Link></td>
                   <td>{this.props.stats.driversAlerts[key].speedLimit}</td>
                   <td>{this.props.stats.driversAlerts[key].timeLimit}</td>
                 </tr>

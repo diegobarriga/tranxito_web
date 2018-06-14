@@ -13,12 +13,12 @@ class VehicleForm extends React.Component {
       errors: {},
       data: {
         vin: '',
-        CMV_power_unit_number: '',
+        CmvPowerUnitNumber: '',
         model: '',
-        car_maker: '',
+        carMaker: '',
         plaque: '',
         state: '',
-        IMEI_ELD: '',
+        imeiEld: '',
       },
       picture: '',
       isLoading: false,
@@ -39,12 +39,12 @@ class VehicleForm extends React.Component {
         if (response.status === 200) {
           const newData = {
             vin: response.data.vin,
-            CMV_power_unit_number: response.data.CMV_power_unit_number,
+            CmvPowerUnitNumber: response.data.CmvPowerUnitNumber,
             model: response.data.model,
-            car_maker: response.data.car_maker,
+            carMaker: response.data.carMaker,
             plaque: response.data.plaque,
             state: response.data.state,
-            IMEI_ELD: response.data.IMEI_ELD,
+            imeiEld: response.data.imeiEld,
             image: response.data.image,
           };
           this.setState({ data: newData });
@@ -86,10 +86,10 @@ class VehicleForm extends React.Component {
     } else if (data.vin.length === 18 && String(data.vin)[0] !== '-') {
       errors.vin = 'Must start with a dash (-) if VIN is 18 char long';
     }
-    if (_.isEmpty(String(data.CMV_power_unit_number))) {
-      errors.CMV_power_unit_number = 'This field is required';
-    } else if (data.IMEI_ELD && !data.CMV_power_unit_number) {
-      errors.CMV_power_unit_number = 'CMV Power Unit Number field is required';
+    if (_.isEmpty(String(data.CmvPowerUnitNumber))) {
+      errors.CmvPowerUnitNumber = 'This field is required';
+    } else if (data.imeiEld && !data.CmvPowerUnitNumber) {
+      errors.CmvPowerUnitNumber = 'CMV Power Unit Number field is required';
     }
     /* fede pls
     if (_.isEmpty(String(data.model))) {
@@ -101,11 +101,11 @@ class VehicleForm extends React.Component {
     if (_.isEmpty(String(data.model))) {
       errors.model = 'This field is required';
     }
-    if (_.isEmpty(String(data.IMEI_ELD))) {
-      errors.IMEI_ELD = 'This field is required';
+    if (_.isEmpty(String(data.imeiEld))) {
+      errors.imeiEld = 'This field is required';
     }
-    if (_.isEmpty(String(data.car_maker))) {
-      errors.car_maker = 'This field is required';
+    if (_.isEmpty(String(data.carMaker))) {
+      errors.carMaker = 'This field is required';
     }
     if (_.isEmpty(String(data.plaque))) {
       errors.plaque = 'This field is required';
@@ -166,14 +166,14 @@ class VehicleForm extends React.Component {
           <FormGroup>
             <Input
               type="text"
-              name="CMV_power_unit_number"
+              name="CmvPowerUnitNumber"
               placeholder="CMV Power Unit Number"
-              value={data.CMV_power_unit_number}
+              value={data.CmvPowerUnitNumber}
               onChange={this.onChange}
-              valid={!this.emptyErrors() && !errors.CMV_power_unit_number}
-              invalid={errors.CMV_power_unit_number}
+              valid={!this.emptyErrors() && !errors.CmvPowerUnitNumber}
+              invalid={errors.CmvPowerUnitNumber}
             />
-            <FormFeedback>{errors.CMV_power_unit_number}</FormFeedback>
+            <FormFeedback>{errors.CmvPowerUnitNumber}</FormFeedback>
           </FormGroup>
         </div>
 
@@ -198,14 +198,14 @@ class VehicleForm extends React.Component {
             <FormGroup>
               <Input
                 type="text"
-                name="car_maker"
+                name="carMaker"
                 placeholder="Car Maker"
-                value={data.car_maker}
+                value={data.carMaker}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.car_maker}
-                invalid={errors.car_maker}
+                valid={!this.emptyErrors() && !errors.carMaker}
+                invalid={errors.carMaker}
               />
-              <FormFeedback>{errors.car_maker}</FormFeedback>
+              <FormFeedback>{errors.carMaker}</FormFeedback>
             </FormGroup>
           </div>
         </div>
@@ -248,14 +248,14 @@ class VehicleForm extends React.Component {
             <Input
               type="number"
               min={0}
-              name="IMEI_ELD"
+              name="imeiEld"
               placeholder="IMEI ELD"
-              value={data.IMEI_ELD}
+              value={data.imeiEld}
               onChange={this.onChange}
-              valid={!this.emptyErrors() && !errors.IMEI_ELD}
-              invalid={errors.IMEI_ELD}
+              valid={!this.emptyErrors() && !errors.imeiEld}
+              invalid={errors.imeiEld}
             />
-            <FormFeedback>{errors.IMEI_ELD}</FormFeedback>
+            <FormFeedback>{errors.imeiEld}</FormFeedback>
           </FormGroup>
         </div>
         <div className="field">

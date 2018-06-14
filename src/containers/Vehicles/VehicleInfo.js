@@ -28,11 +28,11 @@ class VehicleInfo extends React.Component {
             <img src={api.images.vehicleImageLink(this.props.vehicles[this.props.id].image)} alt="vehicleImg" />
           </div>
           <div style={styles.userData}>
-            <h4>{`${this.props.vehicles[this.props.id].car_maker} ${this.props.vehicles[this.props.id].model}`}</h4>
+            <h4>{`${this.props.vehicles[this.props.id].carMaker} ${this.props.vehicles[this.props.id].model}`}</h4>
             <p><strong>Plaque:</strong> {this.props.vehicles[this.props.id].plaque}</p>
             <p><strong>State:</strong> {this.props.vehicles[this.props.id].state}</p>
             <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
-            <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].IMEI_ELD}</p>
+            <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p>
           </div>
         </Row>
       </div>

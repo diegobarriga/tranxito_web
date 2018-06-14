@@ -77,7 +77,7 @@ class LoginForm extends Component {
 
   render() {
     const {
-      errors, redirectTo, showPassword,
+      errors, showPassword,
     } = this.state;
     // if (redirectTo) {
     //   this.setState({redirectTo: false});
