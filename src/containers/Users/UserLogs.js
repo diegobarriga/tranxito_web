@@ -73,6 +73,13 @@ class UserLogs extends React.Component {
     this.setState({ logs, selectedSortId: '1', selectedTypeSort: '1' });
   }
 
+  filterByEvent() {
+    const { logs } = this.state;
+
+    logs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    this.setState({ logs, selectedSortId: '1', selectedTypeSort: '1' });
+  }
+
   render() {
     if (this.state.loading) return <Loader />;
     // this.state.logs.reverse();
@@ -111,7 +118,20 @@ class UserLogs extends React.Component {
           <Table striped>
             <thead>
               <tr>
-                <th>Event</th>
+                <th>
+                  {/* <button onClick={() => this.filterByEvent()} className="default">
+                    <FontAwesomeIcon
+                      icon="filter"
+                    />
+                  </button> */}
+
+                  <select id="bender" value={this.state.filterOption} onChange={() => this.filterByEvent()}>
+                    <option key={-1} value={-1}>Event</option>
+                    {Object.keys(EVENT_TYPES).map(key => (
+                      <option key={key} value={EVENT_TYPES[key]}>{EVENT_TYPES[key]}</option>
+                   ))}
+                  </select>
+                </th>
                 <th>Detail</th>
                 <th>
                   <div>
