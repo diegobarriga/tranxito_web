@@ -107,13 +107,13 @@ class SimpleTable extends React.Component {
                 <button onClick={() => this.sortByColumnAZ()} className="default">
                   <FontAwesomeIcon
                     icon="sort-alpha-down"
-                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '0') ? 'event0_icon' : ''}
+                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '0') ? 'grey_icon' : ''}
                   />
                 </button>
                 <button onClick={() => this.sortByColumnZA()} className="default">
                   <FontAwesomeIcon
                     icon="sort-alpha-up"
-                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '1') ? 'event0_icon' : ''}
+                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '1') ? 'grey_icon' : ''}
                   />
                 </button>
               </th>

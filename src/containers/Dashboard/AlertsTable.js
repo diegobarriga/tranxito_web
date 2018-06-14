@@ -94,13 +94,13 @@ class AlertsTable extends React.Component {
                 <button onClick={() => this.sortByColumnAZ()} className="default">
                   <FontAwesomeIcon
                     icon="sort-alpha-down"
-                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '0') ? 'event0_icon' : ''}
+                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '0') ? 'grey_icon' : ''}
                   />
                 </button>
                 <button onClick={() => this.sortByColumnZA()} className="default">
                   <FontAwesomeIcon
                     icon="sort-alpha-up"
-                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '1') ? 'event0_icon' : ''}
+                    className={(this.state.selectedSortId === '0' && this.state.selectedTypeSort === '1') ? 'grey_icon' : ''}
                   />
                 </button>
               </th>
@@ -109,13 +109,13 @@ class AlertsTable extends React.Component {
                 <button onClick={() => this.sortByColumnDown('speedLimit', '1')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
-                    className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '0') ? 'speed_color_icon' : ''}
+                    className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '0') ? 'purple_icon' : ''}
                   />
                 </button>
                 <button onClick={() => this.sortByColumnUp('speedLimit', '1')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-up"
-                    className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'speed_color_icon' : ''}
+                    className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'purple_icon' : ''}
                   />
                 </button>
               </th>
@@ -124,13 +124,13 @@ class AlertsTable extends React.Component {
                 <button onClick={() => this.sortByColumnDown('timeLimit', '2')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
-                    className={(this.state.selectedSortId === '2' && this.state.selectedTypeSort === '0') ? 'hours_color_icon' : ''}
+                    className={(this.state.selectedSortId === '2' && this.state.selectedTypeSort === '0') ? 'green_icon' : ''}
                   />
                 </button>
                 <button onClick={() => this.sortByColumnUp('timeLimit', '2')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-up"
-                    className={(this.state.selectedSortId === '2' && this.state.selectedTypeSort === '1') ? 'hours_color_icon' : ''}
+                    className={(this.state.selectedSortId === '2' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
                   />
                 </button>
               </th>
