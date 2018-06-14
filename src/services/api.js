@@ -105,7 +105,7 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking?access_token=${token}`),
     // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
     countMotorCarrierSP: (motorCarrierId, token) =>
-      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count?access_token=${token}`, { params: { where: { account_type: 'S' } } }),
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count?access_token=${token}`, { params: { where: { accountType: 'S' } } }),
     getDriverAlerts: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/driverAlerts?access_token=${token}`, { params: { span: `${span}` } }),
     getDriversDutyStats: (motorCarrierId, token, span) =>

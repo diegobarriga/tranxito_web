@@ -17,8 +17,8 @@ export const authSuccess = (
   users,
   supervisors,
   image,
-  first_name,
-  last_name,
+  firstName,
+  lastName,
   mcName,
 ) => ({
   type: actionTypes.AUTH_SUCCESS,
@@ -31,8 +31,8 @@ export const authSuccess = (
   users,
   supervisors,
   image,
-  first_name,
-  last_name,
+  firstName,
+  lastName,
   mcName,
 });
 
@@ -71,10 +71,11 @@ export const signup = data => (dispatch) => {
   const authData = {
     email: data.email,
     password: data.password,
-    first_name: data.firstName,
-    last_name: data.lastName,
+    firstName: data.firstName,
+    lastName: data.lastName,
     username: data.username,
-    account_type: data.accountType,
+    accountType: data.accountType,
+    accountStatus: true,
   };
   console.log(data);
   console.log(authData);
@@ -107,14 +108,14 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.motorCarrierId,
               response.data.id,
             ).then((vehiclesResponse) => {
-              const filter = '{"where": {"account_status": "true"}}';
+              const filter = '{"where": {"accountStatus": "true"}}';
               api.motorCarriers.getMotorCarrierPeople(
                 userResponse.data.motorCarrierId,
                 response.data.id,
                 filter,
               ).then((peopleResponse) => {
                 const supervisors = peopleResponse.data.filter(user => (
-                  user.account_type === 'S'
+                  user.accountType === 'S'
                 ));
                 const usersObject = functions.arrayToObject(peopleResponse.data);
                 const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
@@ -126,15 +127,15 @@ export const login = (email, password) => (dispatch) => {
                   dispatch(authSuccess(
                     response.data.id,
                     userResponse.data.id,
-                    userResponse.data.account_type,
+                    userResponse.data.accountType,
                     response,
                     userResponse.data.motorCarrierId,
                     vehiclesObject,
                     usersObject,
                     supervisorsObject,
                     userResponse.data.image,
-                    userResponse.data.first_name,
-                    userResponse.data.last_name,
+                    userResponse.data.firstName,
+                    userResponse.data.lastName,
                     mCresponse.data.name,
                   ));
                 });
@@ -144,15 +145,15 @@ export const login = (email, password) => (dispatch) => {
             dispatch(authSuccess(
               response.data.id,
               userResponse.data.id,
-              userResponse.data.account_type,
+              userResponse.data.accountType,
               response,
               null,
               null,
               null,
               null,
               userResponse.data.image,
-              userResponse.data.first_name,
-              userResponse.data.last_name,
+              userResponse.data.firstName,
+              userResponse.data.lastName,
             ));
           }
         })
