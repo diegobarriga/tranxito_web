@@ -2,13 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import XLSX from 'xlsx';
 import { connect } from 'react-redux';
-import { Button, Form, Input, Alert } from 'reactstrap';
+import { withRouter } from 'react-router';
+import { Button, Form, Input, Container, Alert, Row, Col } from 'reactstrap';
+import { Breadcrumb } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import TemplateCSV from '../templates/template_csv';
 import TemplateXLSX from '../templates/template_xlsx';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert2 from '../../Alert/Alert';
 import Loader from '../../../components/Loader/Loader';
+import * as actions from '../../../store/actions/index';
+import Aux from '../../../hoc/Aux';
 
 class SimpleReactFileUpload extends React.Component {
   constructor(props) {
@@ -25,6 +30,21 @@ class SimpleReactFileUpload extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
     this.getUploadStatus = this.getUploadStatus.bind(this);
+  }
+
+  componentDidMount() {
+    const auxArray = this.props.location.pathname.split('/');
+    const crumbUrl = this.props.location.pathname;
+    let newCrumb = auxArray[auxArray.length - 1].split('_');
+    if (newCrumb[newCrumb.length - 1] === 'vehicles') {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Vehicle(s)';
+    } else {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Driver(s)';
+    }
+    newCrumb = newCrumb.join(' ');
+    this.props.addBreadCrumb(newCrumb, false, crumbUrl);
   }
 
   onFormSubmit(e) {
@@ -275,6 +295,27 @@ class SimpleReactFileUpload extends React.Component {
     return (
       <div>
         <div>{ alert }</div>
+        <Container>
+          <Row>
+            <Col sm="12" md={{ size: 8 }}>
+              <Breadcrumb>
+                <Link className="section" to="/drivers">Home</Link>
+                {
+                  this.props.navigation.map((x, i) => (
+                    <Aux key={i}>
+                      <Breadcrumb.Divider icon="right chevron" />
+                      { this.props.len - 1 > i ?
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        :
+                        <Breadcrumb.Section active> {x} </Breadcrumb.Section>
+                      }
+                    </Aux>
+                  ))
+                }
+              </Breadcrumb>
+            </Col>
+          </Row>
+        </Container>
         <div className="aligner">
           { this.state.errors &&
             <Alert color="danger">
@@ -302,18 +343,33 @@ class SimpleReactFileUpload extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  token: state.auth.token,
-  userId: state.auth.userId,
-  motorCarrierId: state.auth.motorCarrierId,
-});
-
 SimpleReactFileUpload.propTypes = {
   type: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   userId: PropTypes.number.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
+  addBreadCrumb: PropTypes.func.isRequired,
+  navigation: PropTypes.array.isRequired,
+  naviLinks: PropTypes.array.isRequired,
+  len: PropTypes.number.isRequired,
 };
 
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  userId: state.auth.userId,
+  motorCarrierId: state.auth.motorCarrierId,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
+});
 
-export default connect(mapStateToProps)(SimpleReactFileUpload);
+const mapDispatchToProps = dispatch => ({
+  addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
+    urlString,
+    restart,
+    crumbUrl,
+  )),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SimpleReactFileUpload));
