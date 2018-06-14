@@ -66,16 +66,16 @@ class SimpleTable extends React.Component {
 
   sortAZFunction(a, b) {
     if (this.props.type === 'Driver') {
-      return this.props.users[a.key].last_name.localeCompare(this.props.users[b.key].last_name);
+      return this.props.users[a.key].lastName.localeCompare(this.props.users[b.key].lastName);
     }
-    return this.props.vehicles[a.key].car_maker.localeCompare(this.props.vehicles[b.key].car_maker);
+    return this.props.vehicles[a.key].carMaker.localeCompare(this.props.vehicles[b.key].carMaker);
   }
 
   sortZAFunction(a, b) {
     if (this.props.type === 'Driver') {
-      return this.props.users[b.key].last_name.localeCompare(this.props.users[a.key].last_name);
+      return this.props.users[b.key].lastName.localeCompare(this.props.users[a.key].lastName);
     }
-    return this.props.vehicles[b.key].car_maker.localeCompare(this.props.vehicles[a.key].car_maker);
+    return this.props.vehicles[b.key].carMaker.localeCompare(this.props.vehicles[a.key].carMaker);
   }
 
   sortByColumnAZ() {
@@ -192,7 +192,7 @@ class SimpleTable extends React.Component {
               this.state.stats.map(stat => (
                 <tr key={stat.key}>
                   { this.props.type === 'Driver' &&
-                  <td style={styles.table}><Link to={`/drivers/${this.props.users[stat.key].id}`}>{this.props.users[stat.key].first_name} {this.props.users[stat.key].last_name}</Link></td>
+                  <td style={styles.table}><Link to={`/drivers/${this.props.users[stat.key].id}`}>{this.props.users[stat.key].firstName} {this.props.users[stat.key].lastName}</Link></td>
                   }
                   { this.props.type === 'Vehicle' &&
                   <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[stat.key].id}`}>{this.props.vehicles[stat.key].car_maker} {this.props.vehicles[stat.key].model}</Link></td>

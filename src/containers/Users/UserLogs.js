@@ -7,6 +7,7 @@ import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/userLogs';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../utils/eventTypes';
 import '../../assets/styles/buttons.css';
+import api from '../../services/api';
 
 const moment = require('moment');
 
@@ -27,37 +28,83 @@ class UserLogs extends React.Component {
       logs: null,
       selectedSortId: null,
       selectedTypeSort: null,
+      loading: true,
     };
     this.sortByColumnUp = this.sortByColumnUp.bind(this);
     this.sortByColumnDown = this.sortByColumnDown.bind(this);
   }
 
-  async componentDidMount() {
-    await this.props.getUserLogs(this.props.token, this.props.id);
-    this.setState({ logs: this.props.logs });
+  componentDidMount() {
+    this.getUserLogs();
+  }
+
+  getUserLogs() {
+    this.setState({ loading: true });
+
+    api.people.getUserEvents(this.props.id, this.props.token)
+      .then((response) => {
+        try {
+          const logs = response.data;
+          console.log('paso ok');
+          logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+          this.setState({ logs, loading: false });
+        } catch (error) {
+          console.log('errror');
+          this.setState({ loading: false });
+        }
+      });
   }
 
   formatDate(datetime) {
-    return moment(datetime).calendar();
+    return moment(datetime).format('MMMM Do YYYY, h:mm a');
   }
 
   sortByColumnDown() {
     const { logs } = this.state;
 
-    logs.sort((a, b) => a.event_timestamp - b.event_timestamp);
+    logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     this.setState({ logs, selectedSortId: '1', selectedTypeSort: '0' });
   }
 
   sortByColumnUp() {
     const { logs } = this.state;
 
-    logs.sort((a, b) => b.event_timestamp - a.event_timestamp);
+    logs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     this.setState({ logs, selectedSortId: '1', selectedTypeSort: '1' });
   }
 
   render() {
-    if (this.state.logs == null) return <Loader />;
-    this.props.logs.reverse();
+    if (this.state.loading) return <Loader />;
+    // this.state.logs.reverse();
+    let button;
+    if (this.state.selectedSortId === null) {
+      button = (
+        <button onClick={() => this.sortByColumnUp()} className="default">
+          <FontAwesomeIcon
+            icon="sort"
+            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
+          />
+        </button>
+      );
+    } else if (this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') {
+      button = (
+        <button onClick={() => this.sortByColumnDown()} className="default">
+          <FontAwesomeIcon
+            icon="sort-down"
+            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '0') ? 'green_icon' : ''}
+          />
+        </button>
+      );
+    } else {
+      button = (
+        <button onClick={() => this.sortByColumnUp()} className="default">
+          <FontAwesomeIcon
+            icon="sort-up"
+            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
+          />
+        </button>
+      );
+    }
     return (
       <Row>
         <Col sm="12" md={{ size: 12 }}>
@@ -67,19 +114,10 @@ class UserLogs extends React.Component {
                 <th>Event</th>
                 <th>Detail</th>
                 <th>
-                  Timestamp
-                  <button onClick={() => this.sortByColumnDown()} className="default">
-                    <FontAwesomeIcon
-                      icon="sort-numeric-down"
-                      className={(this.state.selectedSortId === '3' && this.state.selectedTypeSort === '0') ? 'green_icon' : ''}
-                    />
-                  </button>
-                  <button onClick={() => this.sortByColumnUp()} className="default">
-                    <FontAwesomeIcon
-                      icon="sort-numeric-up"
-                      className={(this.state.selectedSortId === '3' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
-                    />
-                  </button>
+                  <div>
+                    Timestamp
+                    {button}
+                  </div>
                 </th>
               </tr>
             </thead>
@@ -107,24 +145,13 @@ class UserLogs extends React.Component {
 }
 
 UserLogs.propTypes = {
-  getUserLogs: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  logs: PropTypes.array,
-};
-
-UserLogs.defaultProps = {
-  logs: null,
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
   loading: state.userLogs.loading,
-  logs: state.userLogs.logs,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserLogs: (token, UserId) => dispatch(actions.getUserLogs(token, UserId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogs);
+export default connect(mapStateToProps)(UserLogs);

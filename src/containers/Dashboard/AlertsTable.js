@@ -53,11 +53,11 @@ class AlertsTable extends React.Component {
   }
 
   sortAZFunction(a, b) {
-    return this.props.users[a.key].last_name.localeCompare(this.props.users[b.key].last_name);
+    return this.props.users[a.key].lastName.localeCompare(this.props.users[b.key].lastName);
   }
 
   sortZAFunction(a, b) {
-    return this.props.users[b.key].last_name.localeCompare(this.props.users[a.key].last_name);
+    return this.props.users[b.key].lastName.localeCompare(this.props.users[a.key].lastName);
   }
 
   sortByColumnAZ() {
@@ -135,7 +135,7 @@ class AlertsTable extends React.Component {
             {
               this.state.stats.map(stat => (
                 <tr key={stat.key}>
-                  <td><Link to={`/drivers/${this.props.users[stat.key].id}`}>{this.props.users[stat.key].first_name} {this.props.users[stat.key].last_name}</Link></td>
+                  <td><Link to={`/drivers/${this.props.users[stat.key].id}`}>{this.props.users[stat.key].firstName} {this.props.users[stat.key].lastName}</Link></td>
                   <td>{stat.speedLimit}</td>
                   <td>{stat.timeLimit}</td>
                 </tr>
