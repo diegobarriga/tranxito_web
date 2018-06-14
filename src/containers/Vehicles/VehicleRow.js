@@ -31,7 +31,7 @@ class VehicleRow extends React.Component {
           </figure>
           <div className="right">
             <ul>
-              <li><Link to={`/vehicles/${this.props.id}`}>{this.props.car_maker} {this.props.model} - {this.props.plaque}</Link></li>
+              <li><Link to={`/vehicles/${this.props.id}`}>{this.props.carMaker} {this.props.model} - {this.props.plaque}</Link></li>
               <li>State: {this.props.state}</li>
             </ul>
           </div>
@@ -57,7 +57,7 @@ const mapDispatchToProps = dispatch => ({
 
 VehicleRow.propTypes = {
   model: PropTypes.string.isRequired,
-  car_maker: PropTypes.string.isRequired,
+  carMaker: PropTypes.string.isRequired,
   plaque: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,

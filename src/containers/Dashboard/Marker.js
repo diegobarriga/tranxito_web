@@ -65,11 +65,11 @@ class InfoWindowMarker extends Component {
             <div>
               {
                 this.props.vehicles[this.props.vehicleId] != null &&
-                <p><FontAwesomeIcon icon="car" /><Link to={`/vehicles/${this.props.vehicles[this.props.vehicleId].id}`}> {this.props.vehicles[this.props.vehicleId].car_maker} {this.props.vehicles[this.props.vehicleId].model} - {this.props.vehicles[this.props.vehicleId].plaque}</Link></p>
+                <p><FontAwesomeIcon icon="car" /><Link to={`/vehicles/${this.props.vehicles[this.props.vehicleId].id}`}> {this.props.vehicles[this.props.vehicleId].carMaker} {this.props.vehicles[this.props.vehicleId].model} - {this.props.vehicles[this.props.vehicleId].plaque}</Link></p>
               }
               {
                 this.props.users[this.props.userId] != null &&
-                <p><FontAwesomeIcon icon="user" /><Link to={`/drivers/${this.props.users[this.props.userId].id}`}> {this.props.users[this.props.userId].first_name} {this.props.users[this.props.userId].last_name}</Link></p>
+                <p><FontAwesomeIcon icon="user" /><Link to={`/drivers/${this.props.users[this.props.userId].id}`}> {this.props.users[this.props.userId].firstName} {this.props.users[this.props.userId].lastName}</Link></p>
               }
               <p><FontAwesomeIcon icon="clock" /> {this.formatDate(this.props.timestamp)}</p>
               <p><FontAwesomeIcon icon="tachometer-alt" /> {this.props.speed} mph</p>

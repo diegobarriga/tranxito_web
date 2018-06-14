@@ -12,8 +12,8 @@ const initialState = {
   users: null,
   supervisors: {},
   image: null,
-  first_name: null,
-  last_name: null,
+  firstName: null,
+  lastName: null,
 };
 
 const authStart = state => updateObject(state, { error: null, loading: true });
@@ -23,7 +23,7 @@ const errorReset = state => updateObject(state, { error: null });
 const createSuccess = (state, action) => {
   const newSupervisor = { ...state.supervisors };
   const newUser = action.response.data;
-  newUser["account_status"] = true;
+  newUser.accountStatus = true;
   newSupervisor[action.response.data.id] = newUser;
   return updateObject(state, {
     supervisors: newSupervisor,
@@ -43,8 +43,8 @@ const authLogout = (state) => {
     users: null,
     supervisors: {},
     image: null,
-    first_name: null,
-    last_name: null,
+    firstName: null,
+    lastName: null,
     mcName: null,
   });
 };
@@ -78,8 +78,8 @@ const authSuccess = (state, action) => updateObject(state, {
   chunkedVehicles: action.chunkedVehicles,
   supervisors: action.supervisors,
   image: action.image,
-  first_name: action.first_name,
-  last_name: action.last_name,
+  firstName: action.firstName,
+  lastName: action.lastName,
   mcName: action.mcName,
 
 });

@@ -17,6 +17,17 @@ export {
   createUser,
 } from './users';
 
+export {
+  addNewBreadCrumb,
+  deleteCrumbs,
+} from './breadcrumbs';
+
+export {
+  updateSidebarState,
+  unmarkSidebar,
+} from './sidebar';
+
+export { getTrackings } from './tracking';
+export { createVehicle } from './vehicle';
 export { onVehicleDelete } from './vehicles';
 
-export { createVehicle } from './vehicle';

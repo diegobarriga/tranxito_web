@@ -8,6 +8,8 @@ import vehicleReducer from './reducers/vehicle';
 import userInfoReducer from './reducers/userInfo';
 import userLogsReducer from './reducers/userLogs';
 import trackingReducer from './reducers/tracking';
+import breadcrumbsReducer from './reducers/breadcrumbs';
+import sidebarReducer from './reducers/sidebar';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
   userInfo: userInfoReducer,
   userLogs: userLogsReducer,
   trackings: trackingReducer,
+  breadcrumbs: breadcrumbsReducer,
+  sidebar: sidebarReducer,
 });
 
 
@@ -47,6 +51,10 @@ const persistedState = loadFromLocalStorage();
 
 const store = createStore(rootReducer, persistedState, composeEnhancers(applyMiddleware(thunk)));
 
-store.subscribe(() => saveToLocalStorage({ auth: store.getState().auth }));
+store.subscribe(() => saveToLocalStorage({
+  auth: store.getState().auth,
+  breadcrumbs: store.getState().breadcrumbs,
+  sidebar: store.getState().sidebar,
+}));
 
 export default store;

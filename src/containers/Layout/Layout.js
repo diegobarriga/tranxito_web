@@ -71,8 +71,8 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   isAdmin: state.auth.role === 'A',
   image: state.auth.image,
-  name: state.auth.first_name,
-  last: state.auth.last_name,
+  name: state.auth.firstName,
+  last: state.auth.lastName,
   mcName: state.auth.mcName,
 });
 
