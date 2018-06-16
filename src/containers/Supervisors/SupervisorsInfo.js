@@ -45,7 +45,7 @@ class SupervisorsInfo extends React.Component {
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" placeholder="Search" type="text" value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
-            <Link className="btn btn-sm green spacing" to={`/supervisors/${this.props.id}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
+            <Link className="btn btn-sm green spacing" to="/supervisors/new_supervisor"><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
           </div>
         </div>
 
@@ -86,7 +86,6 @@ class SupervisorsInfo extends React.Component {
 SupervisorsInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
-  id: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = state => ({

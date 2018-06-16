@@ -32,7 +32,7 @@ class SupervisorsRow extends React.Component {
             </ul>
           </div>
           <div style={pStyle}>
-            <Link className="btn btn-secondary btn-sm" to={`/supervisors/${this.props.id}/edit_supervisor`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
+            <Link className="btn btn-secondary btn-sm" to={`/supervisors/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
             <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
           </div>
         </div>

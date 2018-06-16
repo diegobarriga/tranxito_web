@@ -19,13 +19,16 @@ class SignupView extends Component {
       message: '',
       isLoading: false,
     };
+    this.postData = this.postData.bind(this);
+    this.patchData = this.patchData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   onFormSubmit(formData) {
     this.setState({ isLoading: true });
     // Si estamos creando un usuario
     if (this.props.isCreate) {
-      this.postData(formData.data).then((response) => {
+      this.postData(formData).then((response) => {
         if (response.status === 200) {
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have created the new supervisor.' });
@@ -35,7 +38,7 @@ class SignupView extends Component {
       });
     // Si estamos editando un usuario
     } else {
-      this.patchData(formData.data).then((response) => {
+      this.patchData(formData).then((response) => {
         if (response.status === 200) {
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have edited the supervisor.' });
@@ -49,7 +52,7 @@ class SignupView extends Component {
 
   postData(data) {
     return api.motorCarriers.createMotorCarrierPeople(
-      this.props.match.params.id,
+      this.props.motorCarrierId,
       this.props.token,
       data,
     );
@@ -106,7 +109,7 @@ class SignupView extends Component {
             <SignupForm
               submit={this.onFormSubmit}
               token={this.props.token}
-              motorCarrierId={this.props.match.params.id}
+              motorCarrierId={this.props.match.params.mc || this.props.motorCarrierId}
               match={match}
               isCreate={isCreate}
             />
@@ -125,6 +128,7 @@ SignupView.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   isCreate: PropTypes.bool.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -133,6 +137,7 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   error: state.auth.error,
   isLoading: state.auth.loading,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
 const mapDispatchToProps = dispatch => ({
