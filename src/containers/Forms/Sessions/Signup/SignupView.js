@@ -28,6 +28,8 @@ class SignupView extends Component {
     this.setState({ isLoading: true });
     // Si estamos creando un usuario
     if (this.props.isCreate) {
+      console.log('CREANDO');
+      console.log(formData);
       this.postData(formData).then((response) => {
         if (response.status === 200) {
           this.setState({ isLoading: false });
@@ -38,6 +40,9 @@ class SignupView extends Component {
       });
     // Si estamos editando un usuario
     } else {
+      console.log('EDITANDO');
+      console.log(formData);
+      console.log(this.props.match.params.id);
       this.patchData(formData).then((response) => {
         if (response.status === 200) {
           this.setState({ isLoading: false });
@@ -109,7 +114,7 @@ class SignupView extends Component {
             <SignupForm
               submit={this.onFormSubmit}
               token={this.props.token}
-              motorCarrierId={this.props.match.params.mc || this.props.motorCarrierId}
+              motorCarrierId={parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId}
               match={match}
               isCreate={isCreate}
             />

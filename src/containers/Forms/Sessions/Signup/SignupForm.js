@@ -244,7 +244,7 @@ class SignupForm extends Component {
 SignupForm.propTypes = {
   submit: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
   isCreate: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,
 };
