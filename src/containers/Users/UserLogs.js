@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Row, Col, Table, Badge } from 'reactstrap';
 import Loader from '../../components/Loader/Loader';
-import * as actions from '../../store/actions/userLogs';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../utils/eventTypes';
 import '../../assets/styles/buttons.css';
 import api from '../../services/api';
@@ -21,6 +20,10 @@ const styles = {
   },
 };
 
+
+const s2 = {
+  fontWeight: 'bold',
+}
 class UserLogs extends React.Component {
   constructor(props) {
     super(props);
@@ -63,14 +66,12 @@ class UserLogs extends React.Component {
 
   sortByColumnDown() {
     const { logs } = this.state;
-
     logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     this.setState({ filterLogs: logs, selectedSortId: '1', selectedTypeSort: '0' });
   }
 
   sortByColumnUp() {
     const { logs } = this.state;
-
     logs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     this.setState({ filterLogs: logs, selectedSortId: '1', selectedTypeSort: '1' });
   }
@@ -79,8 +80,6 @@ class UserLogs extends React.Component {
     const { logs } = this.state;
 
     let filteredLogs;
-    console.log(event.target.value);
-    console.log(logs);
     if (String(event.target.value) === String(-1)) {
       filteredLogs = logs;
     } else {
@@ -138,7 +137,7 @@ class UserLogs extends React.Component {
                   </button> */}
 
                   <select id="bender" value={this.state.filterOption} onChange={this.filterByEvent}>
-                    <option key={-1} value={-1}>Events</option>
+                    <option key={-1} value={-1}>All Events</option>
                     {Object.keys(EVENT_TYPES).map(key => (
                       <option key={key} value={key}>{EVENT_TYPES[key]}</option>
                    ))}

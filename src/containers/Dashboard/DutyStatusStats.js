@@ -52,7 +52,7 @@ class DutyStatusStats extends React.Component {
   componentDidMount() {
     this.setState({
       isMounted: true,
-    })
+    });
     // console.log("didmount");
     this.getData();
   }
@@ -60,7 +60,7 @@ class DutyStatusStats extends React.Component {
   componentWillUnmount() {
     this.setState({
       isMounted: false,
-    })
+    });
   }
 
   getData() {

@@ -4,6 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Container, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import * as funct from '../../utils/tableFunctions';
 // import Loader from '../../components/Loader/Loader';
 // import { DUTY_STATUS } from '../../utils/eventTypes';
 // import * as functions from './functions';
@@ -13,7 +14,7 @@ import '../../assets/styles/buttons.css';
 class AlertsTable extends React.Component {
   constructor(props) {
     super(props);
-    const stats = this.objToArr(this.props.stats.driversAlerts);
+    const stats = funct.objToArr(this.props.stats.driversAlerts);
     this.state = {
       stats,
       selectedSortId: null,
@@ -23,54 +24,29 @@ class AlertsTable extends React.Component {
     this.sortByColumnDown = this.sortByColumnDown.bind(this);
     this.sortByColumnAZ = this.sortByColumnAZ.bind(this);
     this.sortByColumnZA = this.sortByColumnZA.bind(this);
-    this.sortAZFunction = this.sortAZFunction.bind(this);
-    this.sortZAFunction = this.sortZAFunction.bind(this);
-  }
-
-  objToArr(stats) {
-    const statsArray = [];
-    Object.keys(stats).forEach((key) => {
-      const obj = stats[key];
-      obj.key = key;
-      statsArray.push(obj);
-    });
-    console.log(statsArray);
-    return statsArray;
   }
 
   sortByColumnDown(column, id) {
-    const { stats } = this.state;
-
-    stats.sort((a, b) => a[column] - b[column]);
+    let { stats } = this.state;
+    stats = funct.sortByColumnDown(column, stats);
     this.setState({ stats, selectedSortId: id, selectedTypeSort: '0' });
   }
 
   sortByColumnUp(column, id) {
-    const { stats } = this.state;
-
-    stats.sort((a, b) => b[column] - a[column]);
+    let { stats } = this.state;
+    stats = funct.sortByColumnUp(column, stats);
     this.setState({ stats, selectedSortId: id, selectedTypeSort: '1' });
   }
 
-  sortAZFunction(a, b) {
-    return this.props.users[a.key].lastName.localeCompare(this.props.users[b.key].lastName);
-  }
-
-  sortZAFunction(a, b) {
-    return this.props.users[b.key].lastName.localeCompare(this.props.users[a.key].lastName);
-  }
-
   sortByColumnAZ() {
-    const { stats } = this.state;
-
-    stats.sort(this.sortAZFunction);
+    let { stats } = this.state;
+    stats = funct.sortByColumnAZ('Driver', stats, this.props.users);
     this.setState({ stats, selectedSortId: '0', selectedTypeSort: '0' });
   }
 
   sortByColumnZA() {
-    const { stats } = this.state;
-
-    stats.sort(this.sortZAFunction);
+    let { stats } = this.state;
+    stats = funct.sortByColumnZA('Driver', stats, this.props.users);
     this.setState({ stats, selectedSortId: '0', selectedTypeSort: '1' });
   }
 

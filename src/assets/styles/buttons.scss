@@ -118,3 +118,15 @@ button:focus {
 br{
   height: 1px;
 }
+
+select {
+  background: transparent;
+  border-top: transparent !important;
+  border-left: transparent !important;
+  border-right: transparent !important;
+  border-bottom: transparent !important;
+}
+
+select:focus {
+  outline:0 !important;
+}

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 // import Loader from '../../components/Loader/Loader';
 import { DUTY_STATUS } from '../../utils/eventTypes';
 import * as functions from './functions';
+import * as funct from '../../utils/tableFunctions';
 import '../../assets/styles/buttons.css';
 
 const styles = {
@@ -25,7 +26,7 @@ const styles = {
 class SimpleTable extends React.Component {
   constructor(props) {
     super(props);
-    const stats = this.objToArr(props.stats);
+    const stats = funct.objToArr(props.stats);
     this.state = {
       stats,
       selectedSortId: null,
@@ -35,60 +36,37 @@ class SimpleTable extends React.Component {
     this.sortByColumnDown = this.sortByColumnDown.bind(this);
     this.sortByColumnAZ = this.sortByColumnAZ.bind(this);
     this.sortByColumnZA = this.sortByColumnZA.bind(this);
-    this.sortAZFunction = this.sortAZFunction.bind(this);
-    this.sortZAFunction = this.sortZAFunction.bind(this);
-  }
-
-  objToArr(stats) {
-    const statsArray = [];
-    Object.keys(stats).forEach((key) => {
-      const obj = stats[key];
-      obj.key = key;
-      statsArray.push(obj);
-    });
-    console.log(statsArray);
-    return statsArray;
   }
 
   sortByColumnDown(column) {
-    const { stats } = this.state;
-
-    stats.sort((a, b) => a[column] - b[column]);
+    let { stats } = this.state;
+    stats = funct.sortByColumnDown(column, stats);
     this.setState({ stats, selectedSortId: column, selectedTypeSort: '0' });
   }
 
   sortByColumnUp(column) {
-    const { stats } = this.state;
-
-    stats.sort((a, b) => b[column] - a[column]);
+    let { stats } = this.state;
+    stats = funct.sortByColumnUp(column, stats);
     this.setState({ stats, selectedSortId: column, selectedTypeSort: '1' });
   }
 
-  sortAZFunction(a, b) {
-    if (this.props.type === 'Driver') {
-      return this.props.users[a.key].lastName.localeCompare(this.props.users[b.key].lastName);
-    }
-    return this.props.vehicles[a.key].carMaker.localeCompare(this.props.vehicles[b.key].carMaker);
-  }
-
-  sortZAFunction(a, b) {
-    if (this.props.type === 'Driver') {
-      return this.props.users[b.key].lastName.localeCompare(this.props.users[a.key].lastName);
-    }
-    return this.props.vehicles[b.key].carMaker.localeCompare(this.props.vehicles[a.key].carMaker);
-  }
-
   sortByColumnAZ() {
-    const { stats } = this.state;
-
-    stats.sort(this.sortAZFunction);
+    let { stats } = this.state;
+    if (this.props.type === 'Driver') {
+      stats = funct.sortByColumnAZ(this.props.type, stats, this.props.users);
+    } else {
+      stats = funct.sortByColumnAZ(this.props.type, stats, this.props.vehicles);
+    }
     this.setState({ stats, selectedSortId: '0', selectedTypeSort: '0' });
   }
 
   sortByColumnZA() {
-    const { stats } = this.state;
-
-    stats.sort(this.sortZAFunction);
+    let { stats } = this.state;
+    if (this.props.type === 'Driver') {
+      stats = funct.sortByColumnZA(this.props.type, stats, this.props.users);
+    } else {
+      stats = funct.sortByColumnZA(this.props.type, stats, this.props.vehicles);
+    }
     this.setState({ stats, selectedSortId: '0', selectedTypeSort: '1' });
   }
 
@@ -195,7 +173,7 @@ class SimpleTable extends React.Component {
                   <td style={styles.table}><Link to={`/drivers/${this.props.users[stat.key].id}`}>{this.props.users[stat.key].firstName} {this.props.users[stat.key].lastName}</Link></td>
                   }
                   { this.props.type === 'Vehicle' &&
-                  <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[stat.key].id}`}>{this.props.vehicles[stat.key].car_maker} {this.props.vehicles[stat.key].model}</Link></td>
+                  <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[stat.key].id}`}>{this.props.vehicles[stat.key].carMaker} {this.props.vehicles[stat.key].model}</Link></td>
                   }
                   <td style={styles.table}>{functions.round(stat['1'])} hours</td>
                   <td style={styles.table}>{functions.round(stat['2'])} hours</td>
