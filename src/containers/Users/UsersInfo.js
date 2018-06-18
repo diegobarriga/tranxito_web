@@ -41,13 +41,8 @@ class UsersInfo extends React.Component {
 
     const totalUsers = filteredUsers.length;
     const { t, i18n } = this.props;
-    const changeLanguage = (lng) => {
-      i18n.changeLanguage(lng);
-    };
     return (
       <div>
-        <button onClick={() => changeLanguage('en')}>en</button>
-        <button onClick={() => changeLanguage('es')}>es</button>
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder="Search" value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">

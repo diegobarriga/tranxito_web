@@ -6,6 +6,11 @@ i18n.use(LanguageDetector).init({
   resources: {
     en: {
       translations: {
+        Logout: 'Logout',
+        Profile: 'Profile',
+
+        Drivers: 'Drivers',
+
         'Create driver': 'Create driver',
         'Create multiple drivers': 'Create multiple drivers',
 
@@ -15,6 +20,12 @@ i18n.use(LanguageDetector).init({
     },
     es: {
       translations: {
+
+        Logout: 'Cerrar Sesión',
+        Profile: 'Perfil',
+
+        Drivers: 'Conductores',
+
         'Create driver': 'Crear conductor',
         'Create multiple drivers': 'Crear multiples conductores',
 
