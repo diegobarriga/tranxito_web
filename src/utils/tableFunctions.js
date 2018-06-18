@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 export function objToArr(stats) {
   const statsArray = [];
   Object.keys(stats).forEach((key) => {
@@ -35,4 +37,31 @@ export function sortByColumnZA(type, data, info) {
     }
     return info[b.key].carMaker.localeCompare(info[a.key].carMaker);
   });
+}
+
+export function formatDate(datetime) {
+  return moment(datetime).format('MMMM Do YYYY, h:mm a');
+}
+
+export function sortByTimestampDown(logs) {
+  logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  return logs;
+}
+
+export function sortByTimestampUp(logs) {
+  logs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  return logs;
+}
+
+export function filterByEvent(logs, event) {
+  let filteredLogs;
+  if (String(event.target.value) === String(-1)) {
+    filteredLogs = logs;
+  } else {
+    filteredLogs = logs.filter(log => ((
+      String(log.type) === String(event.target.value)
+    )));
+  }
+
+  return filteredLogs;
 }
