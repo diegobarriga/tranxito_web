@@ -47,23 +47,35 @@ class SignupForm extends Component {
     console.log(data);
     if (_.isEmpty(String(data.firstName))) {
       errors.firstName = 'This field is required';
+    } else if (_.isEmpty(String(data.firstName.trim()))) {
+      errors.firstName = "This field can't be blank";
     }
     if (_.isEmpty(String(data.lastName))) {
       errors.lastName = 'This field is required';
+    } else if (_.isEmpty(String(data.lastName.trim()))) {
+      errors.lastName = "This field can't be blank";
     }
     if (_.isEmpty(String(data.username))) {
       errors.username = 'This field is required';
+    } else if (_.isEmpty(String(data.username.trim()))) {
+      errors.username = "This field can't be blank";
     }
     if (_.isEmpty(String(data.email))) {
       errors.email = 'This field is required';
+    } else if (_.isEmpty(String(data.email.trim()))) {
+      errors.email = "This field can't be blank";
     } else if (!validator.isEmail(String(data.email))) {
       errors.email = 'Input is not a valid email';
     }
     if (_.isEmpty(String(data.password))) {
       errors.password = 'This field is required';
+    } else if (_.isEmpty(String(data.password.trim()))) {
+      errors.password = "This field can't be blank";
     }
     if (_.isEmpty(String(data.passwordConfirmation))) {
       errors.passwordConfirmation = 'This field is required';
+    } else if (_.isEmpty(String(data.passwordConfirmation.trim()))) {
+      errors.passwordConfirmation = "This field can't be blank";
     } else if (!validator.equals(String(data.password), String(data.passwordConfirmation))) {
       errors.passwordConfirmation = "Passwords don't match";
     }
