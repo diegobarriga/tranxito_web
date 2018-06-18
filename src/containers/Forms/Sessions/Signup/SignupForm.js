@@ -20,6 +20,7 @@ class SignupForm extends Component {
         lastName: '',
         username: '',
         accountType: 'S',
+        accountStatus: true,
       },
       isLoading: false,
       redirectTo: false,

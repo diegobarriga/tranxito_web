@@ -28,15 +28,15 @@ class SignupView extends Component {
     this.setState({ isLoading: true });
     // Si estamos creando un usuario
     if (this.props.isCreate) {
-      console.log('CREANDO');
-      console.log(formData);
       this.postData(formData).then((response) => {
+        console.log(response);
         if (response.status === 200) {
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have created the new supervisor.' });
-        } else {
-          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         }
+      }).catch(() => {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
       });
     // Si estamos editando un usuario
     } else {
@@ -47,17 +47,17 @@ class SignupView extends Component {
         if (response.status === 200) {
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have edited the supervisor.' });
-        } else {
-          this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         }
+      }).catch(() => {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
       });
     }
   }
 
   postData(data) {
     return api.motorCarriers.createMotorCarrierPeople(
-      this.props.motorCarrierId,
+      parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId,
       this.props.token,
       data,
     );
