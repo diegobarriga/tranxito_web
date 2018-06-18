@@ -7,7 +7,7 @@ import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import Graph from './graph';
-import UserLogs from './UserLogs';
+import Logs from '../Logs/Logs';
 import UserInfo from './UserInfo';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
@@ -97,7 +97,7 @@ class User extends React.Component {
               <div className="tabDiv">
                 <Container>
                   <UserInfo id={id} />
-                  <UserLogs id={id} />
+                  <Logs id={id} type="user" />
                 </Container>
               </div>
             </TabPane>

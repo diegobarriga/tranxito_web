@@ -16,13 +16,40 @@
   background-color: $ON;
 }
 
+.event1_icon{
+  color: $OFF;
+}
+
+.event2_icon{
+  color: $SB;
+}
+
+.event3_icon{
+  color: $D;
+}
+
+.event4_icon{
+  color: $ON;
+}
+
+.grey_icon{
+  color: $e2e-grey;
+}
 
 .speedButton{
   background-color: $speed;
 }
 
+.purple_icon{
+  color: $speed;
+}
+
 .timeButton{
   background-color: $time;
+}
+
+.green_icon{
+  color: $time;
 }
 
 .speedButton, .timeButton{
@@ -67,4 +94,39 @@ thead {
 tbody td, thead th {
 width: 33%;
 float: left;
+}
+
+.default {
+  background: none;
+  border: none;
+}
+
+button{
+  padding-right: 0px !important;
+}
+
+button:focus {
+  outline:0 !important;
+}
+
+.buttons-container{
+  // display: block;
+  // vertical-align: top;
+  display: inline;
+}
+
+br{
+  height: 1px;
+}
+
+select {
+  background: transparent;
+  border-top: transparent !important;
+  border-left: transparent !important;
+  border-right: transparent !important;
+  border-bottom: transparent !important;
+}
+
+select:focus {
+  outline:0 !important;
 }

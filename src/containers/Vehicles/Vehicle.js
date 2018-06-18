@@ -7,7 +7,7 @@ import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import VehicleInfo from './VehicleInfo';
-import VehicleLogs from './VehicleLogs';
+import Logs from '../Logs/Logs';
 import Heatmap from './Heatmap';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
@@ -89,7 +89,7 @@ class Vehicle extends React.Component {
             <div className="tabDiv">
               <Container>
                 <VehicleInfo id={id} />
-                <VehicleLogs id={id} />
+                <Logs id={id} type="vehicle" />
               </Container>
             </div>
           </TabPane>
