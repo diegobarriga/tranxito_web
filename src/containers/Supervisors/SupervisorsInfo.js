@@ -90,7 +90,7 @@ SupervisorsInfo.propTypes = {
 
 const mapStateToProps = state => ({
   isLoading: state.users.loading,
-  users: state.auth.supervisors,
+  users: state.auth.users,
 });
 
 export default connect(mapStateToProps)(SupervisorsInfo);

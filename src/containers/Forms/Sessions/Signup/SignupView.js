@@ -29,8 +29,8 @@ class SignupView extends Component {
     // Si estamos creando un usuario
     if (this.props.isCreate) {
       this.postData(formData).then((response) => {
-        console.log(response);
         if (response.status === 200) {
+          this.props.createUser(response.data);
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have created the new supervisor.' });
         }
@@ -40,11 +40,9 @@ class SignupView extends Component {
       });
     // Si estamos editando un usuario
     } else {
-      console.log('EDITANDO');
-      console.log(formData);
-      console.log(this.props.match.params.id);
       this.patchData(formData).then((response) => {
         if (response.status === 200) {
+          this.props.createUser(response.data);
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have edited the supervisor.' });
         }
@@ -134,6 +132,7 @@ SignupView.propTypes = {
   match: PropTypes.object.isRequired,
   isCreate: PropTypes.bool.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
+  createUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -146,7 +145,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: data => dispatch(actions.signup(data)),
+  createUser: user => dispatch(actions.createUser(user)),
   resetError: () => dispatch(actions.errorReset()),
 });
 
