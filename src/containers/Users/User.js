@@ -6,9 +6,10 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import Graph from './graph';
+import Graph from '../Charts/LogsGraph';
 import Logs from '../Logs/Logs';
 import UserInfo from './UserInfo';
+import Alerts from './Alerts';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
@@ -83,6 +84,14 @@ class User extends React.Component {
                 Activity
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '3' })}
+                onClick={() => { this.toggle('3'); }}
+              >
+                Alerts
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
@@ -98,6 +107,13 @@ class User extends React.Component {
                 <Container>
                   <UserInfo id={id} />
                   <Logs id={id} type="user" />
+                </Container>
+              </div>
+            </TabPane>
+            <TabPane tabId="3">
+              <div className="tabDiv">
+                <Container>
+                  <Alerts id={id} activeTab={this.state.activeTab} />
                 </Container>
               </div>
             </TabPane>

@@ -43,6 +43,10 @@ export function formatDate(datetime) {
   return moment(datetime).format('MMMM Do YYYY, h:mm a');
 }
 
+export function formatDay(datetime) {
+  return moment(datetime).format('MMMM DD, YYYY');
+}
+
 export function sortByTimestampDown(logs) {
   logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   return logs;

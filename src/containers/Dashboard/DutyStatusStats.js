@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { EVENT_COLORS, DUTY_STATUS_LONG } from '../../utils/eventTypes';
 import '../../assets/styles/legend.css';
 import api from '../../services/api';
-import DoughnutChart from './DoughnutChart';
+import DoughnutChart from '../Charts/DoughnutChart';
 import SimpleTable from './SimpleTable';
 import * as functions from './functions';
 import Loader from '../../components/Loader/Loader';
