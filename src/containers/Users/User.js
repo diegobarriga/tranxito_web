@@ -25,6 +25,9 @@ class User extends React.Component {
 
   componentDidMount() {
     const auxArray = this.props.location.pathname.split('/');
+    if (this.props.navigation.length > 2) {
+      this.props.popCrumb();
+    }
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     const driverName = this.props.users[newCrumb].firstName;
@@ -116,6 +119,7 @@ User.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  popCrumb: PropTypes.func.isRequired,
   id: PropTypes.number,
 };
 
@@ -129,6 +133,7 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  popCrumb: () => dispatch(actions.popCrumb()),
 });
 
 const mapStateToProps = state => ({
