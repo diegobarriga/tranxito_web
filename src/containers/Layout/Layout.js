@@ -8,6 +8,10 @@ import '../../assets/styles/layout.css';
 
 
 class Layout extends Component {
+  componentDidMount() {
+    console.log(this.props.showSidebar);
+  }
+
   render() {
     return (
       <Aux>
@@ -24,7 +28,7 @@ class Layout extends Component {
               <div className="centerArea">
                 { this.props.children }
               </div>
-              { this.props.isAuthenticated &&
+              { this.props.showSidebar &&
               <div className="leftSidebar">
                 <Sidebar
                   isAdm={this.props.isAdmin}
@@ -50,10 +54,12 @@ Layout.propTypes = {
   token: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  showSidebar: PropTypes.bool.isRequired,
   image: PropTypes.string,
   name: PropTypes.string,
   last: PropTypes.string,
   mcName: PropTypes.string,
+
 };
 
 Layout.defaultProps = {
@@ -67,6 +73,7 @@ Layout.defaultProps = {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
+  showSidebar: state.auth.token !== null && state.auth.role !== 'D',
   userId: state.auth.userId,
   token: state.auth.token,
   isAdmin: state.auth.role === 'A',

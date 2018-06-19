@@ -29,8 +29,8 @@ import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
 import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 import faSort from '@fortawesome/fontawesome-free-solid/faSort';
 
-import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
+import Layout from './containers/Layout/Layout';
 import Users from './containers/Users/Users';
 import User from './containers/Users/User';
 import Vehicles from './containers/Vehicles/Vehicles';
@@ -51,6 +51,7 @@ import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier'
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import Supervisors from './containers/Supervisors/Supervisors';
+import Profile from './containers/Users/Profile/Profile';
 
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
@@ -88,6 +89,7 @@ class App extends Component {
           <Route path="/motor_carriers" component={MotorCarriers} />
           <Route path="/supervisors/:id/new_supervisor" component={SignupView} />
           <Route path="/supervisors" component={Supervisors} />
+          <Route path="/profile" component={Profile} />
         </Switch>
       </Layout>
     );
