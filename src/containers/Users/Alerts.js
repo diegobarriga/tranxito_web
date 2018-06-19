@@ -19,30 +19,58 @@ class Alerts extends React.Component {
       span: 'month',
       alerts: [],
       dataStats: {
-        datasets: [
-          {
-            lineTension: 0,
-            data: [],
-            // label: 'My First dataset',
-            fill: false,
-            backgroundColor: 'rgba(107, 70, 156, 0.4)',
-            borderColor: 'rgba(107, 70, 156, 1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(107, 70, 156, 1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(107, 70, 156, 1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 4,
-            pointHitRadius: 10,
-          },
-        ],
-        labels: [],
+        speed: {
+          datasets: [
+            {
+              lineTension: 0,
+              data: [],
+              // label: 'My First dataset',
+              fill: false,
+              backgroundColor: 'rgba(107, 70, 156, 0.4)',
+              borderColor: 'rgba(107, 70, 156, 1)',
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: 'rgba(107, 70, 156, 1)',
+              pointBackgroundColor: '#fff',
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: 'rgba(107, 70, 156, 1)',
+              pointHoverBorderColor: 'rgba(220,220,220,1)',
+              pointHoverBorderWidth: 2,
+              pointRadius: 4,
+              pointHitRadius: 10,
+            },
+          ],
+          labels: [],
+        },
+        time: {
+          datasets: [
+            {
+              lineTension: 0,
+              data: [],
+              // label: 'My First dataset',
+              fill: false,
+              backgroundColor: 'rgba(188, 214, 49, 0.4)',
+              borderColor: 'rgba(188, 214, 49, 1)',
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: 'rgba(188, 214, 49, 1)',
+              pointBackgroundColor: '#fff',
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: 'rgba(188, 214, 49, 1)',
+              pointHoverBorderColor: 'rgba(220,220,220,1)',
+              pointHoverBorderWidth: 2,
+              pointRadius: 4,
+              pointHitRadius: 10,
+            },
+          ],
+          labels: [],
+        },
       },
     };
     this.groupData = this.groupData.bind(this);
@@ -119,12 +147,21 @@ class Alerts extends React.Component {
     const groupedAlerts = _.groupBy(data, result => moment(result.timestamp).startOf('day'));
     console.log(groupedAlerts);
 
-    Object.keys(groupedResults).forEach((key) => {
+    Object.keys(groupedSpeedResults).forEach((key) => {
       const obj = {
         x: new Date(key),
-        y: groupedResults[key],
+        y: groupedSpeedResults[key],
       };
-      lineData.push(obj);
+      speedData.push(obj);
+      // dataStats.labels.push(new Date(key));
+    });
+
+    Object.keys(groupedTimeResults).forEach((key) => {
+      const obj = {
+        x: new Date(key),
+        y: groupedTimeResults[key],
+      };
+      timeData.push(obj);
       // dataStats.labels.push(new Date(key));
     });
 
@@ -138,11 +175,12 @@ class Alerts extends React.Component {
       // dataStats.labels.push(new Date(key));
     });
     console.log('aleerts', alerts);
-    const orderedData = _.sortBy(lineData, 'x');
+    const orderedSpeedData = _.sortBy(speedData, 'x');
+    const orderedTimeData = _.sortBy(timeData, 'x');
     // orderedData.unshift({ x: moment(Date.now() - this.getSpan()).format(), y: 0 });
-    dataStats.datasets[0].data = orderedData;
+    dataStats.speed.datasets[0].data = orderedSpeedData;
+    dataStats.time.datasets[0].data = orderedTimeData;
 
-    console.log(orderedData);
 
     if (this.state.isMounted) {
       this.setState({
@@ -179,7 +217,9 @@ class Alerts extends React.Component {
 
     else if (this.state.loading) return <Loader />;
 
-    const yMax = Math.max(...this.state.dataStats.datasets[0].data.map(o => o.y));
+    const yMaxSpeed = Math.max(...this.state.dataStats.speed.datasets[0].data.map(o => o.y));
+    const yMaxTime = Math.max(...this.state.dataStats.time.datasets[0].data.map(o => o.y));
+
     console.log('alerts', this.state.alerts);
     return (
       <div className="margin">
@@ -194,9 +234,14 @@ class Alerts extends React.Component {
         </div>
         <div className="barChart">
           <LineChart
-            data={this.state.dataStats}
-            title="Evolution of alerts"
-            yMax={yMax}
+            data={this.state.dataStats.speed}
+            title="Evolution of speed alerts"
+            yMax={yMaxSpeed}
+          />
+          <LineChart
+            data={this.state.dataStats.time}
+            title="Evolution of time alerts"
+            yMax={yMaxTime}
           />
         </div>
         <AlertsTable
