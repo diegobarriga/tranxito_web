@@ -4,6 +4,7 @@ export {
   signup,
   errorReset,
   logoutToken,
+  getMotorCarrier,
 } from './auth';
 
 export {
@@ -30,4 +31,3 @@ export {
 export { getTrackings } from './tracking';
 export { createVehicle } from './vehicle';
 export { onVehicleDelete } from './vehicles';
-

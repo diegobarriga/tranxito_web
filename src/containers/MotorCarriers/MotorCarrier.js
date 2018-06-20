@@ -5,6 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import '../../assets/styles/forms.css';
 import Aux from '../../hoc/Aux';
+import Loader from '../../components/Loader/Loader';
 
 
 class MotorCarrier extends React.Component {
@@ -18,10 +19,13 @@ class MotorCarrier extends React.Component {
       authRedirect = <Redirect to="/" />;
     }
 
+    if (this.props.loading === true) return <Loader />;
+
     return (
       <Aux>
         { authRedirect }
         <h1> MotorCarrier </h1>
+        <h1> {this.props.mCarrierName} </h1>
         <div className="buttons">
           <Link className="btn btn-sm green spacing" to="/drivers/new_driver"><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
         </div>
@@ -34,12 +38,15 @@ class MotorCarrier extends React.Component {
 MotorCarrier.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  mCarrierName: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
-
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
   isAdmin: state.auth.role === 'A',
+  loading: state.auth.loading,
+  mCarrierName: state.auth.mcName,
 });
 
 export default connect(mapStateToProps)(MotorCarrier);

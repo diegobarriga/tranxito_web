@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Container, Row, Col, Button } from 'reactstrap';
@@ -14,10 +14,10 @@ class MotorCarriers extends React.Component {
   componentDidMount() {
     this.props.onInitMC(this.props.token);
   }
-  onDeleteBtnClick() {
-    const confirmDelete = window.confirm('Are you sure you want to delete this driver?');
+  onDeleteBtnClick(mCarrierId) {
+    const confirmDelete = window.confirm('Are you sure you want to delete this motor carrier');
     if (confirmDelete) {
-      // this.props.deleteUser(userId, token);
+      this.props.onDeleteMCarrier(mCarrierId, this.props.token);
     }
   }
 
@@ -70,15 +70,19 @@ class MotorCarriers extends React.Component {
                   this.props.mCarrierList.map(carrier => (
                     <div key={carrier.id} style={flexContainer} className="item">
                       <div key={carrier.id} style={containedObject}>
-                        <Link key={carrier.id} to="/">
+                        <Button onClick={() => {
+                          this.props.getMotorCarrier(carrier.id, this.props.token, carrier.name);
+                          this.props.history.push(`/motor_carriers/${carrier.id}`);
+                           }}
+                        >
                           {carrier.name}
-                        </Link>
+                        </Button>
                       </div>
 
                       <div>
                         <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/new_supervisor`} ><FontAwesomeIcon icon="user" color="white" /> Add Supervisor</Link>
                         <Link className="btn btn-secondary btn-sm" to={`/motor_carriers/${carrier.id}/edit`} ><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
-                        <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}><FontAwesomeIcon icon="trash" color="white" /></Button>
+                        <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(carrier.id)}><FontAwesomeIcon icon="trash" color="white" /></Button>
                       </div>
                     </div>
 
@@ -101,6 +105,9 @@ MotorCarriers.propTypes = {
   token: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onInitMC: PropTypes.func.isRequired,
+  onDeleteMCarrier: PropTypes.func.isRequired,
+  getMotorCarrier: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 
@@ -114,6 +121,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onInitMC: token => dispatch(actions.initMCarriers(token)),
+  onDeleteMCarrier: (mCarrierId, token) => dispatch(actions.onDelete(mCarrierId, token)),
+  getMotorCarrier: (Id, token, name) => dispatch(actions.getMotorCarrier(Id, token, name)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MotorCarriers);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MotorCarriers));

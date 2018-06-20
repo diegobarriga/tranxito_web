@@ -73,6 +73,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers?access_token=${token}`),
     getMotorCarrier: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`),
+    deleteMotorCarrier: (motorCarrierId, token) =>
+      axios.delete(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`),
     createMotorCarrier: (motorCarrier, token) =>
       axios.post(`${apiPath}/MotorCarriers?access_token=${token}`, motorCarrier),
     updateMotorCarrier: (motorCarrierId, data, token) =>

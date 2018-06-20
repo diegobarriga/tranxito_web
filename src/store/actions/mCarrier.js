@@ -21,6 +21,23 @@ export const createMCFail = error => ({
   error,
 });
 
+export const onDeleteSuccess = (mCarrierId, response) => ({
+  type: actionTypes.USER_DELETE,
+  mCarrierId,
+  response,
+});
+
+export const onDelete = (mCarrierId, token) => (dispatch) => {
+  api.motorCarriers.deleteMotorCarrier(mCarrierId, token)
+    .then((response) => {
+      console.log(response);
+      dispatch(onDeleteSuccess(mCarrierId, response));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const initMCarriers = token => (dispatch) => {
   api.motorCarriers.getMotorCarriers(token)
     .then((response) => {

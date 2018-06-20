@@ -6,6 +6,24 @@ export const authStart = () => ({
   type: actionTypes.AUTH_START,
 });
 
+export const getMotorCarrierStart = () => ({
+  type: actionTypes.GET_MOTOR_CARRIER_START,
+});
+
+export const getMotorCarrierSuccess = (
+  motorCarrierId,
+  vehicles,
+  users,
+  supervisors,
+  mcName,
+) => ({
+  type: actionTypes.GET_MOTOR_CARRIER_SUCCESS,
+  motorCarrierId,
+  vehicles,
+  users,
+  supervisors,
+  mcName,
+});
 
 export const authSuccess = (
   token,
@@ -167,4 +185,36 @@ export const login = (email, password) => (dispatch) => {
       console.log(err.response);
       dispatch(authFail(err));
     });
+};
+
+export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => (dispatch) => {
+  dispatch(getMotorCarrierStart());
+  console.log(motorCarrierId);
+  api.motorCarriers.getMotorCarrierVehicles(
+    motorCarrierId,
+    token,
+  ).then((vehiclesResponse) => {
+    console.log(vehiclesResponse);
+    const filter = '{"where": {"accountStatus": "true"}}';
+    api.motorCarriers.getMotorCarrierPeople(
+      motorCarrierId,
+      token,
+      filter,
+    ).then((peopleResponse) => {
+      console.log(peopleResponse);
+      const supervisors = peopleResponse.data.filter(user => (
+        user.accountType === 'S'
+      ));
+      const usersObject = functions.arrayToObject(peopleResponse.data);
+      const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+      const supervisorsObject = functions.arrayToObject(supervisors);
+      dispatch(getMotorCarrierSuccess(
+        motorCarrierId,
+        vehiclesObject,
+        usersObject,
+        supervisorsObject,
+        motorCarrierName,
+      ));
+    });
+  });
 };

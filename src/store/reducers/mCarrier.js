@@ -29,6 +29,15 @@ const setMotorCarriers = (state, action) => updateObject(state, {
   motorCarriers: action.motorCarriers,
 });
 
+const onDeleteMCarrierSuccess = (state, action) => {
+  const motorCarriersCpy = { ...state.motorCarriers };
+  delete motorCarriersCpy[action.mCarrierId];
+  return updateObject(state, {
+    error: action.response,
+    loading: false,
+    motorCarriers: motorCarriersCpy,
+  });
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,6 +45,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_MCCREATE: return createMCarrierStart(state);
     case actionTypes.CREATEMC_SUCCESS: return createMCSuccess(state, action);
     case actionTypes.MCARRIER_CREATE_FAIL: return createMCFail(state, action);
+    case actionTypes.DELETE_MCARRIER: return onDeleteMCarrierSuccess(state, action);
 
     default:
       return state;
