@@ -20,6 +20,8 @@ export const authSuccess = (
   firstName,
   lastName,
   mcName,
+  email,
+  driverLicenseNumber,
 ) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
@@ -34,6 +36,8 @@ export const authSuccess = (
   firstName,
   lastName,
   mcName,
+  email,
+  driverLicenseNumber,
 });
 
 export const authFail = error => ({
@@ -137,6 +141,8 @@ export const login = (email, password) => (dispatch) => {
                     userResponse.data.firstName,
                     userResponse.data.lastName,
                     mCresponse.data.name,
+                    userResponse.data.email,
+                    userResponse.data.driverLicenseNumber,
                   ));
                 });
               });
@@ -154,6 +160,9 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.image,
               userResponse.data.firstName,
               userResponse.data.lastName,
+              null,
+              userResponse.data.email,
+              userResponse.data.driverLicenseNumber,
             ));
           }
         })

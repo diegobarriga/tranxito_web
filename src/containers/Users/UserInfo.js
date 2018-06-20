@@ -6,6 +6,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Row, Button } from 'reactstrap';
 import Avatar from '../../components/Avatar';
 import api from '../../services/api';
+import Aux from '../../hoc/Aux';
 import * as actions from '../../store/actions/index';
 import '../../assets/styles/users.css';
 
@@ -55,23 +56,28 @@ class UserInfo extends React.Component {
               <div>
                 <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
                 { this.props.isDriver ?
-                  <p>{this.props.user.driverLicenseNumber}</p>
+                  <Aux>{this.props.user.driverLicenseNumber}</Aux>
                 :
-                  <p>{this.props.users[this.props.id].driverLicenseNumber}</p>
+                  <Aux>{this.props.users[this.props.id].driverLicenseNumber}</Aux>
                 }
               </div>
               <div>
                 <FontAwesomeIcon icon="envelope" className="customIcon" />{'   '}
                 { this.props.isDriver ?
-                  <p>{this.props.user.email}</p>
+                  <Aux>{this.props.user.email}</Aux>
                 :
-                  <p>{this.props.users[this.props.id].email}</p>
+                  <Aux>{this.props.users[this.props.id].email}</Aux>
                 }
               </div>
             </div>
           </div>
           <div style={styles.pStyle}>
-            <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
+            { this.props.isDriver ?
+              <Link className="btn btn-secondary btn-sm" to="/profile"><FontAwesomeIcon icon="edit" color="white" /></Link>
+            :
+              <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>
+            }
+
             { !this.props.isDriver &&
               <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
             }

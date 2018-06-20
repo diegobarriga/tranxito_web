@@ -14,6 +14,8 @@ const initialState = {
   image: null,
   firstName: null,
   lastName: null,
+  email: null,
+  driverLicenseNumber: null,
 };
 
 const authStart = state => updateObject(state, { error: null, loading: true });
@@ -46,6 +48,8 @@ const authLogout = (state) => {
     firstName: null,
     lastName: null,
     mcName: null,
+    email: null,
+    driverLicenseNumber: null,
   });
 };
 
@@ -81,6 +85,8 @@ const authSuccess = (state, action) => updateObject(state, {
   firstName: action.firstName,
   lastName: action.lastName,
   mcName: action.mcName,
+  email: action.email,
+  driverLicenseNumber: action.driverLicenseNumber,
 
 });
 

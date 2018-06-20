@@ -7,6 +7,7 @@ import classnames from 'classnames';
 // import Logs from '../Logs/Logs';
 import UserInfo from '../UserInfo';
 import '../../../assets/styles/tabs.css';
+import LogsTable from './LogsTable';
 // import * as actions from '../../../store/actions/index';
 
 
@@ -33,7 +34,7 @@ class DriverProfile extends React.Component {
   render() {
     return (
       <Container>
-        <Row>
+        <Row className="driver-container">
           <Col md={{ size: 12 }}>
             <UserInfo isDriver={true} id={this.props.id} />
           </Col>
@@ -74,7 +75,10 @@ class DriverProfile extends React.Component {
           </TabPane>
           <TabPane tabId="2">
             <div className="tabDiv">
-              <h1>Chao</h1>
+              <br />
+              <LogsTable type="user" id={this.props.id} />
+              <br />
+              <br />
             </div>
           </TabPane>
           <TabPane tabId="3">
