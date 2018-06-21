@@ -24,11 +24,13 @@ class MotorCarrier extends React.Component {
     return (
       <Aux>
         { authRedirect }
-        <h1> MotorCarrier </h1>
         <h1> {this.props.mCarrierName} </h1>
         <div className="buttons">
           <Link className="btn btn-sm green spacing" to="/drivers/new_driver"><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
         </div>
+        <Link className="btn btn-sm green spacing" to="/dashboard"> Go to dashboard</Link>
+        <Link className="btn btn-sm green spacing" to="/drivers"> Go to drivers</Link>
+        <Link className="btn btn-sm green spacing" to="/vehicles"> Go to vehicles</Link>
       </Aux>
 
     );
