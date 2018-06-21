@@ -15,13 +15,12 @@ const createMCFail = (state, action) => updateObject(state, {
 });
 
 const createMCSuccess = (state, action) => {
-  const otherCarriers = state.motorCarriers;
-  const newCarrier = action.regData;
-
+  const otherCarriers = { ...state.motorCarriers };
+  otherCarriers[action.response.data.id] = action.response.data;
   return updateObject(state, {
     loading: false,
     error: action.response,
-    motorCarriers: [newCarrier, ...otherCarriers],
+    motorCarriers: otherCarriers,
   });
 };
 
@@ -33,7 +32,6 @@ const onDeleteMCarrierSuccess = (state, action) => {
   const motorCarriersCpy = { ...state.motorCarriers };
   delete motorCarriersCpy[action.mCarrierId];
   return updateObject(state, {
-    error: action.response,
     loading: false,
     motorCarriers: motorCarriersCpy,
   });

@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import api from '../../services/api';
+import * as functions from './functions';
 
 export const setMotorCarriers = motorcarriers => ({
   type: actionTypes.SET_MOTORCARRIER,
@@ -22,15 +23,14 @@ export const createMCFail = error => ({
 });
 
 export const onDeleteSuccess = (mCarrierId, response) => ({
-  type: actionTypes.USER_DELETE,
+  type: actionTypes.DELETE_MCARRIER,
   mCarrierId,
   response,
 });
 
-export const onDelete = (mCarrierId, token) => (dispatch) => {
+export const deleteMotorCarrier = (mCarrierId, token) => (dispatch) => {
   api.motorCarriers.deleteMotorCarrier(mCarrierId, token)
     .then((response) => {
-      console.log(response);
       dispatch(onDeleteSuccess(mCarrierId, response));
     })
     .catch((err) => {
@@ -42,7 +42,9 @@ export const initMCarriers = token => (dispatch) => {
   api.motorCarriers.getMotorCarriers(token)
     .then((response) => {
       console.log(response.data);
-      dispatch(setMotorCarriers(response.data));
+      const mCarrierObject = functions.arrayToObject(response.data);
+      console.log(mCarrierObject);
+      dispatch(setMotorCarriers(mCarrierObject));
     })
     .catch((error) => {
       console.log(error);

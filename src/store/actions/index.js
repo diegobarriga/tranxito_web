@@ -10,6 +10,7 @@ export {
 export {
   initMCarriers,
   carrierRegister,
+  deleteMotorCarrier,
 } from './mCarrier';
 
 export {

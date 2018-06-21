@@ -67,10 +67,12 @@ class MotorCarriers extends React.Component {
             <Col sm="12" md={{ size: 11 }}>
               <div className="ui divided items">
                 {this.props.mCarrierList !== null &&
-                  this.props.mCarrierList.map(carrier => (
+                  Object.values(this.props.mCarrierList).map(carrier => (
                     <div key={carrier.id} style={flexContainer} className="item">
                       <div key={carrier.id} style={containedObject}>
-                        <Button onClick={() => {
+                        <Button
+                          key={carrier.id}
+                          onClick={() => {
                           this.props.getMotorCarrier(carrier.id, this.props.token, carrier.name);
                           this.props.history.push(`/motor_carriers/${carrier.id}`);
                            }}
@@ -100,7 +102,7 @@ class MotorCarriers extends React.Component {
 
 
 MotorCarriers.propTypes = {
-  mCarrierList: PropTypes.array.isRequired,
+  mCarrierList: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -121,7 +123,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onInitMC: token => dispatch(actions.initMCarriers(token)),
-  onDeleteMCarrier: (mCarrierId, token) => dispatch(actions.onDelete(mCarrierId, token)),
+  onDeleteMCarrier: (mCarrierId, token) => dispatch(actions.deleteMotorCarrier(mCarrierId, token)),
   getMotorCarrier: (Id, token, name) => dispatch(actions.getMotorCarrier(Id, token, name)),
 });
 
