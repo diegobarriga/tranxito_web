@@ -12,31 +12,41 @@ export function objToArr(stats) {
 }
 
 export function sortByColumnDown(column, stats) {
-  stats.sort((a, b) => a[column] - b[column]);
+  if (stats) {
+    stats.sort((a, b) => a[column] - b[column]);
+  }
   return stats;
 }
 
 export function sortByColumnUp(column, stats) {
-  stats.sort((a, b) => b[column] - a[column]);
+  if (stats) {
+    stats.sort((a, b) => b[column] - a[column]);
+  }
   return stats;
 }
 
 export function sortByColumnAZ(type, data, info) {
-  return data.sort((a, b) => {
-    if (type === 'Driver') {
-      return info[a.key].lastName.localeCompare(info[b.key].lastName);
-    }
-    return info[a.key].carMaker.localeCompare(info[b.key].carMaker);
-  });
+  if (data) {
+    return data.sort((a, b) => {
+      if (type === 'Driver') {
+        return info[a.key].lastName.localeCompare(info[b.key].lastName);
+      }
+      return info[a.key].carMaker.localeCompare(info[b.key].carMaker);
+    });
+  }
+  return data;
 }
 
 export function sortByColumnZA(type, data, info) {
-  return data.sort((a, b) => {
-    if (type === 'Driver') {
-      return info[b.key].lastName.localeCompare(info[a.key].lastName);
-    }
-    return info[b.key].carMaker.localeCompare(info[a.key].carMaker);
-  });
+  if (data) {
+    return data.sort((a, b) => {
+      if (type === 'Driver') {
+        return info[b.key].lastName.localeCompare(info[a.key].lastName);
+      }
+      return info[b.key].carMaker.localeCompare(info[a.key].carMaker);
+    });
+  }
+  return data;
 }
 
 export function formatDate(datetime) {
@@ -48,20 +58,22 @@ export function formatDay(datetime) {
 }
 
 export function sortByTimestampDown(logs) {
-  logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  if (logs) {
+    logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  }
   return logs;
 }
 
 export function sortByTimestampUp(logs) {
-  logs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  if (logs) {
+    logs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  }
   return logs;
 }
 
 export function filterByEvent(logs, event) {
-  let filteredLogs;
-  if (String(event.target.value) === String(-1)) {
-    filteredLogs = logs;
-  } else {
+  let filteredLogs = logs;
+  if (logs && String(event.target.value) !== String(-1)) {
     filteredLogs = logs.filter(log => ((
       String(log.type) === String(event.target.value)
     )));

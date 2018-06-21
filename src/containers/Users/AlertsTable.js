@@ -49,30 +49,27 @@ class AlertsTable extends React.Component {
 
   render() {
     let button;
-    if (this.state.selectedSortId === null) {
+    if (this.state.selectedSortId === null || this.state.selectedSortId !== '0') {
       button = (
         <button onClick={() => this.sortByTimestampUp()} className="default">
           <FontAwesomeIcon
             icon="sort"
-            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
           />
         </button>
       );
-    } else if (this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') {
+    } else if (this.state.selectedSortId === '0' && this.state.selectedTypeSort === '1') {
       button = (
         <button onClick={() => this.sortByTimestampDown()} className="default">
           <FontAwesomeIcon
             icon="sort-down"
-            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '0') ? 'green_icon' : ''}
           />
         </button>
       );
-    } else {
+    } else if (this.state.selectedSortId === '0' && this.state.selectedTypeSort === '0') {
       button = (
         <button onClick={() => this.sortByTimestampUp()} className="default">
           <FontAwesomeIcon
             icon="sort-up"
-            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
           />
         </button>
       );

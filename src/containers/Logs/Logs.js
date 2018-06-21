@@ -24,7 +24,7 @@ class Logs extends React.Component {
     super(props);
     this.state = {
       logs: null,
-      filterLogs: null,
+      filteredLogs: null,
       selectedSortId: null,
       selectedTypeSort: null,
       loading: true,
@@ -51,7 +51,7 @@ class Logs extends React.Component {
           const logs = response.data;
           console.log(logs);
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-          this.setState({ logs, filterLogs: logs, loading: false });
+          this.setState({ logs, filteredLogs: logs, loading: false });
         } catch (error) {
           console.log('errror');
           this.setState({ loading: false });
@@ -60,51 +60,48 @@ class Logs extends React.Component {
   }
 
   sortByTimestampDown() {
-    let { logs } = this.state;
-    logs = funct.sortByTimestampDown(logs);
-    this.setState({ filterLogs: logs, selectedSortId: '1', selectedTypeSort: '0' });
+    let { filteredLogs } = this.state;
+    filteredLogs = funct.sortByTimestampDown(filteredLogs);
+    this.setState({ filteredLogs, selectedSortId: '1', selectedTypeSort: '0' });
   }
 
   sortByTimestampUp() {
-    let { logs } = this.state;
-    logs = funct.sortByTimestampUp(logs);
-    this.setState({ filterLogs: logs, selectedSortId: '1', selectedTypeSort: '1' });
+    let { filteredLogs } = this.state;
+    filteredLogs = funct.sortByTimestampUp(filteredLogs);
+    this.setState({ filteredLogs, selectedSortId: '1', selectedTypeSort: '1' });
   }
 
   filterByEvent(event) {
     const { logs } = this.state;
     const filteredLogs = funct.filterByEvent(logs, event);
-    this.setState({ filterLogs: filteredLogs, selectedSortId: '0', selectedTypeSort: '0' });
+    this.setState({ filteredLogs, selectedSortId: '0', selectedTypeSort: '0' });
   }
 
   render() {
     if (this.state.loading) return <Loader />;
     // this.state.logs.reverse();
     let button;
-    if (this.state.selectedSortId === null) {
+    if (this.state.selectedSortId === null || this.state.selectedSortId !== '1') {
       button = (
         <button onClick={() => this.sortByTimestampUp()} className="default">
           <FontAwesomeIcon
             icon="sort"
-            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
           />
         </button>
       );
-    } else if (this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') {
+    } if (this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') {
       button = (
         <button onClick={() => this.sortByTimestampDown()} className="default">
           <FontAwesomeIcon
             icon="sort-down"
-            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '0') ? 'green_icon' : ''}
           />
         </button>
       );
-    } else {
+    } else if (this.state.selectedSortId === '1' && this.state.selectedTypeSort === '0') {
       button = (
         <button onClick={() => this.sortByTimestampUp()} className="default">
           <FontAwesomeIcon
             icon="sort-up"
-            className={(this.state.selectedSortId === '1' && this.state.selectedTypeSort === '1') ? 'green_icon' : ''}
           />
         </button>
       );
@@ -133,7 +130,7 @@ class Logs extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.filterLogs.map(event => (
+              {this.state.filteredLogs.map(event => (
                 <tr key={event.id}>
                   <td>{event.type === 1 &&
                     <Badge className={`event${event.code}`} style={styles.badge}>
