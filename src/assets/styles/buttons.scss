@@ -119,14 +119,19 @@ br{
   height: 1px;
 }
 
-select {
+tr th select {
   background: transparent;
   border-top: transparent !important;
   border-left: transparent !important;
   border-right: transparent !important;
   border-bottom: transparent !important;
+  font-weight: bold;
 }
 
-select:focus {
+tr th select:focus {
   outline:0 !important;
+}
+
+thead tr{
+  line-height: 100% !important;
 }
