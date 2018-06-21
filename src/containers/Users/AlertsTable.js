@@ -187,7 +187,7 @@ class AlertsTable extends React.Component {
                         <tbody>
                           {
                             this.props.groupedAlerts[stat.key].map(alert => (
-                              <tr>
+                              <tr key={alert.timestamp}>
                                 <td style={styles.table}>
                                   {funct.formatHour(alert.timestamp)}
                                 </td>
