@@ -14,6 +14,7 @@ const initialState = {
   image: null,
   firstName: null,
   lastName: null,
+  lastMod: {},
 };
 
 const authStart = state => updateObject(state, { error: null, loading: true });
@@ -46,6 +47,7 @@ const authLogout = (state) => {
     firstName: null,
     lastName: null,
     mcName: null,
+    lastMod: {},
   });
 };
 
@@ -65,6 +67,14 @@ const createUser = (state, action) => {
   });
 };
 
+const updateLastMod = (state, action) => {
+  console.log('entro a actions ---', action);
+  return updateObject(state, {
+    lastMod: action.response,
+  });
+};
+
+
 const authSuccess = (state, action) => updateObject(state, {
   token: action.token,
   userId: action.userId,
@@ -81,7 +91,7 @@ const authSuccess = (state, action) => updateObject(state, {
   firstName: action.firstName,
   lastName: action.lastName,
   mcName: action.mcName,
-
+  lastMod: action.lastMod,
 });
 
 const authFail = (state, action) => updateObject(state, {
@@ -122,6 +132,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.DELETE_VEHICLE: return onVehicleDeleteSuccess(state, action);
     case actionTypes.CREATE_VEHICLE: return createVehicle(state, action);
     case actionTypes.CREATE_USER: return createUser(state, action);
+    case actionTypes.UPDATE_LASTMOD: return updateLastMod(state, action);
 
     default:
       return state;

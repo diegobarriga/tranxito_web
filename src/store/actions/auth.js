@@ -6,7 +6,6 @@ export const authStart = () => ({
   type: actionTypes.AUTH_START,
 });
 
-
 export const authSuccess = (
   token,
   userId,
@@ -20,6 +19,7 @@ export const authSuccess = (
   firstName,
   lastName,
   mcName,
+  lastMod,
 ) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
@@ -34,6 +34,7 @@ export const authSuccess = (
   firstName,
   lastName,
   mcName,
+  lastMod,
 });
 
 export const authFail = error => ({
@@ -46,11 +47,14 @@ export const createSuccess = response => ({
   type: actionTypes.CREATE_SUCCESS,
 });
 
+export const updateLastMod = response => ({
+  response,
+  type: actionTypes.UPDATE_LASTMOD,
+});
 
 export const errorReset = () => ({
   type: actionTypes.ERROR_RESET,
 });
-
 
 export const logout = () => ({
   type: actionTypes.AUTH_LOGOUT,
@@ -124,20 +128,27 @@ export const login = (email, password) => (dispatch) => {
                   userResponse.data.motorCarrierId,
                   response.data.id,
                 ).then((mCresponse) => {
-                  dispatch(authSuccess(
-                    response.data.id,
-                    userResponse.data.id,
-                    userResponse.data.accountType,
-                    response,
+                  api.lastMod.getLastMod(
                     userResponse.data.motorCarrierId,
-                    vehiclesObject,
-                    usersObject,
-                    supervisorsObject,
-                    userResponse.data.image,
-                    userResponse.data.firstName,
-                    userResponse.data.lastName,
-                    mCresponse.data.name,
-                  ));
+                    response.data.id,
+                  ).then((lastModResponse) => {
+                    const lastMod = lastModResponse.status === 404 ? {} : lastModResponse.data;
+                    dispatch(authSuccess(
+                      response.data.id,
+                      userResponse.data.id,
+                      userResponse.data.accountType,
+                      response,
+                      userResponse.data.motorCarrierId,
+                      vehiclesObject,
+                      usersObject,
+                      supervisorsObject,
+                      userResponse.data.image,
+                      userResponse.data.firstName,
+                      userResponse.data.lastName,
+                      mCresponse.data.name,
+                      lastMod,
+                    ));
+                  });
                 });
               });
             });
@@ -154,6 +165,7 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.image,
               userResponse.data.firstName,
               userResponse.data.lastName,
+              {},
             ));
           }
         })
