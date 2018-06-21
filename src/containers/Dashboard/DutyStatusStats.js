@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { EVENT_COLORS, DUTY_STATUS_LONG } from '../../utils/eventTypes';
 import '../../assets/styles/legend.css';
 import api from '../../services/api';
-import DoughnutChart from './DoughnutChart';
+import DoughnutChart from '../Charts/DoughnutChart';
 import SimpleTable from './SimpleTable';
-import * as functions from './functions';
+import * as functions from '../../utils/tableFunctions';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/forms.css';
 
@@ -38,7 +38,6 @@ class DutyStatusStats extends React.Component {
       vehiclesDutyStats: null,
       driversDutyStats: null,
       loadingStats: false,
-      dutyStats: null,
       loadingDutyStats: false,
       type: 'Driver',
     };
@@ -124,7 +123,7 @@ class DutyStatusStats extends React.Component {
     console.log(dataDutyStats.datasets[0].data);
     if (this.state.isMounted) {
       console.log('entro al setstate stats');
-      this.setState({ dutyStats: data, loadingDutyStats: false });
+      this.setState({ loadingDutyStats: false });
     }
   }
 
@@ -156,7 +155,6 @@ class DutyStatusStats extends React.Component {
 
   render() {
     // console.log(dataDutyStats);
-    // console.log('loadingduty: ', this.state.loadingDutyStats, 'loadingentity', this.state.loadingStats, 'activetab: ', this.props.activeTab);
     if (this.props.activeTab !== '2') return <div />;
 
     else if (

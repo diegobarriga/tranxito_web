@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../../assets/styles/dashboard.css';
 import api from '../../services/api';
-import BarChart from './BarChart';
+import BarChart from '../Charts/BarChart';
 import AlertsTable from './AlertsTable';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/forms.css';
@@ -81,8 +81,7 @@ class AlertsStats extends React.Component {
   setDriverAlerts(data) {
     console.log('entro al trigger de alerts');
 
-    const dataAlertsSpeedStats = this.state.dataAlertsSpeedStats;
-    const dataAlertsHoursStats = this.state.dataAlertsHoursStats;
+    const { dataAlertsSpeedStats, dataAlertsHoursStats } = this.state;
 
     const speedLabels = [];
     const timeLabels = [];

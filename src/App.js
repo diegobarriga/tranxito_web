@@ -15,7 +15,7 @@ import faUserCog from '@fortawesome/fontawesome-free-solid/faUserCog';
 import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt';
 import faUserTie from '@fortawesome/fontawesome-free-solid/faUserTie';
 import faChartLine from '@fortawesome/fontawesome-free-solid/faChartLine';
-import faBluetooth from '@fortawesome/fontawesome-free-brands/faBluetooth';
+import faHdd from '@fortawesome/fontawesome-free-solid/faHdd';
 import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
 import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
@@ -28,6 +28,8 @@ import faFilter from '@fortawesome/fontawesome-free-solid/faFilter';
 import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
 import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 import faSort from '@fortawesome/fontawesome-free-solid/faSort';
+import faExclamationTriangle from '@fortawesome/fontawesome-free-solid/faExclamationTriangle';
+
 
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
@@ -56,8 +58,8 @@ fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
   faLocationArrow, faTachometerAlt, faInfoCircle, faSortAlphaUp, faSortAlphaDown,
   faChartLine, faSignInAlt, faSignOutAlt, faSortNumericDown, faSortNumericUp,
-  faUserCog, faUserTie, faBluetooth, faEnvelope, faAddressCard, faFilter,
-  faSortUp, faSortDown, faSort,
+  faUserCog, faUserTie, faHdd, faEnvelope, faAddressCard, faFilter,
+  faSortUp, faSortDown, faSort, faExclamationTriangle,
 );
 
 class App extends Component {

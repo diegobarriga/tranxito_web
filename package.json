@@ -17,6 +17,7 @@
     "dotenv": "^5.0.1",
     "eslint": "^4.19.1",
     "font-awesome": "^4.7.0",
+    "loadash": "^1.0.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "node-sass": "^4.8.3",
