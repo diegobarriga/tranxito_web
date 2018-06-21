@@ -59,7 +59,7 @@ class Navibar extends React.Component {
             </UncontrolledDropdown>
             :
             <NavItem>
-              <Link className="nav-link" style={pStyle} to="/"><FontAwesomeIcon icon="sign-in-alt" /> Login</Link>
+              <Link className="nav-link" style={pStyle} to="/"><FontAwesomeIcon icon="sign-in-alt" /> {t('Login')}</Link>
             </NavItem> }
         </Nav>
       </Navbar>
@@ -71,7 +71,7 @@ Navibar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   userId: PropTypes.number,
   token: PropTypes.string,
-  t: PropTypes.object.isRequired,
+
   i18n: PropTypes.object.isRequired,
 };
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { I18nextProvider } from 'react-i18next';
 import Aux from '../../hoc/Aux';
 import Navibar from '../../components/NaviBar/NaviBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { I18nextProvider } from 'react-i18next';
-import i18n from '../Users/i18n';
+import i18n from '../../i18n';
 import '../../assets/styles/layout.css';
 
 

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+import { translate } from 'react-i18next';
 import Graph from './graph';
 import UserLogs from './UserLogs';
 import UserInfo from './UserInfo';
@@ -41,6 +42,7 @@ class User extends React.Component {
 
   render() {
     const { id } = this.props.match.params;
+    const { t } = this.props;
     return (
       <Aux>
         <Container>
@@ -53,9 +55,9 @@ class User extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -137,5 +139,5 @@ const mapStateToProps = state => ({
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User));
+const translateFunc = translate('translations')(User);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

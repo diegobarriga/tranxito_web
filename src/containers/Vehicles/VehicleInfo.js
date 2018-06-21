@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row } from 'reactstrap';
+import { translate } from 'react-i18next';
 import api from '../../services/api';
 import '../../assets/styles/trucks.css';
 
@@ -20,7 +21,7 @@ const styles = {
 class VehicleInfo extends React.Component {
   render() {
   // if (this.state.vehicle === null) return <div><h2>Could not get the vehicle</h2></div>;
-
+    const { t } = this.props;
     return (
       <div className="vehicle-card">
         <Row style={styles.userProfile} className="profile-info">
@@ -29,10 +30,10 @@ class VehicleInfo extends React.Component {
           </div>
           <div style={styles.userData}>
             <h4>{`${this.props.vehicles[this.props.id].carMaker} ${this.props.vehicles[this.props.id].model}`}</h4>
-            <p><strong>Plaque:</strong> {this.props.vehicles[this.props.id].plaque}</p>
-            <p><strong>State:</strong> {this.props.vehicles[this.props.id].state}</p>
-            <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
-            <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p>
+            <p><strong>{t('Plaque')}:</strong> {this.props.vehicles[this.props.id].plaque}</p>
+            <p><strong>{t('State')}:</strong> {this.props.vehicles[this.props.id].state}</p>
+            <p><strong>{t('VIN')}:</strong> {this.props.vehicles[this.props.id].vin}</p>
+            <p><strong>{t('ELD')}:</strong> {this.props.vehicles[this.props.id].imeiEld}</p>
           </div>
         </Row>
       </div>
@@ -43,10 +44,11 @@ class VehicleInfo extends React.Component {
 VehicleInfo.propTypes = {
   vehicles: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
+  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({
   vehicles: state.auth.vehicles,
 });
-
-export default connect(mapStateToProps)(VehicleInfo);
+const translateFunc = translate('translations')(VehicleInfo);
+export default connect(mapStateToProps)(translateFunc);

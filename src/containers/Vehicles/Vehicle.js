@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+import { translate } from 'react-i18next';
 import VehicleInfo from './VehicleInfo';
 import VehicleLogs from './VehicleLogs';
 import Heatmap from './Heatmap';
@@ -43,6 +44,7 @@ class Vehicle extends React.Component {
 
   render() {
     const { id } = this.props.match.params;
+    const { t } = this.props;
     return (
       <Aux>
         <Container>
@@ -55,9 +57,9 @@ class Vehicle extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -72,7 +74,7 @@ class Vehicle extends React.Component {
               className={classnames({ active: this.state.activeTab === '1' })}
               onClick={() => { this.toggle('1'); }}
             >
-              General Information
+              {t('General Information')}
             </NavLink>
           </NavItem>
           <NavItem>
@@ -80,7 +82,7 @@ class Vehicle extends React.Component {
               className={classnames({ active: this.state.activeTab === '2' })}
               onClick={() => { this.toggle('2'); }}
             >
-              Heatmap
+              {t('Heatmap')}
             </NavLink>
           </NavItem>
         </Nav>
@@ -115,6 +117,7 @@ Vehicle.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   vehicles: PropTypes.object.isRequired,
+  t: PropTypes.isRequired,
 };
 
 Vehicle.defaultProps = {
@@ -136,4 +139,5 @@ const mapStateToProps = state => ({
   naviLinks: state.breadcrumbs.links,
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Vehicle));
+const translateFunc = translate('translations')(Vehicle);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

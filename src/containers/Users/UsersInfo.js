@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Col } from 'reactstrap';
 import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
-import { translate, Trans } from 'react-i18next';
+import { translate } from 'react-i18next';
 import UserRow from './UserRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
@@ -40,11 +40,11 @@ class UsersInfo extends React.Component {
       user.accountStatus === true && user.accountType === 'D'));
 
     const totalUsers = filteredUsers.length;
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     return (
       <div>
         <div className="inlineBox">
-          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder="Search" value={this.state.search} onChange={this.updateSearch} />
+          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
             <Link className="btn btn-sm green spacing" to="/drivers/new_driver"><FontAwesomeIcon icon="user" color="white" /> {t('Create driver')} </Link>
             <Link className="btn btn-sm green" to="/drivers/new_drivers"><FontAwesomeIcon icon="users" color="white" /> {t('Create multiple drivers')} </Link>
@@ -90,7 +90,6 @@ UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
   t: PropTypes.object.isRequired,
-  i18n: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

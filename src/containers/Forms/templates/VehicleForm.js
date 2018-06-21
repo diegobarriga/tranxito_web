@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { translate } from 'react-i18next';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 
@@ -144,10 +145,11 @@ class VehicleForm extends React.Component {
       errors,
       data,
     } = this.state;
+    const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>
         <div className="field">
-          <Label>VIN number</Label>
+          <Label>{t('VIN number')}</Label>
           <FormGroup>
             <Input
               type="text"
@@ -162,7 +164,7 @@ class VehicleForm extends React.Component {
           </FormGroup>
         </div>
         <div className="field">
-          <Label>CMV Power Unit Number</Label>
+          <Label>{t('CMV Power Unit Number')}</Label>
           <FormGroup>
             <Input
               type="text"
@@ -179,12 +181,12 @@ class VehicleForm extends React.Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>Vehicle Model</Label>
+            <Label>{t('Vehicle Model')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="model"
-                placeholder="Vehicle Model"
+                placeholder={t('Vehicle Model')}
                 value={data.model}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.model}
@@ -194,12 +196,12 @@ class VehicleForm extends React.Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>Car Maker</Label>
+            <Label>{t('Car Maker')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="carMaker"
-                placeholder="Car Maker"
+                placeholder={t('Car Maker')}
                 value={data.carMaker}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.carMaker}
@@ -212,12 +214,12 @@ class VehicleForm extends React.Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>Plaque</Label>
+            <Label>{t('Plaque')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="plaque"
-                placeholder="Plaque"
+                placeholder={t('Plaque')}
                 value={data.plaque}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.plaque}
@@ -227,12 +229,12 @@ class VehicleForm extends React.Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>State</Label>
+            <Label>{t('State')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="state"
-                placeholder="State"
+                placeholder={t('State')}
                 value={data.state}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.state}
@@ -259,12 +261,12 @@ class VehicleForm extends React.Component {
           </FormGroup>
         </div>
         <div className="field">
-          <Label for="image">Image</Label>
+          <Label for="image">{t('Image')}</Label>
           <FormGroup>
             <Input type="file" name="picture" className="center-item" onChange={this.onChange} />
           </FormGroup>
         </div>
-        <button className="ui button" type="submit">Submit</button>
+        <button className="ui button" type="submit">{t('Submit')}</button>
       </form>
     );
   }
@@ -277,4 +279,4 @@ VehicleForm.propTypes = {
   submit: PropTypes.func.isRequired,
 };
 
-export default VehicleForm;
+export default translate('translations')(VehicleForm);

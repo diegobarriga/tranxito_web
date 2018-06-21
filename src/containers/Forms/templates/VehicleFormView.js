@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
+import { translate } from 'react-i18next';
 import VehicleForm from './VehicleForm';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
@@ -138,7 +139,7 @@ class VehicleFormView extends React.Component {
       marginTop: '1rem',
       marginBottom: '2rem',
     };
-
+    const { t } = this.props;
     return (
       <Container>
         <Row>
@@ -148,7 +149,7 @@ class VehicleFormView extends React.Component {
         </Row>
         <Row>
           <Col sm="12" md={{ size: 8 }}>
-            <h1 style={h1Style}>{title}</h1>
+            <h1 style={h1Style}>{t(title)}</h1>
             <VehicleForm
               submit={this.onFormSubmit}
               isCreate={isCreate}
@@ -179,5 +180,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VehicleFormView));
+const translateFunc = translate('translations')(VehicleFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

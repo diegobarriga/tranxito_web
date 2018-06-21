@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { withGoogleMap, GoogleMap } from 'react-google-maps';
 import HeatmapLayer from 'react-google-maps/lib/components/visualization/HeatmapLayer';
 import { compose, withProps } from 'recompose';
+import { translate } from 'react-i18next';
 import api from '../../services/api';
 // import * as actions from '../../store/actions/tracking';
 import Loader from '../../components/Loader/Loader';
@@ -124,20 +125,20 @@ class HeatMap extends React.Component {
     console.log('new span: ', this.state.span);
     this.getData();
   }
-
   render() {
     if (this.state.loading === true) return <Loader />;
 
+    const { t } = this.props;
     // if (this.state.trackings === null) return <div><h2>Could not load the heatmap</h2></div>;
     return (
       <div>
         <div className="inlineBoxRight paddingBottom">
           <div className="content">
-            <span>Time interval </span>
+            <span>{t('Time interval')} </span>
             <select name="time" onChange={this.updateSpan} value={this.state.span}>
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
+              <option value="day">{t('Day')}</option>
+              <option value="week">{t('Week')}</option>
+              <option value="month">{t('Month')}</option>
             </select>
           </div>
         </div>
@@ -153,6 +154,7 @@ class HeatMap extends React.Component {
 HeatMap.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  t: PropTypes.isRequired,
 };
 
 
@@ -160,4 +162,5 @@ const mapStateToProps = state => ({
   token: state.auth.token,
 });
 
-export default connect(mapStateToProps)(HeatMap);
+const translateFunc = translate('translations')(HeatMap);
+export default connect(mapStateToProps)(translateFunc);

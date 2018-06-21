@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
 import Alert from '../../../Alert/Alert';
@@ -34,15 +35,16 @@ class SignupView extends Component {
     }
 
     /* Alert */
+    const { t } = this.props;
     let alert;
     let msg = '';
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = 'Supervisor was created successfully';
+      msg = t('Supervisor was created successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = 'Error the supervisor could not be created';
+      msg = t('Error the supervisor could not be created');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
 
@@ -57,7 +59,7 @@ class SignupView extends Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             { authRedirect }
-            <h1 style={h1Style}>Register Supervisor</h1>
+            <h1 style={h1Style}>{t('Register Supervisor')}</h1>
             <SignupForm
               submit={this.props.onAuth}
               token={this.props.token}
@@ -97,5 +99,5 @@ const mapDispatchToProps = dispatch => ({
   onAuth: data => dispatch(actions.signup(data)),
   resetError: () => dispatch(actions.errorReset()),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupView));
+const translateFunc = translate('translations')(SignupView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

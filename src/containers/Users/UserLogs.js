@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Table, Badge } from 'reactstrap';
+import { translate } from 'react-i18next';
 import Loader from '../../components/Loader/Loader';
 import * as actions from '../../store/actions/userLogs';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../utils/eventTypes';
@@ -31,15 +32,16 @@ class UserLogs extends React.Component {
   render() {
     if (this.props.logs == null) return <Loader />;
     this.props.logs.reverse();
+    const { t } = this.props;
     return (
       <Row>
         <Col sm="12" md={{ size: 12 }}>
           <Table striped>
             <thead>
               <tr>
-                <th>Event</th>
-                <th>Detail</th>
-                <th>Timestamp</th>
+                <th>{t('Event')}</th>
+                <th>{t('Detail')}</th>
+                <th>{t('Timestamp')}</th>
               </tr>
             </thead>
             <tbody>
@@ -70,6 +72,7 @@ UserLogs.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   logs: PropTypes.array,
+  t: PropTypes.isRequired,
 };
 
 UserLogs.defaultProps = {
@@ -85,5 +88,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUserLogs: (token, UserId) => dispatch(actions.getUserLogs(token, UserId)),
 });
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogs);
+const translateFunc = translate('translations')(UserLogs);
+export default connect(mapStateToProps, mapDispatchToProps)(translateFunc);

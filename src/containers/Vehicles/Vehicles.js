@@ -6,7 +6,8 @@ import { Breadcrumb } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '../Users/i18n';
+import { translate } from 'react-i18next';
+import i18n from '../../i18n';
 import VehiclesInfo from './VehiclesInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
@@ -39,7 +40,7 @@ class Vehicles extends React.Component {
       msg = 'Error the vehicle was not deleted';
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-
+    const { t } = this.props;
     return (
       <Aux>
         { authRedirect }
@@ -54,9 +55,9 @@ class Vehicles extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -67,7 +68,7 @@ class Vehicles extends React.Component {
           <Row>
             <Col md="11">
               <I18nextProvider i18n={i18n}>
-              <VehiclesInfo />
+                <VehiclesInfo />
               </I18nextProvider>
             </Col>
           </Row>
@@ -108,5 +109,5 @@ const mapDispatchToProps = dispatch => ({
     crumbUrl,
   )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Vehicles));
+const translateFunc = translate('translations')(Vehicles);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

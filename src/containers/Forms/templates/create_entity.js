@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import XLSX from 'xlsx';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Alert } from 'reactstrap';
+import { translate } from 'react-i18next';
 import TemplateCSV from '../templates/template_csv';
 import TemplateXLSX from '../templates/template_xlsx';
 import '../../../assets/styles/forms.css';
@@ -85,6 +86,7 @@ class SimpleReactFileUpload extends React.Component {
 
 
   loadHandler = (event) => {
+    const { t } = this.props;
     console.log('Dentro loadHandler');
     const csv = event.target.result;
     const arr = csv.split('\n');
@@ -97,13 +99,13 @@ class SimpleReactFileUpload extends React.Component {
     const headers = arr[0].split(',');
     if (arr.length <= 1) {
       this.setState({ ...this.state, loading: false });
-      this.setState({ type: 'danger', message: 'Your file was empty. Please try again later.' });
+      this.setState({ type: 'danger', message: t('Your file was empty. Please try again later.') });
     }
     for (let i = 1; i < arr.length; i += 1) {
       const data = arr[i].split(',');
       if (data.length !== headers.length) {
         this.setState({ ...this.state, loading: false });
-        this.setState({ type: 'danger', message: 'Your file was not valid. Please try again later.' });
+        this.setState({ type: 'danger', message: t('Your file was not valid. Please try again later.') });
       }
       const obj = {};
       for (let j = 0; j < data.length; j += 1) {
@@ -130,20 +132,20 @@ class SimpleReactFileUpload extends React.Component {
             console.log(status);
             if (status === 'SUCCESS') {
               this.setState({ ...this.state, loading: false });
-              this.setState({ type: 'success', message: `We have created all the new ${this.props.type}.` });
+              this.setState({ type: 'success', message: t('We have created all the new') + t(this.props.type) });
             } else {
               const { id } = res.data[0];
               this.getErrors(id).then((resp) => {
                 console.log(resp);
                 this.setState({ errors: resp.data });
                 this.setState({ ...this.state, loading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               });
             }
           });
         } else {
           this.setState({ ...this.state, loading: false });
-          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         }
       });
     } else {
@@ -273,7 +275,6 @@ class SimpleReactFileUpload extends React.Component {
       this.setState({ isValid: true });
     }
   }
-
   render() {
     if (this.state.loading === true) return <Loader />;
     let alert;
@@ -284,6 +285,7 @@ class SimpleReactFileUpload extends React.Component {
         alert = (<Alert2 alertType="FAIL" message={this.state.message} />);
       }
     }
+    const { t } = this.props;
 
     return (
       <div>
@@ -295,8 +297,8 @@ class SimpleReactFileUpload extends React.Component {
                 {this.state.errors.map(error => (<li key={error.id}>{ error.message }</li>))}
               </ul>
             </Alert>}
-          <div className="aligner-item"><h1>Create multiple {this.props.type} through an Excel or CSV file</h1></div>
-          <div className="aligner-item"><p>The templates below have the structure the file must have. You can download it, fill it and then upload it.</p></div>
+          <div className="aligner-item"><h1>{t('Create multiple')} {t(this.props.type)} {t('through an Excel or CSV file')}</h1></div>
+          <div className="aligner-item"><p>{t('The templates below have the structure the file must have. You can download it, fill it and then upload it.')}</p></div>
           <div className="aligner-item padding-csv">
             <TemplateCSV type={this.props.type} />
             <TemplateXLSX type={this.props.type} />
@@ -305,7 +307,7 @@ class SimpleReactFileUpload extends React.Component {
             <div className="upload-form">
               <Form onSubmit={this.onFormSubmit}>
                 <Input name="file" type="file" accept=".csv, .xlsx" className="center-item" onChange={this.onChange} />
-                <Button type="submit" className="center-item" disabled={!this.state.file}>Upload</Button>
+                <Button type="submit" className="center-item" disabled={!this.state.file}>{t('Upload')}</Button>
               </Form>
             </div>
           </div>
@@ -328,5 +330,5 @@ SimpleReactFileUpload.propTypes = {
   motorCarrierId: PropTypes.number.isRequired,
 };
 
-
-export default connect(mapStateToProps)(SimpleReactFileUpload);
+const translateFunc = translate('translations')(SimpleReactFileUpload);
+export default connect(mapStateToProps)(translateFunc);

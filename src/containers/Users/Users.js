@@ -6,7 +6,8 @@ import { Breadcrumb } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
-import i18n from './i18n';
+import { translate } from 'react-i18next';
+import i18n from '../../i18n';
 import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
 import Aux from '../../hoc/Aux';
@@ -41,7 +42,7 @@ class Users extends React.Component {
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
 
-
+    const { t } = this.props;
     return (
       <Aux>
         { authRedirect }
@@ -56,9 +57,9 @@ class Users extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -109,4 +110,5 @@ const mapDispatchToProps = dispatch => ({
   )),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users));
+const translateFunc = translate('translations')(Users);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Table, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 // import Loader from '../../components/Loader/Loader';
 import { DUTY_STATUS } from '../../utils/eventTypes';
 import * as functions from './functions';
@@ -26,13 +27,13 @@ class SimpleTable extends React.Component {
     Object.entries(this.props.stats).forEach(([key, value]) => {
       console.log(key, value);
     });
-
+    const { t } = this.props;
     return (
       <Container style={styles.container}>
         <Table striped>
           <thead>
             <tr>
-              <th style={styles.table}>{this.props.type}</th>
+              <th style={styles.table}>{t(this.props.type)}</th>
               <th style={styles.table}>
                 <Badge className="event1" style={styles.badge}>
                   {DUTY_STATUS[1]}
@@ -65,10 +66,10 @@ class SimpleTable extends React.Component {
                   { this.props.type === 'Vehicle' &&
                   <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[key].id}`}>{this.props.vehicles[key].carMaker} {this.props.vehicles[key].model}</Link></td>
                   }
-                  <td style={styles.table}>{functions.round(this.props.stats[key]['1'])} hours</td>
-                  <td style={styles.table}>{functions.round(this.props.stats[key]['2'])} hours</td>
-                  <td style={styles.table}>{functions.round(this.props.stats[key]['3'])} hours</td>
-                  <td style={styles.table}>{functions.round(this.props.stats[key]['4'])} hours</td>
+                  <td style={styles.table}>{functions.round(this.props.stats[key]['1'])} {t('hours')}</td>
+                  <td style={styles.table}>{functions.round(this.props.stats[key]['2'])} {t('hours')}</td>
+                  <td style={styles.table}>{functions.round(this.props.stats[key]['3'])} {t('hours')}</td>
+                  <td style={styles.table}>{functions.round(this.props.stats[key]['4'])} {t('hours')}</td>
                 </tr>
               ))
             }
@@ -89,6 +90,7 @@ SimpleTable.propTypes = {
   stats: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
   vehicles: PropTypes.object.isRequired,
+  t: PropTypes.isRequired,
 };
 
 // UserLogs.defaultProps = {
@@ -103,5 +105,5 @@ const mapStateToProps = state => ({
 // const mapDispatchToProps = dispatch => ({
 //   getUserLogs: (token, UserId) => dispatch(actions.getUserLogs(token, UserId)),
 // });
-
-export default connect(mapStateToProps)(SimpleTable);
+const translateFunc = translate('translations')(SimpleTable);
+export default connect(mapStateToProps)(translateFunc);
