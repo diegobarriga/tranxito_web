@@ -6,7 +6,6 @@ import { Container, Table, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
 // import Loader from '../../components/Loader/Loader';
 import { DUTY_STATUS } from '../../utils/eventTypes';
-import * as functions from './functions';
 import * as funct from '../../utils/tableFunctions';
 import '../../assets/styles/buttons.css';
 
@@ -175,10 +174,10 @@ class SimpleTable extends React.Component {
                   { this.props.type === 'Vehicle' &&
                   <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[stat.key].id}`}>{this.props.vehicles[stat.key].carMaker} {this.props.vehicles[stat.key].model}</Link></td>
                   }
-                  <td style={styles.table}>{functions.round(stat['1'])} hours</td>
-                  <td style={styles.table}>{functions.round(stat['2'])} hours</td>
-                  <td style={styles.table}>{functions.round(stat['3'])} hours</td>
-                  <td style={styles.table}>{functions.round(stat['4'])} hours</td>
+                  <td style={styles.table}>{funct.round(stat['1'])} hours</td>
+                  <td style={styles.table}>{funct.round(stat['2'])} hours</td>
+                  <td style={styles.table}>{funct.round(stat['3'])} hours</td>
+                  <td style={styles.table}>{funct.round(stat['4'])} hours</td>
                 </tr>
               ))
             }

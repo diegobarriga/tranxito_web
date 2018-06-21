@@ -7,7 +7,20 @@ import * as funct from '../../utils/tableFunctions';
 // import { DUTY_STATUS } from '../../utils/eventTypes';
 // import * as functions from './functions';
 import '../../assets/styles/buttons.css';
+import '../../assets/styles/tables.css';
 
+const styles = {
+  container: {
+    marginTop: '5px',
+  },
+  table: {
+    width: '19.8%',
+    float: 'left',
+  },
+  badge: {
+    width: '40px',
+  },
+};
 
 class AlertsTable extends React.Component {
   constructor(props) {
@@ -16,11 +29,13 @@ class AlertsTable extends React.Component {
       stats: props.stats,
       selectedSortId: null,
       selectedTypeSort: null,
+      activeRow: null,
     };
     this.sortByColumnUp = this.sortByColumnUp.bind(this);
     this.sortByColumnDown = this.sortByColumnDown.bind(this);
     this.sortByTimestampDown = this.sortByTimestampDown.bind(this);
     this.sortByTimestampUp = this.sortByTimestampUp.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   sortByColumnDown(column, id) {
@@ -45,6 +60,16 @@ class AlertsTable extends React.Component {
     let { stats } = this.state;
     stats = funct.sortByTimestampUp(stats);
     this.setState({ stats, selectedSortId: '0', selectedTypeSort: '1' });
+  }
+
+  handleClick(key) {
+    let { activeRow } = this.state;
+    if (activeRow === key) {
+      activeRow = null;
+    } else {
+      activeRow = key;
+    }
+    this.setState({ activeRow });
   }
 
   render() {
@@ -77,7 +102,7 @@ class AlertsTable extends React.Component {
 
     return (
       <Container>
-        <Table striped>
+        <Table hover>
           <thead>
             <tr>
               <th>
@@ -119,10 +144,75 @@ class AlertsTable extends React.Component {
           <tbody>
             {
               this.state.stats.map(stat => (
-                <tr>
+                <tr
+                  className={this.state.activeRow === stat.key ? 'row-with-table active-row' : 'row-with-table'}
+                  key={stat.timestamp}
+                  onClick={() => this.handleClick(stat.key)}
+                >
                   <td>{funct.formatDay(stat.timestamp)}</td>
                   <td>{stat.speedLimit}</td>
                   <td>{stat.timeLimit}</td>
+                  {this.state.activeRow === stat.key &&
+                    <Container style={styles.container}>
+                      <Table className="inner-table">
+                        <thead>
+                          <tr>
+                            <th style={styles.table}>
+                              <FontAwesomeIcon
+                                icon="clock"
+                              /> Hour
+                            </th>
+                            <th style={styles.table}>
+                              <FontAwesomeIcon
+                                icon="tachometer-alt"
+                              /> Speed
+                            </th>
+                            <th style={styles.table}>
+                              <FontAwesomeIcon
+                                icon="location-arrow"
+                              /> Coordinates
+                            </th>
+                            <th style={styles.table}>
+                              <FontAwesomeIcon
+                                icon="exclamation-triangle"
+                              /> Speed Limit
+                            </th>
+                            <th style={styles.table}>
+                              <FontAwesomeIcon
+                                icon="exclamation-triangle"
+                              /> Drive Time
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            this.props.groupedAlerts[stat.key].map(alert => (
+                              <tr>
+                                <td style={styles.table}>
+                                  {funct.formatHour(alert.timestamp)}
+                                </td>
+                                <td style={styles.table}>
+                                  {alert.speed} mph
+                                </td>
+                                <td style={styles.table}>
+                                  {funct.roundToThree(alert.coordinates.lat)}
+                                  {', '}
+                                  {funct.roundToThree(alert.coordinates.lng)}
+                                  {/* {alert.coordinates.lat},
+                                  {alert.coordinates.lng} */}
+                                </td>
+                                <td style={styles.table}>
+                                  {alert.speedLimitExceeded ? 'true' : 'false'}
+                                </td>
+                                <td style={styles.table}>
+                                  {alert.driveTimeExceeded ? 'true' : 'false'}
+                                </td>
+                              </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </Container>
+                  }
                 </tr>
               ))
             }
@@ -136,6 +226,7 @@ class AlertsTable extends React.Component {
 
 AlertsTable.propTypes = {
   stats: PropTypes.array.isRequired,
+  groupedAlerts: PropTypes.object.isRequired,
 };
 
 

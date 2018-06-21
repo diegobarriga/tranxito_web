@@ -6,7 +6,7 @@ import '../../assets/styles/legend.css';
 import api from '../../services/api';
 import DoughnutChart from '../Charts/DoughnutChart';
 import SimpleTable from './SimpleTable';
-import * as functions from './functions';
+import * as functions from '../../utils/tableFunctions';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/forms.css';
 

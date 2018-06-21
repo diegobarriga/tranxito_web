@@ -57,6 +57,10 @@ export function formatDay(datetime) {
   return moment(datetime).format('MMMM DD, YYYY');
 }
 
+export function formatHour(datetime) {
+  return moment(datetime).format('h:mm a');
+}
+
 export function sortByTimestampDown(logs) {
   if (logs) {
     logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -80,4 +84,12 @@ export function filterByEvent(logs, event) {
   }
 
   return filteredLogs;
+}
+
+export function round(value) {
+  return Math.round(value * 10) / 10;
+}
+
+export function roundToThree(value) {
+  return Math.round(value * 1000) / 1000;
 }

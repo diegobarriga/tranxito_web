@@ -18,6 +18,7 @@ class Alerts extends React.Component {
       isMounted: false,
       span: 'month',
       alerts: [],
+      groupedAlerts: {},
       dataStats: {
         speed: {
           datasets: [
@@ -166,7 +167,9 @@ class Alerts extends React.Component {
     });
 
     Object.keys(groupedAlerts).forEach((key) => {
+      console.log('keyy---', key);
       const obj = {
+        key,
         timestamp: new Date(key),
         speedLimit: _.sumBy(groupedAlerts[key], i => (i.speedLimitExceeded === true ? 1 : 0)),
         timeLimit: _.sumBy(groupedAlerts[key], i => (i.driveTimeExceeded === true ? 1 : 0)),
@@ -187,6 +190,7 @@ class Alerts extends React.Component {
         dataStats,
         loading: false,
         alerts,
+        groupedAlerts,
       });
     }
 
@@ -235,17 +239,18 @@ class Alerts extends React.Component {
         <div className="barChart">
           <LineChart
             data={this.state.dataStats.speed}
-            title="Evolution of speed alerts"
+            title="Speeding Alerts by Day"
             yMax={yMaxSpeed}
           />
           <LineChart
             data={this.state.dataStats.time}
-            title="Evolution of time alerts"
+            title="Hours of Driving Alerts by Day"
             yMax={yMaxTime}
           />
         </div>
         <AlertsTable
           stats={this.state.alerts}
+          groupedAlerts={this.state.groupedAlerts}
         />
       </div>
 
