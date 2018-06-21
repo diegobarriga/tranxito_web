@@ -6,6 +6,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import '../../assets/styles/forms.css';
 import Aux from '../../hoc/Aux';
 import Loader from '../../components/Loader/Loader';
+import dashboardImg from '../../assets/images/statistics.svg';
 
 
 class MotorCarrier extends React.Component {
@@ -28,9 +29,47 @@ class MotorCarrier extends React.Component {
         <div className="buttons">
           <Link className="btn btn-sm green spacing" to="/drivers/new_driver"><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
         </div>
-        <Link className="btn btn-sm green spacing" to="/dashboard"> Go to dashboard</Link>
-        <Link className="btn btn-sm green spacing" to="/drivers"> Go to drivers</Link>
-        <Link className="btn btn-sm green spacing" to="/vehicles"> Go to vehicles</Link>
+
+        <div className="ui link cards">
+          <Link className="card" to="/dashboard">
+            <img src={dashboardImg} alt="Dashboard" />
+            <div className="content">
+              <span className="header">Dashboard</span>
+              <div className="meta">
+                <span className="date">Map, stats and more</span>
+              </div>
+            </div>
+          </Link>
+          <Link className="card" to="/drivers">
+            <img src={dashboardImg} alt="Drivers" />
+            <div className="content">
+              <span className="header">Drivers</span>
+              <div className="meta">
+                <span className="date">List and profiles</span>
+              </div>
+            </div>
+          </Link>
+        </div>
+        <div className="ui link cards">
+          <Link className="card" to="/vehicles">
+            <img src={dashboardImg} alt="Vehicles" />
+            <div className="content">
+              <span className="header">Vehicles</span>
+              <div className="meta">
+                <span className="date">List and profiles</span>
+              </div>
+            </div>
+          </Link>
+          <Link className="card" to="/vehicles">
+            <img src={dashboardImg} alt="Devices" />
+            <div className="content">
+              <span className="header">Devices</span>
+              <div className="meta">
+                <span className="date">List and profiles</span>
+              </div>
+            </div>
+          </Link>
+        </div>
       </Aux>
 
     );
