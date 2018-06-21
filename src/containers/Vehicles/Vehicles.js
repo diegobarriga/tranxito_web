@@ -31,16 +31,16 @@ class Vehicles extends React.Component {
     /* Alert */
     let alert;
     let msg = '';
+    const { t } = this.props;
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = 'The vehicle was deleted successfully';
+      msg = t('The vehicle was deleted successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = 'Error the vehicle was not deleted';
+      msg = t('Error the vehicle was not deleted');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-    const { t } = this.props;
     return (
       <Aux>
         { authRedirect }

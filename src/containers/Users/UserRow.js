@@ -11,7 +11,8 @@ import api from '../../services/api';
 
 class UserRow extends React.Component {
   onDeleteBtnClick(userId, token) {
-    const confirmDelete = window.confirm('Are you sure you want to delete this driver?');
+    const { t } = this.props;
+    const confirmDelete = window.confirm(t('Are you sure you want to delete this driver?'));
     if (confirmDelete) {
       this.props.deleteUser(userId, token);
     }

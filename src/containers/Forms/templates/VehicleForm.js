@@ -81,16 +81,17 @@ class VehicleForm extends React.Component {
   // TODO Complete with defined validations
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
   validateInput(data) {
+    const { t } = this.props;
     const errors = {};
     if (data.vin.length > 18 || data.vin.length < 17) {
-      errors.vin = 'Must be 17 or 18 characters long';
+      errors.vin = t('Must be 17 or 18 characters long');
     } else if (data.vin.length === 18 && String(data.vin)[0] !== '-') {
-      errors.vin = 'Must start with a dash (-) if VIN is 18 char long';
+      errors.vin = t('Must start with a dash (-) if VIN is 18 char long');
     }
     if (_.isEmpty(String(data.CmvPowerUnitNumber))) {
-      errors.CmvPowerUnitNumber = 'This field is required';
+      errors.CmvPowerUnitNumber = t('This field is required');
     } else if (data.imeiEld && !data.CmvPowerUnitNumber) {
-      errors.CmvPowerUnitNumber = 'CMV Power Unit Number field is required';
+      errors.CmvPowerUnitNumber = t('This field is required');
     }
     /* fede pls
     if (_.isEmpty(String(data.model))) {
@@ -100,21 +101,21 @@ class VehicleForm extends React.Component {
     }
     */
     if (_.isEmpty(String(data.model))) {
-      errors.model = 'This field is required';
+      errors.model = t('This field is required');
     }
     if (_.isEmpty(String(data.imeiEld))) {
-      errors.imeiEld = 'This field is required';
+      errors.imeiEld = t('This field is required');
     }
     if (_.isEmpty(String(data.carMaker))) {
-      errors.carMaker = 'This field is required';
+      errors.carMaker = t('This field is required');
     }
     if (_.isEmpty(String(data.plaque))) {
-      errors.plaque = 'This field is required';
+      errors.plaque = t('This field is required');
     }
     if (_.isEmpty(String(data.state))) {
-      errors.state = 'This field is required';
+      errors.state = t('This field is required');
     } else if (String(data.state).length !== 2) {
-      errors.state = 'Not a valid state';
+      errors.state = t('Not a valid state');
     }
     return {
       errors,
@@ -154,7 +155,7 @@ class VehicleForm extends React.Component {
             <Input
               type="text"
               name="vin"
-              placeholder="VIN number"
+              placeholder={t('VIN number')}
               onChange={this.onChange}
               value={data.vin}
               valid={!this.emptyErrors() && !errors.vin}
@@ -169,7 +170,7 @@ class VehicleForm extends React.Component {
             <Input
               type="text"
               name="CmvPowerUnitNumber"
-              placeholder="CMV Power Unit Number"
+              placeholder={t('CMV Power Unit Number')}
               value={data.CmvPowerUnitNumber}
               onChange={this.onChange}
               valid={!this.emptyErrors() && !errors.CmvPowerUnitNumber}

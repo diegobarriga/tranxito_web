@@ -24,6 +24,7 @@ class Users extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -35,14 +36,13 @@ class Users extends React.Component {
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = 'The driver was deleted successfully';
+      msg = t('The driver was deleted successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = 'Error the driver was not deleted';
+      msg = t('Error the driver was not deleted');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
 
-    const { t } = this.props;
     return (
       <Aux>
         { authRedirect }
