@@ -24,6 +24,9 @@ class Vehicle extends React.Component {
 
   componentDidMount() {
     const auxArray = this.props.location.pathname.split('/');
+    if (this.props.navigation.length > 2) {
+      this.props.popCrumb();
+    }
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     const vehicleModel = this.props.vehicles[newCrumb].model;
@@ -114,6 +117,7 @@ Vehicle.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  popCrumb: PropTypes.func.isRequired,
   vehicles: PropTypes.object.isRequired,
 };
 
@@ -127,6 +131,7 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  popCrumb: () => dispatch(actions.popCrumb()),
 });
 
 const mapStateToProps = state => ({
