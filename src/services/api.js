@@ -41,6 +41,8 @@ export default {
       axios.post(`${apiPath}/People/reset`, { options }),
     getUserEvents: (userId, token) =>
       axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`),
+    getUserNotCertifiedEvents: (userId, token, filters) =>
+      axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`, { params: { filter: filters } }),
     createUserEvents: (userId, eventData) =>
       axios.post(`${apiPath}/People/${userId}/events`, { eventData }),
     getUserMotorCarrier: userId =>
@@ -114,6 +116,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getVehiclesDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
+    getNonAuthEvents: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`),
   },
   events: {
     getEvents: () =>

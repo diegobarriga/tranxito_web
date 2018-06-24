@@ -70,7 +70,8 @@ class DriverProfile extends React.Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <div className="tabDiv">
-              <h1>Hola</h1>
+              <br />
+              <h1>Vehicles</h1>
             </div>
           </TabPane>
           <TabPane tabId="2">
@@ -83,7 +84,8 @@ class DriverProfile extends React.Component {
           </TabPane>
           <TabPane tabId="3">
             <div className="tabDiv">
-              <h1>Ciao</h1>
+              <br />
+              <h1>Assign Logs</h1>
             </div>
           </TabPane>
         </TabContent>
