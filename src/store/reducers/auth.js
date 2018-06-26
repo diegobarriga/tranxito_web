@@ -19,6 +19,8 @@ const initialState = {
 
 const authStart = state => updateObject(state, { error: null, loading: true });
 
+const updateUsersStart = state => updateObject(state, { error: null, loading: true });
+
 const errorReset = state => updateObject(state, { error: null });
 
 const createSuccess = (state, action) => {
@@ -67,13 +69,19 @@ const createUser = (state, action) => {
   });
 };
 
+const updateUsersSuccess = (state, action) => updateObject(state, {
+  users: action.users,
+  supervisors: action.supervisors,
+  loading: false,
+});
+
+
 const updateLastMod = (state, action) => {
   console.log('entro a actions ---', action);
   return updateObject(state, {
     lastMod: action.response,
   });
 };
-
 
 const authSuccess = (state, action) => updateObject(state, {
   token: action.token,
@@ -98,6 +106,12 @@ const authFail = (state, action) => updateObject(state, {
   error: action.error,
   loading: false,
 });
+
+const updateUsersFail = (state, action) => updateObject(state, {
+  error: action.error,
+  loading: false,
+});
+
 
 /* Arreglar actualizar chunks */
 const onDeleteUserSuccess = (state, action) => {
@@ -133,6 +147,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.CREATE_VEHICLE: return createVehicle(state, action);
     case actionTypes.CREATE_USER: return createUser(state, action);
     case actionTypes.UPDATE_LASTMOD: return updateLastMod(state, action);
+    case actionTypes.UPDATE_USERS_START: return updateUsersStart(state);
+    case actionTypes.UPDATE_USERS_SUCCESS: return updateUsersSuccess(state, action);
+    case actionTypes.UPDATE_USERS_FAIL: return updateUsersFail(state, action);
 
     default:
       return state;

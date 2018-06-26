@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import UserRow from './UserRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
+import * as actions from '../../store/actions/index';
+import getLastMod from '../../utils/updateStoreFunctions';
 
 
 class UsersInfo extends React.Component {
@@ -20,6 +22,17 @@ class UsersInfo extends React.Component {
     };
     this.updateSearch = this.updateSearch.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+
+  async componentDidMount() {
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+    console.log("api call last mod",lastMod);
+    console.log("prps las mod", this.props.lastMod);
+    if (lastMod.people !== this.props.lastMod.people) {
+      console.log("va a entrar al update");
+      this.props.updateUsers(this.props.motorCarrierId, this.props.token);
+    }
   }
 
   handlePageChange(pageNumber) {
@@ -87,11 +100,24 @@ class UsersInfo extends React.Component {
 UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
+  updateUsers: PropTypes.func.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.users.loading,
+  isLoading: state.auth.loading,
   users: state.auth.users,
+  lastMod: state.auth.lastMod,
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
-export default connect(mapStateToProps)(UsersInfo);
+
+const mapDispatchToProps = dispatch => ({
+  updateUsers: (motorCarrierId, token) =>
+    dispatch(actions.updateUsers(motorCarrierId, token)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersInfo);

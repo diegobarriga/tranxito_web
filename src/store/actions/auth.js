@@ -52,6 +52,24 @@ export const updateLastMod = response => ({
   type: actionTypes.UPDATE_LASTMOD,
 });
 
+export const updateUsersStart = () => ({
+  type: actionTypes.UPDATE_USERS_START,
+});
+
+export const updateUsersSuccess = (
+  users,
+  supervisors,
+) => ({
+  type: actionTypes.UPDATE_USERS_SUCCESS,
+  users,
+  supervisors,
+});
+
+export const updateUsersFail = error => ({
+  type: actionTypes.UPDATE_USERS_FAIL,
+  error,
+});
+
 export const errorReset = () => ({
   type: actionTypes.ERROR_RESET,
 });
@@ -132,7 +150,7 @@ export const login = (email, password) => (dispatch) => {
                     userResponse.data.motorCarrierId,
                     response.data.id,
                   ).then((lastModResponse) => {
-                    const lastMod = lastModResponse.status === 404 ? {} : lastModResponse.data;
+                    const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data;
                     dispatch(authSuccess(
                       response.data.id,
                       userResponse.data.id,
@@ -179,4 +197,30 @@ export const login = (email, password) => (dispatch) => {
       console.log(err.response);
       dispatch(authFail(err));
     });
+};
+
+
+export const updateUsers = (motorCarrierId, token) => (dispatch) => {
+  dispatch(updateUsersStart());
+
+  const filter = '{"where": {"accountStatus": "true"}}';
+  api.motorCarriers.getMotorCarrierPeople(
+    motorCarrierId,
+    token,
+    filter,
+  ).then((peopleResponse) => {
+    const supervisors = peopleResponse.data.filter(user => (
+      user.accountType === 'S'
+    ));
+    const usersObject = functions.arrayToObject(peopleResponse.data);
+    const supervisorsObject = functions.arrayToObject(supervisors);
+
+    dispatch(updateUsersSuccess(
+      usersObject,
+      supervisorsObject,
+    ));
+  }).catch((err) => {
+    console.log(err.response);
+    dispatch(updateUsersFail(err));
+  });
 };

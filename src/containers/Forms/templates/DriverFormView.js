@@ -52,8 +52,9 @@ class DriverFormView extends React.Component {
                 this.props.createUser(response.data);
 
                 const { lastMod } = this.props;
-                lastMod.people = Date.now();
-                console.log('LD------', lastMod);
+                console.log('Lm before------', lastMod);
+                lastMod.people = response.headers.lastmod;
+                console.log('Lm after------', lastMod);
                 this.props.updateLastMod(lastMod);
 
                 this.setState({ isLoading: false });
@@ -66,13 +67,16 @@ class DriverFormView extends React.Component {
           // Si estamos editando un usuario
           } else {
             this.patchData(submitData).then((response) => {
-              console.log('resp---', response);
+              console.log('resp---', response.headers);
               if (response.status === 200) {
                 this.props.createUser(response.data);
 
                 const { lastMod } = this.props;
-                lastMod.people = Date.now();
-                console.log('LD------', lastMod);
+                console.log('Lm before------', lastMod);
+                // falta transformarlo al mismo tipo
+                lastMod.people = response.headers.lastmod;
+
+                console.log('Lm after------', lastMod);
                 this.props.updateLastMod(lastMod);
 
                 this.setState({ isLoading: false });
@@ -98,8 +102,9 @@ class DriverFormView extends React.Component {
             this.props.createUser(response.data);
 
             const { lastMod } = this.props;
-            lastMod.people = Date.now();
-            console.log('LD------', lastMod);
+            console.log('Lm before------', lastMod);
+            lastMod.people = response.headers.lastmod;
+            console.log('Lm after------', lastMod);
             this.props.updateLastMod(lastMod);
 
           } else {
@@ -109,13 +114,14 @@ class DriverFormView extends React.Component {
       // Si estamos editando un usuario
       } else {
         this.patchData(formData.data).then((response) => {
-          console.log('resp---', response);
+          console.log('resp---', response.headers);
           if (response.status === 200) {
             this.props.createUser(response.data);
 
             const { lastMod } = this.props;
-            lastMod.people = Date.now();
-            console.log('LD------', lastMod);
+            console.log('Lm before------', lastMod);
+            lastMod.people = response.headers.lastmod;
+            console.log('Lm after------', lastMod);
             this.props.updateLastMod(lastMod);
 
             this.setState({ isLoading: false });

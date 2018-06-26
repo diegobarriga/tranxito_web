@@ -5,6 +5,7 @@ export {
   errorReset,
   logoutToken,
   updateLastMod,
+  updateUsers,
 } from './auth';
 
 export {
