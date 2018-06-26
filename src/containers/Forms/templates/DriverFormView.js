@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import DriverForm from './DriverForm';
@@ -158,7 +159,7 @@ class DriverFormView extends React.Component {
       token,
       match,
     } = this.props;
-
+    const { t } = this.props;
     return (
       <Container>
         <Row>
@@ -175,9 +176,9 @@ class DriverFormView extends React.Component {
                   <Aux key={i}>
                     <Breadcrumb.Divider icon="right chevron" />
                     { this.props.len - 1 > i ?
-                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                       :
-                      <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                      <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                     }
                   </Aux>
                 ))
@@ -231,5 +232,5 @@ const mapDispatchToProps = dispatch => ({
     crumbUrl,
   )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DriverFormView));
+const translateFunc = translate('translations')(DriverFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

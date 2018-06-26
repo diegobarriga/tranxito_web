@@ -77,7 +77,7 @@ class AlertsTable extends React.Component {
                 </button>
               </th>
               <th>
-                <span className="speedButton">Amount of Excess Speed</span>
+                <span className="speedButton">{t('Amount of Excess Speed')}</span>
                 <button onClick={() => this.sortByColumnDown('speedLimit', '1')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
@@ -92,7 +92,7 @@ class AlertsTable extends React.Component {
                 </button>
               </th>
               <th>
-                <span className="timeButton">Amount of Excess Hours of Driving</span>
+                <span className="timeButton">{t('Amount of Excess Hours of Driving')}</span>
                 <button onClick={() => this.sortByColumnDown('timeLimit', '2')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
@@ -129,7 +129,6 @@ class AlertsTable extends React.Component {
 AlertsTable.propTypes = {
   stats: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({

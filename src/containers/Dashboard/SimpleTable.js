@@ -80,7 +80,7 @@ class SimpleTable extends React.Component {
         <Table striped>
           <thead>
             <tr>
-              <th style={styles.table}>{t(this.props.type)}
+              <th style={styles.table}>
                 {this.props.type}
                 <button onClick={() => this.sortByColumnAZ()} className="default">
                   <FontAwesomeIcon
@@ -199,7 +199,6 @@ SimpleTable.propTypes = {
   stats: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
   vehicles: PropTypes.object.isRequired,
-  t: PropTypes.isRequired,
 };
 
 // UserLogs.defaultProps = {

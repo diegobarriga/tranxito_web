@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Table, Badge } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { translate } from 'react-i18next';
 import Loader from '../../components/Loader/Loader';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../utils/eventTypes';
 import '../../assets/styles/buttons.css';
@@ -106,6 +107,7 @@ class Logs extends React.Component {
         </button>
       );
     }
+    const { t } = this.props;
     return (
       <Row>
         <Col sm="12" md={{ size: 12 }}>
@@ -114,16 +116,16 @@ class Logs extends React.Component {
               <tr>
                 <th>
                   <select id="bender" value={this.state.filterOption} onChange={this.filterByEvent}>
-                    <option key={-1} value={-1}>All Events</option>
+                    <option key={-1} value={-1}>{t('All Events')}</option>
                     {Object.keys(EVENT_TYPES).map(key => (
                       <option key={key} value={key}>{EVENT_TYPES[key]}</option>
                    ))}
                   </select>
                 </th>
-                <th>Detail</th>
+                <th>{t('Detail')}</th>
                 <th>
                   <div>
-                    Timestamp
+                    {t('Timestamp')}
                     {button}
                   </div>
                 </th>
@@ -136,9 +138,9 @@ class Logs extends React.Component {
                     <Badge className={`event${event.code}`} style={styles.badge}>
                       {DUTY_STATUS[event.code]}
                     </Badge>}
-                    {'  '}{EVENT_TYPES[event.type]}
+                    {'  '}{t(EVENT_TYPES[event.type])}
                   </td>
-                  <td>{EVENT_CODES[event.type][event.code]}</td>
+                  <td>{t(EVENT_CODES[event.type][event.code])}</td>
                   <td>{funct.formatDate(event.timestamp)}</td>
                 </tr>
 
@@ -163,4 +165,5 @@ const mapStateToProps = state => ({
   loading: state.userLogs.loading,
 });
 
-export default connect(mapStateToProps)(Logs);
+const translateFunc = translate('translations')(Logs);
+export default connect(mapStateToProps)(translateFunc);

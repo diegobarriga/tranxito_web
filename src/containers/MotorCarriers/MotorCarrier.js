@@ -35,7 +35,6 @@ class MotorCarrier extends React.Component {
 MotorCarrier.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  t: PropTypes.isRequired,
 };
 
 

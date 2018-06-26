@@ -176,7 +176,6 @@ AlertsStats.propTypes = {
   motorCarrierId: PropTypes.number.isRequired,
   activeTab: PropTypes.string.isRequired,
   users: PropTypes.object.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({

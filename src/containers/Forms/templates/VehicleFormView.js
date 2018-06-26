@@ -167,9 +167,9 @@ class VehicleFormView extends React.Component {
                   <Aux key={i}>
                     <Breadcrumb.Divider icon="right chevron" />
                     { this.props.len - 1 > i ?
-                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                       :
-                      <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                      <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                     }
                   </Aux>
                 ))

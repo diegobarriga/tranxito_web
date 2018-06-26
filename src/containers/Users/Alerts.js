@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import '../../assets/styles/dashboard.css';
 import api from '../../services/api';
 import LineChart from '../Charts/LineChart';
@@ -213,7 +214,6 @@ class Alerts extends React.Component {
     console.log('new span: ', this.state.span);
     this.getData();
   }
-
   render() {
     // console.log(dataAlertsStats);
     // console.log('loadingAlertsStats: ', this.state.loadingAlertsStats);
@@ -225,6 +225,7 @@ class Alerts extends React.Component {
     const yMaxTime = Math.max(...this.state.dataStats.time.datasets[0].data.map(o => o.y));
 
     console.log('alerts', this.state.alerts);
+    const { t } = this.props;
     return (
       <div className="margin">
         <div className="inlineBoxRight">
@@ -239,12 +240,12 @@ class Alerts extends React.Component {
         <div className="barChart">
           <LineChart
             data={this.state.dataStats.speed}
-            title="Speeding Alerts by Day"
+            title={t('Speeding Alerts by Day')}
             yMax={yMaxSpeed}
           />
           <LineChart
             data={this.state.dataStats.time}
-            title="Hours of Driving Alerts by Day"
+            title={t('Hours of Driving Alerts by Day')}
             yMax={yMaxTime}
           />
         </div>
@@ -270,5 +271,5 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   // motorCarrierId: state.auth.motorCarrierId,
 });
-
-export default connect(mapStateToProps)(Alerts);
+const translateFunc = translate('translations')(Alerts);
+export default connect(mapStateToProps)(translateFunc);

@@ -89,7 +89,6 @@ SupervisorsInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
   id: PropTypes.any.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -154,7 +154,6 @@ class HeatMap extends React.Component {
 HeatMap.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  t: PropTypes.isRequired,
 };
 
 

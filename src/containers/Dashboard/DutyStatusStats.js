@@ -33,6 +33,7 @@ const dataDutyStats = {
 class DutyStatusStats extends React.Component {
   constructor(props) {
     super(props);
+    const { t } = this.props;
     this.state = {
       isMounted: false,
       span: 'week',
@@ -42,6 +43,16 @@ class DutyStatusStats extends React.Component {
       loadingDutyStats: false,
       type: 'Driver',
     };
+    console.log('HOLAAAA');
+    dataDutyStats.labels = [
+      t(DUTY_STATUS_LONG[1]), t(DUTY_STATUS_LONG[2]), t(DUTY_STATUS_LONG[3]), t(DUTY_STATUS_LONG[4]),
+    ];
+    console.log(t(DUTY_STATUS_LONG[1]));
+    console.log(t(DUTY_STATUS_LONG[2]));
+    console.log(DUTY_STATUS_LONG[3]);
+    console.log(DUTY_STATUS_LONG[4]);
+    console.log('CHAOOOOOoooo');
+
     this.setDutyStats = this.setDutyStats.bind(this);
     this.setDriversDutyStats = this.setDriversDutyStats.bind(this);
     this.setVehiclesDutyStats = this.setVehiclesDutyStats.bind(this);
@@ -212,7 +223,6 @@ DutyStatusStats.propTypes = {
   token: PropTypes.string.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   activeTab: PropTypes.string.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -34,15 +34,16 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   componentDidMount() {
+    const { t } = this.props;
     const auxArray = this.props.location.pathname.split('/');
     const crumbUrl = this.props.location.pathname;
     let newCrumb = auxArray[auxArray.length - 1].split('_');
     if (newCrumb[newCrumb.length - 1] === 'vehicles') {
-      newCrumb[newCrumb.length - 2] = 'New';
-      newCrumb[newCrumb.length - 1] = 'Vehicle(s)';
+      newCrumb[newCrumb.length - 2] = t('New');
+      newCrumb[newCrumb.length - 1] = t('Vehicle(s)');
     } else {
-      newCrumb[newCrumb.length - 2] = 'New';
-      newCrumb[newCrumb.length - 1] = 'Driver(s)';
+      newCrumb[newCrumb.length - 2] = t('New');
+      newCrumb[newCrumb.length - 1] = t('Driver(s)');
     }
     newCrumb = newCrumb.join(' ');
     this.props.addBreadCrumb(newCrumb, false, crumbUrl);
@@ -320,9 +321,9 @@ class SimpleReactFileUpload extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))

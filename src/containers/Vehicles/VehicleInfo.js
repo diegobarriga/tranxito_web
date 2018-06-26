@@ -34,7 +34,7 @@ class VehicleInfo extends React.Component {
   }
 
   render() {
-      const { t } = this.props;
+    const { t } = this.props;
     return (
       <div className="vehicle-card">
         <Row style={styles.userProfile} className="profile-info">
@@ -44,8 +44,8 @@ class VehicleInfo extends React.Component {
             </div>
             <div style={styles.userData}>
               <h4>{`${this.props.vehicles[this.props.id].carMaker} ${this.props.vehicles[this.props.id].model}`}</h4>
-              <p><strong>Plaque:</strong> {this.props.vehicles[this.props.id].plaque}</p>
-              <p><strong>State:</strong> {this.props.vehicles[this.props.id].state}</p>
+              <p><strong>{t('Plaque')}:</strong> {this.props.vehicles[this.props.id].plaque}</p>
+              <p><strong>{t('State')}:</strong> {this.props.vehicles[this.props.id].state}</p>
               <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
               <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p>
             </div>

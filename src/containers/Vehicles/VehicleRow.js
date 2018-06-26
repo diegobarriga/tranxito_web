@@ -65,7 +65,6 @@ VehicleRow.propTypes = {
   deleteVehicle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const translateFunc = translate('translations')(VehicleRow);

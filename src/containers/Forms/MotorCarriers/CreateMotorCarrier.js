@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import '../../../assets/styles/forms.css';
 import MotorCarrierFormView from '../templates/MotorCarrierFormView';
@@ -13,10 +12,6 @@ class CreateMotorCarrier extends React.Component {
     );
   }
 }
-
-CreateMotorCarrier.propTypes = {
-  t: PropTypes.isRequired,
-};
 
 const mapStateToProps = state => ({
   token: state.auth.token,

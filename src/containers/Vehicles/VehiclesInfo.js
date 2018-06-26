@@ -96,7 +96,6 @@ class VehiclesInfo extends React.Component {
 VehiclesInfo.propTypes = {
   vehicles: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({

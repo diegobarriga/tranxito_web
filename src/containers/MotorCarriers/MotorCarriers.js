@@ -102,7 +102,6 @@ MotorCarriers.propTypes = {
   token: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onInitMC: PropTypes.func.isRequired,
-  t: PropTypes.isRequired,
 };
 
 

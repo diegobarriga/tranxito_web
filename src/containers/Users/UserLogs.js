@@ -72,7 +72,6 @@ UserLogs.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   logs: PropTypes.array,
-  t: PropTypes.isRequired,
 };
 
 UserLogs.defaultProps = {

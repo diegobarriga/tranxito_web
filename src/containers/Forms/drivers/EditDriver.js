@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import '../../../assets/styles/forms.css';
@@ -13,10 +12,6 @@ class EditDriver extends React.Component {
     );
   }
 }
-
-EditDriver.propTypes = {
-  t: PropTypes.isRequired,
-};
 
 const mapStateToProps = state => ({
   token: state.auth.token,

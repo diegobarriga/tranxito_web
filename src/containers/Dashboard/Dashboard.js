@@ -143,7 +143,6 @@ Dashboard.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({

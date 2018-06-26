@@ -74,7 +74,7 @@ class VehicleLogs extends React.Component {
                   </Badge>}
                   {'  '}{EVENT_TYPES[event.type]}
                 </td>
-                <td>{EVENT_CODES[event.type][event.code]}</td>
+                <td>{t(EVENT_CODES[event.type][event.code])}</td>
                 <td>{this.formatDate(event.timestamp)}</td>
               </tr>
 
@@ -90,7 +90,6 @@ class VehicleLogs extends React.Component {
 VehicleLogs.propTypes = {
   id: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
-  t: PropTypes.isRequired,
 };
 
 const mapStateToProps = state => ({

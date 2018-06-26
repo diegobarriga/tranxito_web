@@ -121,7 +121,6 @@ Vehicle.propTypes = {
   len: PropTypes.number.isRequired,
   popCrumb: PropTypes.func.isRequired,
   vehicles: PropTypes.object.isRequired,
-  t: PropTypes.isRequired,
 };
 
 Vehicle.defaultProps = {

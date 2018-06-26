@@ -78,7 +78,7 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '1' })}
                 onClick={() => { this.toggle('1'); }}
               >
-                General Information
+                {t('General Information')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -86,7 +86,7 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '2' })}
                 onClick={() => { this.toggle('2'); }}
               >
-                Activity
+                {t('Activity')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -94,7 +94,7 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '3' })}
                 onClick={() => { this.toggle('3'); }}
               >
-                Alerts
+                {t('Alerts')}
               </NavLink>
             </NavItem>
           </Nav>
