@@ -36,7 +36,7 @@ class Navibar extends React.Component {
     };
     return (
       <Navbar fixed="top" className="navbar" light expand="md">
-        <img src={path} className="logo" alt="E2E Performance" />
+        <Link to="/"><img src={path} className="logo" alt="E2E Performance" /></Link>
         <Nav className="ml-auto" navbar>
           { isAuth ?
             <UncontrolledDropdown nav inNavbar>

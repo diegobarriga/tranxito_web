@@ -64,8 +64,10 @@ class MotorCarrierForm extends Component {
     const errors = {};
     if (_.isEmpty(String(data.name))) {
       errors.name = t('This field is required');
-    } else if (String(data.name).length > 120 || String(data.name).length < 4) {
-      errors.name = t('Name must be between 4-120 characters long');
+    } else if (_.isEmpty(String(data.name.trim()))) {
+      errors.name = t("This field can't be blank");
+    } else if (String(data.name.trim()).length > 120 || String(data.name.trim()).length < 4) {
+      errors.name = 'Name must be between 4-120 characters long';
     }
     /* NEED FIX */
     if (_.isEmpty(String(data.usdotNumber))) {

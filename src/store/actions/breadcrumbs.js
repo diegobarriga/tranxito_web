@@ -13,6 +13,10 @@ export const addBreadCrumbs = (lastCrumb, links) => ({
   links,
 });
 
+export const popCrumb = () => ({
+  type: actionTypes.POP_CRUMB,
+});
+
 export const deleteCrumbs = () => ({
   type: actionTypes.DELETE_CRUMBS,
 });

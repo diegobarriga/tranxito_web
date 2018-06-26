@@ -100,27 +100,39 @@ class DriverForm extends Component {
     const { t } = this.props;
     if (_.isEmpty(String(data.firstName))) {
       errors.firstName = t('This field is required');
+    } else if (_.isEmpty(String(data.firstName.trim()))) {
+      errors.firstName = t("This field can't be blank");
     } else if (String(data.firstName.length) > 30 || String(data.firstName).length < 2) {
       errors.firstName = t('First name must have between 2-30 characters');
     }
     if (_.isEmpty(String(data.lastName))) {
       errors.lastName = t('This field is required');
+    } else if (_.isEmpty(String(data.lastName.trim()))) {
+      errors.lastName = t("This field can't be blank");
     } else if (String(data.lastName.length) > 30 || String(data.lastName).length < 2) {
       errors.lastName = t('Last name must have between 2-30 characters');
     }
     if (_.isEmpty(String(data.username))) {
       errors.username = t('This field is required');
+    } else if (_.isEmpty(String(data.username.trim()))) {
+      errors.username = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.email))) {
       errors.email = t('This field is required');
+    } else if (_.isEmpty(String(data.email.trim()))) {
+      errors.email = t("This field can't be blank");
     } else if (!validator.isEmail(String(data.email))) {
       errors.email = t('Input is not a valid email');
     }
     if (_.isEmpty(String(data.password))) {
       errors.password = t('This field is required');
+    } else if (_.isEmpty(String(data.password.trim()))) {
+      errors.password = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.passwordConfirmation))) {
       errors.passwordConfirmation = t('This field is required');
+    } else if (_.isEmpty(String(data.passwordConfirmation.trim()))) {
+      errors.passwordConfirmation = t("This field can't be blank");
     } else if (!validator.equals(String(data.password), String(data.passwordConfirmation))) {
       errors.passwordConfirmation = t("Passwords don't match");
     }
@@ -129,6 +141,8 @@ class DriverForm extends Component {
     }
     if (_.isEmpty(String(data.driverLicenseNumber))) {
       errors.driverLicenseNumber = t('This field is required');
+    } else if (_.isEmpty(String(data.driverLicenseNumber.trim()))) {
+      errors.driverLicenseNumber = t("This field can't be blank");
     } else if (!validator.isAlphanumeric(String(data.driverLicenseNumber))) {
       errors.driverLicenseNumber = t('Must only contain numbers and letters (0-9/A-Z)');
     } else if (String(data.driverLicenseNumber).length > 20) {
@@ -136,6 +150,8 @@ class DriverForm extends Component {
     }
     if (_.isEmpty(String(data.licenseIssuingState))) {
       errors.licenseIssuingState = t('This field is required');
+    } else if (_.isEmpty(String(data.licenseIssuingState.trim()))) {
+      errors.licenseIssuingState = t("This field can't be blank");
     } else if (String(data.licenseIssuingState).length !== 2) {
       errors.licenseIssuingState = t('Not a valid state');
     }

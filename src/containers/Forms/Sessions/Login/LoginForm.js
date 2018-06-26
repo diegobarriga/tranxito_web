@@ -43,11 +43,15 @@ class LoginForm extends Component {
     const errors = {};
     if (_.isEmpty(String(data.email))) {
       errors.email = t('This field is required');
+    } else if (_.isEmpty(String(data.email.trim()))) {
+      errors.email = t("This field can't be blank");
     } else if (!validator.isEmail(String(data.email))) {
       errors.email = t('Not a valid email');
     }
     if (_.isEmpty(String(data.password))) {
       errors.password = t('This field is required');
+    } else if (_.isEmpty(String(data.password.trim()))) {
+      errors.password = t("This field can't be blank");
     }
     return {
       errors,

@@ -37,7 +37,7 @@ const HeatMapComponent = compose(
   }),
   withGoogleMap,
 )(props => (
-  <GoogleMap defaultZoom={6} center={props.center}>
+  <GoogleMap defaultZoom={9} center={props.center}>
     <HeatmapLayer
       data={props.data}
     />

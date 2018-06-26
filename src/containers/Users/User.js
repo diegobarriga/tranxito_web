@@ -7,9 +7,10 @@ import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import { translate } from 'react-i18next';
-import Graph from './graph';
-import UserLogs from './UserLogs';
+import Graph from '../Charts/LogsGraph';
+import Logs from '../Logs/Logs';
 import UserInfo from './UserInfo';
+import Alerts from './Alerts';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
@@ -26,6 +27,9 @@ class User extends React.Component {
 
   componentDidMount() {
     const auxArray = this.props.location.pathname.split('/');
+    if (this.props.navigation.length > 2) {
+      this.props.popCrumb();
+    }
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     const driverName = this.props.users[newCrumb].firstName;
@@ -49,7 +53,7 @@ class User extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/">Home</Link>
+                <Link className="section" to="/drivers">Home</Link>
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -85,6 +89,14 @@ class User extends React.Component {
                 Activity
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '3' })}
+                onClick={() => { this.toggle('3'); }}
+              >
+                Alerts
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
@@ -99,7 +111,14 @@ class User extends React.Component {
               <div className="tabDiv">
                 <Container>
                   <UserInfo id={id} />
-                  <UserLogs id={id} />
+                  <Logs id={id} type="user" />
+                </Container>
+              </div>
+            </TabPane>
+            <TabPane tabId="3">
+              <div className="tabDiv">
+                <Container>
+                  <Alerts id={id} activeTab={this.state.activeTab} />
                 </Container>
               </div>
             </TabPane>
@@ -118,6 +137,7 @@ User.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  popCrumb: PropTypes.func.isRequired,
   id: PropTypes.number,
 };
 
@@ -131,6 +151,7 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  popCrumb: () => dispatch(actions.popCrumb()),
 });
 
 const mapStateToProps = state => ({

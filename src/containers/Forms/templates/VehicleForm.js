@@ -83,13 +83,15 @@ class VehicleForm extends React.Component {
   validateInput(data) {
     const { t } = this.props;
     const errors = {};
-    if (data.vin.length > 18 || data.vin.length < 17) {
+    if (data.vin.trim().length > 18 || data.vin.trim().length < 17) {
       errors.vin = t('Must be 17 or 18 characters long');
-    } else if (data.vin.length === 18 && String(data.vin)[0] !== '-') {
+    } else if (data.vin.trim().length === 18 && String(data.vin.trim())[0] !== '-') {
       errors.vin = t('Must start with a dash (-) if VIN is 18 char long');
     }
     if (_.isEmpty(String(data.CmvPowerUnitNumber))) {
       errors.CmvPowerUnitNumber = t('This field is required');
+    } else if (_.isEmpty(String(data.CmvPowerUnitNumber.trim()))) {
+      errors.CmvPowerUnitNumber = t("This field can't be blank");
     } else if (data.imeiEld && !data.CmvPowerUnitNumber) {
       errors.CmvPowerUnitNumber = t('This field is required');
     }
@@ -102,19 +104,27 @@ class VehicleForm extends React.Component {
     */
     if (_.isEmpty(String(data.model))) {
       errors.model = t('This field is required');
+    } else if (_.isEmpty(String(data.model.trim()))) {
+      errors.model = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.imeiEld))) {
       errors.imeiEld = t('This field is required');
     }
     if (_.isEmpty(String(data.carMaker))) {
       errors.carMaker = t('This field is required');
+    } else if (_.isEmpty(String(data.carMaker.trim()))) {
+      errors.carMaker = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.plaque))) {
       errors.plaque = t('This field is required');
+    } else if (_.isEmpty(String(data.plaque.trim()))) {
+      errors.plaque = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.state))) {
       errors.state = t('This field is required');
-    } else if (String(data.state).length !== 2) {
+    } else if (_.isEmpty(String(data.state.trim()))) {
+      errors.state = t("This field can't be blank");
+    } else if (String(data.state.trim()).length !== 2) {
       errors.state = t('Not a valid state');
     }
     return {

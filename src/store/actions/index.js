@@ -20,6 +20,7 @@ export {
 export {
   addNewBreadCrumb,
   deleteCrumbs,
+  popCrumb,
 } from './breadcrumbs';
 
 export {

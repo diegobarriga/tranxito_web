@@ -47,6 +47,8 @@ export default {
       axios.get(`${apiPath}/People/${userId}/motorCarrier`),
     getUserDutyStatusChange: (userId, token) =>
       axios.get(`${apiPath}/People/${userId}/dutyStatusChange?access_token=${token}`),
+    getTrackings: (userId, token, conditions) =>
+      axios.get(`${apiPath}/People/${userId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
   vehicles: {
     getVehicles: () =>

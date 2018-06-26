@@ -56,7 +56,7 @@ class VehiclesInfo extends React.Component {
 
         <div className="ui divided items">
           {
-              filteredVehicles.sort((a, b) => a.carMaker > b.carMaker)
+              filteredVehicles.sort((a, b) => a.carMaker.localeCompare(b.carMaker))
               .slice(
               ((this.state.currentPage * this.state.pages) - 5),
                this.state.currentPage * this.state.pages,

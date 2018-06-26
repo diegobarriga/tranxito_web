@@ -21,6 +21,10 @@ class Users extends React.Component {
     const url = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     this.props.addBreadCrumb(newCrumb, true, url);
+    this.props.updateSidebar('dashboard', false);
+    this.props.updateSidebar('vehicles', false);
+    this.props.updateSidebar('supervisors', false);
+    this.props.updateSidebar('drivers', true);
   }
 
   render() {
@@ -51,7 +55,7 @@ class Users extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/">Home</Link>
+                <Link className="section" to="/drivers">Home</Link>
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -87,6 +91,7 @@ Users.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  updateSidebar: PropTypes.func.isRequired,
   error: PropTypes.object,
 };
 
@@ -108,6 +113,7 @@ const mapDispatchToProps = dispatch => ({
     restart,
     url,
   )),
+  updateSidebar: (tabName, clicked) => dispatch(actions.updateSidebarState(tabName, clicked)),
 });
 
 const translateFunc = translate('translations')(Users);

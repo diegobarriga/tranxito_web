@@ -53,7 +53,7 @@ class SupervisorsInfo extends React.Component {
 
         <div className="ui divided items">
           {
-              filteredUsers.sort((a, b) => a.lastName > b.lastName)
+              filteredUsers.sort((a, b) => a.lastName.localeCompare(b.lastName))
               .slice(
                 ((this.state.currentPage * this.state.pages) - 5),
                  this.state.currentPage * this.state.pages,
