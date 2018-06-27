@@ -10,3 +10,36 @@
   height: 70px;
   width: auto;
 }
+
+div button{
+  padding-right: 0px !important;
+  background: transparent;
+  border: none;
+}
+
+div button:focus {
+  outline:0 !important;
+}
+
+.selected-flag{
+  border: 2px solid $e2e-green;
+  border-radius: 2px;
+}
+
+// .flags{
+//   margin-left: auto;
+// }
+
+
+// .naw_wrapper {
+//   display: flex;
+//   flex-grow: 1;
+// }
+//
+// .left {
+//   flex: 0 0 20%;
+// }
+//
+// .right {
+//   flex: 1;
+// }

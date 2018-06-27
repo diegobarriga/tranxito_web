@@ -7,6 +7,7 @@ import {
   DropdownMenu, DropdownItem, NavLink,
 } from 'reactstrap';
 import { translate } from 'react-i18next';
+import FlagIcon from '../FlagIcon';
 
 import api from '../../services/api';
 import '../../assets/styles/navbar.css';
@@ -20,7 +21,9 @@ const path = `${process.env.PUBLIC_URL}/img/logoe2e.svg`;
 class Navibar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      language: 'en',
+    };
     this.getUserInfo = this.getUserInfo.bind(this);
   }
 
@@ -33,10 +36,19 @@ class Navibar extends React.Component {
     const { t, i18n } = this.props;
     const changeLanguage = (lng) => {
       i18n.changeLanguage(lng);
+      this.setState({ language: lng });
     };
+
+    const usFlag = this.state.language === 'en' ? <FlagIcon code="us" size="lg" className="selected-flag" /> : <FlagIcon code="us" size="lg" />;
+    const mxFlag = this.state.language === 'es' ? <FlagIcon code="mx" size="lg" className="selected-flag" /> : <FlagIcon code="mx" size="lg" />;
+
     return (
       <Navbar fixed="top" className="navbar" light expand="md">
         <Link to="/"><img src={path} className="logo" alt="E2E Performance" /></Link>
+        <div className="flags">
+          <button onClick={() => changeLanguage('en')}>{usFlag}</button>
+          <button onClick={() => changeLanguage('es')}>{mxFlag}</button>
+        </div>
         <Nav className="ml-auto" navbar>
           { isAuth ?
             <UncontrolledDropdown nav inNavbar>
@@ -46,10 +58,6 @@ class Navibar extends React.Component {
               <DropdownMenu right>
                 <DropdownItem>
                   <NavLink >{t('Profile')}</NavLink>
-                </DropdownItem>
-                <DropdownItem>
-                  <button onClick={() => changeLanguage('en')}>EN</button>
-                  <button onClick={() => changeLanguage('es')}>ES</button>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
@@ -71,7 +79,7 @@ Navibar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   userId: PropTypes.number,
   token: PropTypes.string,
-
+  t: PropTypes.func.isRequired,
   i18n: PropTypes.object.isRequired,
 };
 
