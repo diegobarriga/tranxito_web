@@ -5,6 +5,7 @@ const initialState = {
   dashboardClicked: false,
   driversClicked: true,
   vehiclesClicked: false,
+  devicesClicked: false,
   supervisorsClicked: false,
 };
 
@@ -16,6 +17,10 @@ const updateSidebarState = (state, action) => {
   } else if (action.tabName === 'drivers') {
     return updateObject(state, {
       driversClicked: action.clicked,
+    });
+  } else if (action.tabName === 'devices') {
+    return updateObject(state, {
+      devicesClicked: action.clicked,
     });
   } else if (action.tabName === 'vehicles') {
     return updateObject(state, {
@@ -33,6 +38,7 @@ const unmarkSidebar = (state) => { // eslint-disable-line
     dashboardClicked: false,
     driversClicked: true,
     vehiclesClicked: false,
+    devicesClicked: false,
     supervisorsClicked: false,
   });
 };

@@ -53,6 +53,7 @@ import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier'
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import Supervisors from './containers/Supervisors/Supervisors';
+import Devices from './containers/Devices/Devices';
 
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
@@ -90,6 +91,7 @@ class App extends Component {
           <Route path="/motor_carriers" component={MotorCarriers} />
           <Route path="/supervisors/:id/new_supervisor" component={SignupView} />
           <Route path="/supervisors" component={Supervisors} />
+          <Route path="/devices" component={Devices} />
         </Switch>
       </Layout>
     );
