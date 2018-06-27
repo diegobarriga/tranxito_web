@@ -33,10 +33,8 @@ class UsersInfo extends React.Component {
   async checkLastMod() {
     this.setState({ checking: true });
     const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
-    console.log("api call last mod",lastMod);
-    console.log("prps las mod", this.props.lastMod);
+
     if (lastMod.people !== this.props.lastMod.people) {
-      console.log("va a entrar al update");
       this.props.updateUsers(this.props.motorCarrierId, this.props.token);
       this.props.updateLastMod(lastMod);
     }
