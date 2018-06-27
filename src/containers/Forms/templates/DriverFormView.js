@@ -52,9 +52,7 @@ class DriverFormView extends React.Component {
                 this.props.createUser(response.data);
 
                 const { lastMod } = this.props;
-                console.log('Lm before------', lastMod);
                 lastMod.people = response.headers.lastmod;
-                console.log('Lm after------', lastMod);
                 this.props.updateLastMod(lastMod);
 
                 this.setState({ isLoading: false });
@@ -72,11 +70,7 @@ class DriverFormView extends React.Component {
                 this.props.createUser(response.data);
 
                 const { lastMod } = this.props;
-                console.log('Lm before------', lastMod);
-                // falta transformarlo al mismo tipo
                 lastMod.people = response.headers.lastmod;
-
-                console.log('Lm after------', lastMod);
                 this.props.updateLastMod(lastMod);
 
                 this.setState({ isLoading: false });
@@ -97,16 +91,14 @@ class DriverFormView extends React.Component {
       if (this.props.isCreate) {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
-            this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: 'We have created the new driver.' });
             this.props.createUser(response.data);
 
             const { lastMod } = this.props;
-            console.log('Lm before------', lastMod);
             lastMod.people = response.headers.lastmod;
-            console.log('Lm after------', lastMod);
             this.props.updateLastMod(lastMod);
 
+            this.setState({ isLoading: false });
+            this.setState({ type: 'success', message: 'We have created the new driver.' });
           } else {
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
@@ -119,9 +111,7 @@ class DriverFormView extends React.Component {
             this.props.createUser(response.data);
 
             const { lastMod } = this.props;
-            console.log('Lm before------', lastMod);
             lastMod.people = response.headers.lastmod;
-            console.log('Lm after------', lastMod);
             this.props.updateLastMod(lastMod);
 
             this.setState({ isLoading: false });
@@ -165,7 +155,6 @@ class DriverFormView extends React.Component {
     }
     return items;
   }
-
 
   render() {
     if (this.state.isLoading === true) return <Loader />;
