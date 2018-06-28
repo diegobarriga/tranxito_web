@@ -7,8 +7,6 @@ import {
   DropdownMenu, DropdownItem, NavLink,
 } from 'reactstrap';
 import { translate } from 'react-i18next';
-
-import api from '../../services/api';
 import '../../assets/styles/navbar.css';
 
 const pStyle = {
@@ -21,11 +19,6 @@ class Navibar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.getUserInfo = this.getUserInfo.bind(this);
-  }
-
-  getUserInfo() {
-    return api.people.getUser(this.props.userId, this.props.token);
   }
 
   render() {
@@ -41,7 +34,7 @@ class Navibar extends React.Component {
           { isAuth ?
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret style={pStyle}>
-                { this.state.firstName }
+                Profile
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>

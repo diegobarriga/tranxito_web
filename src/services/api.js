@@ -70,6 +70,22 @@ export default {
     getTrackings: (vehicleId, token, conditions) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
+  trailers: {
+    getTrailers: () =>
+      axios.get(`${apiPath}/Trailers`),
+    getTrailer: (trailerId, token) =>
+      axios.get(`${apiPath}/Trailers/${trailerId}?access_token=${token}`),
+    deleteTrailer: (trailerId, token) =>
+      axios.delete(`${apiPath}/Trailers/${trailerId}?access_token=${token}`),
+    updateTrailer: (trailerId, token, data) =>
+      axios.patch(`${apiPath}/Trailers/${trailerId}?access_token=${token}`, data),
+    setImage: (trailerId, url) =>
+      axios.get(`${apiPath}/Trailers/${trailerId}/setImage`, { url }),
+    getTrailerMotorCarrier: trailerId =>
+      axios.get(`${apiPath}/Trailers/${trailerId}/motorCarrier`),
+    exists: trailerId =>
+      axios.get(`${apiPath}/Trailers/${trailerId}/exists`),
+  },
   motorCarriers: {
     getMotorCarriers: token =>
       axios.get(`${apiPath}/MotorCarriers?access_token=${token}`),
@@ -97,6 +113,14 @@ export default {
       axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`, vehicle),
     countMotorCarrierVehicles: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles/count`),
+    getMotorCarrierTrailers: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers?access_token=${token}`),
+    getMotorCarrierTrailer: (motorCarrierId, trailerId) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers/${trailerId}`),
+    createMotorCarrierTrailer: (motorCarrierId, token, trailer) =>
+      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers?access_token=${token}`, trailer),
+    countMotorCarrierTrailers: motorCarrierId =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers/count`),
     getMotorCarrierEvents: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/events`),
     getMotorCarrierEvent: (motorCarrierId, eventId) =>
@@ -138,6 +162,8 @@ export default {
       axios.post(`${apiPath}/imageContainers/People/upload?access_token=${token}`, formData, config),
     vehicleImageUpload: (formData, config, token) =>
       axios.post(`${apiPath}/imageContainers/Vehicles/upload?access_token=${token}`, formData, config),
+    trailerImageUpload: (formData, config, token) =>
+      axios.post(`${apiPath}/imageContainers/Trailers/upload?access_token=${token}`, formData, config),
   },
   file: {
     csvFileUpload: (formData, config, token, id, type) =>

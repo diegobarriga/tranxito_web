@@ -5,6 +5,7 @@ import faFileExcel from '@fortawesome/fontawesome-free-solid/faFileExcel';
 import faUsers from '@fortawesome/fontawesome-free-solid/faUsers';
 import faUser from '@fortawesome/fontawesome-free-solid/faUser';
 import faCar from '@fortawesome/fontawesome-free-solid/faCar';
+import faTruck from '@fortawesome/fontawesome-free-solid/faTruck';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit';
@@ -48,6 +49,9 @@ import CreateDrivers from './containers/Forms/drivers/CreateDrivers';
 import CreateVehicle from './containers/Forms/vehicles/CreateVehicle';
 import CreateVehicles from './containers/Forms/vehicles/CreateVehicles';
 import EditVehicle from './containers/Forms/vehicles/EditVehicle';
+import Trailers from './containers/Trailers/Trailers';
+import CreateTrailer from './containers/Forms/Trailers/CreateTrailer';
+import EditTrailer from './containers/Forms/Trailers/EditTrailer';
 import CreateMotorCarrier from './containers/Forms/MotorCarriers/CreateMotorCarrier';
 import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
@@ -55,7 +59,7 @@ import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import Supervisors from './containers/Supervisors/Supervisors';
 
 fontawesome.library.add(
-  faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
+  faFileExcel, faUser, faUsers, faCar, faTruck, faSearch, faTrash, faEdit, faClock,
   faLocationArrow, faTachometerAlt, faInfoCircle, faSortAlphaUp, faSortAlphaDown,
   faChartLine, faSignInAlt, faSignOutAlt, faSortNumericDown, faSortNumericUp,
   faUserCog, faUserTie, faHdd, faEnvelope, faAddressCard, faFilter,
@@ -77,6 +81,9 @@ class App extends Component {
           <Route path="/vehicles/:id/edit" component={EditVehicle} />
           <Route path="/vehicles/:id" component={Vehicle} />
           <Route path="/vehicles" component={Vehicles} />
+          <Route path="/trailers/new_trailer" component={CreateTrailer} />
+          <Route path="/trailers/:id/edit" component={EditTrailer} />
+          <Route path="/trailers" component={Trailers} />
           <Route path="/logs" component={Logs} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={SignupView} />
