@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import VehicleForm from './VehicleForm';
+import TrailerForm from './TrailerForm';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert from '../../Alert/Alert';
@@ -180,7 +180,7 @@ class TrailerFormView extends React.Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             <h1 style={h1Style}>{t(title)}</h1>
-            <VehicleForm
+            <TrailerForm
               submit={this.onFormSubmit}
               isCreate={isCreate}
               token={token}

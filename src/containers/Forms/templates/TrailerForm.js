@@ -8,6 +8,9 @@ import api from '../../../services/api';
 
 const _ = require('lodash');
 
+const now = new Date();
+const thisYear = now.getUTCFullYear();
+
 class TrailerForm extends React.Component {
   constructor(props) {
     super(props);
@@ -112,7 +115,7 @@ class TrailerForm extends React.Component {
 
     if (_.isEmpty(String(data.year))) {
       errors.year = t('This field is required');
-    } else if (!validator.isInt(String(this.year), { min: 1900 })) {
+    } else if (!validator.isInt(String(this.year, { min: 1900, max: thisYear + 1 }))) {
       errors.year = t('Invalid trailer year');
     }
 
@@ -150,8 +153,6 @@ class TrailerForm extends React.Component {
       errors,
       data,
     } = this.state;
-    const now = new Date();
-    const thisYear = now.getUTCFullYear();
     const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>
@@ -226,6 +227,7 @@ class TrailerForm extends React.Component {
               <Input
                 type="number"
                 min={1900}
+                max={thisYear + 1}
                 name="year"
                 placeholder={t('Year')}
                 value={data.year || thisYear}
