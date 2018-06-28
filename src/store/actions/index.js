@@ -6,6 +6,7 @@ export {
   logoutToken,
   updateLastMod,
   updateUsers,
+  updateVehicles,
 } from './auth';
 
 export {

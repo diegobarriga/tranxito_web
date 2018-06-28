@@ -39,9 +39,16 @@ class Dashboard extends React.Component {
     this.setState({ checking: true });
     const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
 
-    if (lastMod.people !== this.props.lastMod.people) {
-      this.props.updateUsers(this.props.motorCarrierId, this.props.token);
+    if (
+      lastMod.people !== this.props.lastMod.people ||
+      lastMod.vehicles !== this.props.lastMod.vehicles) {
       this.props.updateLastMod(lastMod);
+      if (lastMod.people !== this.props.lastMod.people) {
+        this.props.updateUsers(this.props.motorCarrierId, this.props.token);
+      }
+      if (lastMod.vehicles !== this.props.lastMod.vehicles) {
+        this.props.updateVehicles(this.props.motorCarrierId, this.props.token);
+      }
     }
     this.setState({ checking: false });
   }
@@ -161,6 +168,7 @@ Dashboard.propTypes = {
   lastMod: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   updateUsers: PropTypes.func.isRequired,
+  updateVehicles: PropTypes.func.isRequired,
   updateLastMod: PropTypes.func.isRequired,
 };
 
@@ -175,8 +183,6 @@ const mapStateToProps = state => ({
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
   lastMod: state.auth.lastMod,
-  updateUsers: PropTypes.func.isRequired,
-  updateLastMod: PropTypes.func.isRequired,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -189,6 +195,8 @@ const mapDispatchToProps = dispatch => ({
   updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   updateUsers: (motorCarrierId, token) =>
     dispatch(actions.updateUsers(motorCarrierId, token)),
+  updateVehicles: (motorCarrierId, token) =>
+    dispatch(actions.updateVehicles(motorCarrierId, token)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

@@ -9,6 +9,8 @@ import Pagination from 'react-js-pagination';
 import VehicleRow from './VehicleRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
+import * as actions from '../../store/actions/index';
+import getLastMod from '../../utils/updateStoreFunctions';
 
 class VehiclesInfo extends React.Component {
   constructor(props) {
@@ -17,9 +19,25 @@ class VehiclesInfo extends React.Component {
       search: '',
       pages: '5',
       currentPage: '1',
+      checking: false,
     };
     this.updateSearch = this.updateSearch.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkLastMod();
+  }
+
+  async checkLastMod() {
+    this.setState({ checking: true });
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+
+    if (lastMod.vehicles !== this.props.lastMod.vehicles) {
+      this.props.updateVehicles(this.props.motorCarrierId, this.props.token);
+      this.props.updateLastMod(lastMod);
+    }
+    this.setState({ checking: false });
   }
 
   handlePageChange(pageNumber) {
@@ -31,7 +49,7 @@ class VehiclesInfo extends React.Component {
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    if (this.state.checking || this.props.isLoading) return <Loader />;
 
     const filteredVehicles = Object.values(this.props.vehicles).filter(vehicle => (
       vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
@@ -94,11 +112,26 @@ class VehiclesInfo extends React.Component {
 VehiclesInfo.propTypes = {
   vehicles: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  updateVehicles: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.vehicles.loading,
   vehicles: state.auth.vehicles,
+  isLoading: state.auth.loading,
+  lastMod: state.auth.lastMod,
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
-export default connect(mapStateToProps)(VehiclesInfo);
+const mapDispatchToProps = dispatch => ({
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
+  updateVehicles: (motorCarrierId, token) =>
+    dispatch(actions.updateVehicles(motorCarrierId, token)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(VehiclesInfo);

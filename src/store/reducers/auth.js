@@ -21,6 +21,8 @@ const authStart = state => updateObject(state, { error: null, loading: true });
 
 const updateUsersStart = state => updateObject(state, { error: null, loading: true });
 
+const updateVehiclesStart = state => updateObject(state, { error: null, loading: true });
+
 const errorReset = state => updateObject(state, { error: null });
 
 const createSuccess = (state, action) => {
@@ -75,6 +77,11 @@ const updateUsersSuccess = (state, action) => updateObject(state, {
   loading: false,
 });
 
+const updateVehiclesSuccess = (state, action) => updateObject(state, {
+  vehicles: action.vehicles,
+  loading: false,
+});
+
 
 const updateLastMod = (state, action) => {
   console.log('entro a actions ---', action);
@@ -108,6 +115,11 @@ const authFail = (state, action) => updateObject(state, {
 });
 
 const updateUsersFail = (state, action) => updateObject(state, {
+  error: action.error,
+  loading: false,
+});
+
+const updateVehiclesFail = (state, action) => updateObject(state, {
   error: action.error,
   loading: false,
 });
@@ -150,6 +162,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_USERS_START: return updateUsersStart(state);
     case actionTypes.UPDATE_USERS_SUCCESS: return updateUsersSuccess(state, action);
     case actionTypes.UPDATE_USERS_FAIL: return updateUsersFail(state, action);
+    case actionTypes.UPDATE_VEHICLES_START: return updateVehiclesStart(state);
+    case actionTypes.UPDATE_VEHICLES_SUCCESS: return updateVehiclesSuccess(state, action);
+    case actionTypes.UPDATE_VEHICLES_FAIL: return updateVehiclesFail(state, action);
 
     default:
       return state;

@@ -49,6 +49,11 @@ class VehicleFormView extends React.Component {
             this.postData(submitData).then((response) => {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
+
+                const { lastMod } = this.props;
+                lastMod.vehicles = response.headers.lastmod;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: 'We have created the new vehicle.' });
               } else {
@@ -61,6 +66,11 @@ class VehicleFormView extends React.Component {
             this.patchData(submitData).then((response) => {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
+
+                const { lastMod } = this.props;
+                lastMod.vehicles = response.headers.lastmod;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: 'We have edited the vehicle.' });
               } else {
@@ -80,6 +90,11 @@ class VehicleFormView extends React.Component {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
+
+            const { lastMod } = this.props;
+            lastMod.vehicles = response.headers.lastmod;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
             this.setState({ type: 'success', message: 'We have created the new vehicle.' });
           } else {
@@ -92,6 +107,11 @@ class VehicleFormView extends React.Component {
         this.patchData(formData.data).then((response) => {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
+
+            const { lastMod } = this.props;
+            lastMod.vehicles = response.headers.lastmod;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
             this.setState({ type: 'success', message: 'We have edited the vehicle.' });
           } else {
@@ -198,11 +218,13 @@ VehicleFormView.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   createVehicle: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  lastMod: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -211,10 +233,12 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
   createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
     urlString,
     restart,

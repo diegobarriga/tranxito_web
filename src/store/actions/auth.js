@@ -70,6 +70,20 @@ export const updateUsersFail = error => ({
   error,
 });
 
+export const updateVehiclesStart = () => ({
+  type: actionTypes.UPDATE_VEHICLES_START,
+});
+
+export const updateVehiclesSuccess = vehicles => ({
+  type: actionTypes.UPDATE_VEHICLES_SUCCESS,
+  vehicles,
+});
+
+export const updateVehiclesFail = error => ({
+  type: actionTypes.UPDATE_VEHICLES_FAIL,
+  error,
+});
+
 export const errorReset = () => ({
   type: actionTypes.ERROR_RESET,
 });
@@ -219,6 +233,22 @@ export const updateUsers = (motorCarrierId, token) => (dispatch) => {
       usersObject,
       supervisorsObject,
     ));
+  }).catch((err) => {
+    console.log(err.response);
+    dispatch(updateUsersFail(err));
+  });
+};
+
+export const updateVehicles = (motorCarrierId, token) => (dispatch) => {
+  dispatch(updateVehiclesStart());
+
+  api.motorCarriers.getMotorCarrierVehicles(
+    motorCarrierId,
+    token,
+  ).then((vehiclesResponse) => {
+    const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+
+    dispatch(updateVehiclesSuccess(vehiclesObject));
   }).catch((err) => {
     console.log(err.response);
     dispatch(updateUsersFail(err));
