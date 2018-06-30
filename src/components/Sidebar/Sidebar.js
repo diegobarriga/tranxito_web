@@ -49,7 +49,6 @@ class sidebar extends Component {
                   isAdm={this.props.isAdm}
                   name={this.props.name}
                   last={this.props.last}
-                  mc={this.props.mc}
                 />
                 <Link className="list-group-item-action list-group-item" to="/motor_carriers">Motor Carriers</Link>
               </Aux>
@@ -81,10 +80,14 @@ sidebar.propTypes = {
   profileImage: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   last: PropTypes.string.isRequired,
-  mc: PropTypes.string.isRequired,
+  mc: PropTypes.string,
   newBreadCrumb: PropTypes.func.isRequired,
   updateSidebar: PropTypes.func.isRequired,
   sidebarState: PropTypes.object.isRequired,
+};
+
+sidebar.defaultProps = {
+  mc: null,
 };
 
 const mapDispatchToProps = dispatch => ({

@@ -102,7 +102,7 @@ class MotorCarriers extends React.Component {
 
 
 MotorCarriers.propTypes = {
-  mCarrierList: PropTypes.array.isRequired,
+  mCarrierList: PropTypes.any.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,

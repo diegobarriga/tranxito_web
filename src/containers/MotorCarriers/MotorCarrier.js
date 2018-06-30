@@ -14,6 +14,7 @@ import syrusImg from '../../assets/images/syrus.svg';
 
 class MotorCarrier extends React.Component {
   render() {
+    const { id } = this.props.match.params;
     let authRedirect = null;
     if (this.props.isAuthenticated) {
       if (!this.props.isAdmin) {
@@ -30,7 +31,7 @@ class MotorCarrier extends React.Component {
         { authRedirect }
         <h1> {this.props.mCarrierName} </h1>
         <div className="buttons">
-          <Link className="btn btn-sm green spacing" to={`/supervisors/${this.props.mCarrierId}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
+          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
         </div>
 
         <div className="ui link cards">
@@ -82,9 +83,13 @@ class MotorCarrier extends React.Component {
 MotorCarrier.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  mCarrierName: PropTypes.string.isRequired,
+  mCarrierName: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  mCarrierId: PropTypes.number.isRequired,
+  match: PropTypes.object.isRequired,
+};
+
+MotorCarrier.defaultProps = {
+  mCarrierName: null,
 };
 
 const mapStateToProps = state => ({
@@ -92,7 +97,6 @@ const mapStateToProps = state => ({
   isAdmin: state.auth.role === 'A',
   loading: state.auth.loading,
   mCarrierName: state.auth.mcName,
-  mCarrierId: state.auth.motorCarrierId,
 });
 
 export default connect(mapStateToProps)(MotorCarrier);
