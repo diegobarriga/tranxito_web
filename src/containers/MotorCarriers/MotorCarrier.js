@@ -5,6 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import '../../assets/styles/forms.css';
+import '../../assets/styles/dashboardAdmin.css';
 import Aux from '../../hoc/Aux';
 import Loader from '../../components/Loader/Loader';
 import dashboardImg from '../../assets/images/statistics.svg';
@@ -38,7 +39,7 @@ class MotorCarrier extends React.Component {
 
         <div className="ui link cards">
           <Link className="card" to="/dashboard">
-            <img src={dashboardImg} alt="Dashboard" />
+            <img className="paddingBottom padding" src={dashboardImg} alt="Dashboard" />
             <div className="content">
               <span className="header">{t('Dashboard')}</span>
               <div className="meta">
@@ -47,7 +48,7 @@ class MotorCarrier extends React.Component {
             </div>
           </Link>
           <Link className="card" to="/drivers">
-            <img src={driverImg} alt="Drivers" />
+            <img className="paddingBottom padding" src={driverImg} alt="Drivers" />
             <div className="content">
               <span className="header">{t('Drivers')}</span>
               <div className="meta">
@@ -58,7 +59,7 @@ class MotorCarrier extends React.Component {
         </div>
         <div className="ui link cards">
           <Link className="card" to="/vehicles">
-            <img src={truckImg} alt="Vehicles" />
+            <img className="paddingBottom padding" src={truckImg} alt="Vehicles" />
             <div className="content">
               <span className="header">{t('Vehicles')}</span>
               <div className="meta">
@@ -67,7 +68,7 @@ class MotorCarrier extends React.Component {
             </div>
           </Link>
           <Link className="card" to="/vehicles">
-            <img src={syrusImg} alt="Devices" />
+            <img className="paddingBottom padding" src={syrusImg} alt="Devices" />
             <div className="content">
               <span className="header">{t('Devices')}</span>
               <div className="meta">
