@@ -46,7 +46,6 @@ class Layout extends Component {
               </div>
               <footer />
             </main>
-            <Footer />
           </div>
         </I18nextProvider>
       </Aux>
