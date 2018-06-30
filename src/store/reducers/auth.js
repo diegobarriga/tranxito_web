@@ -8,6 +8,7 @@ const initialState = {
   loading: false,
   role: null,
   motorCarrierId: null,
+  trailers: null,
   vehicles: null,
   users: null,
   supervisors: {},
@@ -39,6 +40,7 @@ const authLogout = (state) => {
     userId: null,
     role: null,
     motorCarrierId: null,
+    trailers: null,
     vehicles: null,
     users: null,
     supervisors: {},
@@ -72,6 +74,7 @@ const authSuccess = (state, action) => updateObject(state, {
   error: null,
   loading: false,
   motorCarrierId: action.motorCarrierId,
+  trailers: action.trailers,
   vehicles: action.vehicles,
   users: action.users,
   chunkedUsers: action.chunkedUsers,
@@ -81,7 +84,6 @@ const authSuccess = (state, action) => updateObject(state, {
   firstName: action.firstName,
   lastName: action.lastName,
   mcName: action.mcName,
-
 });
 
 const authFail = (state, action) => updateObject(state, {

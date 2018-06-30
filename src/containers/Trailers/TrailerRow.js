@@ -21,19 +21,20 @@ class TrailerRow extends React.Component {
     const pStyle = {
       justifyContent: 'flex-end',
     };
-    const { t } = this.props;
+    const { t, id, model, manufacturer, number, year, gvw } = this.props;
     return (
       <div className="item no-padding">
         <div className="truck_wrapper">
           <figure className="left">
             <Link to={`/trailers/${this.props.id}`}>
-              <img style={{ borderRadius: '50%' }} className="media-object" alt="trailer-img" width="100" src={api.images.trailerImageLink(this.props.image)} />
+              <img style={{ borderRadius: '50%' }} className="media-object" alt="trailer-img" width="100" src={api.images.trailersImageLink(this.props.image)} />
             </Link>
           </figure>
           <div className="right">
             <ul>
-              <li><Link to={`/trailers/${this.props.id}`}>{this.props.manufacturer} {this.props.model} - {this.props.year}</Link></li>
-              <li>{t('State')}: {this.props.state}</li>
+              <li>{model} - {manufacturer} ({year})</li>
+              <li>{t('Serial Number')}: {number}</li>
+              <li>{t('Gross Vehicle Weight')}: {gvw} kg</li>
             </ul>
           </div>
         </div>

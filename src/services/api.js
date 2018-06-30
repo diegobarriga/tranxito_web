@@ -158,6 +158,7 @@ export default {
   images: {
     userImageLink: image => `${apiPath}/imageContainers/People/download/${image}`,
     vehicleImageLink: image => `${apiPath}/imageContainers/Vehicles/download/${image}`,
+    trailersImageLink: image => `${apiPath}/imageContainers/Trailers/download/${image}`,
     driverImageUpload: (formData, config, token) =>
       axios.post(`${apiPath}/imageContainers/People/upload?access_token=${token}`, formData, config),
     vehicleImageUpload: (formData, config, token) =>

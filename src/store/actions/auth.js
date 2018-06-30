@@ -13,6 +13,7 @@ export const authSuccess = (
   role,
   response,
   motorCarrierId,
+  trailers,
   vehicles,
   users,
   supervisors,
@@ -27,6 +28,7 @@ export const authSuccess = (
   role,
   response,
   motorCarrierId,
+  trailers,
   vehicles,
   users,
   supervisors,
@@ -108,36 +110,43 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.motorCarrierId,
               response.data.id,
             ).then((vehiclesResponse) => {
-              const filter = '{"where": {"accountStatus": "true"}}';
-              api.motorCarriers.getMotorCarrierPeople(
+              api.motorCarriers.getMotorCarrierTrailers(
                 userResponse.data.motorCarrierId,
                 response.data.id,
-                filter,
-              ).then((peopleResponse) => {
-                const supervisors = peopleResponse.data.filter(user => (
-                  user.accountType === 'S'
-                ));
-                const usersObject = functions.arrayToObject(peopleResponse.data);
-                const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
-                const supervisorsObject = functions.arrayToObject(supervisors);
-                api.motorCarriers.getMotorCarrier(
+              ).then((trailersResponse) => {
+                const filter = '{"where": {"accountStatus": "true"}}';
+                api.motorCarriers.getMotorCarrierPeople(
                   userResponse.data.motorCarrierId,
                   response.data.id,
-                ).then((mCresponse) => {
-                  dispatch(authSuccess(
-                    response.data.id,
-                    userResponse.data.id,
-                    userResponse.data.accountType,
-                    response,
-                    userResponse.data.motorCarrierId,
-                    vehiclesObject,
-                    usersObject,
-                    supervisorsObject,
-                    userResponse.data.image,
-                    userResponse.data.firstName,
-                    userResponse.data.lastName,
-                    mCresponse.data.name,
+                  filter,
+                ).then((peopleResponse) => {
+                  const supervisors = peopleResponse.data.filter(user => (
+                    user.accountType === 'S'
                   ));
+                  const usersObject = functions.arrayToObject(peopleResponse.data);
+                  const trailersObject = functions.arrayToObject(trailersResponse.data);
+                  const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+                  const supervisorsObject = functions.arrayToObject(supervisors);
+                  api.motorCarriers.getMotorCarrier(
+                    userResponse.data.motorCarrierId,
+                    response.data.id,
+                  ).then((mCresponse) => {
+                    dispatch(authSuccess(
+                      response.data.id,
+                      userResponse.data.id,
+                      userResponse.data.accountType,
+                      response,
+                      userResponse.data.motorCarrierId,
+                      trailersObject,
+                      vehiclesObject,
+                      usersObject,
+                      supervisorsObject,
+                      userResponse.data.image,
+                      userResponse.data.firstName,
+                      userResponse.data.lastName,
+                      mCresponse.data.name,
+                    ));
+                  });
                 });
               });
             });
@@ -147,6 +156,7 @@ export const login = (email, password) => (dispatch) => {
               userResponse.data.id,
               userResponse.data.accountType,
               response,
+              null,
               null,
               null,
               null,

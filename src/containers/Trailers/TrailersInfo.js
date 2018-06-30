@@ -32,23 +32,21 @@ class TrailersInfo extends React.Component {
   }
 
   render() {
-    if (this.props.isLoading) return <Loader />;
-    const totalTrailers = 0;
-    const filteredTrailers = null;
-    if (this.props.trailers && this.props.trailers.length > 0) {
-      const filteredTrailers = Object.values(this.props.trailers).filter(trailer => (
-        trailer.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        trailer.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        trailer.manufacturer.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-        trailer.number.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+    const { trailers, isLoading } = this.props;
+    if (isLoading) return <Loader />;
 
-      const totalTrailers = filteredTrailers.length;
-    }
+    const filteredTrailers = Object.values(trailers).filter(trailer => (
+      trailer.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      trailer.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      trailer.manufacturer.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      trailer.number.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+
+    console.log(filteredTrailers);
+    const totalTrailers = filteredTrailers.length;
     const { t } = this.props;
 
     return (
       <div>
-
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
@@ -58,7 +56,7 @@ class TrailersInfo extends React.Component {
 
         <div className="ui divided items">
           {
-              totalTrailers > 0 ? filteredTrailers.sort((a, b) => a.manufacturer.localeCompare(b.manufacturer))
+              filteredTrailers.sort((a, b) => a.manufacturer.localeCompare(b.manufacturer))
               .slice(
               ((this.state.currentPage * this.state.pages) - 5),
                this.state.currentPage * this.state.pages,
@@ -73,7 +71,7 @@ class TrailersInfo extends React.Component {
                 year={trailer.year}
                 gvw={trailer.gvw}
                 image={trailer.image}
-              />)) : (<h3>No trailers</h3>)
+              />))
             }
         </div>
         <Col sm="12" md={{ size: 5, offset: 4 }}>
