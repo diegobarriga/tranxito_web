@@ -16,6 +16,7 @@ import syrusImg from '../../assets/images/syrus.svg';
 class MotorCarrier extends React.Component {
   render() {
     const { id } = this.props.match.params;
+    const { t } = this.props;
     let authRedirect = null;
     if (this.props.isAuthenticated) {
       if (!this.props.isAdmin) {
@@ -32,25 +33,25 @@ class MotorCarrier extends React.Component {
         { authRedirect }
         <h1> {this.props.mCarrierName} </h1>
         <div className="buttons">
-          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
+          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> {t('Create Supervisor')}</Link>
         </div>
 
         <div className="ui link cards">
           <Link className="card" to="/dashboard">
             <img src={dashboardImg} alt="Dashboard" />
             <div className="content">
-              <span className="header">Dashboard</span>
+              <span className="header">{t('Dashboard')}</span>
               <div className="meta">
-                <span className="date">Map, stats and more</span>
+                <span className="date">{t('Map, stats and more')}</span>
               </div>
             </div>
           </Link>
           <Link className="card" to="/drivers">
             <img src={driverImg} alt="Drivers" />
             <div className="content">
-              <span className="header">Drivers</span>
+              <span className="header">{t('Drivers')}</span>
               <div className="meta">
-                <span className="date">List and profiles</span>
+                <span className="date">{t('List and profiles')}</span>
               </div>
             </div>
           </Link>
@@ -59,18 +60,18 @@ class MotorCarrier extends React.Component {
           <Link className="card" to="/vehicles">
             <img src={truckImg} alt="Vehicles" />
             <div className="content">
-              <span className="header">Vehicles</span>
+              <span className="header">{t('Vehicles')}</span>
               <div className="meta">
-                <span className="date">List and profiles</span>
+                <span className="date">{t('List and profiles')}</span>
               </div>
             </div>
           </Link>
           <Link className="card" to="/vehicles">
             <img src={syrusImg} alt="Devices" />
             <div className="content">
-              <span className="header">Devices</span>
+              <span className="header">{t('Devices')}</span>
               <div className="meta">
-                <span className="date">List and profiles</span>
+                <span className="date">{t('List and profiles')}</span>
               </div>
             </div>
           </Link>
