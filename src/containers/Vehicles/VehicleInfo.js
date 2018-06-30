@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Button } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { translate } from 'react-i18next';
 import api from '../../services/api';
 import * as actions from '../../store/actions/index';
 import '../../assets/styles/trucks.css';
@@ -33,6 +34,7 @@ class VehicleInfo extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="vehicle-card">
         <Row style={styles.userProfile} className="profile-info">
@@ -42,8 +44,8 @@ class VehicleInfo extends React.Component {
             </div>
             <div style={styles.userData}>
               <h4>{`${this.props.vehicles[this.props.id].carMaker} ${this.props.vehicles[this.props.id].model}`}</h4>
-              <p><strong>Plaque:</strong> {this.props.vehicles[this.props.id].plaque}</p>
-              <p><strong>State:</strong> {this.props.vehicles[this.props.id].state}</p>
+              <p><strong>{t('Plaque')}:</strong> {this.props.vehicles[this.props.id].plaque}</p>
+              <p><strong>{t('State')}:</strong> {this.props.vehicles[this.props.id].state}</p>
               <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
               <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p>
             </div>
@@ -73,5 +75,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   deleteVehicle: (vehicleId, token) => dispatch(actions.onVehicleDelete(vehicleId, token)),
 });
-
-export default connect(mapStateToProps, mapDispatchToProps)(VehicleInfo);
+const translateFunc = translate('translations')(VehicleInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(translateFunc);

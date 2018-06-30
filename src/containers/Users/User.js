@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import Graph from './graph';
+import { translate } from 'react-i18next';
+import Graph from '../Charts/LogsGraph';
 import Logs from '../Logs/Logs';
 import UserInfo from './UserInfo';
+import Alerts from './Alerts';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
@@ -25,6 +27,9 @@ class User extends React.Component {
 
   componentDidMount() {
     const auxArray = this.props.location.pathname.split('/');
+    if (this.props.navigation.length > 2) {
+      this.props.popCrumb();
+    }
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     const driverName = this.props.users[newCrumb].firstName;
@@ -41,6 +46,7 @@ class User extends React.Component {
 
   render() {
     const { id } = this.props.match.params;
+    const { t } = this.props;
     return (
       <Aux>
         <Container>
@@ -54,9 +60,9 @@ class User extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -73,7 +79,7 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '1' })}
                 onClick={() => { this.toggle('1'); }}
               >
-                General Information
+                {t('General Information')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -81,7 +87,15 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '2' })}
                 onClick={() => { this.toggle('2'); }}
               >
-                Activity
+                {t('Activity')}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '3' })}
+                onClick={() => { this.toggle('3'); }}
+              >
+                {t('Alerts')}
               </NavLink>
             </NavItem>
           </Nav>
@@ -102,6 +116,13 @@ class User extends React.Component {
                 </Container>
               </div>
             </TabPane>
+            <TabPane tabId="3">
+              <div className="tabDiv">
+                <Container>
+                  <Alerts id={id} activeTab={this.state.activeTab} />
+                </Container>
+              </div>
+            </TabPane>
           </TabContent>
         </Container>
       </Aux>
@@ -117,6 +138,7 @@ User.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  popCrumb: PropTypes.func.isRequired,
   id: PropTypes.number,
   role: PropTypes.string.isRequired,
   mcName: PropTypes.string.isRequired,
@@ -133,6 +155,7 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  popCrumb: () => dispatch(actions.popCrumb()),
 });
 
 const mapStateToProps = state => ({
@@ -144,5 +167,5 @@ const mapStateToProps = state => ({
   mcName: state.auth.mcName,
   motorCarrierId: state.auth.motorCarrierId,
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User));
+const translateFunc = translate('translations')(User);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

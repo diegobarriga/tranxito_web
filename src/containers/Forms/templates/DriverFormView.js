@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import DriverForm from './DriverForm';
@@ -35,6 +36,7 @@ class DriverFormView extends React.Component {
   }
 
   onFormSubmit(formData) {
+    const { t } = this.props;
     this.setState({ isLoading: true });
     if (formData.picture !== '') {
       this.imgUpload(formData.picture).then((imgResponse) => {
@@ -51,10 +53,10 @@ class DriverFormView extends React.Component {
               if (response.status === 200) {
                 this.props.createUser(response.data);
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: 'We have created the new driver.' });
+                this.setState({ type: 'success', message: t('We have created the new driver.') });
               } else {
                 this.setState({ isLoading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
             });
           // Si estamos editando un usuario
@@ -63,16 +65,16 @@ class DriverFormView extends React.Component {
               if (response.status === 200) {
                 this.props.createUser(response.data);
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: 'We have edited the driver.' });
+                this.setState({ type: 'success', message: t('We have edited the driver.') });
               } else {
                 this.setState({ isLoading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
             });
           }
         } else {
           this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error with the image upload. Please try again later.') });
         }
       });
     } else {
@@ -81,10 +83,10 @@ class DriverFormView extends React.Component {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: 'We have created the new driver.' });
+            this.setState({ type: 'success', message: t('We have created the new driver.') });
             this.props.createUser(response.data);
           } else {
-            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
         });
       // Si estamos editando un usuario
@@ -93,10 +95,10 @@ class DriverFormView extends React.Component {
           if (response.status === 200) {
             this.props.createUser(response.data);
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: 'We have edited the driver.' });
+            this.setState({ type: 'success', message: t('We have edited the driver.') });
           } else {
             this.setState({ isLoading: false });
-            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
         });
       }
@@ -157,7 +159,7 @@ class DriverFormView extends React.Component {
       token,
       match,
     } = this.props;
-
+    const { t } = this.props;
     return (
       <Container>
         <Row>
@@ -174,9 +176,9 @@ class DriverFormView extends React.Component {
                   <Aux key={i}>
                     <Breadcrumb.Divider icon="right chevron" />
                     { this.props.len - 1 > i ?
-                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                       :
-                      <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                      <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                     }
                   </Aux>
                 ))
@@ -230,5 +232,5 @@ const mapDispatchToProps = dispatch => ({
     crumbUrl,
   )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DriverFormView));
+const translateFunc = translate('translations')(DriverFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

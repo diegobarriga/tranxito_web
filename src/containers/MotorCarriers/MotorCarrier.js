@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import '../../assets/styles/forms.css';
 import Aux from '../../hoc/Aux';
@@ -99,4 +100,5 @@ const mapStateToProps = state => ({
   mCarrierName: state.auth.mcName,
 });
 
-export default connect(mapStateToProps)(MotorCarrier);
+const translateFunc = translate('translations')(MotorCarrier);
+export default connect(mapStateToProps)(translateFunc);

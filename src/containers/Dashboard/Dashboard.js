@@ -6,6 +6,7 @@ import { Breadcrumb } from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Col, Row } from 'reactstrap';
+import { translate } from 'react-i18next';
 import Aux from '../../hoc/Aux';
 import Map from './Map';
 import Summary from './Summary';
@@ -47,7 +48,7 @@ class Dashboard extends React.Component {
     }
     if (this.props.loading === true) return <Loader />;
     const alert = null;
-
+    const { t } = this.props;
     return (
       <Aux>
         { alert }
@@ -63,9 +64,9 @@ class Dashboard extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -81,7 +82,7 @@ class Dashboard extends React.Component {
                 className={classnames({ active: this.state.activeTab === '1' })}
                 onClick={() => { this.toggle('1'); }}
               >
-                Map
+                {t('Map')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -89,7 +90,7 @@ class Dashboard extends React.Component {
                 className={classnames({ active: this.state.activeTab === '2' })}
                 onClick={() => { this.toggle('2'); }}
               >
-                Duty Status Stats
+                {t('Duty Status Stats')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -97,7 +98,7 @@ class Dashboard extends React.Component {
                 className={classnames({ active: this.state.activeTab === '3' })}
                 onClick={() => { this.toggle('3'); }}
               >
-                Alerts Stats
+                {t('Alerts Stats')}
               </NavLink>
             </NavItem>
           </Nav>
@@ -169,5 +170,5 @@ const mapDispatchToProps = dispatch => ({
     crumbUrl,
   )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+const translateFunc = translate('translations')(Dashboard);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

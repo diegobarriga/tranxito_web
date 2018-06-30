@@ -121,7 +121,7 @@ export const login = (email, password) => (dispatch) => {
       api.people.getUser(response.data.userId, response.data.id)
         .then((userResponse) => {
           console.log(userResponse.data);
-          if (userResponse.data.motorCarrierId) {
+          if (userResponse.data.motorCarrierId && userResponse.data.accountType !== 'D') {
             api.motorCarriers.getMotorCarrierVehicles(
               userResponse.data.motorCarrierId,
               response.data.id,

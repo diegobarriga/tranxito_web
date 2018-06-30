@@ -4,6 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Container, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import * as funct from '../../utils/tableFunctions';
 // import Loader from '../../components/Loader/Loader';
 // import { DUTY_STATUS } from '../../utils/eventTypes';
@@ -54,14 +55,14 @@ class AlertsTable extends React.Component {
     Object.entries(this.props.stats.driversAlerts).forEach(([key, value]) => {
       console.log(key, value);
     });
-
+    const { t } = this.props;
     return (
       <Container>
         <Table striped>
           <thead>
             <tr>
               <th>
-                Driver
+                {t('Driver')}
                 <button onClick={() => this.sortByColumnAZ()} className="default">
                   <FontAwesomeIcon
                     icon="sort-alpha-down"
@@ -76,7 +77,7 @@ class AlertsTable extends React.Component {
                 </button>
               </th>
               <th>
-                <span className="speedButton">Amount of Excess Speed</span>
+                <span className="speedButton">{t('Amount of Excess Speed')}</span>
                 <button onClick={() => this.sortByColumnDown('speedLimit', '1')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
@@ -91,7 +92,7 @@ class AlertsTable extends React.Component {
                 </button>
               </th>
               <th>
-                <span className="timeButton">Amount of Excess Hours of Driving</span>
+                <span className="timeButton">{t('Amount of Excess Hours of Driving')}</span>
                 <button onClick={() => this.sortByColumnDown('timeLimit', '2')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
@@ -133,5 +134,5 @@ AlertsTable.propTypes = {
 const mapStateToProps = state => ({
   users: state.auth.users,
 });
-
-export default connect(mapStateToProps)(AlertsTable);
+const translateFunc = translate('translations')(AlertsTable);
+export default connect(mapStateToProps)(translateFunc);
