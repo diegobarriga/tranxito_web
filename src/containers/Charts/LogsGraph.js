@@ -3,6 +3,7 @@ import { Scatter } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'reactstrap';
+import { translate } from 'react-i18next';
 import api from '../../services/api';
 import { EVENT_CODES } from '../../utils/eventTypes';
 import Loader from '../../components/Loader/Loader';
@@ -12,12 +13,13 @@ const moment = require('moment');
 class Graph extends React.Component {
   constructor(props) {
     super(props);
+    const { t } = this.props;
     this.state = {
       loading: false,
       chartData: {
         xLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
           13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
-        yLabels: ['Off-duty', 'Sleeper Berth', 'Driving', 'On-duty not driving'],
+        yLabels: [t('Off-duty'), t('Sleeper Berth'), t('Driving'), t('On-duty not driving')],
         datasets: [
           {
             steppedLine: true,
@@ -63,6 +65,7 @@ class Graph extends React.Component {
   processData = () => {
     const graphData = this.state.chartData;
     const logs = this.state.api_logs.reverse();
+    const { t } = this.props;
     graphData.datasets[0].data = [];
     console.log('FIRST LOG & API LOGS');
     console.log(this.state.firstLog);
@@ -70,7 +73,7 @@ class Graph extends React.Component {
     // Agregar el estado inicial
     graphData.datasets[0].data.push({
       x: 0,
-      y: EVENT_CODES[1][this.state.firstLog.code],
+      y: t(EVENT_CODES[1][this.state.firstLog.code]),
     });
     console.log(graphData.datasets[0].data);
 
@@ -81,18 +84,17 @@ class Graph extends React.Component {
       console.log(tiempo);
       graphData.datasets[0].data.push({
         x: (hour + (minutes / 60)),
-        y: EVENT_CODES[1][event.code],
+        y: t(EVENT_CODES[1][event.code]),
       });
     });
 
     // AGREGAR UN DATO DEL ULTIMO DUTY STATUS CON LA HORA ACTUAL
-
     if (logs.length > 0) {
       const now = moment();
       const nownumber = now.hour() + (now.minute() / 60);
       graphData.datasets[0].data.push({
         x: nownumber,
-        y: EVENT_CODES[1][logs[logs.length - 1].code],
+        y: t(EVENT_CODES[1][logs[logs.length - 1].code]),
       });
     } else {
       if (this.state.firstLog !== undefined) {
@@ -102,7 +104,7 @@ class Graph extends React.Component {
         console.log(this.state.firstLog.code);
         graphData.datasets[0].data.push({
           x: nownumber,
-          y: EVENT_CODES[1][this.state.firstLog.event],
+          y: t(EVENT_CODES[1][this.state.firstLog.event]),
         });
       }
     }
@@ -111,7 +113,7 @@ class Graph extends React.Component {
 
   render() {
     if (this.state.loading === true) return <Loader />;
-
+    const { t } = this.props;
     return (
       <Row>
         <Col sm="12" md={{ size: 12 }}>
@@ -121,7 +123,7 @@ class Graph extends React.Component {
             options={{
                   title: {
                     display: true,
-                    text: 'Last 24 hours',
+                    text: t('Last 24 hours'),
                     fontSize: 25,
                   },
                   legend: {
@@ -137,7 +139,7 @@ class Graph extends React.Component {
                               },
                               scaleLabel: {
                                 display: true,
-                                labelString: 'Time',
+                                labelString: t('Time'),
                               },
                             }],
                             yAxes: [{
@@ -146,7 +148,7 @@ class Graph extends React.Component {
                               display: true,
                               scaleLabel: {
                                 display: true,
-                                labelString: 'Duty status',
+                                labelString: t('Duty status'),
                               },
                             }],
                             gridLines: [{
@@ -170,4 +172,5 @@ const mapStateToProps = state => ({
   token: state.auth.token,
 });
 
-export default connect(mapStateToProps)(Graph);
+const translateFunc = translate('translations')(Graph);
+export default connect(mapStateToProps)(translateFunc);

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+import { translate } from 'react-i18next';
 import Graph from '../Charts/LogsGraph';
 import Logs from '../Logs/Logs';
 import UserInfo from './UserInfo';
@@ -30,6 +31,9 @@ class User extends React.Component {
   componentDidMount() {
     this.checkLastMod();
     const auxArray = this.props.location.pathname.split('/');
+    if (this.props.navigation.length > 2) {
+      this.props.popCrumb();
+    }
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     const driverName = this.props.users[newCrumb].firstName;
@@ -60,6 +64,7 @@ class User extends React.Component {
     if (this.state.checking || this.props.isLoading) return <Loader />;
 
     const { id } = this.props.match.params;
+    const { t } = this.props;
     return (
       <Aux>
         <Container>
@@ -72,9 +77,9 @@ class User extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -91,7 +96,7 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '1' })}
                 onClick={() => { this.toggle('1'); }}
               >
-                General Information
+                {t('General Information')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -99,7 +104,7 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '2' })}
                 onClick={() => { this.toggle('2'); }}
               >
-                Activity
+                {t('Activity')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -107,7 +112,7 @@ class User extends React.Component {
                 className={classnames({ active: this.state.activeTab === '3' })}
                 onClick={() => { this.toggle('3'); }}
               >
-                Alerts
+                {t('Alerts')}
               </NavLink>
             </NavItem>
           </Nav>
@@ -150,6 +155,7 @@ User.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  popCrumb: PropTypes.func.isRequired,
   id: PropTypes.number,
   isLoading: PropTypes.bool.isRequired,
   updateUsers: PropTypes.func.isRequired,
@@ -172,6 +178,7 @@ const mapDispatchToProps = dispatch => ({
   updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   updateUsers: (motorCarrierId, token) =>
     dispatch(actions.updateUsers(motorCarrierId, token)),
+  popCrumb: () => dispatch(actions.popCrumb()),
 });
 
 const mapStateToProps = state => ({
@@ -184,5 +191,5 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User));
+const translateFunc = translate('translations')(User);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

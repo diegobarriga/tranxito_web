@@ -44,11 +44,23 @@ const deleteCrumbs = (state) => { // eslint-disable-line
   });
 };
 
+const popCrumb = (state) => { // eslint-disable-line
+  const newCrumbs = [...state.breadcrumbs];
+  newCrumbs.pop();
+  const newLinks = [...state.links];
+  newLinks.pop();
+  return updateObject(state, {
+    breadcrumbs: newCrumbs,
+    links: newLinks,
+  });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.RESET_BREADCRUMBS: return resetBreadCrumbs(state, action);
     case actionTypes.ADD_BREADCRUMBS: return addBreadCrumbs(state, action);
     case actionTypes.DELETE_CRUMBS: return deleteCrumbs(state, action);
+    case actionTypes.POP_CRUMB: return popCrumb(state, action);
 
     default:
       return state;

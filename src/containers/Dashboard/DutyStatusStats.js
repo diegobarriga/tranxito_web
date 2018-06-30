@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import { EVENT_COLORS, DUTY_STATUS_LONG } from '../../utils/eventTypes';
 import '../../assets/styles/legend.css';
 import api from '../../services/api';
@@ -32,6 +33,7 @@ const dataDutyStats = {
 class DutyStatusStats extends React.Component {
   constructor(props) {
     super(props);
+    const { t } = this.props;
     this.state = {
       isMounted: false,
       span: 'week',
@@ -41,6 +43,16 @@ class DutyStatusStats extends React.Component {
       loadingDutyStats: false,
       type: 'Driver',
     };
+    console.log('HOLAAAA');
+    dataDutyStats.labels = [
+      t(DUTY_STATUS_LONG[1]), t(DUTY_STATUS_LONG[2]), t(DUTY_STATUS_LONG[3]), t(DUTY_STATUS_LONG[4]),
+    ];
+    console.log(t(DUTY_STATUS_LONG[1]));
+    console.log(t(DUTY_STATUS_LONG[2]));
+    console.log(DUTY_STATUS_LONG[3]);
+    console.log(DUTY_STATUS_LONG[4]);
+    console.log('CHAOOOOOoooo');
+
     this.setDutyStats = this.setDutyStats.bind(this);
     this.setDriversDutyStats = this.setDriversDutyStats.bind(this);
     this.setVehiclesDutyStats = this.setVehiclesDutyStats.bind(this);
@@ -173,26 +185,27 @@ class DutyStatusStats extends React.Component {
       data = this.state.vehiclesDutyStats;
     }
     // console.log('data1', data);
+    const { t } = this.props;
     return (
       <div className="margin">
         <div className="inlineBoxRight">
           <div className="content">
-            <span>Type </span>
+            <span>{t('Type')} </span>
             <select name="time" onChange={this.updateType} value={this.state.type}>
-              <option value="Driver">Driver</option>
-              <option value="Vehicle">Vehicle</option>
+              <option value="Driver">{t('Driver')}</option>
+              <option value="Vehicle">{t('Vehicle')}</option>
             </select>
-            <span>Time interval </span>
+            <span>{t('Time interval')} </span>
             <select name="time" onChange={this.updateSpan} value={this.state.span}>
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
+              <option value="day">{t('Day')}</option>
+              <option value="week">{t('Week')}</option>
+              <option value="month">{t('Month')}</option>
             </select>
           </div>
         </div>
         <DoughnutChart
           data={dataDutyStats}
-          title="Accumulated Duty Status Hours Per Type"
+          title={t('Accumulated Duty Status Hours Per Type')}
         />
         <div className="padding margin">
           <SimpleTable
@@ -210,12 +223,11 @@ DutyStatusStats.propTypes = {
   token: PropTypes.string.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   activeTab: PropTypes.string.isRequired,
-
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,
 });
-
-export default connect(mapStateToProps)(DutyStatusStats);
+const translateFunc = translate('translations')(DutyStatusStats);
+export default connect(mapStateToProps)(translateFunc);

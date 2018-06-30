@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import '../../assets/styles/dashboard.css';
 import api from '../../services/api';
 import BarChart from '../Charts/BarChart';
@@ -138,27 +139,27 @@ class AlertsStats extends React.Component {
     console.log(this.state.dataAlertsSpeedStats);
     console.log(this.state.dataAlertsHoursStats);
     console.log(this.state.alertsStats);
-
+    const { t } = this.props;
     return (
       <div className="margin">
         <div className="inlineBoxRight">
           <div className="content">
-            <span>Time interval </span>
+            <span>{t('Time interval')} </span>
             <select name="time" onChange={this.updateSpan} value={this.state.span}>
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
+              <option value="day">{t('Day')}</option>
+              <option value="week">{t('Week')}</option>
+              <option value="month">{t('Month')}</option>
             </select>
           </div>
         </div>
         <div className="barChart">
           <BarChart
             data={this.state.dataAlertsSpeedStats}
-            title="Drivers with the most Speeding Alerts"
+            title={t('Drivers with the most Speeding Alerts')}
           />
           <BarChart
             data={this.state.dataAlertsHoursStats}
-            title="Drivers with the most Hours of Driving Alerts"
+            title={t('Drivers with the most Hours of Driving Alerts')}
           />
         </div>
         <AlertsTable
@@ -182,5 +183,5 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,
 });
-
-export default connect(mapStateToProps)(AlertsStats);
+const translateFunc = translate('translations')(AlertsStats);
+export default connect(mapStateToProps)(translateFunc);

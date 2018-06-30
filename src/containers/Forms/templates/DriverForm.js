@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { translate } from 'react-i18next';
 import api from '../../../services/api';
 import '../../../assets/styles/forms.css';
 
@@ -96,62 +97,63 @@ class DriverForm extends Component {
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
   validateInput(data) {
     const errors = {};
+    const { t } = this.props;
     if (_.isEmpty(String(data.firstName))) {
-      errors.firstName = 'This field is required';
+      errors.firstName = t('This field is required');
     } else if (_.isEmpty(String(data.firstName.trim()))) {
-      errors.firstName = "This field can't be blank";
+      errors.firstName = t("This field can't be blank");
     } else if (String(data.firstName.length) > 30 || String(data.firstName).length < 2) {
-      errors.firstName = 'First name must have between 2-30 characters';
+      errors.firstName = t('First name must have between 2-30 characters');
     }
     if (_.isEmpty(String(data.lastName))) {
-      errors.lastName = 'This field is required';
+      errors.lastName = t('This field is required');
     } else if (_.isEmpty(String(data.lastName.trim()))) {
-      errors.lastName = "This field can't be blank";
+      errors.lastName = t("This field can't be blank");
     } else if (String(data.lastName.length) > 30 || String(data.lastName).length < 2) {
-      errors.lastName = 'Last name must have between 2-30 characters';
+      errors.lastName = t('Last name must have between 2-30 characters');
     }
     if (_.isEmpty(String(data.username))) {
-      errors.username = 'This field is required';
+      errors.username = t('This field is required');
     } else if (_.isEmpty(String(data.username.trim()))) {
-      errors.username = "This field can't be blank";
+      errors.username = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.email))) {
-      errors.email = 'This field is required';
+      errors.email = t('This field is required');
     } else if (_.isEmpty(String(data.email.trim()))) {
-      errors.email = "This field can't be blank";
+      errors.email = t("This field can't be blank");
     } else if (!validator.isEmail(String(data.email))) {
-      errors.email = 'Input is not a valid email';
+      errors.email = t('Input is not a valid email');
     }
     if (_.isEmpty(String(data.password))) {
-      errors.password = 'This field is required';
+      errors.password = t('This field is required');
     } else if (_.isEmpty(String(data.password.trim()))) {
-      errors.password = "This field can't be blank";
+      errors.password = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.passwordConfirmation))) {
-      errors.passwordConfirmation = 'This field is required';
+      errors.passwordConfirmation = t('This field is required');
     } else if (_.isEmpty(String(data.passwordConfirmation.trim()))) {
-      errors.passwordConfirmation = "This field can't be blank";
+      errors.passwordConfirmation = t("This field can't be blank");
     } else if (!validator.equals(String(data.password), String(data.passwordConfirmation))) {
-      errors.passwordConfirmation = "Passwords don't match";
+      errors.passwordConfirmation = t("Passwords don't match");
     }
     if (!_.isEmpty(data.picture) && !validator.isMimeType(String(data.picture))) {
-      errors.picture = 'Invalid file format';
+      errors.picture = t('Invalid file format');
     }
     if (_.isEmpty(String(data.driverLicenseNumber))) {
-      errors.driverLicenseNumber = 'This field is required';
+      errors.driverLicenseNumber = t('This field is required');
     } else if (_.isEmpty(String(data.driverLicenseNumber.trim()))) {
-      errors.driverLicenseNumber = "This field can't be blank";
+      errors.driverLicenseNumber = t("This field can't be blank");
     } else if (!validator.isAlphanumeric(String(data.driverLicenseNumber))) {
-      errors.driverLicenseNumber = 'Must only contain numbers and letters (0-9/A-Z)';
+      errors.driverLicenseNumber = t('Must only contain numbers and letters (0-9/A-Z)');
     } else if (String(data.driverLicenseNumber).length > 20) {
-      errors.driverLicenseNumber = 'Must have ≤ 20 characters';
+      errors.driverLicenseNumber = t('Must have ≤ 20 characters');
     }
     if (_.isEmpty(String(data.licenseIssuingState))) {
-      errors.licenseIssuingState = 'This field is required';
+      errors.licenseIssuingState = t('This field is required');
     } else if (_.isEmpty(String(data.licenseIssuingState.trim()))) {
-      errors.licenseIssuingState = "This field can't be blank";
+      errors.licenseIssuingState = t("This field can't be blank");
     } else if (String(data.licenseIssuingState).length !== 2) {
-      errors.licenseIssuingState = 'Not a valid state';
+      errors.licenseIssuingState = t('Not a valid state');
     }
     /*
     if (_.isEmpty(String(data.exemptDriverConfiguration))) {
@@ -161,7 +163,7 @@ class DriverForm extends Component {
     }
     */
     if (_.isEmpty(String(data.startingTime24HourPeriod))) {
-      errors.startingTime24HourPeriod = 'This field is required';
+      errors.startingTime24HourPeriod = t('This field is required');
     }
     /*
     if (_.isEmpty(String(data.timeZoneOffsetUtc))) {
@@ -218,17 +220,17 @@ class DriverForm extends Component {
       showPassword,
       data,
     } = this.state;
-
+    const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>
         <div className="unstackable two fields">
           <div className="field">
-            <Label>First name</Label>
+            <Label>{t('First name')}</Label>
             <FormGroup widths="equal">
               <Input
                 type="text"
                 name="firstName"
-                placeholder="First name"
+                placeholder={t('First name')}
                 value={data.firstName}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.firstName}
@@ -239,12 +241,12 @@ class DriverForm extends Component {
           </div>
 
           <div className="field">
-            <Label>Last name</Label>
+            <Label>{t('Last name')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="lastName"
-                placeholder="Last name"
+                placeholder={t('Last name')}
                 value={data.lastName}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.lastName}
@@ -257,12 +259,12 @@ class DriverForm extends Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>Username</Label>
+            <Label>{t('Username')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="username"
-                placeholder="Username"
+                placeholder={t('Username')}
                 value={data.username}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.username}
@@ -289,10 +291,10 @@ class DriverForm extends Component {
 
 
         <div className="field">
-          <Label>Password</Label>
+          <Label>{t('Password')}</Label>
           <FormGroup>
             <Input
-              placeholder="Password"
+              placeholder={t('Password')}
               type={!showPassword ? 'password' : 'text'}
               name="password"
               autoComplete="new-password"
@@ -305,10 +307,10 @@ class DriverForm extends Component {
           </FormGroup>
         </div>
         <div className="field">
-          <Label>Password confirmation </Label>
+          <Label>{t('Password confirmation')} </Label>
           <FormGroup>
             <Input
-              placeholder="Password confirmation"
+              placeholder={t('Password confirmation')}
               type={!showPassword ? 'password' : 'text'}
               name="passwordConfirmation"
               autoComplete="new-password"
@@ -322,7 +324,7 @@ class DriverForm extends Component {
         </div>
 
         <div className="field">
-          <Label for="image">Image</Label>
+          <Label for="image">{t('Image')}</Label>
           <FormGroup>
             <Input
               type="file"
@@ -338,12 +340,12 @@ class DriverForm extends Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>Driver license number</Label>
+            <Label>{t('Driver license number')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="driverLicenseNumber"
-                placeholder="Driver license number"
+                placeholder={t('Driver license number')}
                 value={data.driverLicenseNumber}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.driverLicenseNumber}
@@ -353,12 +355,12 @@ class DriverForm extends Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>Licenses issuing state</Label>
+            <Label>{t('Licenses issuing state')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="licenseIssuingState"
-                placeholder="Licenses issuing state"
+                placeholder={t('Licenses issuing state')}
                 value={data.licenseIssuingState}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.licenseIssuingState}
@@ -371,7 +373,7 @@ class DriverForm extends Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>Exempt driver configuration</Label>
+            <Label>{t('Exempt driver configuration')}</Label>
             <FormGroup>
               <Input
                 label="Exempt Driver Configuration"
@@ -389,7 +391,7 @@ class DriverForm extends Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>Time Zone Offset in UTC</Label>
+            <Label>{t('Time Zone Offset in UTC')}</Label>
             <FormGroup>
               <Input
                 type="select"
@@ -407,7 +409,7 @@ class DriverForm extends Component {
         </div>
 
         <div className="field">
-          <Label>Starting Time 24 Hour Period</Label>
+          <Label>{t('Starting Time 24 Hour Period')}</Label>
           <FormGroup>
             <Input
               type="datetime-local"
@@ -422,7 +424,7 @@ class DriverForm extends Component {
 
         <div className="unstackable three fields">
           <div className="field">
-            <Label>Move Yards Use</Label>
+            <Label>{t('Move Yards Use')}</Label>
             <FormGroup>
               <Input
                 type="select"
@@ -438,7 +440,7 @@ class DriverForm extends Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>Default Use</Label>
+            <Label>{t('Default Use')}</Label>
             <FormGroup>
               <Input
                 type="select"
@@ -454,7 +456,7 @@ class DriverForm extends Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>Personal Use</Label>
+            <Label>{t('Personal Use')}</Label>
             <FormGroup>
               <Input
                 type="select"
@@ -470,7 +472,7 @@ class DriverForm extends Component {
             </FormGroup>
           </div>
         </div>
-        <button className="ui button" type="submit">Submit</button>
+        <button className="ui button" type="submit">{t('Submit')}</button>
       </form>
     );
   }
@@ -483,4 +485,4 @@ DriverForm.propTypes = {
   submit: PropTypes.func.isRequired,
 };
 
-export default DriverForm;
+export default translate('translations')(DriverForm);

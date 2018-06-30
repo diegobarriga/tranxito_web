@@ -38,7 +38,8 @@ class BarChart extends React.Component {
   render() {
     // if (this.props.activeTab !== '2') return <div />;
     this.state.options.title.text = this.props.title;
-
+    console.log(this.props.title);
+    
     return (
       <div>
         <Bar

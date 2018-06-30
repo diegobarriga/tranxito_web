@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Container, Table } from 'reactstrap';
 import * as funct from '../../utils/tableFunctions';
+import { translate } from 'react-i18next';
 // import Loader from '../../components/Loader/Loader';
 // import { DUTY_STATUS } from '../../utils/eventTypes';
 // import * as functions from './functions';
@@ -99,7 +100,7 @@ class AlertsTable extends React.Component {
         </button>
       );
     }
-
+    const { t } = this.props;
     return (
       <Container>
         <Table hover>
@@ -110,7 +111,7 @@ class AlertsTable extends React.Component {
                 {button}
               </th>
               <th>
-                <span className="speedButton">Amount of Excess Speed</span>
+                <span className="speedButton">{t('Amount of Excess Speed')}</span>
                 <button onClick={() => this.sortByColumnDown('speedLimit', '1')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
@@ -125,7 +126,7 @@ class AlertsTable extends React.Component {
                 </button>
               </th>
               <th>
-                <span className="timeButton">Amount of Excess Hours of Driving</span>
+                <span className="timeButton">{t('Amount of Excess Hours of Driving')}</span>
                 <button onClick={() => this.sortByColumnDown('timeLimit', '2')} className="default">
                   <FontAwesomeIcon
                     icon="sort-numeric-down"
@@ -229,5 +230,4 @@ AlertsTable.propTypes = {
   groupedAlerts: PropTypes.object.isRequired,
 };
 
-
-export default AlertsTable;
+export default translate('translations')(AlertsTable);
