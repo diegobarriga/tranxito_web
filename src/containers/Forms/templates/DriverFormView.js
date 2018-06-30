@@ -12,6 +12,7 @@ import Alert from '../../Alert/Alert';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import Aux from '../../../hoc/Aux';
+import getLastMod from '../../../utils/updateStoreFunctions';
 
 class DriverFormView extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class DriverFormView extends React.Component {
     this.props.addBreadCrumb(newCrumb, false, crumbUrl);
   }
 
-  onFormSubmit(formData) {
+  async onFormSubmit(formData) {
     this.setState({ isLoading: true });
     if (formData.picture !== '') {
       this.imgUpload(formData.picture).then((imgResponse) => {
@@ -47,12 +48,13 @@ class DriverFormView extends React.Component {
           console.log(submitData);
           // Si estamos creando un usuario
           if (this.props.isCreate) {
-            this.postData(submitData).then((response) => {
+            this.postData(submitData).then(async (response) => {
               if (response.status === 200) {
                 this.props.createUser(response.data);
 
+                const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
                 const { lastMod } = this.props;
-                lastMod.people = response.headers.lastmod;
+                lastMod.people = lastModAPI.people;
                 this.props.updateLastMod(lastMod);
 
                 this.setState({ isLoading: false });
@@ -61,16 +63,20 @@ class DriverFormView extends React.Component {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             });
           // Si estamos editando un usuario
           } else {
-            this.patchData(submitData).then((response) => {
+            this.patchData(submitData).then(async (response) => {
               console.log('resp---', response.headers);
               if (response.status === 200) {
                 this.props.createUser(response.data);
 
+                const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
                 const { lastMod } = this.props;
-                lastMod.people = response.headers.lastmod;
+                lastMod.people = lastModAPI.people;
                 this.props.updateLastMod(lastMod);
 
                 this.setState({ isLoading: false });
@@ -79,6 +85,9 @@ class DriverFormView extends React.Component {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             });
           }
         } else {
@@ -89,12 +98,13 @@ class DriverFormView extends React.Component {
     } else {
       // Si estamos creando un usuario
       if (this.props.isCreate) {
-        this.postData(formData.data).then((response) => {
+        this.postData(formData.data).then(async (response) => {
           if (response.status === 200) {
             this.props.createUser(response.data);
 
+            const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
             const { lastMod } = this.props;
-            lastMod.people = response.headers.lastmod;
+            lastMod.people = lastModAPI.people;
             this.props.updateLastMod(lastMod);
 
             this.setState({ isLoading: false });
@@ -102,16 +112,20 @@ class DriverFormView extends React.Component {
           } else {
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         });
       // Si estamos editando un usuario
       } else {
-        this.patchData(formData.data).then((response) => {
+        this.patchData(formData.data).then(async (response) => {
           console.log('resp---', response.headers);
           if (response.status === 200) {
             this.props.createUser(response.data);
 
+            const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
             const { lastMod } = this.props;
-            lastMod.people = response.headers.lastmod;
+            lastMod.people = lastModAPI.people;
             this.props.updateLastMod(lastMod);
 
             this.setState({ isLoading: false });
@@ -120,6 +134,9 @@ class DriverFormView extends React.Component {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         });
       }
     }

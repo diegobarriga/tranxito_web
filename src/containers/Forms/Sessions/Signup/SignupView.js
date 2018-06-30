@@ -8,16 +8,45 @@ import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
 import Alert from '../../../Alert/Alert';
 import SignupForm from './SignupForm';
-
+import getLastMod from '../../../../utils/updateStoreFunctions';
+import api from '../../../../services/api';
 
 class SignupView extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      type: '',
+      message: '',
+      isLoading: false,
+    };
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
+  async onFormSubmit(data) {
+    this.setState({ isLoading: true });
+
+    api.motorCarriers.createMotorCarrierPeople(data.motorCarrierId, data.token, data)
+      .then(async (response) => {
+        if (response.status === 200) {
+          this.props.createSuccess(response);
+
+          const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+          const { lastMod } = this.props;
+          lastMod.people = lastModAPI.people;
+          this.props.updateLastMod(lastMod);
+          this.setState({ isLoading: false });
+        } else {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+        }
+      }).catch(() => {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+      });
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    if (this.props.isLoading || this.state.isLoading) return <Loader />;
 
     const h1Style = {
       marginTop: '1rem',
@@ -35,15 +64,12 @@ class SignupView extends Component {
 
     /* Alert */
     let alert;
-    let msg = '';
-    if (this.props.error === null) {
-      alert = null;
-    } else if (this.props.error.status === 200) {
-      msg = 'Supervisor was created successfully';
-      alert = (<Alert alertType="SUCCESS" message={msg} />);
-    } else {
-      msg = 'Error the supervisor could not be created';
-      alert = (<Alert alertType="FAIL" message={msg} />);
+    if (this.state.type && this.state.message) {
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
 
     return (
@@ -59,7 +85,7 @@ class SignupView extends Component {
             { authRedirect }
             <h1 style={h1Style}>Register Supervisor</h1>
             <SignupForm
-              submit={this.props.onAuth}
+              submit={this.onFormSubmit}
               token={this.props.token}
               motorCarrierId={this.props.match.params.id}
             />
@@ -70,19 +96,16 @@ class SignupView extends Component {
   }
 }
 
-
 SignupView.propTypes = {
   isAdmin: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  onAuth: PropTypes.func.isRequired,
+  createSuccess: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
   match: PropTypes.object.isRequired,
-};
-
-SignupView.defaultProps = {
-  error: null,
+  updateLastMod: PropTypes.func.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  lastMod: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -91,11 +114,14 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   error: state.auth.error,
   isLoading: state.auth.loading,
+  motorCarrierId: state.auth.motorCarrierId,
+  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: data => dispatch(actions.signup(data)),
+  createSuccess: data => dispatch(actions.createSuccess(data)),
   resetError: () => dispatch(actions.errorReset()),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupView));

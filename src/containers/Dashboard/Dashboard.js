@@ -42,13 +42,15 @@ class Dashboard extends React.Component {
     if (
       lastMod.people !== this.props.lastMod.people ||
       lastMod.vehicles !== this.props.lastMod.vehicles) {
-      this.props.updateLastMod(lastMod);
       if (lastMod.people !== this.props.lastMod.people) {
+        console.log('--update users dash--');
         this.props.updateUsers(this.props.motorCarrierId, this.props.token);
       }
       if (lastMod.vehicles !== this.props.lastMod.vehicles) {
+        console.log('--update vehicles dash--');
         this.props.updateVehicles(this.props.motorCarrierId, this.props.token);
       }
+      this.props.updateLastMod(lastMod);
     }
     this.setState({ checking: false });
   }

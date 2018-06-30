@@ -215,6 +215,7 @@ export const login = (email, password) => (dispatch) => {
 
 
 export const updateUsers = (motorCarrierId, token) => (dispatch) => {
+  console.log('entro a updateUsers ---');
   dispatch(updateUsersStart());
 
   const filter = '{"where": {"accountStatus": "true"}}';
@@ -240,6 +241,7 @@ export const updateUsers = (motorCarrierId, token) => (dispatch) => {
 };
 
 export const updateVehicles = (motorCarrierId, token) => (dispatch) => {
+  console.log('entro a updateVehicles ---');
   dispatch(updateVehiclesStart());
 
   api.motorCarriers.getMotorCarrierVehicles(

@@ -60,6 +60,9 @@ class VehicleFormView extends React.Component {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             });
           // Si estamos editando un usuario
           } else {
@@ -77,6 +80,9 @@ class VehicleFormView extends React.Component {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
             });
           }
         } else {
@@ -101,6 +107,9 @@ class VehicleFormView extends React.Component {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         });
       // Si estamos editando un usuario
       } else {
@@ -118,6 +127,9 @@ class VehicleFormView extends React.Component {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
         });
       }
     }

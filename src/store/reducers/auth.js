@@ -84,7 +84,7 @@ const updateVehiclesSuccess = (state, action) => updateObject(state, {
 
 
 const updateLastMod = (state, action) => {
-  console.log('entro a actions ---', action);
+  console.log('entro a updateLastMod ---', action);
   return updateObject(state, {
     lastMod: action.response,
   });
