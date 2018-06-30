@@ -47,7 +47,8 @@ class User extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/drivers">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -117,6 +118,9 @@ User.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   id: PropTypes.number,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 User.defaultProps = {
@@ -136,6 +140,9 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User));

@@ -9,6 +9,7 @@ import Loader from '../../components/Loader/Loader';
 import dashboardImg from '../../assets/images/statistics.svg';
 import driverImg from '../../assets/images/delivery-man.svg';
 import truckImg from '../../assets/images/delivery-truck.svg';
+import syrusImg from '../../assets/images/syrus.svg';
 
 
 class MotorCarrier extends React.Component {
@@ -63,7 +64,7 @@ class MotorCarrier extends React.Component {
             </div>
           </Link>
           <Link className="card" to="/vehicles">
-            <img src={dashboardImg} alt="Devices" />
+            <img src={syrusImg} alt="Devices" />
             <div className="content">
               <span className="header">Devices</span>
               <div className="meta">

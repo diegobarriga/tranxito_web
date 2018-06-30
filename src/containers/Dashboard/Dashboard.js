@@ -56,7 +56,8 @@ class Dashboard extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -142,6 +143,8 @@ Dashboard.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -154,6 +157,8 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
 });
 
 const mapDispatchToProps = dispatch => ({
