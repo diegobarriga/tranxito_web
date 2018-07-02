@@ -5,7 +5,6 @@ import { I18nextProvider } from 'react-i18next';
 import Aux from '../../hoc/Aux';
 import Navibar from '../../components/NaviBar/NaviBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import Footer from '../../components/Footer';
 import i18n from '../../i18n';
 import '../../assets/styles/layout.css';
 

@@ -21,13 +21,15 @@ class TrailerRow extends React.Component {
     const pStyle = {
       justifyContent: 'flex-end',
     };
-    const { t, id, model, manufacturer, number, year, gvw } = this.props;
+    const {
+      t, id, model, manufacturer, number, year, gvw,
+    } = this.props;
     return (
       <div className="item no-padding">
         <div className="truck_wrapper">
           <figure className="left">
-            <Link to={`/trailers/${this.props.id}`}>
-              <img style={{ borderRadius: '50%' }} className="media-object" alt="trailer-img" width="100" src={api.images.trailersImageLink(this.props.image)} />
+            <Link to={`/trailers/${id}`}>
+              <img className="media-object" alt="trailer-img" width="100" src={api.images.trailersImageLink(this.props.image)} />
             </Link>
           </figure>
           <div className="right">
@@ -65,6 +67,8 @@ TrailerRow.propTypes = {
   deleteTrailer: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  gvw: PropTypes.number.isRequired,
 };
 
 const translateFunc = translate('translations')(TrailerRow);

@@ -41,15 +41,14 @@ class TrailerForm extends React.Component {
     if (!this.props.isCreate) {
       this.getTrailerInfo().then((response) => {
         if (response.status === 200) {
+          console.log(response.data);
           const newData = {
             vin: response.data.vin,
-            CmvPowerUnitNumber: response.data.CmvPowerUnitNumber,
+            manufacturer: response.data.manufacturer,
             model: response.data.model,
-            carMaker: response.data.carMaker,
-            plaque: response.data.plaque,
-            state: response.data.state,
-            imeiEld: response.data.imeiEld,
-            image: response.data.image,
+            number: response.data.number,
+            year: response.data.year,
+            gvw: response.data.gvw,
           };
           this.setState({ data: newData });
         } else {
@@ -87,9 +86,9 @@ class TrailerForm extends React.Component {
     const { t } = this.props;
     const errors = {};
 
-    if (data.vin.trim().length > 18 || data.vin.trim().length < 17) {
+    if (data.vin && (data.vin.trim().length > 18 || data.vin.trim().length < 17)) {
       errors.vin = t('Must be 17 or 18 characters long');
-    } else if (data.vin.trim().length === 18 && String(data.vin.trim())[0] !== '-') {
+    } else if (data.vin && (data.vin.trim().length === 18 && String(data.vin.trim())[0] !== '-')) {
       errors.vin = t('Must start with a dash (-) if VIN is 18 char long');
     }
 
@@ -103,7 +102,7 @@ class TrailerForm extends React.Component {
       errors.number = t('This field is required');
     } else if (_.isEmpty(String(data.number.trim()))) {
       errors.number = t("This field can't be blank");
-    } else if (this.number.trim().length > 10) {
+    } else if (data.number.trim().length > 10) {
       errors.number = t('Must be between 0-10 characters long');
     }
 
@@ -115,13 +114,13 @@ class TrailerForm extends React.Component {
 
     if (_.isEmpty(String(data.year))) {
       errors.year = t('This field is required');
-    } else if (!validator.isInt(String(this.year, { min: 1900, max: thisYear + 1 }))) {
+    } else if (!validator.isInt(String(data.year, { min: 1900, max: thisYear + 1 }))) {
       errors.year = t('Invalid trailer year');
     }
 
     if (_.isEmpty(String(data.gvw))) {
       errors.gvw = t('This field is required');
-    } else if (!validator.isInt(String(this.gvw), { min: 0 })) {
+    } else if (!validator.isInt(String(data.gvw), { min: 0 })) {
       errors.gvw = t("GVW value can't be less than 0");
     }
     return {
@@ -230,7 +229,7 @@ class TrailerForm extends React.Component {
                 max={thisYear + 1}
                 name="year"
                 placeholder={t('Year')}
-                value={data.year || thisYear}
+                value={data.year}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.year}
                 invalid={errors.year}
