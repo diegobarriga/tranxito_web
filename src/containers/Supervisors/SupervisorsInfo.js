@@ -88,12 +88,11 @@ class SupervisorsInfo extends React.Component {
 SupervisorsInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
-  id: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = state => ({
   isLoading: state.users.loading,
-  users: state.auth.supervisors,
+  users: state.auth.users,
 });
 const translateFunc = translate('translations')(SupervisorsInfo);
 export default connect(mapStateToProps)(translateFunc);
