@@ -205,11 +205,7 @@ class SimpleReactFileUpload extends React.Component {
         ${d[5]},
         ${d[6]},
         ${d[7]},
-        ${d[8]},
-        ${d[9]},
-        ${d[10]},
-        ${d[11]},
-        ${d[12]}\n`)
+        ${d[8]}\n`)
         .join('');
       // console.log("String: "+dataString)
       const csv = new Blob([dataString], { type: 'text/csv' });
@@ -253,22 +249,6 @@ class SimpleReactFileUpload extends React.Component {
         } else if (data[i].driverLicenseNumber.length === 0) {
           this.setState({ isValid: false });
           console.log('driverlicensenumber');
-          return;
-        } else if (data[i].moveYardsUse.length !== 1) {
-          this.setState({ isValid: false });
-          console.log('move_yards');
-          return;
-        } else if (data[i].defaultUse.length !== 1) {
-          this.setState({ isValid: false });
-          console.log('defaultuse');
-          return;
-        } else if (data[i].personalUse.length !== 1) {
-          this.setState({ isValid: false });
-          console.log('personaluse');
-          return;
-        } else if (data[i].exemptDriverConfiguration.length === 0) {
-          this.setState({ isValid: false });
-          console.log('driverconfig');
           return;
         } else if (data[i].timeZoneOffsetUtc.length === 0) {
           this.setState({ isValid: false });
