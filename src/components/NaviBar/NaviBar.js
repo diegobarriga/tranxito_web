@@ -7,12 +7,14 @@ import {
   DropdownMenu, DropdownItem, NavLink,
 } from 'reactstrap';
 import { translate } from 'react-i18next';
+import FlagIcon from '../FlagIcon';
 
 import api from '../../services/api';
 import '../../assets/styles/navbar.css';
 
 const pStyle = {
   color: 'white',
+  paddingTop: '0px',
 };
 
 const path = `${process.env.PUBLIC_URL}/img/logoe2e.svg`;
@@ -20,7 +22,9 @@ const path = `${process.env.PUBLIC_URL}/img/logoe2e.svg`;
 class Navibar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      language: 'en',
+    };
     this.getUserInfo = this.getUserInfo.bind(this);
   }
 
@@ -31,37 +35,32 @@ class Navibar extends React.Component {
   render() {
     const { isAuth } = this.props;
     const { t, i18n } = this.props;
-    const changeLanguage = (lng) => {
+    const changeLanguage = (lng, subLng) => {
       i18n.changeLanguage(lng);
+      this.setState({ language: subLng });
     };
+
+    const usFlag = this.state.language === 'en' ? <FlagIcon code="us" size="lg" className="selected-flag" /> : <FlagIcon code="us" size="lg" />;
+    const mxFlag = this.state.language === 'mx' ? <FlagIcon code="mx" size="lg" className="selected-flag" /> : <FlagIcon code="mx" size="lg" />;
+    const clFlag = this.state.language === 'cl' ? <FlagIcon code="cl" size="lg" className="selected-flag" /> : <FlagIcon code="cl" size="lg" />;
+
     return (
       <Navbar fixed="top" className="navbar" light expand="md">
-        <Link to="/"><img src={path} className="logo" alt="E2E Performance" /></Link>
-        <Nav className="ml-auto" navbar>
+        <div className="nav-left">
+          <Link to="/"><img src={path} className="logo" alt="E2E Performance" /></Link>
+        </div>
+        <div className="nav-right">
+          <div className="flags">
+            <button onClick={() => changeLanguage('en', 'en')}>{usFlag}</button>
+            <button onClick={() => changeLanguage('es', 'mx')}>{mxFlag}</button>
+            <button onClick={() => changeLanguage('es', 'cl')}>{clFlag}</button>
+          </div>
           { isAuth ?
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret style={pStyle}>
-                { this.state.firstName }
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  <NavLink >{t('Profile')}</NavLink>
-                </DropdownItem>
-                <DropdownItem>
-                  <button onClick={() => changeLanguage('en')}>EN</button>
-                  <button onClick={() => changeLanguage('es')}>ES</button>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <Link className="nav-link" to="/logout"><FontAwesomeIcon icon="sign-out-alt" />  {t('Logout')}</Link>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+            <Link className="nav-link" style={pStyle} to="/logout"><FontAwesomeIcon icon="sign-out-alt" />  {t('Logout')}</Link>
             :
-            <NavItem>
-              <Link className="nav-link" style={pStyle} to="/"><FontAwesomeIcon icon="sign-in-alt" /> {t('Login')}</Link>
-            </NavItem> }
-        </Nav>
+            <Link className="nav-link" style={pStyle} to="/"><FontAwesomeIcon icon="sign-in-alt" /> {t('Login')}</Link>
+          }
+        </div>
       </Navbar>
     );
   }
@@ -71,7 +70,7 @@ Navibar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   userId: PropTypes.number,
   token: PropTypes.string,
-
+  t: PropTypes.func.isRequired,
   i18n: PropTypes.object.isRequired,
 };
 
