@@ -13,6 +13,8 @@ import Heatmap from './Heatmap';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
+import getLastMod from '../../utils/updateStoreFunctions';
+import Loader from '../../components/Loader/Loader';
 
 class Vehicle extends React.Component {
   constructor(props) {
@@ -20,10 +22,12 @@ class Vehicle extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
+      checking: false,
     };
   }
 
   componentDidMount() {
+    this.checkLastMod();
     const auxArray = this.props.location.pathname.split('/');
     if (this.props.navigation.length > 2) {
       this.props.popCrumb();
@@ -37,6 +41,17 @@ class Vehicle extends React.Component {
     this.props.addBreadCrumb(vehicleName, false, crumbUrl);
   }
 
+  async checkLastMod() {
+    this.setState({ checking: true });
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+
+    if (lastMod.vehicles !== this.props.lastMod.vehicles) {
+      this.props.updateVehicles(this.props.motorCarrierId, this.props.token);
+      this.props.updateLastMod(lastMod);
+    }
+    this.setState({ checking: false });
+  }
+
   toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
@@ -46,6 +61,8 @@ class Vehicle extends React.Component {
   }
 
   render() {
+    if (this.state.checking || this.props.isLoading) return <Loader />;
+
     const { id } = this.props.match.params;
     const { t } = this.props;
     return (
@@ -121,11 +138,28 @@ Vehicle.propTypes = {
   len: PropTypes.number.isRequired,
   popCrumb: PropTypes.func.isRequired,
   vehicles: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  updateVehicles: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 Vehicle.defaultProps = {
   id: undefined,
 };
+
+const mapStateToProps = state => ({
+  vehicles: state.auth.vehicles,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
+  isLoading: state.auth.loading,
+  lastMod: state.auth.lastMod,
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
+});
 
 const mapDispatchToProps = dispatch => ({
   addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
@@ -133,15 +167,12 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   popCrumb: () => dispatch(actions.popCrumb()),
+  updateVehicles: (motorCarrierId, token) =>
+    dispatch(actions.updateVehicles(motorCarrierId, token)),
 });
 
-const mapStateToProps = state => ({
-  vehicles: state.auth.vehicles,
-  navigation: state.breadcrumbs.breadcrumbs,
-  len: state.breadcrumbs.breadcrumbs.length,
-  naviLinks: state.breadcrumbs.links,
-});
 
 const translateFunc = translate('translations')(Vehicle);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

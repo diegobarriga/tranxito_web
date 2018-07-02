@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import api from '../../../../services/api';
-import { translate } from 'react-i18next';
 import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
 import Alert from '../../../Alert/Alert';
 import SignupForm from './SignupForm';
+import getLastMod from '../../../../utils/updateStoreFunctions';
 
 
 class SignupView extends Component {
@@ -20,18 +21,24 @@ class SignupView extends Component {
       message: '',
       isLoading: false,
     };
+    this.onFormSubmit = this.onFormSubmit.bind(this);
     this.postData = this.postData.bind(this);
     this.patchData = this.patchData.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
-
-  onFormSubmit(formData) {
+  async onFormSubmit(formData) {
     this.setState({ isLoading: true });
     // Si estamos creando un usuario
     if (this.props.isCreate) {
-      this.postData(formData).then((response) => {
+      this.postData(formData).then(async (response) => {
         if (response.status === 200) {
           this.props.createUser(response.data);
+
+          const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+          const { lastMod } = this.props;
+          lastMod.people = lastModAPI.people;
+          this.props.updateLastMod(lastMod);
+
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have created the new supervisor.' });
         }
@@ -41,9 +48,15 @@ class SignupView extends Component {
       });
     // Si estamos editando un usuario
     } else {
-      this.patchData(formData).then((response) => {
+      this.patchData(formData).then(async (response) => {
         if (response.status === 200) {
           this.props.createUser(response.data);
+
+          const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+          const { lastMod } = this.props;
+          lastMod.people = lastModAPI.people;
+          this.props.updateLastMod(lastMod);
+
           this.setState({ isLoading: false });
           this.setState({ type: 'success', message: 'We have edited the supervisor.' });
         }
@@ -67,7 +80,7 @@ class SignupView extends Component {
   }
 
   render() {
-    if (this.state.isLoading === true) return <Loader />;
+    if (this.state.isLoading || this.props.isLoading) return <Loader />;
 
     const h1Style = {
       marginTop: '1rem',
@@ -88,9 +101,9 @@ class SignupView extends Component {
     let alert;
     if (this.state.type && this.state.message) {
       if (this.state.type === 'success') {
-        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+        alert = (<Alert alertType="SUCCESS" message={t(this.state.message)} />);
       } else if (this.state.type === 'danger') {
-        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+        alert = (<Alert alertType="FAIL" message={t(this.state.message)} />);
       }
     }
 
@@ -125,7 +138,6 @@ class SignupView extends Component {
   }
 }
 
-
 SignupView.propTypes = {
   title: PropTypes.string.isRequired,
   isAdmin: PropTypes.string.isRequired,
@@ -135,6 +147,10 @@ SignupView.propTypes = {
   isCreate: PropTypes.bool.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   createUser: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
+  lastMod: PropTypes.object.isRequired,
+
 };
 
 const mapStateToProps = state => ({
@@ -144,11 +160,13 @@ const mapStateToProps = state => ({
   error: state.auth.error,
   isLoading: state.auth.loading,
   motorCarrierId: state.auth.motorCarrierId,
+  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
   createUser: user => dispatch(actions.createUser(user)),
   resetError: () => dispatch(actions.errorReset()),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
 });
 const translateFunc = translate('translations')(SignupView);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

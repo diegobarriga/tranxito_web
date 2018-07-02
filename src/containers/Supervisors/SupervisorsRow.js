@@ -32,6 +32,7 @@ class SupervisorsRow extends React.Component {
             <ul>
               <li>{this.props.firstName} {this.props.lastName}</li>
               <li>{t('Username')}: {this.props.username}</li>
+              <li>{t('Email')}: {this.props.email}</li>
             </ul>
           </div>
           <div style={pStyle}>
@@ -61,6 +62,7 @@ SupervisorsRow.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   deleteUser: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 

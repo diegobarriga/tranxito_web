@@ -14,6 +14,8 @@ import Alerts from './Alerts';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
+import getLastMod from '../../utils/updateStoreFunctions';
+import Loader from '../../components/Loader/Loader';
 
 
 class User extends React.Component {
@@ -22,10 +24,12 @@ class User extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
+      checking: false,
     };
   }
 
   componentDidMount() {
+    this.checkLastMod();
     const auxArray = this.props.location.pathname.split('/');
     if (this.props.navigation.length > 2) {
       this.props.popCrumb();
@@ -34,6 +38,18 @@ class User extends React.Component {
     const newCrumb = auxArray[auxArray.length - 1];
     const driverName = this.props.users[newCrumb].firstName;
     this.props.addBreadCrumb(driverName, false, crumbUrl);
+  }
+
+  async checkLastMod() {
+    this.setState({ checking: true });
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+
+    if (lastMod.people !== this.props.lastMod.people) {
+      this.props.updateUsers(this.props.motorCarrierId, this.props.token);
+      this.props.updateLastMod(lastMod);
+    }
+
+    this.setState({ checking: false });
   }
 
   toggle(tab) {
@@ -45,6 +61,8 @@ class User extends React.Component {
   }
 
   render() {
+    if (this.state.checking || this.props.isLoading) return <Loader />;
+
     const { id } = this.props.match.params;
     const { t } = this.props;
     return (
@@ -139,6 +157,12 @@ User.propTypes = {
   len: PropTypes.number.isRequired,
   popCrumb: PropTypes.func.isRequired,
   id: PropTypes.number,
+  isLoading: PropTypes.bool.isRequired,
+  updateUsers: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 User.defaultProps = {
@@ -151,6 +175,9 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
+  updateUsers: (motorCarrierId, token) =>
+    dispatch(actions.updateUsers(motorCarrierId, token)),
   popCrumb: () => dispatch(actions.popCrumb()),
 });
 
@@ -159,6 +186,10 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  isLoading: state.auth.loading,
+  lastMod: state.auth.lastMod,
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 const translateFunc = translate('translations')(User);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

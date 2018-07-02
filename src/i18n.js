@@ -16,6 +16,7 @@ i18n.use(LanguageDetector).init({
         Vehicles: 'Vehicles',
         Devices: 'Devices',
         Supervisors: 'Supervisors',
+        supervisors: 'supervisors',
         // Dashboard
         'Drivers with the most Speeding Alerts': 'Drivers with the most Speeding Alerts',
         'Drivers with the most Hours of Driving Alerts': 'Drivers with the most Hours of Driving Alerts',
@@ -44,6 +45,7 @@ i18n.use(LanguageDetector).init({
         'USDOT Number': 'USDOT Number',
         'Multiday basis used': 'Multiday basis used',
         'Register Supervisor': 'Register Supervisor',
+        Email: 'Email',
 
         'First name': 'First name',
         'Last name': 'Last name',
@@ -175,6 +177,10 @@ i18n.use(LanguageDetector).init({
         'Create trailer': 'Create trailer',
         edit: 'edit',
         'Trailer was deleted successfully': 'Trailer was deleted successfully',
+
+        // Supervisors
+        'We have created the new supervisor.': 'We have created the new supervisor.',
+        'We have edited the supervisor.': 'We have edited the supervisor.',
       },
     },
     es: {
@@ -193,7 +199,7 @@ i18n.use(LanguageDetector).init({
         Devices: 'Dispositivos',
         devices: 'Dispositivos',
         Supervisors: 'Supervisores',
-        supervisors: 'Supervisores',
+        supervisors: 'supervisores',
 
         Administrator: 'Administrator',
         // Dashboard
@@ -225,6 +231,7 @@ i18n.use(LanguageDetector).init({
         'USDOT Number': 'Número USDOT',
         'Multiday basis used': 'Multiday basis usada',
         'Register Supervisor': 'Registrar Supervisor',
+        Email: 'Correo electrónico',
 
         'First name': 'Nombre',
         'Last name': 'Apellido',
@@ -356,6 +363,10 @@ i18n.use(LanguageDetector).init({
         'Create trailer': 'Crear tráiler',
         edit: 'editar',
         'Trailer was deleted successfully': 'El tráiler fue eliminado satisfactoriamente',
+
+        // Supervisors
+        'We have created the new supervisor.': 'Hemos creado al nuevo supervisor.',
+        'We have edited the supervisor.': 'Hemos editado al supervisor.',
       },
     },
   },

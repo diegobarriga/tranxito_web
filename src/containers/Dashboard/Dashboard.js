@@ -15,6 +15,7 @@ import AlertsStats from './AlertsStats';
 import * as actions from '../../store/actions/index';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/tabs.css';
+import getLastMod from '../../utils/updateStoreFunctions';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Dashboard extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
+      checking: false,
     };
   }
 
@@ -31,7 +33,29 @@ class Dashboard extends React.Component {
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     this.props.addBreadCrumb(newCrumb, true, crumbUrl);
+    this.checkLastMod();
   }
+
+  async checkLastMod() {
+    this.setState({ checking: true });
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+
+    if (
+      lastMod.people !== this.props.lastMod.people ||
+      lastMod.vehicles !== this.props.lastMod.vehicles) {
+      if (lastMod.people !== this.props.lastMod.people) {
+        console.log('--update users dash--');
+        this.props.updateUsers(this.props.motorCarrierId, this.props.token);
+      }
+      if (lastMod.vehicles !== this.props.lastMod.vehicles) {
+        console.log('--update vehicles dash--');
+        this.props.updateVehicles(this.props.motorCarrierId, this.props.token);
+      }
+      this.props.updateLastMod(lastMod);
+    }
+    this.setState({ checking: false });
+  }
+
 
   toggle(tab) {
     if (this.state.activeTab !== tab) {
@@ -46,7 +70,8 @@ class Dashboard extends React.Component {
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
     }
-    if (this.props.loading === true) return <Loader />;
+    if (this.state.checking || this.props.isLoading || this.props.loading) return <Loader />;
+
     const alert = null;
     const { t } = this.props;
     return (
@@ -143,6 +168,11 @@ Dashboard.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  updateUsers: PropTypes.func.isRequired,
+  updateVehicles: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -155,6 +185,7 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -164,6 +195,11 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
+  updateUsers: (motorCarrierId, token) =>
+    dispatch(actions.updateUsers(motorCarrierId, token)),
+  updateVehicles: (motorCarrierId, token) =>
+    dispatch(actions.updateVehicles(motorCarrierId, token)),
 });
 const translateFunc = translate('translations')(Dashboard);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));
