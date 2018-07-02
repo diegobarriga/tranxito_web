@@ -82,6 +82,7 @@ class SupervisorsInfo extends React.Component {
                 lastName={user.lastName}
                 username={user.username}
                 image={user.image}
+                email={user.email}
               />))
             }
         </div>
@@ -115,7 +116,7 @@ SupervisorsInfo.propTypes = {
 
 const mapStateToProps = state => ({
   isLoading: state.auth.loading,
-  users: state.auth.supervisors,
+  users: state.auth.users,
   lastMod: state.auth.lastMod,
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,

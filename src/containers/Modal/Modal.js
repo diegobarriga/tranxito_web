@@ -12,27 +12,22 @@ class Modal extends React.Component {
       showModal: false,
     };
 
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleToggleModal = this.handleToggleModal.bind(this);
   }
 
-  handleOpenModal() {
-    this.setState({ showModal: true });
-  }
-
-  handleCloseModal() {
-    this.setState({ showModal: false });
+  handleToggleModal() {
+    this.setState({ showModal: !this.state.showModal });
   }
 
   render() {
     return (
       <Aux>
-        <button onClick={this.handleOpenModal} disabled> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </button>
+        <button onClick={this.handleToggleModal} disabled> <FontAwesomeIcon icon="info-circle" className="customIcon" /> </button>
         <ReactModal
           isOpen={this.state.showModal}
           contentLabel="Minimal Modal Example"
         >
-          <button onClick={this.handleCloseModal}>Close Modal</button>
+          <button onClick={this.handleToggleModal}>Close Modal</button>
         </ReactModal>
       </Aux>
     );

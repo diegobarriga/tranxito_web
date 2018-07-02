@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import api from '../../../../services/api';
 import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
 import Alert from '../../../Alert/Alert';
 import SignupForm from './SignupForm';
 import getLastMod from '../../../../utils/updateStoreFunctions';
-import api from '../../../../services/api';
+
 
 class SignupView extends Component {
   constructor(props) {
@@ -21,33 +22,65 @@ class SignupView extends Component {
       isLoading: false,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.postData = this.postData.bind(this);
+    this.patchData = this.patchData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
-
-  async onFormSubmit(data) {
+  async onFormSubmit(formData) {
     this.setState({ isLoading: true });
-
-    api.motorCarriers.createMotorCarrierPeople(data.motorCarrierId, data.token, data)
-      .then(async (response) => {
+    // Si estamos creando un usuario
+    if (this.props.isCreate) {
+      this.postData(formData).then(async (response) => {
         if (response.status === 200) {
-          this.props.createSuccess(response);
+          this.props.createUser(response.data);
 
           const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
           const { lastMod } = this.props;
           lastMod.people = lastModAPI.people;
           this.props.updateLastMod(lastMod);
+
           this.setState({ isLoading: false });
-        } else {
-          this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+          this.setState({ type: 'success', message: 'We have created the new supervisor.' });
         }
       }).catch(() => {
         this.setState({ isLoading: false });
-        this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
       });
+    // Si estamos editando un usuario
+    } else {
+      this.patchData(formData).then(async (response) => {
+        if (response.status === 200) {
+          this.props.createUser(response.data);
+
+          const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+          const { lastMod } = this.props;
+          lastMod.people = lastModAPI.people;
+          this.props.updateLastMod(lastMod);
+
+          this.setState({ isLoading: false });
+          this.setState({ type: 'success', message: 'We have edited the supervisor.' });
+        }
+      }).catch(() => {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+      });
+    }
+  }
+
+  postData(data) {
+    return api.motorCarriers.createMotorCarrierPeople(
+      parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId,
+      this.props.token,
+      data,
+    );
+  }
+
+  patchData(data) {
+    return api.people.updateUser(this.props.match.params.id, this.props.token, data);
   }
 
   render() {
-    if (this.props.isLoading || this.state.isLoading) return <Loader />;
+    if (this.state.isLoading || this.props.isLoading) return <Loader />;
 
     const h1Style = {
       marginTop: '1rem',
@@ -68,11 +101,16 @@ class SignupView extends Component {
     let alert;
     if (this.state.type && this.state.message) {
       if (this.state.type === 'success') {
-        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+        alert = (<Alert alertType="SUCCESS" message={t(this.state.message)} />);
       } else if (this.state.type === 'danger') {
-        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+        alert = (<Alert alertType="FAIL" message={t(this.state.message)} />);
       }
     }
+
+    const {
+      isCreate,
+      match,
+    } = this.props;
 
     return (
 
@@ -85,11 +123,13 @@ class SignupView extends Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             { authRedirect }
-            <h1 style={h1Style}>{t('Register Supervisor')}</h1>
+            <h1 style={h1Style}>{ t(this.props.title) }</h1>
             <SignupForm
               submit={this.onFormSubmit}
               token={this.props.token}
-              motorCarrierId={this.props.match.params.id}
+              motorCarrierId={parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId}
+              match={match}
+              isCreate={isCreate}
             />
           </Col>
         </Row>
@@ -99,15 +139,18 @@ class SignupView extends Component {
 }
 
 SignupView.propTypes = {
+  title: PropTypes.string.isRequired,
   isAdmin: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  createSuccess: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,
-  updateLastMod: PropTypes.func.isRequired,
+  isCreate: PropTypes.bool.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
+  createUser: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
   lastMod: PropTypes.object.isRequired,
+
 };
 
 const mapStateToProps = state => ({
@@ -121,7 +164,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createSuccess: data => dispatch(actions.createSuccess(data)),
+  createUser: user => dispatch(actions.createUser(user)),
   resetError: () => dispatch(actions.errorReset()),
   updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
 });
