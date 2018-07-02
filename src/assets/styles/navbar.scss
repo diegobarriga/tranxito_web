@@ -11,13 +11,13 @@
   width: auto;
 }
 
-div button{
+div .flags button{
   padding-right: 0px !important;
   background: transparent;
   border: none;
 }
 
-div button:focus {
+div .flags button:focus {
   outline:0 !important;
 }
 
