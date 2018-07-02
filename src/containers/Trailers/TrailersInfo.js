@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 import { Col } from 'reactstrap';
 import Pagination from 'react-js-pagination';
 import { translate } from 'react-i18next';
-import VehicleRow from './VehicleRow';
+import TrailerRow from './TrailerRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
 
-class VehiclesInfo extends React.Component {
+class TrailersInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,56 +32,54 @@ class VehiclesInfo extends React.Component {
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    const { trailers, isLoading } = this.props;
+    if (isLoading) return <Loader />;
 
-    const filteredVehicles = Object.values(this.props.vehicles).filter(vehicle => (
-      vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      vehicle.carMaker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
+    const filteredTrailers = Object.values(trailers).filter(trailer => (
+      trailer.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      trailer.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      trailer.manufacturer.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      trailer.number.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
 
-    const totalVehicles = filteredVehicles.length;
+    console.log(filteredTrailers);
+    const totalTrailers = filteredTrailers.length;
     const { t } = this.props;
-    console.log(filteredVehicles);
 
     return (
       <div>
-
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
-            <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> {t('Create vehicle')} </Link>
-            <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> {t('Create multiple vehicles')} </Link>
+            <Link className="btn btn-sm green spacing" to="/trailers/new_trailer"><FontAwesomeIcon icon="car" color="white" /> {t('Create trailer')} </Link>
           </div>
         </div>
 
         <div className="ui divided items">
           {
-              filteredVehicles.sort((a, b) => a.carMaker.localeCompare(b.carMaker))
+              filteredTrailers.sort((a, b) => a.manufacturer.localeCompare(b.manufacturer))
               .slice(
               ((this.state.currentPage * this.state.pages) - 5),
                this.state.currentPage * this.state.pages,
               )
-              .map(truck => (<VehicleRow
-                key={truck.id}
-                id={truck.id}
-                vin={truck.vin}
-                CmvPowerUnitNumber={truck.CmvPowerUnitNumber}
-                model={truck.model}
-                carMaker={truck.carMaker}
-                plaque={truck.plaque}
-                state={truck.state}
-                imeiEld={truck.imeiEld}
-                image={truck.image}
+              .map(trailer => (<TrailerRow
+                key={trailer.id}
+                id={trailer.id}
+                vin={trailer.vin}
+                number={trailer.number}
+                model={trailer.model}
+                manufacturer={trailer.manufacturer}
+                year={trailer.year}
+                gvw={trailer.gvw}
+                image={trailer.image}
               />))
             }
         </div>
         <Col sm="12" md={{ size: 5, offset: 4 }}>
-          { totalVehicles > 5 &&
+          { totalTrailers > 5 &&
             <Pagination
               activePage={this.state.currentPage}
               itemsCountPerPage={5}
-              totalItemsCount={totalVehicles}
+              totalItemsCount={totalTrailers}
               pageRangeDisplayed={4}
               onChange={this.handlePageChange}
               itemClass="page-item"
@@ -94,15 +92,15 @@ class VehiclesInfo extends React.Component {
   }
 }
 
-VehiclesInfo.propTypes = {
-  vehicles: PropTypes.object.isRequired,
+TrailersInfo.propTypes = {
+  trailers: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.vehicles.loading,
-  vehicles: state.auth.vehicles,
+  isLoading: state.trailers && state.trailers.loading,
+  trailers: state.auth.trailers,
 });
 
-const translateApp = translate('translations')(VehiclesInfo);
+const translateApp = translate('translations')(TrailersInfo);
 export default connect(mapStateToProps)(translateApp);

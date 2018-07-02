@@ -1,33 +1,27 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import { Breadcrumb } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { Container, Col, Row } from 'reactstrap';
+import { withRouter } from 'react-router';
+import { Breadcrumb } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { I18nextProvider, translate } from 'react-i18next';
 import i18n from '../../i18n';
-import UsersInfo from './UsersInfo';
-import Alert from '../Alert/Alert';
+import TrailersInfo from './TrailersInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
+import Alert from '../Alert/Alert';
 import * as actions from '../../store/actions/index';
 
-
-class Users extends React.Component {
+class Trailers extends React.Component {
   componentDidMount() {
     const auxArray = this.props.location.pathname.split('/');
-    const url = this.props.location.pathname;
+    const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
-    this.props.addBreadCrumb(newCrumb, true, url);
-    this.props.updateSidebar('dashboard', false);
-    this.props.updateSidebar('vehicles', false);
-    this.props.updateSidebar('supervisors', false);
-    this.props.updateSidebar('drivers', true);
+    this.props.addBreadCrumb(newCrumb, true, crumbUrl);
   }
 
   render() {
-    const { t } = this.props;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -36,21 +30,21 @@ class Users extends React.Component {
     /* Alert */
     let alert;
     let msg = '';
+    const { t } = this.props;
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = t('The driver was deleted successfully');
+      msg = t('Trailer was deleted successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = t('Error the driver was not deleted');
+      msg = t('Error: cannot delete trailer');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-
     return (
       <Aux>
         { authRedirect }
         { alert }
-        <Container >
+        <Container>
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
@@ -71,9 +65,9 @@ class Users extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col sm="12" md={{ size: 11 }}>
+            <Col md="11">
               <I18nextProvider i18n={i18n}>
-                <UsersInfo />
+                <TrailersInfo />
               </I18nextProvider>
             </Col>
           </Row>
@@ -83,22 +77,23 @@ class Users extends React.Component {
     );
   }
 }
-Users.propTypes = {
+
+Trailers.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
-  updateSidebar: PropTypes.func.isRequired,
   error: PropTypes.object,
 };
 
-Users.defaultProps = {
+Trailers.defaultProps = {
   error: null,
 };
 
 const mapStateToProps = state => ({
+  trailers: state.auth.trailers,
   isAuthenticated: state.auth.token !== null,
   error: state.auth.error,
   navigation: state.breadcrumbs.breadcrumbs,
@@ -107,13 +102,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addBreadCrumb: (urlString, restart, url) => dispatch(actions.addNewBreadCrumb(
+  addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
     urlString,
     restart,
-    url,
+    crumbUrl,
   )),
-  updateSidebar: (tabName, clicked) => dispatch(actions.updateSidebarState(tabName, clicked)),
 });
-
-const translateFunc = translate('translations')(Users);
+const translateFunc = translate('translations')(Trailers);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

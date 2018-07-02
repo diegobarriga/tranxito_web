@@ -8,6 +8,7 @@ const initialState = {
   loading: false,
   role: null,
   motorCarrierId: null,
+  trailers: null,
   vehicles: null,
   users: null,
   supervisors: {},
@@ -39,6 +40,7 @@ const authLogout = (state) => {
     userId: null,
     role: null,
     motorCarrierId: null,
+    trailers: null,
     vehicles: null,
     users: null,
     supervisors: {},
@@ -65,6 +67,14 @@ const createUser = (state, action) => {
   });
 };
 
+const createTrailer = (state, action) => {
+  const newTrailers = { ...state.trailers };
+  newTrailers[action.trailer.id] = action.trailer;
+  return updateObject(state, {
+    trailers: newTrailers,
+  });
+};
+
 const authSuccess = (state, action) => updateObject(state, {
   token: action.token,
   userId: action.userId,
@@ -72,6 +82,7 @@ const authSuccess = (state, action) => updateObject(state, {
   error: null,
   loading: false,
   motorCarrierId: action.motorCarrierId,
+  trailers: action.trailers,
   vehicles: action.vehicles,
   users: action.users,
   chunkedUsers: action.chunkedUsers,
@@ -81,7 +92,6 @@ const authSuccess = (state, action) => updateObject(state, {
   firstName: action.firstName,
   lastName: action.lastName,
   mcName: action.mcName,
-
 });
 
 const authFail = (state, action) => updateObject(state, {
@@ -110,6 +120,16 @@ const onVehicleDeleteSuccess = (state, action) => {
   });
 };
 
+const onTrailerDeleteSuccess = (state, action) => {
+  const tmpTrailers = { ...state.trailers };
+  delete tmpTrailers[action.trailerId];
+  return updateObject(state, {
+    error: action.response,
+    loading: false,
+    trailers: tmpTrailers,
+  });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START: return authStart(state);
@@ -121,6 +141,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.USER_DELETE: return onDeleteUserSuccess(state, action);
     case actionTypes.DELETE_VEHICLE: return onVehicleDeleteSuccess(state, action);
     case actionTypes.CREATE_VEHICLE: return createVehicle(state, action);
+    case actionTypes.CREATE_TRAILER: return createTrailer(state, action);
+    case actionTypes.DELETE_TRAILER: return onTrailerDeleteSuccess(state, action);
     case actionTypes.CREATE_USER: return createUser(state, action);
 
     default:
