@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Button } from 'reactstrap';
+import { translate } from 'react-i18next';
 import '../../assets/styles/users.css';
 import * as actions from '../../store/actions/index';
 import api from '../../services/api';
 
 class UserRow extends React.Component {
   onDeleteBtnClick(userId, token) {
-    const confirmDelete = window.confirm('Are you sure you want to delete this driver?');
+    const { t } = this.props;
+    const confirmDelete = window.confirm(t('Are you sure you want to delete this driver?'));
     if (confirmDelete) {
       this.props.deleteUser(userId, token);
     }
@@ -20,7 +22,7 @@ class UserRow extends React.Component {
     const pStyle = {
       justifyContent: 'flex-end',
     };
-
+    const { t } = this.props;
     return (
       <div className="item no-padding">
         <div className="user_wrapper">
@@ -32,7 +34,7 @@ class UserRow extends React.Component {
           <div className="right">
             <ul>
               <li><Link to={`/drivers/${this.props.id}`}>{this.props.firstName} {this.props.lastName}</Link></li>
-              <li>Username: {this.props.username}</li>
+              <li>{t('Username')}: {this.props.username}</li>
             </ul>
           </div>
         </div>
@@ -65,5 +67,5 @@ UserRow.propTypes = {
   image: PropTypes.string.isRequired,
 };
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserRow);
+const translateFunc = translate('translations')(UserRow);
+export default connect(mapStateToProps, mapDispatchToProps)(translateFunc);

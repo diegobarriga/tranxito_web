@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import api from '../../../../services/api';
+import { translate } from 'react-i18next';
 import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
 import Alert from '../../../Alert/Alert';
@@ -83,6 +84,7 @@ class SignupView extends Component {
     }
 
     /* Alert */
+    const { t } = this.props;
     let alert;
     if (this.state.type && this.state.message) {
       if (this.state.type === 'success') {
@@ -108,7 +110,7 @@ class SignupView extends Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             { authRedirect }
-            <h1 style={h1Style}>{ this.props.title }</h1>
+            <h1 style={h1Style}>{ t(this.props.title) }</h1>
             <SignupForm
               submit={this.onFormSubmit}
               token={this.props.token}
@@ -148,5 +150,5 @@ const mapDispatchToProps = dispatch => ({
   createUser: user => dispatch(actions.createUser(user)),
   resetError: () => dispatch(actions.errorReset()),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupView));
+const translateFunc = translate('translations')(SignupView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

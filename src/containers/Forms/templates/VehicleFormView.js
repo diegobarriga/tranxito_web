@@ -3,12 +3,16 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
+import { Breadcrumb } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import VehicleForm from './VehicleForm';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert from '../../Alert/Alert';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
+import Aux from '../../../hoc/Aux';
 
 class VehicleFormView extends React.Component {
   constructor(props) {
@@ -24,7 +28,15 @@ class VehicleFormView extends React.Component {
     this.imgUpload = this.imgUpload.bind(this);
   }
 
+  componentDidMount() {
+    const auxArray = this.props.location.pathname.split('/');
+    const crumbUrl = this.props.location.pathname;
+    const newCrumb = auxArray[auxArray.length - 1].split('_').join(' ');
+    this.props.addBreadCrumb(newCrumb, false, crumbUrl);
+  }
+
   onFormSubmit(formData) {
+    const { t } = this.props; // eslint-disable-line no-use-before-define
     this.setState({ isLoading: true });
     if (formData.picture !== '') {
       this.imgUpload(formData.picture).then((imgResponse) => {
@@ -40,10 +52,10 @@ class VehicleFormView extends React.Component {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: 'We have created the new vehicle.' });
+                this.setState({ type: 'success', message: t('We have created the new vehicle.') });
               } else {
                 this.setState({ isLoading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
             });
           // Si estamos editando un usuario
@@ -52,16 +64,16 @@ class VehicleFormView extends React.Component {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: 'We have edited the vehicle.' });
+                this.setState({ type: 'success', message: t('We have edited the vehicle.') });
               } else {
                 this.setState({ isLoading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
             });
           }
         } else {
           this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error with the image upload. Please try again later.') });
         }
       });
     } else {
@@ -71,10 +83,10 @@ class VehicleFormView extends React.Component {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: 'We have created the new vehicle.' });
+            this.setState({ type: 'success', message: t('We have created the new vehicle.') });
           } else {
             this.setState({ isLoading: false });
-            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
         });
       // Si estamos editando un usuario
@@ -83,10 +95,10 @@ class VehicleFormView extends React.Component {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: 'We have edited the vehicle.' });
+            this.setState({ type: 'success', message: t('We have edited the vehicle.') });
           } else {
             this.setState({ isLoading: false });
-            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
         });
       }
@@ -138,7 +150,7 @@ class VehicleFormView extends React.Component {
       marginTop: '1rem',
       marginBottom: '2rem',
     };
-
+    const { t } = this.props;
     return (
       <Container>
         <Row>
@@ -148,7 +160,26 @@ class VehicleFormView extends React.Component {
         </Row>
         <Row>
           <Col sm="12" md={{ size: 8 }}>
-            <h1 style={h1Style}>{title}</h1>
+            <Breadcrumb>
+              <Link className="section" to="/drivers">Home</Link>
+              {
+                this.props.navigation.map((x, i) => (
+                  <Aux key={i}>
+                    <Breadcrumb.Divider icon="right chevron" />
+                    { this.props.len - 1 > i ?
+                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
+                      :
+                      <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
+                    }
+                  </Aux>
+                ))
+              }
+            </Breadcrumb>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 8 }}>
+            <h1 style={h1Style}>{t(title)}</h1>
             <VehicleForm
               submit={this.onFormSubmit}
               isCreate={isCreate}
@@ -169,15 +200,28 @@ VehicleFormView.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   createVehicle: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  addBreadCrumb: PropTypes.func.isRequired,
+  navigation: PropTypes.array.isRequired,
+  naviLinks: PropTypes.array.isRequired,
+  len: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
   motorCarrierId: state.auth.motorCarrierId,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
 });
 
 const mapDispatchToProps = dispatch => ({
   createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
+  addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
+    urlString,
+    restart,
+    crumbUrl,
+  )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VehicleFormView));
+const translateFunc = translate('translations')(VehicleFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

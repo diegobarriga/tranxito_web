@@ -5,6 +5,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import UserRow from './SupervisorsRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
@@ -40,18 +41,19 @@ class SupervisorsInfo extends React.Component {
       user.accountStatus === true && user.accountType === 'S'));
 
     const totalUsers = filteredUsers.length;
+    const { t } = this.props;
     return (
       <div>
         <div className="inlineBox">
-          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" placeholder="Search" type="text" value={this.state.search} onChange={this.updateSearch} />
+          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" placeholder={t('Search')} type="text" value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
-            <Link className="btn btn-sm green spacing" to="/supervisors/new_supervisor"><FontAwesomeIcon icon="user" color="white" /> Create Supervisor</Link>
+            <Link className="btn btn-sm green spacing" to={`/supervisors/${this.props.id}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> {t('Create Supervisor')}</Link>
           </div>
         </div>
 
         <div className="ui divided items">
           {
-              filteredUsers.sort((a, b) => a.lastName > b.lastName)
+              filteredUsers.sort((a, b) => a.lastName.localeCompare(b.lastName))
               .slice(
                 ((this.state.currentPage * this.state.pages) - 5),
                  this.state.currentPage * this.state.pages,
@@ -92,5 +94,5 @@ const mapStateToProps = state => ({
   isLoading: state.users.loading,
   users: state.auth.users,
 });
-
-export default connect(mapStateToProps)(SupervisorsInfo);
+const translateFunc = translate('translations')(SupervisorsInfo);
+export default connect(mapStateToProps)(translateFunc);

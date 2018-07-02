@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Table, Badge } from 'reactstrap';
+import { translate } from 'react-i18next';
 import Loader from '../../components/Loader/Loader';
 import api from '../../services/api';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../utils/eventTypes';
@@ -51,17 +52,17 @@ class VehicleLogs extends React.Component {
   formatDate(datetime) {
     return moment(datetime).calendar();
   }
-
   render() {
     if (this.state.loading === true) return <Loader />;
+    const { t } = this.props;
     return (
       <Container >
         <Table striped>
           <thead>
             <tr>
-              <th>Event</th>
-              <th>Detail</th>
-              <th>Timestamp</th>
+              <th>{t('Event')}</th>
+              <th>{t('Detail')}</th>
+              <th>{t('Timestamp')}</th>
             </tr>
           </thead>
           <tbody>
@@ -73,7 +74,7 @@ class VehicleLogs extends React.Component {
                   </Badge>}
                   {'  '}{EVENT_TYPES[event.type]}
                 </td>
-                <td>{EVENT_CODES[event.type][event.code]}</td>
+                <td>{t(EVENT_CODES[event.type][event.code])}</td>
                 <td>{this.formatDate(event.timestamp)}</td>
               </tr>
 
@@ -94,5 +95,5 @@ VehicleLogs.propTypes = {
 const mapStateToProps = state => ({
   token: state.auth.token,
 });
-
-export default connect(mapStateToProps)(VehicleLogs);
+const translateFunc = translate('translations')(VehicleLogs);
+export default connect(mapStateToProps)(translateFunc);

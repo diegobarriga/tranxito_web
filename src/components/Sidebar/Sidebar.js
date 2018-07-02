@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { ListGroup } from 'reactstrap';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/sidebar.css';
 import * as actions from '../../store/actions/index';
@@ -38,6 +39,7 @@ class sidebar extends Component {
     const dashboardColor = this.props.sidebarState.dashboardClicked ? '#dedede' : 'white';
     const supervisorsColor = this.props.sidebarState.supervisorsClicked ? '#dedede' : 'white';
 
+    const { t } = this.props;
     return (
       <div className="sidebar">
         <div>
@@ -62,11 +64,11 @@ class sidebar extends Component {
                   last={this.props.last}
                   mc={this.props.mc}
                 />
-                <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}><FontAwesomeIcon icon="chart-line" /> Dashboard</Link>
-                <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> Drivers</Link>
-                <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> Vehicles</Link>
-                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon={['fab', 'bluetooth']} /> Devices</Link>
-                <Link style={{ backgroundColor: supervisorsColor }} className="btn list-group-item-action list-group-item" to="/supervisors" onClick={() => this.changeColor('supervisors')}><FontAwesomeIcon icon="user-cog" /> Supervisors</Link>
+                <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}><FontAwesomeIcon icon="chart-line" /> {t('Dashboard')}</Link>
+                <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> {t('Drivers')}</Link>
+                <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> {t('Vehicles')}</Link>
+                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon="hdd" /> {t('Devices')} </Link>
+                <Link style={{ backgroundColor: supervisorsColor }} className="btn list-group-item-action list-group-item" to="/supervisors" onClick={() => this.changeColor('supervisors')}><FontAwesomeIcon icon="user-cog" /> {t('Supervisors')}</Link>
               </Aux> }
           </ListGroup>
         </div>
@@ -100,4 +102,5 @@ const mapStateToProps = state => ({
   sidebarState: state.sidebar,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(sidebar);
+const translateFunc = translate('translations')(sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(translateFunc);

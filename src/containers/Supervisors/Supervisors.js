@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import UsersInfo from './SupervisorsInfo';
 import Alert from '../Alert/Alert';
 import Aux from '../../hoc/Aux';
@@ -21,6 +22,7 @@ class Supervisors extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     let authRedirect = null;
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
@@ -32,13 +34,12 @@ class Supervisors extends React.Component {
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = 'The driver was deleted successfully';
+      msg = t('The driver was deleted successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = 'Error the driver was not deleted';
+      msg = t('Error the driver was not deleted');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-
     return (
       <Aux>
         { authRedirect }
@@ -53,9 +54,9 @@ class Supervisors extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -106,5 +107,5 @@ const mapDispatchToProps = dispatch => ({
     url,
   )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Supervisors));
+const translateFunc = translate('translations')(Supervisors);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

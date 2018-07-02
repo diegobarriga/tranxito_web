@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { translate } from 'react-i18next';
 
 const _ = require('lodash');
 
@@ -38,14 +39,19 @@ class LoginForm extends Component {
   }
 
   validateInput(data) {
+    const { t } = this.props;
     const errors = {};
     if (_.isEmpty(String(data.email))) {
-      errors.email = 'This field is required';
+      errors.email = t('This field is required');
+    } else if (_.isEmpty(String(data.email.trim()))) {
+      errors.email = t("This field can't be blank");
     } else if (!validator.isEmail(String(data.email))) {
-      errors.email = 'Not a valid email';
+      errors.email = t('Not a valid email');
     }
     if (_.isEmpty(String(data.password))) {
-      errors.password = 'This field is required';
+      errors.password = t('This field is required');
+    } else if (_.isEmpty(String(data.password.trim()))) {
+      errors.password = t("This field can't be blank");
     }
     return {
       errors,
@@ -74,7 +80,6 @@ class LoginForm extends Component {
       // );
     }
   }
-
   render() {
     const {
       errors, showPassword,
@@ -83,6 +88,7 @@ class LoginForm extends Component {
     //   this.setState({redirectTo: false});
     //   return <Redirect to='/dashboard'/>;
     // }
+    const { t } = this.props;
     return (
       <Form onSubmit={this.submitHandler}>
         <FormGroup>
@@ -98,7 +104,7 @@ class LoginForm extends Component {
         </FormGroup>
         <FormGroup>
           <Input
-            placeholder="Password"
+            placeholder={t('Password')}
             type={!showPassword ? 'password' : 'text'}
             name="password"
             autoComplete="new-password"
@@ -110,10 +116,10 @@ class LoginForm extends Component {
         <FormGroup check>
           <Label check>
             <Input type="checkbox" onClick={this.onTogglePassword} />{' '}
-            Show password
+            {t('Show password')}
           </Label>
         </FormGroup>
-        <Button type="submit" >Submit</Button>
+        <Button type="submit" >{t('Submit')}</Button>
       </Form>
     );
   }
@@ -123,4 +129,4 @@ LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
 };
 
-export default LoginForm;
+export default translate('translations')(LoginForm);

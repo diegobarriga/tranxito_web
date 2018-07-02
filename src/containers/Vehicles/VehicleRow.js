@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Button } from 'reactstrap';
+import { translate } from 'react-i18next';
 import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
 import api from '../../services/api';
@@ -20,7 +21,7 @@ class VehicleRow extends React.Component {
     const pStyle = {
       justifyContent: 'flex-end',
     };
-
+    const { t } = this.props;
     return (
       <div className="item no-padding">
         <div className="truck_wrapper">
@@ -32,7 +33,7 @@ class VehicleRow extends React.Component {
           <div className="right">
             <ul>
               <li><Link to={`/vehicles/${this.props.id}`}>{this.props.carMaker} {this.props.model} - {this.props.plaque}</Link></li>
-              <li>State: {this.props.state}</li>
+              <li>{t('State')}: {this.props.state}</li>
             </ul>
           </div>
         </div>
@@ -66,4 +67,5 @@ VehicleRow.propTypes = {
   image: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(VehicleRow);
+const translateFunc = translate('translations')(VehicleRow);
+export default connect(mapStateToProps, mapDispatchToProps)(translateFunc);

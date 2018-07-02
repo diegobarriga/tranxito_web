@@ -15,11 +15,21 @@ import faUserCog from '@fortawesome/fontawesome-free-solid/faUserCog';
 import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt';
 import faUserTie from '@fortawesome/fontawesome-free-solid/faUserTie';
 import faChartLine from '@fortawesome/fontawesome-free-solid/faChartLine';
-import faBluetooth from '@fortawesome/fontawesome-free-brands/faBluetooth';
+import faHdd from '@fortawesome/fontawesome-free-solid/faHdd';
 import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import faSignInAlt from '@fortawesome/fontawesome-free-solid/faSignInAlt';
 import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
 import faAddressCard from '@fortawesome/fontawesome-free-solid/faAddressCard';
+import faSortNumericDown from '@fortawesome/fontawesome-free-solid/faSortNumericDown';
+import faSortNumericUp from '@fortawesome/fontawesome-free-solid/faSortNumericUp';
+import faSortAlphaUp from '@fortawesome/fontawesome-free-solid/faSortAlphaUp';
+import faSortAlphaDown from '@fortawesome/fontawesome-free-solid/faSortAlphaDown';
+import faFilter from '@fortawesome/fontawesome-free-solid/faFilter';
+import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
+import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
+import faSort from '@fortawesome/fontawesome-free-solid/faSort';
+import faExclamationTriangle from '@fortawesome/fontawesome-free-solid/faExclamationTriangle';
+
 
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
@@ -48,9 +58,10 @@ import EditSupervisor from './containers/Forms/supervisors/EditSupervisor';
 
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
-  faLocationArrow, faTachometerAlt, faInfoCircle,
-  faChartLine, faSignInAlt, faSignOutAlt,
-  faUserCog, faUserTie, faBluetooth, faEnvelope, faAddressCard,
+  faLocationArrow, faTachometerAlt, faInfoCircle, faSortAlphaUp, faSortAlphaDown,
+  faChartLine, faSignInAlt, faSignOutAlt, faSortNumericDown, faSortNumericUp,
+  faUserCog, faUserTie, faHdd, faEnvelope, faAddressCard, faFilter,
+  faSortUp, faSortDown, faSort, faExclamationTriangle,
 );
 
 class App extends Component {

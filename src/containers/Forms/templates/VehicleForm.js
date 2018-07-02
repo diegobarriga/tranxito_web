@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { translate } from 'react-i18next';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 
@@ -80,16 +81,19 @@ class VehicleForm extends React.Component {
   // TODO Complete with defined validations
   // https://docs.google.com/document/d/1xpVsXXotppyoR2_pqqleRZp6-cvYGC78tZzaVFZrVcA/edit
   validateInput(data) {
+    const { t } = this.props;
     const errors = {};
-    if (data.vin.length > 18 || data.vin.length < 17) {
-      errors.vin = 'Must be 17 or 18 characters long';
-    } else if (data.vin.length === 18 && String(data.vin)[0] !== '-') {
-      errors.vin = 'Must start with a dash (-) if VIN is 18 char long';
+    if (data.vin.trim().length > 18 || data.vin.trim().length < 17) {
+      errors.vin = t('Must be 17 or 18 characters long');
+    } else if (data.vin.trim().length === 18 && String(data.vin.trim())[0] !== '-') {
+      errors.vin = t('Must start with a dash (-) if VIN is 18 char long');
     }
     if (_.isEmpty(String(data.CmvPowerUnitNumber))) {
-      errors.CmvPowerUnitNumber = 'This field is required';
+      errors.CmvPowerUnitNumber = t('This field is required');
+    } else if (_.isEmpty(String(data.CmvPowerUnitNumber.trim()))) {
+      errors.CmvPowerUnitNumber = t("This field can't be blank");
     } else if (data.imeiEld && !data.CmvPowerUnitNumber) {
-      errors.CmvPowerUnitNumber = 'CMV Power Unit Number field is required';
+      errors.CmvPowerUnitNumber = t('This field is required');
     }
     /* fede pls
     if (_.isEmpty(String(data.model))) {
@@ -99,21 +103,29 @@ class VehicleForm extends React.Component {
     }
     */
     if (_.isEmpty(String(data.model))) {
-      errors.model = 'This field is required';
+      errors.model = t('This field is required');
+    } else if (_.isEmpty(String(data.model.trim()))) {
+      errors.model = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.imeiEld))) {
-      errors.imeiEld = 'This field is required';
+      errors.imeiEld = t('This field is required');
     }
     if (_.isEmpty(String(data.carMaker))) {
-      errors.carMaker = 'This field is required';
+      errors.carMaker = t('This field is required');
+    } else if (_.isEmpty(String(data.carMaker.trim()))) {
+      errors.carMaker = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.plaque))) {
-      errors.plaque = 'This field is required';
+      errors.plaque = t('This field is required');
+    } else if (_.isEmpty(String(data.plaque.trim()))) {
+      errors.plaque = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.state))) {
-      errors.state = 'This field is required';
-    } else if (String(data.state).length !== 2) {
-      errors.state = 'Not a valid state';
+      errors.state = t('This field is required');
+    } else if (_.isEmpty(String(data.state.trim()))) {
+      errors.state = t("This field can't be blank");
+    } else if (String(data.state.trim()).length !== 2) {
+      errors.state = t('Not a valid state');
     }
     return {
       errors,
@@ -144,15 +156,16 @@ class VehicleForm extends React.Component {
       errors,
       data,
     } = this.state;
+    const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>
         <div className="field">
-          <Label>VIN number</Label>
+          <Label>{t('VIN number')}</Label>
           <FormGroup>
             <Input
               type="text"
               name="vin"
-              placeholder="VIN number"
+              placeholder={t('VIN number')}
               onChange={this.onChange}
               value={data.vin}
               valid={!this.emptyErrors() && !errors.vin}
@@ -162,12 +175,12 @@ class VehicleForm extends React.Component {
           </FormGroup>
         </div>
         <div className="field">
-          <Label>CMV Power Unit Number</Label>
+          <Label>{t('CMV Power Unit Number')}</Label>
           <FormGroup>
             <Input
               type="text"
               name="CmvPowerUnitNumber"
-              placeholder="CMV Power Unit Number"
+              placeholder={t('CMV Power Unit Number')}
               value={data.CmvPowerUnitNumber}
               onChange={this.onChange}
               valid={!this.emptyErrors() && !errors.CmvPowerUnitNumber}
@@ -179,12 +192,12 @@ class VehicleForm extends React.Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>Vehicle Model</Label>
+            <Label>{t('Vehicle Model')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="model"
-                placeholder="Vehicle Model"
+                placeholder={t('Vehicle Model')}
                 value={data.model}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.model}
@@ -194,12 +207,12 @@ class VehicleForm extends React.Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>Car Maker</Label>
+            <Label>{t('Car Maker')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="carMaker"
-                placeholder="Car Maker"
+                placeholder={t('Car Maker')}
                 value={data.carMaker}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.carMaker}
@@ -212,12 +225,12 @@ class VehicleForm extends React.Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>Plaque</Label>
+            <Label>{t('Plaque')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="plaque"
-                placeholder="Plaque"
+                placeholder={t('Plaque')}
                 value={data.plaque}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.plaque}
@@ -227,12 +240,12 @@ class VehicleForm extends React.Component {
             </FormGroup>
           </div>
           <div className="field">
-            <Label>State</Label>
+            <Label>{t('State')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="state"
-                placeholder="State"
+                placeholder={t('State')}
                 value={data.state}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.state}
@@ -259,12 +272,12 @@ class VehicleForm extends React.Component {
           </FormGroup>
         </div>
         <div className="field">
-          <Label for="image">Image</Label>
+          <Label for="image">{t('Image')}</Label>
           <FormGroup>
             <Input type="file" name="picture" className="center-item" onChange={this.onChange} />
           </FormGroup>
         </div>
-        <button className="ui button" type="submit">Submit</button>
+        <button className="ui button" type="submit">{t('Submit')}</button>
       </form>
     );
   }
@@ -277,4 +290,4 @@ VehicleForm.propTypes = {
   submit: PropTypes.func.isRequired,
 };
 
-export default VehicleForm;
+export default translate('translations')(VehicleForm);

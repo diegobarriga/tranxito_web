@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Button } from 'reactstrap';
+import { translate } from 'react-i18next';
 import '../../assets/styles/users.css';
 import * as actions from '../../store/actions/index';
 import api from '../../services/api';
@@ -19,6 +20,8 @@ class SupervisorsRow extends React.Component {
     const pStyle = {
       justifyContent: 'flex-end',
     };
+    const { t } = this.props;
+
     return (
       <div className="item">
         <div className="user_wrapper">
@@ -28,7 +31,7 @@ class SupervisorsRow extends React.Component {
           <div className="right">
             <ul>
               <li>{this.props.firstName} {this.props.lastName}</li>
-              <li>Username: {this.props.username}</li>
+              <li>{t('Username')}: {this.props.username}</li>
             </ul>
           </div>
           <div style={pStyle}>
@@ -61,4 +64,5 @@ SupervisorsRow.propTypes = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SupervisorsRow);
+const translateFunc = translate('translations')(SupervisorsRow);
+export default connect(mapStateToProps, mapDispatchToProps)(translateFunc);

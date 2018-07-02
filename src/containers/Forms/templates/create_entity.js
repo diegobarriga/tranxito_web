@@ -2,13 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import XLSX from 'xlsx';
 import { connect } from 'react-redux';
-import { Button, Form, Input, Alert } from 'reactstrap';
+import { translate } from 'react-i18next';
+import { withRouter } from 'react-router';
+import { Button, Form, Input, Container, Alert, Row, Col } from 'reactstrap';
+import { Breadcrumb } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import TemplateCSV from '../templates/template_csv';
 import TemplateXLSX from '../templates/template_xlsx';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert2 from '../../Alert/Alert';
 import Loader from '../../../components/Loader/Loader';
+import * as actions from '../../../store/actions/index';
+import Aux from '../../../hoc/Aux';
 
 class SimpleReactFileUpload extends React.Component {
   constructor(props) {
@@ -25,6 +31,22 @@ class SimpleReactFileUpload extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
     this.getUploadStatus = this.getUploadStatus.bind(this);
+  }
+
+  componentDidMount() {
+    const { t } = this.props;
+    const auxArray = this.props.location.pathname.split('/');
+    const crumbUrl = this.props.location.pathname;
+    let newCrumb = auxArray[auxArray.length - 1].split('_');
+    if (newCrumb[newCrumb.length - 1] === 'vehicles') {
+      newCrumb[newCrumb.length - 2] = t('New');
+      newCrumb[newCrumb.length - 1] = t('Vehicle(s)');
+    } else {
+      newCrumb[newCrumb.length - 2] = t('New');
+      newCrumb[newCrumb.length - 1] = t('Driver(s)');
+    }
+    newCrumb = newCrumb.join(' ');
+    this.props.addBreadCrumb(newCrumb, false, crumbUrl);
   }
 
   onFormSubmit(e) {
@@ -85,6 +107,7 @@ class SimpleReactFileUpload extends React.Component {
 
 
   loadHandler = (event) => {
+    const { t } = this.props;
     console.log('Dentro loadHandler');
     const csv = event.target.result;
     const arr = csv.split('\n');
@@ -97,13 +120,13 @@ class SimpleReactFileUpload extends React.Component {
     const headers = arr[0].split(',');
     if (arr.length <= 1) {
       this.setState({ ...this.state, loading: false });
-      this.setState({ type: 'danger', message: 'Your file was empty. Please try again later.' });
+      this.setState({ type: 'danger', message: t('Your file was empty. Please try again later.') });
     }
     for (let i = 1; i < arr.length; i += 1) {
       const data = arr[i].split(',');
       if (data.length !== headers.length) {
         this.setState({ ...this.state, loading: false });
-        this.setState({ type: 'danger', message: 'Your file was not valid. Please try again later.' });
+        this.setState({ type: 'danger', message: t('Your file was not valid. Please try again later.') });
       }
       const obj = {};
       for (let j = 0; j < data.length; j += 1) {
@@ -130,20 +153,20 @@ class SimpleReactFileUpload extends React.Component {
             console.log(status);
             if (status === 'SUCCESS') {
               this.setState({ ...this.state, loading: false });
-              this.setState({ type: 'success', message: `We have created all the new ${this.props.type}.` });
+              this.setState({ type: 'success', message: t('We have created all the new') + t(this.props.type) });
             } else {
               const { id } = res.data[0];
               this.getErrors(id).then((resp) => {
                 console.log(resp);
                 this.setState({ errors: resp.data });
                 this.setState({ ...this.state, loading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               });
             }
           });
         } else {
           this.setState({ ...this.state, loading: false });
-          this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         }
       });
     } else {
@@ -174,21 +197,34 @@ class SimpleReactFileUpload extends React.Component {
       this.checkValid(this.state.file);
       // console.log("Valid: "+this.state.isValid)
 
-      dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]},${d[9]},${d[10]},${d[11]},${d[12]}\n`).join('');
+      dataString = this.state.data.map(d => `${d[0]},
+        ${d[1]},
+        ${d[2]},
+        ${d[3]},
+        ${d[4]},
+        ${d[5]},
+        ${d[6]},
+        ${d[7]},
+        ${d[8]},
+        ${d[9]},
+        ${d[10]},
+        ${d[11]},
+        ${d[12]}\n`)
+        .join('');
       // console.log("String: "+dataString)
       const csv = new Blob([dataString], { type: 'text/csv' });
 
       // console.log("STATE EXCEL: "+this.state.file)
 
-      const reader1 = new FileReader();
-      reader1.readAsText(csv);
+      // const reader1 = new FileReader();
+      // reader1.readAsText(csv);
       // reader1.onload = (e) => {
       // // console.log("CSV " + e.target.result)
       // }
 
       this.setState({ file: csv });
       // console.log("STATE CSV: "+this.state.file)
-      reader1.onload = this.loadHandler;
+      // reader1.onload = this.loadHandler;
     };
     if (rABS) reader.readAsBinaryString(this.state.file);
     else reader.readAsArrayBuffer(this.state.file);
@@ -260,7 +296,6 @@ class SimpleReactFileUpload extends React.Component {
       this.setState({ isValid: true });
     }
   }
-
   render() {
     if (this.state.loading === true) return <Loader />;
     let alert;
@@ -271,10 +306,32 @@ class SimpleReactFileUpload extends React.Component {
         alert = (<Alert2 alertType="FAIL" message={this.state.message} />);
       }
     }
+    const { t } = this.props;
 
     return (
       <div>
         <div>{ alert }</div>
+        <Container>
+          <Row>
+            <Col sm="12" md={{ size: 8 }}>
+              <Breadcrumb>
+                <Link className="section" to="/drivers">Home</Link>
+                {
+                  this.props.navigation.map((x, i) => (
+                    <Aux key={i}>
+                      <Breadcrumb.Divider icon="right chevron" />
+                      { this.props.len - 1 > i ?
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
+                        :
+                        <Breadcrumb.Section active> {t(x)} </Breadcrumb.Section>
+                      }
+                    </Aux>
+                  ))
+                }
+              </Breadcrumb>
+            </Col>
+          </Row>
+        </Container>
         <div className="aligner">
           { this.state.errors &&
             <Alert color="danger">
@@ -282,8 +339,8 @@ class SimpleReactFileUpload extends React.Component {
                 {this.state.errors.map(error => (<li key={error.id}>{ error.message }</li>))}
               </ul>
             </Alert>}
-          <div className="aligner-item"><h1>Create multiple {this.props.type} through an Excel or CSV file</h1></div>
-          <div className="aligner-item"><p>The templates below have the structure the file must have. You can download it, fill it and then upload it.</p></div>
+          <div className="aligner-item"><h1>{t('Create multiple')} {t(this.props.type)} {t('through an Excel or CSV file')}</h1></div>
+          <div className="aligner-item"><p>{t('The templates below have the structure the file must have. You can download it, fill it and then upload it.')}</p></div>
           <div className="aligner-item padding-csv">
             <TemplateCSV type={this.props.type} />
             <TemplateXLSX type={this.props.type} />
@@ -292,7 +349,7 @@ class SimpleReactFileUpload extends React.Component {
             <div className="upload-form">
               <Form onSubmit={this.onFormSubmit}>
                 <Input name="file" type="file" accept=".csv, .xlsx" className="center-item" onChange={this.onChange} />
-                <Button type="submit" className="center-item" disabled={!this.state.file}>Upload</Button>
+                <Button type="submit" className="center-item" disabled={!this.state.file}>{t('Upload')}</Button>
               </Form>
             </div>
           </div>
@@ -302,18 +359,33 @@ class SimpleReactFileUpload extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  token: state.auth.token,
-  userId: state.auth.userId,
-  motorCarrierId: state.auth.motorCarrierId,
-});
-
 SimpleReactFileUpload.propTypes = {
   type: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   userId: PropTypes.number.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
+  addBreadCrumb: PropTypes.func.isRequired,
+  navigation: PropTypes.array.isRequired,
+  naviLinks: PropTypes.array.isRequired,
+  len: PropTypes.number.isRequired,
 };
 
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  userId: state.auth.userId,
+  motorCarrierId: state.auth.motorCarrierId,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
+});
 
-export default connect(mapStateToProps)(SimpleReactFileUpload);
+const mapDispatchToProps = dispatch => ({
+  addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
+    urlString,
+    restart,
+    crumbUrl,
+  )),
+});
+const translateFunc = translate('translations')(SimpleReactFileUpload);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

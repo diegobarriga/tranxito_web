@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Col } from 'reactstrap';
 import Pagination from 'react-js-pagination';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import UserRow from './UserRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
-
 
 class UsersInfo extends React.Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class UsersInfo extends React.Component {
     this.setState({ search: event.target.value });
   }
 
+
   render() {
     if (this.props.isLoading === true) return <Loader />;
 
@@ -39,19 +40,20 @@ class UsersInfo extends React.Component {
       user.accountStatus === true && user.accountType === 'D'));
 
     const totalUsers = filteredUsers.length;
+    const { t } = this.props;
     return (
       <div>
         <div className="inlineBox">
-          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder="Search" value={this.state.search} onChange={this.updateSearch} />
+          <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
-            <Link className="btn btn-sm green spacing" to="/drivers/new_driver"><FontAwesomeIcon icon="user" color="white" /> Create driver</Link>
-            <Link className="btn btn-sm green" to="/drivers/new_drivers"><FontAwesomeIcon icon="users" color="white" /> Create multiple drivers</Link>
+            <Link className="btn btn-sm green spacing" to="/drivers/new_driver"><FontAwesomeIcon icon="user" color="white" /> {t('Create driver')} </Link>
+            <Link className="btn btn-sm green" to="/drivers/new_drivers"><FontAwesomeIcon icon="users" color="white" /> {t('Create multiple drivers')} </Link>
           </div>
         </div>
 
         <div className="ui divided items">
           {
-              filteredUsers.sort((a, b) => a.lastName > b.lastName)
+              filteredUsers.sort((a, b) => a.lastName.localeCompare(b.lastName))
               .slice(
                 ((this.state.currentPage * this.state.pages) - 5),
                  this.state.currentPage * this.state.pages,
@@ -87,6 +89,7 @@ class UsersInfo extends React.Component {
 UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
+  t: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -94,4 +97,6 @@ const mapStateToProps = state => ({
   users: state.auth.users,
 });
 
-export default connect(mapStateToProps)(UsersInfo);
+const translateApp = translate('translations')(UsersInfo);
+
+export default connect(mapStateToProps)(translateApp);

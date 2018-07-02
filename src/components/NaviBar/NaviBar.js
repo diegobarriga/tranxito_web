@@ -6,6 +6,8 @@ import {
   Navbar, Nav, NavItem, UncontrolledDropdown, DropdownToggle,
   DropdownMenu, DropdownItem, NavLink,
 } from 'reactstrap';
+import { translate } from 'react-i18next';
+
 import api from '../../services/api';
 import '../../assets/styles/navbar.css';
 
@@ -28,10 +30,13 @@ class Navibar extends React.Component {
 
   render() {
     const { isAuth } = this.props;
-
+    const { t, i18n } = this.props;
+    const changeLanguage = (lng) => {
+      i18n.changeLanguage(lng);
+    };
     return (
       <Navbar fixed="top" className="navbar" light expand="md">
-        <img src={path} className="logo" alt="E2E Performance" />
+        <Link to="/"><img src={path} className="logo" alt="E2E Performance" /></Link>
         <Nav className="ml-auto" navbar>
           { isAuth ?
             <UncontrolledDropdown nav inNavbar>
@@ -40,20 +45,21 @@ class Navibar extends React.Component {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  <NavLink >Profile</NavLink>
+                  <NavLink >{t('Profile')}</NavLink>
                 </DropdownItem>
                 <DropdownItem>
-                  <NavLink>Settings</NavLink>
+                  <button onClick={() => changeLanguage('en')}>EN</button>
+                  <button onClick={() => changeLanguage('es')}>ES</button>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  <Link className="nav-link" to="/logout"><FontAwesomeIcon icon="sign-out-alt" />  Logout</Link>
+                  <Link className="nav-link" to="/logout"><FontAwesomeIcon icon="sign-out-alt" />  {t('Logout')}</Link>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             :
             <NavItem>
-              <Link className="nav-link" style={pStyle} to="/"><FontAwesomeIcon icon="sign-in-alt" /> Login</Link>
+              <Link className="nav-link" style={pStyle} to="/"><FontAwesomeIcon icon="sign-in-alt" /> {t('Login')}</Link>
             </NavItem> }
         </Nav>
       </Navbar>
@@ -65,6 +71,8 @@ Navibar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   userId: PropTypes.number,
   token: PropTypes.string,
+
+  i18n: PropTypes.object.isRequired,
 };
 
 Navibar.defaultProps = {
@@ -72,4 +80,5 @@ Navibar.defaultProps = {
   token: null,
 };
 
-export default Navibar;
+
+export default translate('translations')(Navibar);

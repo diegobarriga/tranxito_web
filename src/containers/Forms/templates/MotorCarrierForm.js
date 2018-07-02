@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import validator from 'validator';
 import { Label, FormGroup, FormFeedback, Input } from 'reactstrap';
+import { translate } from 'react-i18next';
 import api from '../../../services/api';
 import '../../../assets/styles/forms.css';
 
@@ -59,20 +60,23 @@ class MotorCarrierForm extends Component {
   }
 
   validateInput(data) {
+    const { t } = this.props;
     const errors = {};
     if (_.isEmpty(String(data.name))) {
-      errors.name = 'This field is required';
-    } else if (String(data.name).length > 120 || String(data.name).length < 4) {
+      errors.name = t('This field is required');
+    } else if (_.isEmpty(String(data.name.trim()))) {
+      errors.name = t("This field can't be blank");
+    } else if (String(data.name.trim()).length > 120 || String(data.name.trim()).length < 4) {
       errors.name = 'Name must be between 4-120 characters long';
     }
     /* NEED FIX */
     if (_.isEmpty(String(data.usdotNumber))) {
-      errors.usdotNumber = 'This field is required';
+      errors.usdotNumber = t('This field is required');
     } else if (Number(this.usdotNumber) < 0 || Number(this.usdotNumber) > 999999999) {
-      errors.usdotNumber = 'USDOT number must be between 0-999,999,999';
+      errors.usdotNumber = t('USDOT number must be between 0-999,999,999');
     }
     if (_.isEmpty(String(data.multidayBasisUsed))) {
-      errors.multidayBasisUsed = 'This field is required';
+      errors.multidayBasisUsed = t('This field is required');
     }
     return {
       errors,
@@ -100,17 +104,18 @@ class MotorCarrierForm extends Component {
 
   render() {
     const { errors, data } = this.state;
+    const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>
 
         <div className="field">
-          <Label>Name</Label>
+          <Label>{t('Name')}</Label>
           <FormGroup>
             <Input
               type="text"
               name="name"
               onChange={this.onChange}
-              placeholder="Name"
+              placeholder={t('Name')}
               value={data.name}
               valid={!this.emptyErrors() && !errors.name}
               invalid={errors.name}
@@ -119,7 +124,7 @@ class MotorCarrierForm extends Component {
           </FormGroup>
         </div>
         <div className="field">
-          <Label>USDOT Number</Label>
+          <Label>{t('USDOT Number')}</Label>
           <FormGroup>
             <Input
               type="number"
@@ -127,7 +132,7 @@ class MotorCarrierForm extends Component {
               min={0}
               value={data.usdotNumber}
               onChange={this.onChange}
-              placeholder="USDOT Number"
+              placeholder={t('USDOT Number')}
               valid={!this.emptyErrors() && !errors.usdotNumber}
               invalid={errors.usdotNumber}
             />
@@ -135,7 +140,7 @@ class MotorCarrierForm extends Component {
           </FormGroup>
         </div>
         <div className="field">
-          <Label>Multiday basis used</Label>
+          <Label>{t('Multiday basis used')}</Label>
           <FormGroup>
             <Input
               type="select"
@@ -152,7 +157,7 @@ class MotorCarrierForm extends Component {
           </FormGroup>
         </div>
 
-        <button className="ui button" type="submit">Submit</button>
+        <button className="ui button" type="submit">{t('Submit')}</button>
       </form>
     );
   }
@@ -165,4 +170,4 @@ MotorCarrierForm.propTypes = {
   isCreate: PropTypes.bool.isRequired,
 };
 
-export default MotorCarrierForm;
+export default translate('translations')(MotorCarrierForm);
