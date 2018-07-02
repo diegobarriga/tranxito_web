@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
+import api from '../../../../services/api';
 import { translate } from 'react-i18next';
 import * as actions from '../../../../store/actions/index';
 import Loader from '../../../../components/Loader/Loader';
@@ -14,11 +15,59 @@ import SignupForm from './SignupForm';
 class SignupView extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      type: '',
+      message: '',
+      isLoading: false,
+    };
+    this.postData = this.postData.bind(this);
+    this.patchData = this.patchData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
+  onFormSubmit(formData) {
+    this.setState({ isLoading: true });
+    // Si estamos creando un usuario
+    if (this.props.isCreate) {
+      this.postData(formData).then((response) => {
+        if (response.status === 200) {
+          this.props.createUser(response.data);
+          this.setState({ isLoading: false });
+          this.setState({ type: 'success', message: 'We have created the new supervisor.' });
+        }
+      }).catch(() => {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+      });
+    // Si estamos editando un usuario
+    } else {
+      this.patchData(formData).then((response) => {
+        if (response.status === 200) {
+          this.props.createUser(response.data);
+          this.setState({ isLoading: false });
+          this.setState({ type: 'success', message: 'We have edited the supervisor.' });
+        }
+      }).catch(() => {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+      });
+    }
+  }
+
+  postData(data) {
+    return api.motorCarriers.createMotorCarrierPeople(
+      parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId,
+      this.props.token,
+      data,
+    );
+  }
+
+  patchData(data) {
+    return api.people.updateUser(this.props.match.params.id, this.props.token, data);
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    if (this.state.isLoading === true) return <Loader />;
 
     const h1Style = {
       marginTop: '1rem',
@@ -37,16 +86,18 @@ class SignupView extends Component {
     /* Alert */
     const { t } = this.props;
     let alert;
-    let msg = '';
-    if (this.props.error === null) {
-      alert = null;
-    } else if (this.props.error.status === 200) {
-      msg = t('Supervisor was created successfully');
-      alert = (<Alert alertType="SUCCESS" message={msg} />);
-    } else {
-      msg = t('Error the supervisor could not be created');
-      alert = (<Alert alertType="FAIL" message={msg} />);
+    if (this.state.type && this.state.message) {
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
     }
+
+    const {
+      isCreate,
+      match,
+    } = this.props;
 
     return (
 
@@ -59,11 +110,13 @@ class SignupView extends Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             { authRedirect }
-            <h1 style={h1Style}>{t('Register Supervisor')}</h1>
+            <h1 style={h1Style}>{ t(this.props.title) }</h1>
             <SignupForm
-              submit={this.props.onAuth}
+              submit={this.onFormSubmit}
               token={this.props.token}
-              motorCarrierId={this.props.match.params.id}
+              motorCarrierId={parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId}
+              match={match}
+              isCreate={isCreate}
             />
           </Col>
         </Row>
@@ -74,17 +127,14 @@ class SignupView extends Component {
 
 
 SignupView.propTypes = {
+  title: PropTypes.string.isRequired,
   isAdmin: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  onAuth: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
   match: PropTypes.object.isRequired,
-};
-
-SignupView.defaultProps = {
-  error: null,
+  isCreate: PropTypes.bool.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  createUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -93,10 +143,11 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   error: state.auth.error,
   isLoading: state.auth.loading,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: data => dispatch(actions.signup(data)),
+  createUser: user => dispatch(actions.createUser(user)),
   resetError: () => dispatch(actions.errorReset()),
 });
 const translateFunc = translate('translations')(SignupView);

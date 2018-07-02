@@ -53,6 +53,8 @@ import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier'
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import Supervisors from './containers/Supervisors/Supervisors';
+import CreateSupervisor from './containers/Forms/supervisors/CreateSupervisor';
+import EditSupervisor from './containers/Forms/supervisors/EditSupervisor';
 
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
@@ -85,10 +87,10 @@ class App extends Component {
           <Route path="/logout" component={Logout} />
           <Route path="/motor_carriers/create" component={CreateMotorCarrier} />
           <Route path="/motor_carriers/:id/edit" component={EditMotorCarrier} />
-          <Route path="/motor_carriers/:id/new_supervisor" component={SignupView} />
+          <Route path="/motor_carriers/:mc/new_supervisor" component={CreateSupervisor} />
           <Route path="/motor_carriers/:id" component={MotorCarrier} />
           <Route path="/motor_carriers" component={MotorCarriers} />
-          <Route path="/supervisors/:id/new_supervisor" component={SignupView} />
+          <Route path="/supervisors/:id/edit" component={EditSupervisor} />
           <Route path="/supervisors" component={Supervisors} />
         </Switch>
       </Layout>
