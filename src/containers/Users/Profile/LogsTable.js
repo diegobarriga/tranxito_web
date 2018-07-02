@@ -65,10 +65,13 @@ class Logs extends React.Component {
       loading: true,
       isOpen: false,
       message: '',
+      selectMessage: 'Select All',
+      result: null,
     };
     this.sortByTimestampUp = this.sortByTimestampUp.bind(this);
     this.sortByTimestampDown = this.sortByTimestampDown.bind(this);
     this.filterByEvent = this.filterByEvent.bind(this);
+    this.handleSelectAll = this.handleSelectAll.bind(this);
   }
 
   componentDidMount() {
@@ -88,7 +91,8 @@ class Logs extends React.Component {
           const logs = response.data;
           console.log(logs);
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-          const objectLogs = functions.arrayToObject(logs);
+          const objectLogs = functions.arrayToObjectLogs(logs);
+          console.log(objectLogs);
           this.setState({ logs: objectLogs, filterLogs: logs, loading: false });
         } catch (error) {
           console.log('errror');
@@ -105,20 +109,39 @@ class Logs extends React.Component {
 
   sortByTimestampDown() {
     let logs = Object.values(this.state.logs);
+    logs = logs.map(x => x[0]);
     logs = funct.sortByTimestampDown(logs);
     this.setState({ filterLogs: logs, selectedSortId: '1', selectedTypeSort: '0' });
   }
 
   sortByTimestampUp() {
     let logs = Object.values(this.state.logs);
+    logs = logs.map(x => x[0]);
     logs = funct.sortByTimestampUp(logs);
     this.setState({ filterLogs: logs, selectedSortId: '1', selectedTypeSort: '1' });
   }
 
   filterByEvent(event) {
-    const logs = Object.values(this.state.logs);
+    let logs = Object.values(this.state.logs);
+    logs = logs.map(x => x[0]);
     const filteredLogs = funct.filterByEvent(logs, event);
     this.setState({ filterLogs: filteredLogs, selectedSortId: '0', selectedTypeSort: '0' });
+  }
+
+  handleSelectAll() {
+    let logg = Object.values(this.state.logs).map((x) => {
+      x[1] = !x[1];
+      return x;
+    });
+
+    if (this.state.selectMessage === 'Select All') {
+      this.setState({ selectMessage: 'Unselect All' });
+    } else {
+      this.setState({ selectMessage: 'Select All' });
+    }
+
+    logg = functions.arrayToObject2(logg);
+    this.setState({ logs: logg });
   }
 
   render() {
@@ -156,63 +179,62 @@ class Logs extends React.Component {
     return (
       <Row>
         <Col sm="12" md={{ size: 12 }}>
-          { this.state.filterLogs.length > 0 ?
-            <Table celled compact definition>
-              <Table.Header fullWidth>
-                <Table.Row>
-                  <Table.HeaderCell style={styles.head} />
-                  <Table.HeaderCell style={styles.headDos} >
-                    <select id="bender" value={this.state.filterOption} onChange={this.filterByEvent}>
-                      <option key={-1} value={-1}>All Events</option>
-                      {Object.keys(EVENT_TYPES).map(key => (
-                        <option key={key} value={key}>{EVENT_TYPES[key]}</option>
+          <Table celled compact definition>
+            <Table.Header fullWidth>
+              <Table.Row>
+                <Table.HeaderCell style={styles.head} />
+                <Table.HeaderCell style={styles.headDos} >
+                  <select id="bender" value={this.state.filterOption} onChange={this.filterByEvent}>
+                    <option key={-1} value={-1}>All Events</option>
+                    {Object.keys(EVENT_TYPES).map(key => (
+                      <option key={key} value={key}>{EVENT_TYPES[key]}</option>
+                  ))}
+                  </select>
+                </Table.HeaderCell>
+                <Table.HeaderCell style={styles.headTres}>Detail</Table.HeaderCell>
+                <Table.HeaderCell style={styles.time}>
+                  <Aux>
+                    Timestamp
+                    {button}
+                  </Aux>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+
+            <Table.Body>
+              {this.state.filterLogs.map(event => (
+                <Table.Row key={event.id}>
+                  <Table.Cell style={styles.head} collapsing>
+                    <Checkbox checked={this.state.logs[event.id][1]} value={event.id} />
+                  </Table.Cell>
+                  <Table.Cell style={styles.table}>{event.type === 1 &&
+                    <Badge className={`event${event.code}`} style={styles.badge}>
+                      {DUTY_STATUS[event.code]}
+                    </Badge>}
+                    {'  '}{EVENT_TYPES[event.type]}
+                  </Table.Cell>
+                  <Table.Cell style={styles.table}>
+                    {EVENT_CODES[event.type][event.code]}
+                  </Table.Cell>
+                  <Table.Cell style={styles.timeDos}>
+                    {funct.formatDate(event.timestamp)}
+                  </Table.Cell>
+                </Table.Row>
+
                     ))}
-                    </select>
-                  </Table.HeaderCell>
-                  <Table.HeaderCell style={styles.headTres}>Detail</Table.HeaderCell>
-                  <Table.HeaderCell style={styles.time}>
-                    <Aux>
-                      Timestamp
-                      {button}
-                    </Aux>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-
-              <Table.Body>
-                {this.state.filterLogs.map(event => (
-                  <Table.Row key={event.id}>
-                    <Table.Cell style={styles.head} collapsing>
-                      <Checkbox value={event.id} />
-                    </Table.Cell>
-                    <Table.Cell style={styles.table}>{event.type === 1 &&
-                      <Badge className={`event${event.code}`} style={styles.badge}>
-                        {DUTY_STATUS[event.code]}
-                      </Badge>}
-                      {'  '}{EVENT_TYPES[event.type]}
-                    </Table.Cell>
-                    <Table.Cell style={styles.table}>
-                      {EVENT_CODES[event.type][event.code]}
-                    </Table.Cell>
-                    <Table.Cell style={styles.timeDos}>
-                      {funct.formatDate(event.timestamp)}
-                    </Table.Cell>
-                  </Table.Row>
-
-                      ))}
-              </Table.Body>
-              <Table.Footer fullWidth>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="4">
-                    <Modal text={this.state.message} />
-                    <Button size="small">Select All</Button>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
-            </Table>
-            :
-            <h2> No logs to be certified </h2>
-          }
+            </Table.Body>
+            <Table.Footer fullWidth>
+              <Table.Row>
+                <Table.HeaderCell colSpan="4">
+                  <Modal
+                    text={this.state.message}
+                    log={this.state.result}
+                  />
+                  <Button size="small" onClick={this.handleSelectAll}>{this.state.selectMessage}</Button>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Footer>
+          </Table>
         </Col>
       </Row>
 

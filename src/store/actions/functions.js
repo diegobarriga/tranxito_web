@@ -16,3 +16,17 @@ export const arraySplit = (inputArray, chunks) => {
   }, []);
   return arr;
 };
+
+export const arrayToObjectLogs = array =>
+  array.reduce((obj, item) => {
+    obj[item.id] = [item, false];
+    return obj;
+  }, {});
+
+
+export const arrayToObject2 = array =>
+  array.reduce((obj, item) => {
+    obj[item[0].id] = [item[0], item[1]];
+    return obj;
+  }, {});
+

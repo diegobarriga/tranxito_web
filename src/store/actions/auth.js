@@ -104,20 +104,23 @@ export const login = (email, password) => (dispatch) => {
 
   api.people.login(authData)
     .then((response) => {
+      console.log('Logging In...');
       api.people.getUser(response.data.userId, response.data.id)
         .then((userResponse) => {
-          console.log(userResponse.data);
+          console.log('Getting Users...');
           if (userResponse.data.motorCarrierId && userResponse.data.accountType !== 'D') {
             api.motorCarriers.getMotorCarrierVehicles(
               userResponse.data.motorCarrierId,
               response.data.id,
             ).then((vehiclesResponse) => {
+              console.log('Getting Vehicles...');
               const filter = '{"where": {"accountStatus": "true"}}';
               api.motorCarriers.getMotorCarrierPeople(
                 userResponse.data.motorCarrierId,
                 response.data.id,
                 filter,
               ).then((peopleResponse) => {
+                console.log('Getting Supervisors...');
                 const supervisors = peopleResponse.data.filter(user => (
                   user.accountType === 'S'
                 ));
@@ -128,6 +131,7 @@ export const login = (email, password) => (dispatch) => {
                   userResponse.data.motorCarrierId,
                   response.data.id,
                 ).then((mCresponse) => {
+                  console.log('Getting MC info...');
                   dispatch(authSuccess(
                     response.data.id,
                     userResponse.data.id,

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// const apiPath = 'https://eld-test.azurewebsites.net/api';
+//  const apiPath = 'https://eld-test.azurewebsites.net/api';
 const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
 
@@ -43,6 +43,8 @@ export default {
       axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`),
     getUserNotCertifiedEvents: (userId, token, filters) =>
       axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`, { params: { filter: filters } }),
+    userCertifyEvents: (userId, token, data) =>
+      axios.patch(`${apiPath}/People/${userId}/certifyEvents?access_token=${token}`, data),
     createUserEvents: (userId, eventData) =>
       axios.post(`${apiPath}/People/${userId}/events`, { eventData }),
     getUserMotorCarrier: userId =>
