@@ -83,7 +83,7 @@ class TrailerFormView extends React.Component {
           if (response.status === 200) {
             this.props.createTrailer(response.data);
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: t('We have created the new vehicle.') });
+            this.setState({ type: 'success', message: t('We have created the new trailer.') });
           } else {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
@@ -95,7 +95,7 @@ class TrailerFormView extends React.Component {
           if (response.status === 200) {
             this.props.createTrailer(response.data);
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: t('We have edited the vehicle.') });
+            this.setState({ type: 'success', message: t('We have edited the trailer.') });
           } else {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
