@@ -19,7 +19,7 @@ class DriverForm extends Component {
         email: '',
         driverLicenseNumber: '',
         licenseIssuingState: '',
-        timeZoneOffsetUtc: '',
+        timeZoneOffsetUtc: 4,
         startingTime24HourPeriod: '',
         username: '',
         password: '',
@@ -194,6 +194,7 @@ class DriverForm extends Component {
   async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidData()) {
+      console.log('antes de enviar----', this.state);
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
       try {

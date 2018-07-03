@@ -12,6 +12,7 @@ i18n.use(LanguageDetector).init({
         Profile: 'Profile',
         // Sidebar
         Dashboard: 'Dashboard',
+        dashboard: 'dashboard',
         Drivers: 'Drivers',
         Vehicles: 'Vehicles',
         Devices: 'Devices',
@@ -192,6 +193,16 @@ i18n.use(LanguageDetector).init({
         'We have aplied the configurations.': 'We have aplied the configurations.',
         'Explanation for the configuration of exemption': 'Explanation for the configuration of exemption',
         Annotation: 'Annotation',
+
+        // Summary
+        'Amount of Support Personnels': 'Amount of Support Personnels',
+        'Amount of Drivers': 'Amount of Drivers',
+        'Amount of Vehicles': 'Amount of Vehicles',
+        'Amount of vehicles off dutty': 'Amount of vehicles off dutty',
+        'Amount of vehicles in sleeper berth': 'Amount of vehicles in sleeper berth',
+        'Amount of vehicles driving': 'Amount of vehicles driving',
+        'Amount of vehicles on duty not driving': 'Amount of vehicles on duty not driving',
+        'Amount of vehicles undefined': 'Amount of vehicles undefined',
       },
     },
     es: {
@@ -202,7 +213,7 @@ i18n.use(LanguageDetector).init({
         Profile: 'Perfil',
         // Sidebar
         Dashboard: 'Panel',
-        dashboard: 'Panel',
+        dashboard: 'panel',
         Drivers: 'Conductores',
         drivers: 'Conductores',
         Vehicles: 'Vehículos',
@@ -389,6 +400,16 @@ i18n.use(LanguageDetector).init({
         'We have aplied the configurations.': 'Hemos aplicado las configuraciones.',
         'Explanation for the configuration of exemption': 'Explicación para la configuración de la eximición',
         Annotation: 'Anotación',
+
+        // Summary
+        'Amount of Support Personnels': 'Cantidad de personal de apoyo',
+        'Amount of Drivers': 'Cantidad de conductores',
+        'Amount of Vehicles': 'Cantidad de vehículos',
+        'Amount of vehicles off dutty': 'Cantidad de vehículos fuera de servicio',
+        'Amount of vehicles in sleeper berth': 'Cantidad de vehículos descansando en litera',
+        'Amount of vehicles driving': 'Cantidad de vehículos conduciendo',
+        'Amount of vehicles on duty not driving': 'Cantidad de vehículos en servicio - no conduciendo',
+        'Amount of vehicles undefined': 'Cantidad de vehículos indefinidos',
       },
     },
   },
