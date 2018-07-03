@@ -85,10 +85,14 @@ const getMotorCarrierSuccess = (state, action) => updateObject(state, {
   chunkedVehicles: action.chunkedVehicles,
   supervisors: action.supervisors,
   mcName: action.mcName,
+  trailers: action.trailers,
+  lastMod: action.lastMod,
 });
 
 const getMotorCarrierFail = (state, action) => updateObject(state, {
   error: action.error,
+  loading: false,
+});
 
 const updateUsersSuccess = (state, action) => updateObject(state, {
   users: action.users,
@@ -99,7 +103,6 @@ const updateVehiclesSuccess = (state, action) => updateObject(state, {
   vehicles: action.vehicles,
   loading: false,
 });
-
 
 
 const updateLastMod = (state, action) => {

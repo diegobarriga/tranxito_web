@@ -43,7 +43,7 @@ class Vehicle extends React.Component {
 
   async checkLastMod() {
     this.setState({ checking: true });
-    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+    const lastMod = await getLastMod(this.props.token);
 
     if (lastMod.vehicles !== this.props.lastMod.vehicles) {
       this.props.updateVehicles(this.props.motorCarrierId, this.props.token);

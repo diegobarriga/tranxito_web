@@ -34,7 +34,7 @@ class SignupView extends Component {
         if (response.status === 200) {
           this.props.createUser(response.data);
 
-          const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+          const lastModAPI = await getLastMod(this.props.token);
           const { lastMod } = this.props;
           lastMod.people = lastModAPI.people;
           this.props.updateLastMod(lastMod);
@@ -52,7 +52,7 @@ class SignupView extends Component {
         if (response.status === 200) {
           this.props.createUser(response.data);
 
-          const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+          const lastModAPI = await getLastMod(this.props.token);
           const { lastMod } = this.props;
           lastMod.people = lastModAPI.people;
           this.props.updateLastMod(lastMod);

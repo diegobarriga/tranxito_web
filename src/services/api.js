@@ -175,7 +175,7 @@ export default {
     getFileUploadErrors: id => axios.get(`${apiPath}/file-uploads/${id}/errors`),
   },
   lastMod: {
-    getLastMod: (motorCarrierId, token) =>
-      axios.get(`${apiPath}/LastMods/${motorCarrierId}?access_token=${token}`),
+    getLastMod: token =>
+      axios.get(`${apiPath}/LastMods/?access_token=${token}`),
   },
 };
