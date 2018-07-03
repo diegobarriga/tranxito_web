@@ -138,6 +138,8 @@ class SimpleReactFileUpload extends React.Component {
 
     this.checkValid(drivers);
 
+    console.log('valid', this.state.isValid, this.state.loading);
+
     if (this.state.isValid === true && this.state.loading === true) {
       console.log('valid');
       this.fileUpload(this.state.file).then((response) => {
@@ -197,30 +199,21 @@ class SimpleReactFileUpload extends React.Component {
       this.checkValid(this.state.file);
       // console.log("Valid: "+this.state.isValid)
 
-      dataString = this.state.data.map(d => `${d[0]},
-        ${d[1]},
-        ${d[2]},
-        ${d[3]},
-        ${d[4]},
-        ${d[5]},
-        ${d[6]},
-        ${d[7]},
-        ${d[8]}\n`)
-        .join('');
-      // console.log("String: "+dataString)
+      dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]}\n`).join('');
+      // console.log("String: ", dataString);
       const csv = new Blob([dataString], { type: 'text/csv' });
 
       // console.log("STATE EXCEL: "+this.state.file)
 
-      // const reader1 = new FileReader();
-      // reader1.readAsText(csv);
+      const reader1 = new FileReader();
+      reader1.readAsText(csv);
       // reader1.onload = (e) => {
       // // console.log("CSV " + e.target.result)
       // }
 
       this.setState({ file: csv });
       // console.log("STATE CSV: "+this.state.file)
-      // reader1.onload = this.loadHandler;
+      reader1.onload = this.loadHandler;
     };
     if (rABS) reader.readAsBinaryString(this.state.file);
     else reader.readAsArrayBuffer(this.state.file);
@@ -276,6 +269,7 @@ class SimpleReactFileUpload extends React.Component {
       this.setState({ isValid: true });
     }
   }
+
   render() {
     if (this.state.loading === true) return <Loader />;
     let alert;
