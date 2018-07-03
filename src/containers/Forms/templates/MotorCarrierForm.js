@@ -67,6 +67,7 @@ class MotorCarrierForm extends Component {
     } else if (_.isEmpty(String(data.name.trim()))) {
       errors.name = t("This field can't be blank");
     } else if (String(data.name.trim()).length > 120 || String(data.name.trim()).length < 4) {
+      // i18n
       errors.name = 'Name must be between 4-120 characters long';
     }
     /* NEED FIX */

@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import VehicleForm from './VehicleForm';
+import TrailerForm from './TrailerForm';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 import Alert from '../../Alert/Alert';
@@ -14,7 +14,7 @@ import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import Aux from '../../../hoc/Aux';
 
-class VehicleFormView extends React.Component {
+class TrailerFormView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,41 +50,25 @@ class VehicleFormView extends React.Component {
           if (this.props.isCreate) {
             this.postData(submitData).then((response) => {
               if (response.status === 200) {
-                this.props.createVehicle(response.data);
-
-                const { lastMod } = this.props;
-                lastMod.vehicles = response.headers.lastmod;
-                this.props.updateLastMod(lastMod);
-
+                this.props.createTrailer(response.data);
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: t('We have created the new vehicle.') });
+                this.setState({ type: 'success', message: t('We have created the new trailer.') });
               } else {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
-            }).catch(() => {
-              this.setState({ isLoading: false });
-              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           // Si estamos editando un usuario
           } else {
             this.patchData(submitData).then((response) => {
               if (response.status === 200) {
-                this.props.createVehicle(response.data);
-
-                const { lastMod } = this.props;
-                lastMod.vehicles = response.headers.lastmod;
-                this.props.updateLastMod(lastMod);
-
+                this.props.createTrailer(response.data);
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: t('We have edited the vehicle.') });
+                this.setState({ type: 'success', message: t('We have edited the trailer.') });
               } else {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
-            }).catch(() => {
-              this.setState({ isLoading: false });
-              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           }
         } else {
@@ -97,48 +81,32 @@ class VehicleFormView extends React.Component {
       if (this.props.isCreate) {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
-            this.props.createVehicle(response.data);
-
-            const { lastMod } = this.props;
-            lastMod.vehicles = response.headers.lastmod;
-            this.props.updateLastMod(lastMod);
-
+            this.props.createTrailer(response.data);
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: t('We have created the new vehicle.') });
+            this.setState({ type: 'success', message: t('We have created the new trailer.') });
           } else {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
-        }).catch(() => {
-          this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       // Si estamos editando un usuario
       } else {
         this.patchData(formData.data).then((response) => {
           if (response.status === 200) {
-            this.props.createVehicle(response.data);
-
-            const { lastMod } = this.props;
-            lastMod.vehicles = response.headers.lastmod;
-            this.props.updateLastMod(lastMod);
-
+            this.props.createTrailer(response.data);
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: t('We have edited the vehicle.') });
+            this.setState({ type: 'success', message: t('We have edited the trailer.') });
           } else {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
-        }).catch(() => {
-          this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       }
     }
   }
 
   postData(data) {
-    return api.motorCarriers.createMotorCarrierVehicle(
+    return api.motorCarriers.createMotorCarrierTrailer(
       this.props.motorCarrierId,
       this.props.token,
       data,
@@ -146,7 +114,7 @@ class VehicleFormView extends React.Component {
   }
 
   patchData(data) {
-    return api.vehicles.updateVehicle(this.props.match.params.id, this.props.token, data);
+    return api.trailers.updateTrailer(this.props.match.params.id, this.props.token, data);
   }
 
   imgUpload(file) {
@@ -157,7 +125,7 @@ class VehicleFormView extends React.Component {
         'content-type': 'multipart/form-data',
       },
     };
-    return api.images.vehicleImageUpload(formData, config, this.props.token);
+    return api.images.trailerImageUpload(formData, config, this.props.token);
   }
 
   render() {
@@ -193,8 +161,7 @@ class VehicleFormView extends React.Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             <Breadcrumb>
-              { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
-              { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
+              <Link className="section" to="/drivers">Home</Link>
               {
                 this.props.navigation.map((x, i) => (
                   <Aux key={i}>
@@ -213,7 +180,7 @@ class VehicleFormView extends React.Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             <h1 style={h1Style}>{t(title)}</h1>
-            <VehicleForm
+            <TrailerForm
               submit={this.onFormSubmit}
               isCreate={isCreate}
               token={token}
@@ -226,22 +193,18 @@ class VehicleFormView extends React.Component {
   }
 }
 
-VehicleFormView.propTypes = {
+TrailerFormView.propTypes = {
   title: PropTypes.string.isRequired,
   isCreate: PropTypes.bool.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
-  createVehicle: PropTypes.func.isRequired,
-  updateLastMod: PropTypes.func.isRequired,
+  createTrailer: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
-  role: PropTypes.string.isRequired,
-  mcName: PropTypes.string.isRequired,
-  lastMod: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -250,19 +213,15 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
-  role: state.auth.role,
-  mcName: state.auth.mcName,
-  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
-  createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
-  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
+  createTrailer: trailer => dispatch(actions.createTrailer(trailer)),
   addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
     urlString,
     restart,
     crumbUrl,
   )),
 });
-const translateFunc = translate('translations')(VehicleFormView);
+const translateFunc = translate('translations')(TrailerFormView);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

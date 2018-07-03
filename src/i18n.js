@@ -16,6 +16,7 @@ i18n.use(LanguageDetector).init({
         Vehicles: 'Vehicles',
         Devices: 'Devices',
         Supervisors: 'Supervisors',
+        supervisors: 'supervisors',
         // Dashboard
         'Drivers with the most Speeding Alerts': 'Drivers with the most Speeding Alerts',
         'Drivers with the most Hours of Driving Alerts': 'Drivers with the most Hours of Driving Alerts',
@@ -35,6 +36,7 @@ i18n.use(LanguageDetector).init({
         'Create vehicle': 'Create vehicle',
         'Create multiple vehicles': 'Create multiple vehicles',
         'Create Supervisor': 'Create Supervisor',
+        'Edit Supervisor': 'Edit Supervisor',
         'Create MotorCarrier': 'Create MotorCarrier',
         'Add Supervisor': 'Add Supervisor',
         'Create New Driver': 'Create New Driver',
@@ -46,6 +48,8 @@ i18n.use(LanguageDetector).init({
         'List and profiles': 'List and profiles',
         'Map, stats and more': 'Map, stats and more',
         'Add Devices': 'Add Devices',
+        Email: 'Email',
+
 
         'First name': 'First name',
         'Last name': 'Last name',
@@ -157,6 +161,30 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'SLEEPER BERTH',
         DRIVING: 'DRIVING',
         'ON DUTY NOT DRIVING': 'DRIVING',
+        // trailers
+        Trailers: 'Trailers',
+        'Create New Trailer': 'Create New Trailer',
+        'Edit Trailer': 'Edit Trailer',
+        'Trailer Number': 'Trailer Number',
+        'Trailer Model': 'Trailer Model',
+        'Trailer Manufacturer': 'Trailer Manufacturer',
+        Manufacturer: 'Manufacturer',
+        Year: 'Year',
+        'Gross vehicle weight': 'Gross vehicle weight',
+        'Gross Vehicle Weight': 'Gross Vehicle Weight',
+        'We have created the new trailer.': 'We have created the new trailer.',
+        'We have edited the trailer.': 'We have edited the trailer.',
+        'Invalid trailer year': 'Invalid trailer year',
+        'new trailer': 'new trailer',
+        trailers: 'trailers',
+        'Serial Number': 'Serial Number',
+        'Create trailer': 'Create trailer',
+        edit: 'edit',
+        'Trailer was deleted successfully': 'Trailer was deleted successfully',
+
+        // Supervisors
+        'We have created the new supervisor.': 'We have created the new supervisor.',
+        'We have edited the supervisor.': 'We have edited the supervisor.',
       },
     },
     es: {
@@ -175,7 +203,7 @@ i18n.use(LanguageDetector).init({
         Devices: 'Dispositivos',
         devices: 'Dispositivos',
         Supervisors: 'Supervisores',
-        supervisors: 'Supervisores',
+        supervisors: 'supervisores',
 
         Administrator: 'Administrator',
         // Dashboard
@@ -198,6 +226,7 @@ i18n.use(LanguageDetector).init({
         'Create vehicle': 'Crear vehiculo',
         'Create multiple vehicles': 'Crear multiples vehiculos',
         'Create Supervisor': 'Crear Supervisor',
+        'Edit Supervisor': 'Editar Supervisor',
         'Create MotorCarrier': 'Crear Motor Carrier',
         'Add Supervisor': 'Agregar Supervisor',
         'Create New Driver': 'Crear Nuevo Conductor',
@@ -209,6 +238,7 @@ i18n.use(LanguageDetector).init({
         'List and profiles': 'Lista y perfiles',
         'Map, stats and more': 'Mapa, estadísticas y más',
         'Add Devices': 'Agregar Dispositivos',
+        Email: 'Correo electrónico',
 
         'First name': 'Nombre',
         'Last name': 'Apellido',
@@ -320,6 +350,30 @@ i18n.use(LanguageDetector).init({
         DRIVING: 'CONDUCIENDO',
         'ON DUTY NOT DRIVING': 'EN SERVICIO - NO CONDUCIENDO',
 
+        // trailers
+        Trailers: 'Tráilers',
+        'Create New Trailer': 'Crear Nuevo Tráiler',
+        'Edit Trailer': 'Editar Tráiler',
+        'Trailer Number': 'Número de Tráiler',
+        'Trailer Model': 'Modelo de Tráiler',
+        'Trailer Manufacturer': 'Fabricante del Tráiler',
+        Manufacturer: 'Fabricante',
+        Year: 'Año',
+        'Gross vehicle weight': 'Peso bruto del vehículo',
+        'Gross Vehicle Weight': 'Peso bruto del vehículo',
+        'We have created the new trailer.': 'Hemos creado el nuevo tráiler.',
+        'We have edited the trailer.': 'Hemos editado el tráiler.',
+        'Invalid trailer year': 'Año de tráiler inválido',
+        'new trailer': 'nuevo tráiler',
+        trailers: 'tráilers',
+        'Serial Number': 'Número de serie',
+        'Create trailer': 'Crear tráiler',
+        edit: 'editar',
+        'Trailer was deleted successfully': 'El tráiler fue eliminado satisfactoriamente',
+
+        // Supervisors
+        'We have created the new supervisor.': 'Hemos creado al nuevo supervisor.',
+        'We have edited the supervisor.': 'Hemos editado al supervisor.',
       },
     },
   },

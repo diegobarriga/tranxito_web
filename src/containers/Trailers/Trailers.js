@@ -7,13 +7,13 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { I18nextProvider, translate } from 'react-i18next';
 import i18n from '../../i18n';
-import VehiclesInfo from './VehiclesInfo';
+import TrailersInfo from './TrailersInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
 import Alert from '../Alert/Alert';
 import * as actions from '../../store/actions/index';
 
-class Vehicles extends React.Component {
+class Trailers extends React.Component {
   componentDidMount() {
     const auxArray = this.props.location.pathname.split('/');
     const crumbUrl = this.props.location.pathname;
@@ -34,10 +34,10 @@ class Vehicles extends React.Component {
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = t('The vehicle was deleted successfully');
+      msg = t('Trailer was deleted successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = t('Error the vehicle was not deleted');
+      msg = t('Error: cannot delete trailer');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
     return (
@@ -48,8 +48,7 @@ class Vehicles extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
-                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
+                <Link className="section" to="/drivers">Home</Link>
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -68,7 +67,7 @@ class Vehicles extends React.Component {
           <Row>
             <Col md="11">
               <I18nextProvider i18n={i18n}>
-                <VehiclesInfo />
+                <TrailersInfo />
               </I18nextProvider>
             </Col>
           </Row>
@@ -79,7 +78,7 @@ class Vehicles extends React.Component {
   }
 }
 
-Vehicles.propTypes = {
+Trailers.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
@@ -87,25 +86,19 @@ Vehicles.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   error: PropTypes.object,
-  role: PropTypes.string.isRequired,
-  mcName: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.number.isRequired,
 };
 
-Vehicles.defaultProps = {
+Trailers.defaultProps = {
   error: null,
 };
 
 const mapStateToProps = state => ({
-  vehicles: state.auth.vehicles,
+  trailers: state.auth.trailers,
   isAuthenticated: state.auth.token !== null,
   error: state.auth.error,
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
-  role: state.auth.role,
-  mcName: state.auth.mcName,
-  motorCarrierId: state.auth.motorCarrierId,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -115,5 +108,5 @@ const mapDispatchToProps = dispatch => ({
     crumbUrl,
   )),
 });
-const translateFunc = translate('translations')(Vehicles);
+const translateFunc = translate('translations')(Trailers);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

@@ -9,6 +9,8 @@ import { translate } from 'react-i18next';
 import UserRow from './UserRow';
 import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
+import * as actions from '../../store/actions/index';
+import getLastMod from '../../utils/updateStoreFunctions';
 
 class UsersInfo extends React.Component {
   constructor(props) {
@@ -17,9 +19,26 @@ class UsersInfo extends React.Component {
       search: '',
       pages: '5',
       currentPage: '1',
+      checking: false,
     };
     this.updateSearch = this.updateSearch.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+
+  componentDidMount() {
+    this.checkLastMod();
+  }
+
+  async checkLastMod() {
+    this.setState({ checking: true });
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+
+    if (lastMod.people !== this.props.lastMod.people) {
+      this.props.updateUsers(this.props.motorCarrierId, this.props.token);
+      this.props.updateLastMod(lastMod);
+    }
+    this.setState({ checking: false });
   }
 
   handlePageChange(pageNumber) {
@@ -31,7 +50,7 @@ class UsersInfo extends React.Component {
 
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    if (this.state.checking || this.props.isLoading) return <Loader />;
 
     const filteredUsers = Object.values(this.props.users).filter(user => ((
       user.firstName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
@@ -89,14 +108,28 @@ class UsersInfo extends React.Component {
 UsersInfo.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.object.isRequired,
+  updateUsers: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
   t: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.users.loading,
+  isLoading: state.auth.loading,
   users: state.auth.users,
+  lastMod: state.auth.lastMod,
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
+});
+
+
+const mapDispatchToProps = dispatch => ({
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
+  updateUsers: (motorCarrierId, token) =>
+    dispatch(actions.updateUsers(motorCarrierId, token)),
 });
 
 const translateApp = translate('translations')(UsersInfo);
-
-export default connect(mapStateToProps)(translateApp);
+export default connect(mapStateToProps, mapDispatchToProps)(translateApp);

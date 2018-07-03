@@ -34,6 +34,7 @@
     "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.3.2",
     "react-file-reader": "^1.1.4",
+    "react-flag-icon-css": "^1.0.23",
     "react-google-maps": "^9.4.5",
     "react-i18next": "^7.7.0",
     "react-js-pagination": "^3.0.2",

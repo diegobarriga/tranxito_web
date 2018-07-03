@@ -12,7 +12,7 @@ import Alert from '../../../Alert/Alert';
 
 class LoginView extends Component {
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    if (this.props.isLoading) return <Loader />;
 
     const h1Style = {
       marginTop: '5rem',

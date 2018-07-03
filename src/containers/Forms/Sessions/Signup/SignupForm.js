@@ -3,7 +3,9 @@ import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import api from '../../../../services/api';
 import { translate } from 'react-i18next';
+
 
 const _ = require('lodash');
 
@@ -20,6 +22,7 @@ class SignupForm extends Component {
         lastName: '',
         username: '',
         accountType: 'S',
+        accountStatus: true,
       },
       isLoading: false,
       redirectTo: false,
@@ -30,7 +33,31 @@ class SignupForm extends Component {
     this.onChange = this.onChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+    this.getUserInfo = this.getUserInfo.bind(this);
   }
+
+  componentDidMount() {
+    // Si estamos editando el documento cargamos los datos del usuario para completar el form
+    if (!this.props.isCreate) {
+      this.getUserInfo().then((response) => {
+        if (response.status === 200) {
+          const newData = {
+            email: response.data.email,
+            password: '',
+            passwordConfirmation: '',
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            username: response.data.username,
+            accountType: 'S',
+          };
+          this.setState({ data: newData });
+        } else {
+          console.log('Error loading user info');
+        }
+      });
+    }
+  }
+
 
   onTogglePassword() {
     this.setState({ showPassword: !this.state.showPassword });
@@ -41,6 +68,10 @@ class SignupForm extends Component {
       ...this.state,
       data: { ...this.state.data, [event.target.name]: event.target.value },
     });
+  }
+
+  getUserInfo() {
+    return api.people.getUser(this.props.match.params.id, this.props.token);
   }
 
   validateInput(data) {
@@ -116,8 +147,12 @@ class SignupForm extends Component {
 
   render() {
     const {
-      errors, redirectTo, showPassword,
+      errors,
+      redirectTo,
+      showPassword,
+      data,
     } = this.state;
+
     // Change redirect link
     if (redirectTo) {
       this.setState({ redirectTo: false });
@@ -134,6 +169,7 @@ class SignupForm extends Component {
               <Input
                 type="text"
                 name="firstName"
+                value={data.firstName}
                 placeholder={t('First name')}
                 onChange={this.onChange}
                 invalid={errors.firstName}
@@ -148,6 +184,7 @@ class SignupForm extends Component {
               <Input
                 type="text"
                 name="lastName"
+                value={data.lastName}
                 placeholder={t('Last name')}
                 onChange={this.onChange}
                 invalid={errors.lastName}
@@ -162,6 +199,7 @@ class SignupForm extends Component {
             <Input
               type="text"
               name="username"
+              value={data.username}
               placeholder={t('Username')}
               onChange={this.onChange}
               invalid={errors.username}
@@ -176,6 +214,7 @@ class SignupForm extends Component {
             <Input
               type="email"
               name="email"
+              value={data.email}
               onChange={this.onChange}
               placeholder="Email"
               invalid={errors.email}
@@ -222,7 +261,9 @@ class SignupForm extends Component {
 SignupForm.propTypes = {
   submit: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  isCreate: PropTypes.bool.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default translate('translations')(SignupForm);
