@@ -45,6 +45,7 @@ i18n.use(LanguageDetector).init({
         'Register Supervisor': 'Register Supervisor',
         'List and profiles': 'List and profiles',
         'Map, stats and more': 'Map, stats and more',
+        'Add Devices': 'Add Devices',
 
         'First name': 'First name',
         'Last name': 'Last name',
@@ -207,6 +208,7 @@ i18n.use(LanguageDetector).init({
         'Register Supervisor': 'Registrar Supervisor',
         'List and profiles': 'Lista y perfiles',
         'Map, stats and more': 'Mapa, estadísticas y más',
+        'Add Devices': 'Agregar Dispositivos',
 
         'First name': 'Nombre',
         'Last name': 'Apellido',

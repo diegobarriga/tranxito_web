@@ -94,6 +94,7 @@ class MotorCarriers extends React.Component {
                     <div key={carrier.id} style={flexContainer} className="item">
                       <div key={carrier.id} style={containedObject}>
                         <Button
+                          color="link"
                           key={carrier.id}
                           onClick={() => {
                           this.props.getMotorCarrier(carrier.id, this.props.token, carrier.name);
