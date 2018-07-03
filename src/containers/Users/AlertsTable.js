@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Container, Table } from 'reactstrap';
-import * as funct from '../../utils/tableFunctions';
 import { translate } from 'react-i18next';
+import * as funct from '../../utils/tableFunctions';
 // import Loader from '../../components/Loader/Loader';
 // import { DUTY_STATUS } from '../../utils/eventTypes';
 // import * as functions from './functions';
@@ -101,6 +101,9 @@ class AlertsTable extends React.Component {
       );
     }
     const { t } = this.props;
+
+    const alertSpeedIcon = <FontAwesomeIcon icon="exclamation-triangle" className="purple_icon" />
+    const alertTimeIcon = <FontAwesomeIcon icon="exclamation-triangle" className="green_icon" />
     return (
       <Container>
         <Table hover>
@@ -203,10 +206,10 @@ class AlertsTable extends React.Component {
                                   {alert.coordinates.lng} */}
                                 </td>
                                 <td style={styles.table}>
-                                  {alert.speedLimitExceeded ? 'true' : 'false'}
+                                  {alert.speedLimitExceeded ? alertSpeedIcon : ''}
                                 </td>
                                 <td style={styles.table}>
-                                  {alert.driveTimeExceeded ? 'true' : 'false'}
+                                  {alert.driveTimeExceeded ? alertTimeIcon : ''}
                                 </td>
                               </tr>
                           ))}
