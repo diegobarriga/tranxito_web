@@ -39,11 +39,14 @@ class SimpleReactFileUpload extends React.Component {
     const crumbUrl = this.props.location.pathname;
     let newCrumb = auxArray[auxArray.length - 1].split('_');
     if (newCrumb[newCrumb.length - 1] === 'vehicles') {
-      newCrumb[newCrumb.length - 2] = t('New');
-      newCrumb[newCrumb.length - 1] = t('Vehicle(s)');
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Vehicles';
+    } else if (newCrumb[newCrumb.length - 1] === 'devices') {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Devices';
     } else {
-      newCrumb[newCrumb.length - 2] = t('New');
-      newCrumb[newCrumb.length - 1] = t('Driver(s)');
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Drivers';
     }
     newCrumb = newCrumb.join(' ');
     this.props.addBreadCrumb(newCrumb, false, crumbUrl);

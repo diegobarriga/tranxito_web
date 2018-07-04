@@ -174,7 +174,11 @@ i18n.use(LanguageDetector).init({
         'We have created the new device.': 'We have created the new device.',
         'We have edited the device.': 'We have edited the device.',
         'Are you sure you want to delete this device?': 'Are you sure you want to delete this device?',
+        'new device': 'new device',
 
+        'New Drivers': 'New Drivers',
+        'New Vehicles': 'New Vehicles',
+        'New Devices': 'New Devices',
       },
     },
     es: {
@@ -334,7 +338,6 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'DESCANSANDO EN LITERA',
         DRIVING: 'CONDUCIENDO',
         'ON DUTY NOT DRIVING': 'EN SERVICIO - NO CONDUCIENDO',
-        new_device: 'nuevo_dispositivo',
         IMEI: 'IMEI',
 
         'Bluetooth Mac': 'Bluetooth Mac',
@@ -352,6 +355,11 @@ i18n.use(LanguageDetector).init({
         'We have created the new device.': 'Hemos creado el nuevo dispositivo',
         'We have edited the device.': 'Hemos editado el dispositivo',
         'Are you sure you want to delete this device?': 'Estás seguro que quieres eliminar este dispositivo?',
+
+        'New Drivers': 'Nuevos Conductores',
+        'New Vehicles': 'Nuevos Vehículos',
+        'New Devices': 'Nuevos Dispositivos',
+
       },
     },
   },
