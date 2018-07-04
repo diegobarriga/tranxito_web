@@ -51,8 +51,6 @@ class DeviceScriptFormView extends React.Component {
   }
 
 
-
-
   patchData(data) {
     return api.motorCarriers.updateMotorCarrierDevice(
       this.props.motorCarrierId,

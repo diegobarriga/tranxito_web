@@ -192,7 +192,7 @@ class DeviceForm extends React.Component {
                 onChange={this.onChange}
               >
                 <option value={false}>No</option>
-                <option value={true}>Yes</option>
+                <option value={true}>{t('Yes')}</option>
               </select>
 
               <FormFeedback>{errors.configStatus}</FormFeedback>

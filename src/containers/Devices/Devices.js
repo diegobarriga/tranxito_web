@@ -33,10 +33,10 @@ class Devices extends React.Component {
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = t('The vehicle was deleted successfully');
+      msg = t('The device was deleted successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = t('Error the vehicle was not deleted');
+      msg = t('Error the device was not deleted');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
     return (

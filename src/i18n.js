@@ -165,6 +165,16 @@ i18n.use(LanguageDetector).init({
 
         'Create device': 'Create device',
         'Create multiple devices': 'Create multiple devices',
+        'The device was deleted successfully': 'The device was deleted successfully',
+        'Error the device was not deleted': 'Error the device was not deleted',
+        'Create New Device': 'Create New Device',
+        'Edit Device': 'Edit Device',
+        'Configure Device': 'Configure Device',
+        Yes: 'Yes',
+        'We have created the new device.': 'We have created the new device.',
+        'We have edited the device.': 'We have edited the device.',
+        'Are you sure you want to delete this device?': 'Are you sure you want to delete this device?',
+
       },
     },
     es: {
@@ -333,6 +343,15 @@ i18n.use(LanguageDetector).init({
 
         'Create device': 'Crear dispositivo',
         'Create multiple devices': 'Crear multiples dispositivos',
+        'The device was deleted successfully': 'El device fue correctamente eliminado',
+        'Error the device was not deleted': 'Error, el device no fue eliminado',
+        'Create New Device': 'Crear un Nuevo Dispositivo',
+        'Edit Device': 'Editar Dispositivo',
+        'Configure Device': 'Configurar Dispositivo',
+        Yes: 'Si',
+        'We have created the new device.': 'Hemos creado el nuevo dispositivo',
+        'We have edited the device.': 'Hemos editado el dispositivo',
+        'Are you sure you want to delete this device?': 'Estás seguro que quieres eliminar este dispositivo?',
       },
     },
   },

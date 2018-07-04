@@ -26,7 +26,7 @@ class DeviceRow extends React.Component {
         <div className="truck_wrapper">
           <div className="right">
             <ul>
-              <li>Syrus {this.props.bluetoothMac}</li>
+              <li>Syrus MAC: {this.props.bluetoothMac}</li>
               <li>{t('IMEI')}: {this.props.imei}</li>
             </ul>
           </div>

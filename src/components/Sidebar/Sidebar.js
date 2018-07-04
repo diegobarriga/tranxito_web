@@ -41,7 +41,7 @@ class sidebar extends Component {
     const vehiclesColor = this.props.sidebarState.vehiclesClicked ? '#dedede' : 'white';
     const driversColor = this.props.sidebarState.driversClicked ? '#dedede' : 'white';
     const dashboardColor = this.props.sidebarState.dashboardClicked ? '#dedede' : 'white';
-    const devicesColor = this.props.sidebarState.deClicked ? '#dedede' : 'white';
+    const devicesColor = this.props.sidebarState.devicesClicked ? '#dedede' : 'white';
     const supervisorsColor = this.props.sidebarState.supervisorsClicked ? '#dedede' : 'white';
 
     const { t } = this.props;

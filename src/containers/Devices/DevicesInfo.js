@@ -71,8 +71,8 @@ class DevicesInfo extends React.Component {
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
           { this.state.createDevices &&
             <div className="buttons">
-              <Link className="btn btn-sm green spacing" to="/devices/new_device"><FontAwesomeIcon icon="car" color="white" /> {t('Create device')} </Link>
-              <Link className="btn btn-sm green" to="/devices/new_devices"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> {t('Create multiple devices')} </Link>
+              <Link className="btn btn-sm green spacing" to="/devices/new_device"><FontAwesomeIcon icon="hdd" color="white" /> {t('Create device')} </Link>
+              <Link className="btn btn-sm green" to="/devices/new_devices"><FontAwesomeIcon icon="hdd" color="white" /><FontAwesomeIcon icon="hdd" color="white" /> {t('Create multiple devices')} </Link>
             </div>
           }
 
@@ -119,7 +119,6 @@ class DevicesInfo extends React.Component {
 
 DevicesInfo.propTypes = {
   devices: PropTypes.object.isRequired,
-  mcCreateDevices: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
