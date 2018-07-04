@@ -102,8 +102,8 @@ class AlertsTable extends React.Component {
     }
     const { t } = this.props;
 
-    const alertSpeedIcon = <FontAwesomeIcon icon="exclamation-triangle" className="purple_icon" />
-    const alertTimeIcon = <FontAwesomeIcon icon="exclamation-triangle" className="green_icon" />
+    const alertSpeedIcon = <FontAwesomeIcon icon="exclamation-triangle" className="purple_icon" />;
+    const alertTimeIcon = <FontAwesomeIcon icon="exclamation-triangle" className="green_icon" />;
     return (
       <Container>
         <Table hover>

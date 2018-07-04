@@ -34,7 +34,7 @@ class Configurations extends React.Component {
     this.setState({ isLoading: true });
 
     this.patchData(formData.data).then(async (response) => {
-      console.log('resp---', response.headers);
+      // console.log('resp---', response.headers);
       if (response.status === 200) {
         this.props.createUser(response.data);
 
