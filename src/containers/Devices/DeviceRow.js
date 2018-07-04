@@ -28,6 +28,9 @@ class DeviceRow extends React.Component {
             <ul>
               <li>Syrus MAC: {this.props.bluetoothMac}</li>
               <li>{t('IMEI')}: {this.props.imei}</li>
+              <li>
+                {t('Configuration status')}: {this.props.configStatus ? <FontAwesomeIcon icon="check" color="green" /> : <FontAwesomeIcon icon="times" color="red" />}
+              </li>
             </ul>
           </div>
         </div>
@@ -59,7 +62,7 @@ DeviceRow.propTypes = {
   token: PropTypes.string.isRequired,
   deleteDevice: PropTypes.func.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
-
+  configStatus: PropTypes.bool.isRequired,
 };
 
 const translateFunc = translate('translations')(DeviceRow);

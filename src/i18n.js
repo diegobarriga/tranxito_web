@@ -166,7 +166,8 @@ i18n.use(LanguageDetector).init({
 
         devices: 'devices',
         IMEI: 'IMEI',
-        new_device: 'new_device',
+        'new device': 'new device',
+        'Configuration status': 'Configuration status',
 
         'Bluetooth Mac': 'Bluetooth Mac',
         'Configuration Script': 'Configuration Script',
@@ -399,6 +400,9 @@ i18n.use(LanguageDetector).init({
         DRIVING: 'CONDUCIENDO',
         'ON DUTY NOT DRIVING': 'EN SERVICIO - NO CONDUCIENDO',
         IMEI: 'IMEI',
+
+        'new device': 'nuevo dispositivo',
+        'Configuration status': 'Estado de configuración',
 
         'Bluetooth Mac': 'Bluetooth Mac',
         'Configuration Script': 'Script de Configuración',

@@ -87,6 +87,7 @@ class UsersInfo extends React.Component {
                 firstName={user.firstName}
                 lastName={user.lastName}
                 username={user.username}
+                email={user.email}
                 license_number={user.driverLicenseNumber}
                 image={user.image}
               />))
