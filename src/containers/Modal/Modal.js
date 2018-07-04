@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/alert.css';
+import Alert from '../Alert/Alert';
 
 const customStyles = {
   content: {
@@ -55,6 +56,7 @@ class ConfirmModal extends React.Component {
     super();
     this.state = {
       showModal: false,
+      toggleAlert: false,
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -63,26 +65,35 @@ class ConfirmModal extends React.Component {
   }
 
   handleOpenModal() {
-    this.setState({ showModal: true });
+    if (this.props.logs.length === 0) {
+      console.log('logs cant be blank');
+    } else {
+      this.setState({ showModal: true });
+    }
   }
 
   handleCloseModal() {
+    this.setState({ toggleAlert: false });
     this.setState({ showModal: false });
   }
 
   handleSubmit() {
+    console.log(this.props.logs);
     api.people.userCertifyEvents(
       this.props.id,
       this.props.token,
       this.props.logs,
     ).then((response) => {
-      console.log(response);
+      if (response.status === 200) {
+        this.handleCloseModal();
+      }
     });
   }
 
   render() {
     return (
       <Aux>
+        {this.state.toggleAlert && <Alert message="No logs selected" alertType="d" />}
         <Button onClick={this.handleOpenModal} style={{ paddingRight: 'none !important' }} floated="right" primary size="small" >Certify Events</Button>
         <ReactModal
           isOpen={this.state.showModal}

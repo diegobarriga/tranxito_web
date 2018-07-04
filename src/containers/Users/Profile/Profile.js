@@ -17,10 +17,11 @@ class DriverProfile extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
+      mcId: null,
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
   }
 
   toggle(tab) {
@@ -77,7 +78,11 @@ class DriverProfile extends React.Component {
           <TabPane tabId="2">
             <div className="tabDiv">
               <br />
-              <LogsTable type="user" id={this.props.id} />
+              <LogsTable
+                type="user"
+                id={this.props.id}
+                isNotAuth={false}
+              />
               <br />
               <br />
             </div>
@@ -85,7 +90,14 @@ class DriverProfile extends React.Component {
           <TabPane tabId="3">
             <div className="tabDiv">
               <br />
-              <h1>Assign Logs</h1>
+              <LogsTable
+                type="user"
+                id={this.props.id}
+                isNotAuth={true}
+                mcId={this.state.mcId}
+              />
+              <br />
+              <br />
             </div>
           </TabPane>
         </TabContent>
@@ -96,6 +108,7 @@ class DriverProfile extends React.Component {
 
 DriverProfile.propTypes = {
   id: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 /*
@@ -106,6 +119,7 @@ DriverProfile.defaultProps = {
 
 const mapStateToProps = state => ({
   id: state.auth.userId,
+  token: state.auth.token,
 });
 
 export default withRouter(connect(mapStateToProps)(DriverProfile));

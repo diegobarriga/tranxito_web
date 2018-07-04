@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Badge } from 'reactstrap';
-import { Button, Checkbox, Icon, Table } from 'semantic-ui-react';
+import { Button, Checkbox, Table } from 'semantic-ui-react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import Loader from '../../../components/Loader/Loader';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../../utils/eventTypes';
@@ -66,7 +66,8 @@ class Logs extends React.Component {
       isOpen: false,
       message: '',
       selectMessage: 'Select All',
-      result: null,
+      result: [],
+      mcId: null,
     };
     this.sortByTimestampUp = this.sortByTimestampUp.bind(this);
     this.sortByTimestampDown = this.sortByTimestampDown.bind(this);
@@ -76,7 +77,15 @@ class Logs extends React.Component {
 
   componentDidMount() {
     if (this.props.type === 'user') {
-      this.getLogs(api.people.getUserNotCertifiedEvents);
+      if (this.props.isNotAuth) {
+        api.people.getUser(this.props.id, this.props.token)
+          .then((userResponse) => {
+            this.setState({ mcId: userResponse.data.motorCarrierId });
+            this.getNotAuthLogs(api.motorCarriers.getNonAuthEvents);
+          });
+      } else {
+        this.getLogs(api.people.getUserNotCertifiedEvents);
+      }
     }
   }
 
@@ -89,10 +98,30 @@ class Logs extends React.Component {
       .then((response) => {
         try {
           const logs = response.data;
-          console.log(logs);
+          // console.log(logs);
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
           const objectLogs = functions.arrayToObjectLogs(logs);
-          console.log(objectLogs);
+          // console.log(objectLogs);
+          this.setState({ logs: objectLogs, filterLogs: logs, loading: false });
+        } catch (error) {
+          console.log('errror');
+          this.setState({ loading: false });
+        }
+      });
+  }
+
+  getNotAuthLogs(apiCall) {
+    this.setState({ loading: true });
+    const mess = 'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.';
+    this.setState({ message: mess });
+    apiCall(this.state.mcId, this.props.token)
+      .then((response) => {
+        try {
+          const logs = response.data;
+          // console.log(logs);
+          logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+          const objectLogs = functions.arrayToObjectLogs(logs);
+          // console.log(objectLogs);
           this.setState({ logs: objectLogs, filterLogs: logs, loading: false });
         } catch (error) {
           console.log('errror');
@@ -133,6 +162,14 @@ class Logs extends React.Component {
       x[1] = !x[1];
       return x;
     });
+    const arrayOfKeys = [];
+    Object.values(logg).forEach((log) => {
+      if (log[1]) {
+        arrayOfKeys.push(log[0].id);
+      }
+    });
+
+    this.setState({ result: arrayOfKeys });
 
     if (this.state.selectMessage === 'Select All') {
       this.setState({ selectMessage: 'Unselect All' });
@@ -142,6 +179,21 @@ class Logs extends React.Component {
 
     logg = functions.arrayToObject2(logg);
     this.setState({ logs: logg });
+  }
+
+  handleCheck(id) {
+    let newLogs = this.state.logs;
+    newLogs[id][1] = !newLogs[id][1];
+    this.setState({ logs: newLogs });
+    newLogs = Object.values(newLogs);
+
+    const arrayOfKeys = [];
+    Object.values(newLogs).forEach((log) => {
+      if (log[1]) {
+        arrayOfKeys.push(log[0].id);
+      }
+    });
+    this.setState({ result: arrayOfKeys });
   }
 
   render() {
@@ -205,7 +257,7 @@ class Logs extends React.Component {
               {this.state.filterLogs.map(event => (
                 <Table.Row key={event.id}>
                   <Table.Cell style={styles.head} collapsing>
-                    <Checkbox checked={this.state.logs[event.id][1]} value={event.id} />
+                    <Checkbox checked={this.state.logs[event.id][1]} onClick={() => this.handleCheck(event.id)} value={event.id} />
                   </Table.Cell>
                   <Table.Cell style={styles.table}>{event.type === 1 &&
                     <Badge className={`event${event.code}`} style={styles.badge}>
@@ -228,7 +280,7 @@ class Logs extends React.Component {
                 <Table.HeaderCell colSpan="4">
                   <Modal
                     text={this.state.message}
-                    log={this.state.result}
+                    logs={this.state.result}
                   />
                   <Button size="small" onClick={this.handleSelectAll}>{this.state.selectMessage}</Button>
                 </Table.HeaderCell>
@@ -246,6 +298,7 @@ Logs.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  isNotAuth: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -145,7 +145,7 @@ export default {
     getVehiclesDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getNonAuthEvents: (motorCarrierId, token) =>
-      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`),
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/nonAuthEvents?access_token=${token}`),
   },
   events: {
     getEvents: () =>
