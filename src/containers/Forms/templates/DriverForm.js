@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import { translate } from 'react-i18next';
 import api from '../../../services/api';
+import states from '../../../utils/states.json';
 import '../../../assets/styles/forms.css';
 
 const _ = require('lodash');
+
+console.log(states);
 
 class DriverForm extends Component {
   constructor(props) {
@@ -19,6 +22,7 @@ class DriverForm extends Component {
         email: '',
         driverLicenseNumber: '',
         licenseIssuingState: '',
+        licenseIssuingCountry: '',
         timeZoneOffsetUtc: 4,
         startingTime24HourPeriod: '',
         username: '',
@@ -52,6 +56,7 @@ class DriverForm extends Component {
             email: response.data.email,
             driverLicenseNumber: response.data.driverLicenseNumber,
             licenseIssuingState: response.data.licenseIssuingState,
+            licenseIssuingCountry: response.data.licenseIssuingCountry,
             timeZoneOffsetUtc: response.data.timeZoneOffsetUtc,
             startingTime24HourPeriod: response.data.startingTime24HourPeriod,
             image: response.data.image,
@@ -148,6 +153,14 @@ class DriverForm extends Component {
       errors.licenseIssuingState = t("This field can't be blank");
     } else if (String(data.licenseIssuingState).length !== 2) {
       errors.licenseIssuingState = t('Not a valid state');
+    }
+
+    if (_.isEmpty(String(data.licenseIssuingCountry))) {
+      errors.licenseIssuingCountry = t('This field is required');
+    } else if (_.isEmpty(String(data.licenseIssuingCountry.trim()))) {
+      errors.licenseIssuingCountry = t("This field can't be blank");
+    } else if (!['USA', 'Mexico', 'Canada', 'Other'].includes(data.licenseIssuingCountry)) {
+      errors.licenseIssuingCountry = t("Issuing country can only be one of 'USA', 'Mexico', 'Canada' or 'Other'");
     }
     /*
     if (_.isEmpty(String(data.exemptDriverConfiguration))) {
@@ -350,17 +363,48 @@ class DriverForm extends Component {
             </FormGroup>
           </div>
           <div className="field">
+            <Label>{t('Licenses issuing country')}</Label>
+            <FormGroup>
+              <Input
+                type="select"
+                name="licenseIssuingCountry"
+                placeholder={t('Licenses issuing country')}
+                value={data.licenseIssuingCountry}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.licenseIssuingCountry}
+                invalid={errors.licenseIssuingCountry}
+              >
+                <option value="">Select Country</option>
+                <option>Canada</option>
+                <option>Mexico</option>
+                <option>USA</option>
+                <option>Other</option>
+              </Input>
+              <FormFeedback>{errors.licenseIssuingCountry}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
             <Label>{t('Licenses issuing state')}</Label>
             <FormGroup>
               <Input
-                type="text"
+                type="select"
                 name="licenseIssuingState"
                 placeholder={t('Licenses issuing state')}
                 value={data.licenseIssuingState}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.licenseIssuingState}
                 invalid={errors.licenseIssuingState}
-              />
+                disabled={data.licenseIssuingCountry === ''}
+              >
+                <option value="">Select State</option>
+                {data.licenseIssuingCountry !== '' ? (
+                  states[data.licenseIssuingCountry].map(state => (
+                    <option value={state.code}>
+                      ({state.code}) {state.name}
+                    </option>
+                    ))
+                ) : ''}
+              </Input>
               <FormFeedback>{errors.licenseIssuingState}</FormFeedback>
             </FormGroup>
           </div>

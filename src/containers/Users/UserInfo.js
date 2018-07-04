@@ -46,11 +46,11 @@ class UserInfo extends React.Component {
               <h5>{`${this.props.users[this.props.id].firstName} ${this.props.users[this.props.id].lastName}`}</h5>
               <div>
                 <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
-                {this.props.users[this.props.id].driverLicenseNumber}
+                {this.props.users[this.props.id].driverLicenseNumber}       <b>State:</b> {this.props.users[this.props.id].licenseIssuingState} ({this.props.users[this.props.id].licenseIssuingCountry})
               </div>
               <div>
                 <FontAwesomeIcon icon="envelope" className="customIcon" />{'   '}
-                {this.props.users[this.props.id].email}
+                {this.props.users[this.props.id].email.toLowerCase()}
               </div>
             </div>
           </div>
