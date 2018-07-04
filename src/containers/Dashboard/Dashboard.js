@@ -6,6 +6,7 @@ import { Breadcrumb } from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Col, Row } from 'reactstrap';
+import { translate } from 'react-i18next';
 import Aux from '../../hoc/Aux';
 import Map from './Map';
 import Summary from './Summary';
@@ -14,6 +15,7 @@ import AlertsStats from './AlertsStats';
 import * as actions from '../../store/actions/index';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/tabs.css';
+import getLastMod from '../../utils/updateStoreFunctions';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -21,6 +23,7 @@ class Dashboard extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
+      checking: false,
     };
   }
 
@@ -30,7 +33,29 @@ class Dashboard extends React.Component {
     const crumbUrl = this.props.location.pathname;
     const newCrumb = auxArray[auxArray.length - 1];
     this.props.addBreadCrumb(newCrumb, true, crumbUrl);
+    this.checkLastMod();
   }
+
+  async checkLastMod() {
+    this.setState({ checking: true });
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+
+    if (
+      lastMod.people !== this.props.lastMod.people ||
+      lastMod.vehicles !== this.props.lastMod.vehicles) {
+      if (lastMod.people !== this.props.lastMod.people) {
+        console.log('--update users dash--');
+        this.props.updateUsers(this.props.motorCarrierId, this.props.token);
+      }
+      if (lastMod.vehicles !== this.props.lastMod.vehicles) {
+        console.log('--update vehicles dash--');
+        this.props.updateVehicles(this.props.motorCarrierId, this.props.token);
+      }
+      this.props.updateLastMod(lastMod);
+    }
+    this.setState({ checking: false });
+  }
+
 
   toggle(tab) {
     if (this.state.activeTab !== tab) {
@@ -45,9 +70,10 @@ class Dashboard extends React.Component {
     if (!this.props.isAuthenticated) {
       authRedirect = <Redirect to="/" />;
     }
-    if (this.props.loading === true) return <Loader />;
-    const alert = null;
+    if (this.state.checking || this.props.isLoading || this.props.loading) return <Loader />;
 
+    const alert = null;
+    const { t } = this.props;
     return (
       <Aux>
         { alert }
@@ -62,9 +88,9 @@ class Dashboard extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -80,7 +106,7 @@ class Dashboard extends React.Component {
                 className={classnames({ active: this.state.activeTab === '1' })}
                 onClick={() => { this.toggle('1'); }}
               >
-                Map
+                {t('Map')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -88,7 +114,7 @@ class Dashboard extends React.Component {
                 className={classnames({ active: this.state.activeTab === '2' })}
                 onClick={() => { this.toggle('2'); }}
               >
-                Duty Status Stats
+                {t('Duty Status Stats')}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -96,7 +122,7 @@ class Dashboard extends React.Component {
                 className={classnames({ active: this.state.activeTab === '3' })}
                 onClick={() => { this.toggle('3'); }}
               >
-                Alerts Stats
+                {t('Alerts Stats')}
               </NavLink>
             </NavItem>
           </Nav>
@@ -142,6 +168,11 @@ Dashboard.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  updateUsers: PropTypes.func.isRequired,
+  updateVehicles: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -154,6 +185,7 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -163,6 +195,11 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
+  updateUsers: (motorCarrierId, token) =>
+    dispatch(actions.updateUsers(motorCarrierId, token)),
+  updateVehicles: (motorCarrierId, token) =>
+    dispatch(actions.updateVehicles(motorCarrierId, token)),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+const translateFunc = translate('translations')(Dashboard);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

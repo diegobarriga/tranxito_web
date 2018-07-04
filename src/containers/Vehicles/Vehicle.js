@@ -6,12 +6,15 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+import { translate } from 'react-i18next';
 import VehicleInfo from './VehicleInfo';
 import Logs from '../Logs/Logs';
 import Heatmap from './Heatmap';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
+import getLastMod from '../../utils/updateStoreFunctions';
+import Loader from '../../components/Loader/Loader';
 
 class Vehicle extends React.Component {
   constructor(props) {
@@ -19,10 +22,12 @@ class Vehicle extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
+      checking: false,
     };
   }
 
   componentDidMount() {
+    this.checkLastMod();
     const auxArray = this.props.location.pathname.split('/');
     if (this.props.navigation.length > 2) {
       this.props.popCrumb();
@@ -36,6 +41,17 @@ class Vehicle extends React.Component {
     this.props.addBreadCrumb(vehicleName, false, crumbUrl);
   }
 
+  async checkLastMod() {
+    this.setState({ checking: true });
+    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+
+    if (lastMod.vehicles !== this.props.lastMod.vehicles) {
+      this.props.updateVehicles(this.props.motorCarrierId, this.props.token);
+      this.props.updateLastMod(lastMod);
+    }
+    this.setState({ checking: false });
+  }
+
   toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
@@ -45,7 +61,10 @@ class Vehicle extends React.Component {
   }
 
   render() {
+    if (this.state.checking || this.props.isLoading) return <Loader />;
+
     const { id } = this.props.match.params;
+    const { t } = this.props;
     return (
       <Aux>
         <Container>
@@ -58,9 +77,9 @@ class Vehicle extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -75,7 +94,7 @@ class Vehicle extends React.Component {
               className={classnames({ active: this.state.activeTab === '1' })}
               onClick={() => { this.toggle('1'); }}
             >
-              General Information
+              {t('General Information')}
             </NavLink>
           </NavItem>
           <NavItem>
@@ -83,7 +102,7 @@ class Vehicle extends React.Component {
               className={classnames({ active: this.state.activeTab === '2' })}
               onClick={() => { this.toggle('2'); }}
             >
-              Heatmap
+              {t('Heatmap')}
             </NavLink>
           </NavItem>
         </Nav>
@@ -119,11 +138,28 @@ Vehicle.propTypes = {
   len: PropTypes.number.isRequired,
   popCrumb: PropTypes.func.isRequired,
   vehicles: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  updateVehicles: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
+  lastMod: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 Vehicle.defaultProps = {
   id: undefined,
 };
+
+const mapStateToProps = state => ({
+  vehicles: state.auth.vehicles,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
+  isLoading: state.auth.loading,
+  lastMod: state.auth.lastMod,
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
+});
 
 const mapDispatchToProps = dispatch => ({
   addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
@@ -131,14 +167,12 @@ const mapDispatchToProps = dispatch => ({
     restart,
     crumbUrl,
   )),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   popCrumb: () => dispatch(actions.popCrumb()),
+  updateVehicles: (motorCarrierId, token) =>
+    dispatch(actions.updateVehicles(motorCarrierId, token)),
 });
 
-const mapStateToProps = state => ({
-  vehicles: state.auth.vehicles,
-  navigation: state.breadcrumbs.breadcrumbs,
-  len: state.breadcrumbs.breadcrumbs.length,
-  naviLinks: state.breadcrumbs.links,
-});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Vehicle));
+const translateFunc = translate('translations')(Vehicle);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

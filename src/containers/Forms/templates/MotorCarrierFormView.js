@@ -29,17 +29,17 @@ class MotorCarrierFormView extends React.Component {
 
   render() {
     if (this.props.isLoading === true) return <Loader />;
-
+    const { t } = this.props;
     let alert;
     let msg = '';
     console.log(this.props.error);
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = 'The Motor Carrier was created successfully';
+      msg = t('The Motor Carrier was created successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = 'Error the Motor Carrier could not be created';
+      msg = t('Error the Motor Carrier could not be created');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
 

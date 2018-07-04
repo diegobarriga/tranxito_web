@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { I18nextProvider } from 'react-i18next';
 import Aux from '../../hoc/Aux';
+import i18n from '../../i18n';
 import Navibar from '../../components/NaviBar/NaviBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import '../../assets/styles/layout.css';
@@ -15,34 +17,36 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <div className="app">
-          <header className="appNavbar" >
-            <Navibar
-              isAuth={this.props.isAuthenticated}
-              userId={this.props.userId}
-              token={this.props.token}
-            />
-          </header>
-          <main className="appBody">
-            <div className="appMain">
-              <div className="centerArea">
-                { this.props.children }
+        <I18nextProvider i18n={i18n}>
+          <div className="app">
+            <header className="appNavbar" >
+              <Navibar
+                isAuth={this.props.isAuthenticated}
+                userId={this.props.userId}
+                token={this.props.token}
+              />
+            </header>
+            <main className="appBody">
+              <div className="appMain">
+                <div className="centerArea">
+                  { this.props.children }
+                </div>
+                { this.props.showSidebar &&
+                <div className="leftSidebar">
+                  <Sidebar
+                    isAdm={this.props.isAdmin}
+                    profileImage={this.props.image}
+                    name={this.props.name}
+                    last={this.props.last}
+                    mc={this.props.mcName}
+                  />
+                </div>
+                }
               </div>
-              { this.props.showSidebar &&
-              <div className="leftSidebar">
-                <Sidebar
-                  isAdm={this.props.isAdmin}
-                  profileImage={this.props.image}
-                  name={this.props.name}
-                  last={this.props.last}
-                  mc={this.props.mcName}
-                />
-              </div>
-              }
-            </div>
-            <footer />
-          </main>
-        </div>
+              <footer />
+            </main>
+          </div>
+        </I18nextProvider>
       </Aux>
     );
   }

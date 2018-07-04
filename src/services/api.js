@@ -51,6 +51,8 @@ export default {
       axios.get(`${apiPath}/People/${userId}/motorCarrier`),
     getUserDutyStatusChange: (userId, token) =>
       axios.get(`${apiPath}/People/${userId}/dutyStatusChange?access_token=${token}`),
+    getTrackings: (userId, token, conditions) =>
+      axios.get(`${apiPath}/People/${userId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
   vehicles: {
     getVehicles: () =>
@@ -71,6 +73,22 @@ export default {
       axios.get(`${apiPath}/Vehicles/${vehicleId}/events?access_token=${token}`),
     getTrackings: (vehicleId, token, conditions) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
+  },
+  trailers: {
+    getTrailers: () =>
+      axios.get(`${apiPath}/Trailers`),
+    getTrailer: (trailerId, token) =>
+      axios.get(`${apiPath}/Trailers/${trailerId}?access_token=${token}`),
+    deleteTrailer: (trailerId, token) =>
+      axios.delete(`${apiPath}/Trailers/${trailerId}?access_token=${token}`),
+    updateTrailer: (trailerId, token, data) =>
+      axios.patch(`${apiPath}/Trailers/${trailerId}?access_token=${token}`, data),
+    setImage: (trailerId, url) =>
+      axios.get(`${apiPath}/Trailers/${trailerId}/setImage`, { url }),
+    getTrailerMotorCarrier: trailerId =>
+      axios.get(`${apiPath}/Trailers/${trailerId}/motorCarrier`),
+    exists: trailerId =>
+      axios.get(`${apiPath}/Trailers/${trailerId}/exists`),
   },
   motorCarriers: {
     getMotorCarriers: token =>
@@ -99,6 +117,14 @@ export default {
       axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`, vehicle),
     countMotorCarrierVehicles: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles/count`),
+    getMotorCarrierTrailers: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers?access_token=${token}`),
+    getMotorCarrierTrailer: (motorCarrierId, trailerId) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers/${trailerId}`),
+    createMotorCarrierTrailer: (motorCarrierId, token, trailer) =>
+      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers?access_token=${token}`, trailer),
+    countMotorCarrierTrailers: motorCarrierId =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/trailers/count`),
     getMotorCarrierEvents: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/events`),
     getMotorCarrierEvent: (motorCarrierId, eventId) =>
@@ -138,15 +164,22 @@ export default {
   images: {
     userImageLink: image => `${apiPath}/imageContainers/People/download/${image}`,
     vehicleImageLink: image => `${apiPath}/imageContainers/Vehicles/download/${image}`,
+    trailersImageLink: image => `${apiPath}/imageContainers/Trailers/download/${image}`,
     driverImageUpload: (formData, config, token) =>
       axios.post(`${apiPath}/imageContainers/People/upload?access_token=${token}`, formData, config),
     vehicleImageUpload: (formData, config, token) =>
       axios.post(`${apiPath}/imageContainers/Vehicles/upload?access_token=${token}`, formData, config),
+    trailerImageUpload: (formData, config, token) =>
+      axios.post(`${apiPath}/imageContainers/Trailers/upload?access_token=${token}`, formData, config),
   },
   file: {
     csvFileUpload: (formData, config, token, id, type) =>
       axios.post(`${apiPath}/MotorCarriers/${id}/${type}/csvUpload?access_token=${token}`, formData, config),
     getfileUploads: filters => axios.get(`${apiPath}/file-uploads`, { params: { filter: filters } }),
     getFileUploadErrors: id => axios.get(`${apiPath}/file-uploads/${id}/errors`),
+  },
+  lastMod: {
+    getLastMod: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/LastMods/${motorCarrierId}?access_token=${token}`),
   },
 };

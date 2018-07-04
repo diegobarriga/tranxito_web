@@ -83,7 +83,7 @@ class ConfirmModal extends React.Component {
   render() {
     return (
       <Aux>
-        <Button onClick={this.handleOpenModal} floated="right" primary size="small" >Certify Events</Button>
+        <Button onClick={this.handleOpenModal} style={{ paddingRight: 'none !important' }} floated="right" primary size="small" >Certify Events</Button>
         <ReactModal
           isOpen={this.state.showModal}
           contentLabel="Minimal Modal Example"

@@ -4,6 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Container, Row, Col, Button } from 'reactstrap';
+import { translate } from 'react-i18next';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
 import * as actions from '../../store/actions/index';
@@ -49,7 +50,7 @@ class MotorCarriers extends React.Component {
     } else {
       authRedirect = <Redirect to="/" />;
     }
-
+    const { t } = this.props;
     return (
       <Aux>
         { authRedirect }
@@ -60,7 +61,7 @@ class MotorCarriers extends React.Component {
               <h1 style={h1Style}> MotorCarriers </h1>
             </Col>
             <Col sm="12" md={{ size: 6 }}>
-              <Link style={bStyle} className="btn btn-sm green spacing" to="/motor_carriers/create"><FontAwesomeIcon icon="user" color="white" /> Create MotorCarrier</Link>
+              <Link style={bStyle} className="btn btn-sm green spacing" to="/motor_carriers/create"><FontAwesomeIcon icon="user" color="white" /> {t('Create MotorCarrier')}</Link>
             </Col>
           </Row>
           <Row >
@@ -76,7 +77,7 @@ class MotorCarriers extends React.Component {
                       </div>
 
                       <div>
-                        <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/new_supervisor`} ><FontAwesomeIcon icon="user" color="white" /> Add Supervisor</Link>
+                        <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/new_supervisor`} ><FontAwesomeIcon icon="user" color="white" /> {t('Add Supervisor')}</Link>
                         <Link className="btn btn-secondary btn-sm" to={`/motor_carriers/${carrier.id}/edit`} ><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
                         <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick()}><FontAwesomeIcon icon="trash" color="white" /></Button>
                       </div>
@@ -116,4 +117,5 @@ const mapDispatchToProps = dispatch => ({
   onInitMC: token => dispatch(actions.initMCarriers(token)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MotorCarriers);
+const translateFunc = translate('translations')(MotorCarriers);
+export default connect(mapStateToProps, mapDispatchToProps)(translateFunc);

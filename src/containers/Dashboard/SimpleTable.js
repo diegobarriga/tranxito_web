@@ -4,9 +4,9 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Container, Table, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 // import Loader from '../../components/Loader/Loader';
 import { DUTY_STATUS } from '../../utils/eventTypes';
-import * as functions from './functions';
 import * as funct from '../../utils/tableFunctions';
 import '../../assets/styles/buttons.css';
 
@@ -74,7 +74,7 @@ class SimpleTable extends React.Component {
     // Object.entries(this.state.stats).forEach(([key, value]) => {
     //   console.log(key, value);
     // });
-
+    const { t } = this.props;
     return (
       <Container style={styles.container}>
         <Table striped>
@@ -175,10 +175,10 @@ class SimpleTable extends React.Component {
                   { this.props.type === 'Vehicle' &&
                   <td style={styles.table}><Link to={`/vehicles/${this.props.vehicles[stat.key].id}`}>{this.props.vehicles[stat.key].carMaker} {this.props.vehicles[stat.key].model}</Link></td>
                   }
-                  <td style={styles.table}>{functions.round(stat['1'])} hours</td>
-                  <td style={styles.table}>{functions.round(stat['2'])} hours</td>
-                  <td style={styles.table}>{functions.round(stat['3'])} hours</td>
-                  <td style={styles.table}>{functions.round(stat['4'])} hours</td>
+                  <td style={styles.table}>{funct.round(stat['1'])} {t('hours')}</td>
+                  <td style={styles.table}>{funct.round(stat['2'])} {t('hours')}</td>
+                  <td style={styles.table}>{funct.round(stat['3'])} {t('hours')}</td>
+                  <td style={styles.table}>{funct.round(stat['4'])} {t('hours')}</td>
                 </tr>
               ))
             }
@@ -213,5 +213,5 @@ const mapStateToProps = state => ({
 // const mapDispatchToProps = dispatch => ({
 //   getUserLogs: (token, UserId) => dispatch(actions.getUserLogs(token, UserId)),
 // });
-
-export default connect(mapStateToProps)(SimpleTable);
+const translateFunc = translate('translations')(SimpleTable);
+export default connect(mapStateToProps)(translateFunc);

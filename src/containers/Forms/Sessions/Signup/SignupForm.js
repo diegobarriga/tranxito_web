@@ -3,6 +3,9 @@ import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import api from '../../../../services/api';
+import { translate } from 'react-i18next';
+
 
 const _ = require('lodash');
 
@@ -19,6 +22,7 @@ class SignupForm extends Component {
         lastName: '',
         username: '',
         accountType: 'S',
+        accountStatus: true,
       },
       isLoading: false,
       redirectTo: false,
@@ -29,7 +33,31 @@ class SignupForm extends Component {
     this.onChange = this.onChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+    this.getUserInfo = this.getUserInfo.bind(this);
   }
+
+  componentDidMount() {
+    // Si estamos editando el documento cargamos los datos del usuario para completar el form
+    if (!this.props.isCreate) {
+      this.getUserInfo().then((response) => {
+        if (response.status === 200) {
+          const newData = {
+            email: response.data.email,
+            password: '',
+            passwordConfirmation: '',
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            username: response.data.username,
+            accountType: 'S',
+          };
+          this.setState({ data: newData });
+        } else {
+          console.log('Error loading user info');
+        }
+      });
+    }
+  }
+
 
   onTogglePassword() {
     this.setState({ showPassword: !this.state.showPassword });
@@ -42,42 +70,47 @@ class SignupForm extends Component {
     });
   }
 
+  getUserInfo() {
+    return api.people.getUser(this.props.match.params.id, this.props.token);
+  }
+
   validateInput(data) {
     const errors = {};
+    const { t } = this.props;
     console.log(data);
     if (_.isEmpty(String(data.firstName))) {
-      errors.firstName = 'This field is required';
+      errors.firstName = t('This field is required');
     } else if (_.isEmpty(String(data.firstName.trim()))) {
-      errors.firstName = "This field can't be blank";
+      errors.firstName = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.lastName))) {
-      errors.lastName = 'This field is required';
+      errors.lastName = t('This field is required');
     } else if (_.isEmpty(String(data.lastName.trim()))) {
-      errors.lastName = "This field can't be blank";
+      errors.lastName = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.username))) {
-      errors.username = 'This field is required';
+      errors.username = t('This field is required');
     } else if (_.isEmpty(String(data.username.trim()))) {
-      errors.username = "This field can't be blank";
+      errors.username = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.email))) {
-      errors.email = 'This field is required';
+      errors.email = t('This field is required');
     } else if (_.isEmpty(String(data.email.trim()))) {
-      errors.email = "This field can't be blank";
+      errors.email = t("This field can't be blank");
     } else if (!validator.isEmail(String(data.email))) {
-      errors.email = 'Input is not a valid email';
+      errors.email = t('Input is not a valid email');
     }
     if (_.isEmpty(String(data.password))) {
-      errors.password = 'This field is required';
+      errors.password = t('This field is required');
     } else if (_.isEmpty(String(data.password.trim()))) {
-      errors.password = "This field can't be blank";
+      errors.password = t("This field can't be blank");
     }
     if (_.isEmpty(String(data.passwordConfirmation))) {
-      errors.passwordConfirmation = 'This field is required';
+      errors.passwordConfirmation = t('This field is required');
     } else if (_.isEmpty(String(data.passwordConfirmation.trim()))) {
-      errors.passwordConfirmation = "This field can't be blank";
+      errors.passwordConfirmation = t("This field can't be blank");
     } else if (!validator.equals(String(data.password), String(data.passwordConfirmation))) {
-      errors.passwordConfirmation = "Passwords don't match";
+      errors.passwordConfirmation = t("Passwords don't match");
     }
     return {
       errors,
@@ -114,24 +147,30 @@ class SignupForm extends Component {
 
   render() {
     const {
-      errors, redirectTo, showPassword,
+      errors,
+      redirectTo,
+      showPassword,
+      data,
     } = this.state;
+
     // Change redirect link
     if (redirectTo) {
       this.setState({ redirectTo: false });
       return <Redirect to="/dashboard" />;
     }
+    const { t } = this.props;
     return (
 
       <form className="ui form" onSubmit={this.submitHandler}>
         <div className="unstackable two fields">
           <div className="field">
-            <Label>First name</Label>
+            <Label>{t('First name')}</Label>
             <FormGroup widths="equal">
               <Input
                 type="text"
                 name="firstName"
-                placeholder="First name"
+                value={data.firstName}
+                placeholder={t('First name')}
                 onChange={this.onChange}
                 invalid={errors.firstName}
               />
@@ -140,12 +179,13 @@ class SignupForm extends Component {
           </div>
 
           <div className="field">
-            <Label>Last name</Label>
+            <Label>{t('Last name')}</Label>
             <FormGroup>
               <Input
                 type="text"
                 name="lastName"
-                placeholder="Last name"
+                value={data.lastName}
+                placeholder={t('Last name')}
                 onChange={this.onChange}
                 invalid={errors.lastName}
               />
@@ -154,12 +194,13 @@ class SignupForm extends Component {
           </div>
         </div>
         <div className="field">
-          <Label>Username</Label>
+          <Label>{t('Username')}</Label>
           <FormGroup>
             <Input
               type="text"
               name="username"
-              placeholder="Username"
+              value={data.username}
+              placeholder={t('Username')}
               onChange={this.onChange}
               invalid={errors.username}
             />
@@ -173,6 +214,7 @@ class SignupForm extends Component {
             <Input
               type="email"
               name="email"
+              value={data.email}
               onChange={this.onChange}
               placeholder="Email"
               invalid={errors.email}
@@ -182,10 +224,10 @@ class SignupForm extends Component {
         </div>
 
         <div className="field">
-          <Label>Password</Label>
+          <Label>{t('Password')}</Label>
           <FormGroup>
             <Input
-              placeholder="Password"
+              placeholder={t('Password')}
               type={!showPassword ? 'password' : 'text'}
               name="password"
               autoComplete="new-password"
@@ -197,10 +239,10 @@ class SignupForm extends Component {
         </div>
 
         <div className="field">
-          <Label>Password confirmation</Label>
+          <Label>{t('Password confirmation')}</Label>
           <FormGroup>
             <Input
-              placeholder="Password Confirmation"
+              placeholder={t('Password confirmation')}
               type={!showPassword ? 'password' : 'text'}
               name="passwordConfirmation"
               autoComplete="new-password"
@@ -210,7 +252,7 @@ class SignupForm extends Component {
             <FormFeedback>{errors.passwordConfirmation}</FormFeedback>
           </FormGroup>
         </div>
-        <button className="ui button" type="submit">Submit</button>
+        <button className="ui button" type="submit">{t('Submit')}</button>
       </form>
     );
   }
@@ -219,7 +261,9 @@ class SignupForm extends Component {
 SignupForm.propTypes = {
   submit: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  motorCarrierId: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  isCreate: PropTypes.bool.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
-export default SignupForm;
+export default translate('translations')(SignupForm);

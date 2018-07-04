@@ -135,7 +135,7 @@ class Summary extends Component {
 
         <a data-tip data-for="d2"><p><img src={icon2} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[2]}</p></a>
         <ReactTooltip id="d2" type="info" effect="solid" className="tooltip">
-          <span>Amount of vehicles {DUTY_STATUS_LONG[2].toLowerCase()}</span>
+          <span>Amount of vehicles in {DUTY_STATUS_LONG[2].toLowerCase()}</span>
         </ReactTooltip>
 
         <a data-tip data-for="d3"><p><img src={icon3} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[3]}</p></a>

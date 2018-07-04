@@ -4,6 +4,10 @@ export {
   signup,
   errorReset,
   logoutToken,
+  updateLastMod,
+  updateUsers,
+  updateVehicles,
+  createSuccess,
 } from './auth';
 
 export {
@@ -30,5 +34,6 @@ export {
 
 export { getTrackings } from './tracking';
 export { createVehicle } from './vehicle';
+export { createTrailer } from './trailer';
+export { onTrailerDelete } from './trailers';
 export { onVehicleDelete } from './vehicles';
-

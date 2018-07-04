@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 import { Breadcrumb } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { I18nextProvider, translate } from 'react-i18next';
+import i18n from '../../i18n';
 import VehiclesInfo from './VehiclesInfo';
 import Aux from '../../hoc/Aux';
 import '../../assets/styles/forms.css';
@@ -28,16 +30,16 @@ class Vehicles extends React.Component {
     /* Alert */
     let alert;
     let msg = '';
+    const { t } = this.props;
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
-      msg = 'The vehicle was deleted successfully';
+      msg = t('The vehicle was deleted successfully');
       alert = (<Alert alertType="SUCCESS" message={msg} />);
     } else {
-      msg = 'Error the vehicle was not deleted';
+      msg = t('Error the vehicle was not deleted');
       alert = (<Alert alertType="FAIL" message={msg} />);
     }
-
     return (
       <Aux>
         { authRedirect }
@@ -52,9 +54,9 @@ class Vehicles extends React.Component {
                     <Aux key={i}>
                       <Breadcrumb.Divider icon="right chevron" />
                       { this.props.len - 1 > i ?
-                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                        <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                         :
-                        <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                        <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                       }
                     </Aux>
                   ))
@@ -64,7 +66,9 @@ class Vehicles extends React.Component {
           </Row>
           <Row>
             <Col md="11">
-              <VehiclesInfo />
+              <I18nextProvider i18n={i18n}>
+                <VehiclesInfo />
+              </I18nextProvider>
             </Col>
           </Row>
         </Container>
@@ -104,5 +108,5 @@ const mapDispatchToProps = dispatch => ({
     crumbUrl,
   )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Vehicles));
+const translateFunc = translate('translations')(Vehicles);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { Breadcrumb } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import VehicleForm from './VehicleForm';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
@@ -35,6 +36,7 @@ class VehicleFormView extends React.Component {
   }
 
   onFormSubmit(formData) {
+    const { t } = this.props; // eslint-disable-line no-use-before-define
     this.setState({ isLoading: true });
     if (formData.picture !== '') {
       this.imgUpload(formData.picture).then((imgResponse) => {
@@ -49,29 +51,45 @@ class VehicleFormView extends React.Component {
             this.postData(submitData).then((response) => {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
+
+                const { lastMod } = this.props;
+                lastMod.vehicles = response.headers.lastmod;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: 'We have created the new vehicle.' });
+                this.setState({ type: 'success', message: t('We have created the new vehicle.') });
               } else {
                 this.setState({ isLoading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           // Si estamos editando un usuario
           } else {
             this.patchData(submitData).then((response) => {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
+
+                const { lastMod } = this.props;
+                lastMod.vehicles = response.headers.lastmod;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
-                this.setState({ type: 'success', message: 'We have edited the vehicle.' });
+                this.setState({ type: 'success', message: t('We have edited the vehicle.') });
               } else {
                 this.setState({ isLoading: false });
-                this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+                this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           }
         } else {
           this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: 'Sorry, there has been an error with the image upload. Please try again later.' });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error with the image upload. Please try again later.') });
         }
       });
     } else {
@@ -80,24 +98,40 @@ class VehicleFormView extends React.Component {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
+
+            const { lastMod } = this.props;
+            lastMod.vehicles = response.headers.lastmod;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: 'We have created the new vehicle.' });
+            this.setState({ type: 'success', message: t('We have created the new vehicle.') });
           } else {
             this.setState({ isLoading: false });
-            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       // Si estamos editando un usuario
       } else {
         this.patchData(formData.data).then((response) => {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
+
+            const { lastMod } = this.props;
+            lastMod.vehicles = response.headers.lastmod;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
-            this.setState({ type: 'success', message: 'We have edited the vehicle.' });
+            this.setState({ type: 'success', message: t('We have edited the vehicle.') });
           } else {
             this.setState({ isLoading: false });
-            this.setState({ type: 'danger', message: 'Sorry, there has been an error. Please try again later.' });
+            this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       }
     }
@@ -148,7 +182,7 @@ class VehicleFormView extends React.Component {
       marginTop: '1rem',
       marginBottom: '2rem',
     };
-
+    const { t } = this.props;
     return (
       <Container>
         <Row>
@@ -165,9 +199,9 @@ class VehicleFormView extends React.Component {
                   <Aux key={i}>
                     <Breadcrumb.Divider icon="right chevron" />
                     { this.props.len - 1 > i ?
-                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {x} </Link>
+                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
                       :
-                      <Breadcrumb.Section className="capitalize" active> {x} </Breadcrumb.Section>
+                      <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
                     }
                   </Aux>
                 ))
@@ -177,7 +211,7 @@ class VehicleFormView extends React.Component {
         </Row>
         <Row>
           <Col sm="12" md={{ size: 8 }}>
-            <h1 style={h1Style}>{title}</h1>
+            <h1 style={h1Style}>{t(title)}</h1>
             <VehicleForm
               submit={this.onFormSubmit}
               isCreate={isCreate}
@@ -198,11 +232,13 @@ VehicleFormView.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   createVehicle: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  lastMod: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -211,15 +247,17 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
   createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
     urlString,
     restart,
     crumbUrl,
   )),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VehicleFormView));
+const translateFunc = translate('translations')(VehicleFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));
