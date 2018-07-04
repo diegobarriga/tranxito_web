@@ -12,6 +12,7 @@ i18n.use(LanguageDetector).init({
         Profile: 'Profile',
         // Sidebar
         Dashboard: 'Dashboard',
+        dashboard: 'dashboard',
         Drivers: 'Drivers',
         Vehicles: 'Vehicles',
         Devices: 'Devices',
@@ -122,6 +123,7 @@ i18n.use(LanguageDetector).init({
         'Invalid file format': 'Invalid file format',
         'Must only contain numbers and letters (0-9/A-Z)': 'Must only contain numbers and letters (0-9/A-Z)',
         'Must have ≤ 20 characters': 'Must have ≤ 20 characters',
+        'Must have ≤ 60 characters': 'Must have ≤ 60 characters',
         'Not a valid state': 'Not a valid state',
         'We have created the new driver.': 'We have created the new driver.',
         'We have edited the driver.': 'We have edited the driver.',
@@ -193,6 +195,26 @@ i18n.use(LanguageDetector).init({
         // Supervisors
         'We have created the new supervisor.': 'We have created the new supervisor.',
         'We have edited the supervisor.': 'We have edited the supervisor.',
+
+        // Configurations
+        Yes: 'Yes',
+        No: 'No',
+        'Categories configurations': 'Categories configurations',
+        'Exempt driver configurations': 'Exempt driver configurations',
+        Configurations: 'Configurations',
+        'We have aplied the configurations.': 'We have aplied the configurations.',
+        'Explanation for the configuration of exemption': 'Explanation for the configuration of exemption',
+        Annotation: 'Annotation',
+
+        // Summary
+        'Amount of Support Personnels': 'Amount of Support Personnels',
+        'Amount of Drivers': 'Amount of Drivers',
+        'Amount of Vehicles': 'Amount of Vehicles',
+        'Amount of vehicles off dutty': 'Amount of vehicles off dutty',
+        'Amount of vehicles in sleeper berth': 'Amount of vehicles in sleeper berth',
+        'Amount of vehicles driving': 'Amount of vehicles driving',
+        'Amount of vehicles on duty not driving': 'Amount of vehicles on duty not driving',
+        'Amount of vehicles undefined': 'Amount of vehicles undefined',
       },
     },
     es: {
@@ -203,7 +225,7 @@ i18n.use(LanguageDetector).init({
         Profile: 'Perfil',
         // Sidebar
         Dashboard: 'Panel',
-        dashboard: 'Panel',
+        dashboard: 'panel',
         Drivers: 'Conductores',
         drivers: 'Conductores',
         Vehicles: 'Vehículos',
@@ -264,7 +286,7 @@ i18n.use(LanguageDetector).init({
         Image: 'Imagen',
         'Driver license number': 'Número de licencia',
         'Licenses issuing state': 'Estado emisor de licencia',
-        'Exempt driver configuration': 'Configutación Conductor Eximido',
+        'Exempt driver configuration': 'Configuración Conductor Eximido',
         'Time Zone Offset in UTC': 'Desfase zona horaria en UTC',
         'Starting Time 24 Hour Period': 'Hora inicial Periodo de 24 Horaas',
         'Move Yards Use': 'Uso Move Yards',
@@ -317,6 +339,7 @@ i18n.use(LanguageDetector).init({
         'Invalid file format': 'Formato Inválido',
         'Must only contain numbers and letters (0-9/A-Z)': 'Solo debe contener numeros y letras (0-9/A-Z)',
         'Must have ≤ 20 characters': 'Debe tener ≤ 20 caracateres',
+        'Must have ≤ 60 characters': 'Debe tener ≤ 60 caracateres',
         'Not a valid state': 'No es un estado válido',
         'We have created the new driver.': 'Hemos creado el nuevo conductor',
         'We have edited the driver.': 'Hemos editado el conductor',
@@ -390,6 +413,26 @@ i18n.use(LanguageDetector).init({
         // Supervisors
         'We have created the new supervisor.': 'Hemos creado al nuevo supervisor.',
         'We have edited the supervisor.': 'Hemos editado al supervisor.',
+
+        // Configurations
+        Yes: 'Si',
+        No: 'No',
+        'Categories configurations': 'Configuración de categorías',
+        'Exempt driver configurations': 'Configuraciones de conductor eximido',
+        Configurations: 'Configuraciones',
+        'We have aplied the configurations.': 'Hemos aplicado las configuraciones.',
+        'Explanation for the configuration of exemption': 'Explicación para la configuración de la eximición',
+        Annotation: 'Anotación',
+
+        // Summary
+        'Amount of Support Personnels': 'Cantidad de personal de apoyo',
+        'Amount of Drivers': 'Cantidad de conductores',
+        'Amount of Vehicles': 'Cantidad de vehículos',
+        'Amount of vehicles off dutty': 'Cantidad de vehículos fuera de servicio',
+        'Amount of vehicles in sleeper berth': 'Cantidad de vehículos descansando en litera',
+        'Amount of vehicles driving': 'Cantidad de vehículos conduciendo',
+        'Amount of vehicles on duty not driving': 'Cantidad de vehículos en servicio - no conduciendo',
+        'Amount of vehicles undefined': 'Cantidad de vehículos indefinidos',
       },
     },
   },

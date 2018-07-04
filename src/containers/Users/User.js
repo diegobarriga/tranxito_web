@@ -12,6 +12,7 @@ import Logs from '../Logs/Logs';
 import UserInfo from './UserInfo';
 import Alerts from './Alerts';
 import Chat from './Chat';
+import Configurations from './Configurations';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
@@ -125,6 +126,14 @@ class User extends React.Component {
                 {'Chat'}
               </NavLink> }
             </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '5' })}
+                onClick={() => { this.toggle('5'); }}
+              >
+                {t('Configurations')}
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
@@ -154,6 +163,13 @@ class User extends React.Component {
               <div className="tabDiv">
                 <Container>
                   <Chat id={id} activeTab={this.state.activeTab} />
+                </Container>
+              </div>
+            </TabPane>
+            <TabPane tabId="5">
+              <div className="tabDiv">
+                <Container>
+                  <Configurations id={id} activeTab={this.state.activeTab} />
                 </Container>
               </div>
             </TabPane>
