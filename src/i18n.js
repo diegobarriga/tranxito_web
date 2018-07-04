@@ -29,6 +29,14 @@ i18n.use(LanguageDetector).init({
         'Duty Status Stats': 'Duty Status Stats',
         'Alerts Stats': 'Alerts Stats',
         'Accumulated Duty Status Hours Per Type': 'Accumulated Duty Status Hours Per Type',
+        'Amount of Support Personnel': 'Amount of Support Personnel',
+        'Amount of Drivers': 'Amount of Drivers',
+        'Amount of Vehicles': 'Amount of Vehicles',
+        'Amount of vehicles off dutty': 'Amount of vehicles off dutty',
+        'Amount of vehicles in sleeper berth': 'Amount of vehicles in sleeper berth',
+        'Amount of vehicles driving': 'Amount of vehicles driving',
+        'Amount of vehicles on duty not driving': 'Amount of vehicles on duty not driving',
+        'Amount of vehicles undefined': 'Amount of vehicles undefined',
         // Drivers, Vehicles and MotorCarriers
         Search: 'Search',
         'Create driver': 'Create driver',
@@ -205,7 +213,7 @@ i18n.use(LanguageDetector).init({
         Supervisors: 'Supervisores',
         supervisors: 'supervisores',
 
-        Administrator: 'Administrator',
+        Administrator: 'Administrador',
         // Dashboard
 
         'Drivers with the most Speeding Alerts': 'Conductores con la mayor cantidad de Alertas de Exceso de Velocidad',
@@ -218,7 +226,15 @@ i18n.use(LanguageDetector).init({
         Map: 'Mapa',
         'Duty Status Stats': 'Estadísticas de Estado de Servicio',
         'Alerts Stats': 'Estadísticas de Alertas',
-        'Accumulated Duty Status Hours Per Type': 'Horas Duty Status Por Tipo Acumuladas',
+        'Accumulated Duty Status Hours Per Type': 'Horas Estado de Servicio Por Tipo Acumuladas',
+        'Amount of Support Personnel': 'Cantidad de personal de soporte',
+        'Amount of Drivers': 'Cantidad de conductores',
+        'Amount of Vehicles': 'Cantidad de vehículos',
+        'Amount of vehicles off dutty': 'Cantidad de vehículos fuera de servicio',
+        'Amount of vehicles in sleeper berth': 'Cantidad de vehículos descansando en litera',
+        'Amount of vehicles driving': 'Cantidad de vehículos conduciendo',
+        'Amount of vehicles on duty not driving': 'Cantidad de vehículos en servicio - no conduciendo',
+        'Amount of vehicles undefined': 'Cantidad de vehículos indefinidos',
         // Conductores, vehículos y MotorCarriers
         Search: 'Buscar',
         'Create driver': 'Crear conductor',
