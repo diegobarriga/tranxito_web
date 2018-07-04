@@ -81,6 +81,10 @@ export default {
       axios.patch(`${apiPath}/Devices/${deviceId}?access_token=${token}`, data),
     getDeviceMotorCarrier: deviceId =>
       axios.get(`${apiPath}/Devices/${deviceId}/motorCarrier`),
+    linkVehicle: (deviceId, token, data) =>
+      axios.post(`${apiPath}/Devices/${deviceId}/linkVehicle=${token}`, data),
+    unlinkVehicle: (deviceId, token) =>
+      axios.post(`${apiPath}/Devices/${deviceId}/unlink=${token}`),
   },
   // `MotorCarrier/{id}/devices/{id}`
   trailers: {
