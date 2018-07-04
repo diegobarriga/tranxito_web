@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import MotorCarrierForm from './MotorCarrierForm';
@@ -119,4 +120,6 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MotorCarrierFormView));
+
+const translateFunc = translate('translations')(MotorCarrierFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));
