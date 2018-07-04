@@ -14,12 +14,8 @@ class DeviceScriptForm extends React.Component {
     this.state = {
       errors: {},
       data: {
-        bluetoothMac: '',
-        imei: '',
         configScript: '',
         configStatus: false,
-        state: true,
-        sequenceId: 0,
       },
       isLoading: false,
       redirectTo: false,
@@ -38,11 +34,8 @@ class DeviceScriptForm extends React.Component {
       this.getDeviceInfo().then((response) => {
         if (response.status === 200) {
           const newData = {
-            bluetoothMac: response.data.bluetoothMac,
-            imei: response.data.imei,
-            state: response.data.state,
             configScript: response.data.configScript,
-            configStatus: response.data.configStatus,
+            configStatus: false,
           };
           this.setState({ data: newData });
         } else {
@@ -63,14 +56,11 @@ class DeviceScriptForm extends React.Component {
 
   getDeviceInfo() {
     console.log('GET DEVICE INFO');
-    return api.motorCarriers.getMotorCarrierDevice(this.props.motorCarrierId,
-      this.props.match.params.id, this.props.token);
-  }
-
-  stringToBoolean() {
-    if(this.state.data.configStatus === 'true') {
-      this.state.data.configStatus = true;
-    }
+    return api.motorCarriers.getMotorCarrierDevice(
+      this.props.motorCarrierId,
+      this.props.match.params.id,
+      this.props.token,
+    );
   }
 
   isValidData() {
@@ -85,17 +75,6 @@ class DeviceScriptForm extends React.Component {
     const { t } = this.props;
     const errors = {};
 
-    if (_.isEmpty(String(data.bluetoothMac))) {
-      errors.bluetoothMac = t('This field is required');
-    } else if (_.isEmpty(String(data.bluetoothMac.trim()))) {
-      errors.bluetoothMac = t("This field can't be blank");
-    }
-    if (_.isEmpty(String(data.imei))) {
-      errors.imei = t('This field is required');
-      console.log(errors.imei);
-    } else if (_.isEmpty(String(data.imei.trim()))) {
-      errors.imei = t("This field can't be blank");
-    }
     if (_.isEmpty(String(data.configScript))) {
       errors.configScript = t('This field is required');
     } else if (_.isEmpty(String(data.configScript.trim()))) {
