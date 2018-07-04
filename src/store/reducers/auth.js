@@ -93,7 +93,6 @@ const getMotorCarrierSuccess = (state, action) => updateObject(state, {
   users: action.users,
   chunkedUsers: action.chunkedUsers,
   chunkedVehicles: action.chunkedVehicles,
-  supervisors: action.supervisors,
   mcName: action.mcName,
   trailers: action.trailers,
   lastMod: action.lastMod,

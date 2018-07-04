@@ -14,7 +14,6 @@ export const getMotorCarrierSuccess = (
   motorCarrierId,
   vehicles,
   users,
-  supervisors,
   mcName,
   trailers,
   lastMod,
@@ -23,7 +22,6 @@ export const getMotorCarrierSuccess = (
   motorCarrierId,
   vehicles,
   users,
-  supervisors,
   mcName,
   trailers,
   lastMod,
@@ -149,140 +147,124 @@ export const signup = data => (dispatch) => {
     });
 };
 
-export const login = (email, password) => (dispatch) => {
+export const login = (email, password) => async (dispatch) => {
   dispatch(authStart());
   const authData = {
     email,
     password,
   };
 
-  api.people.login(authData)
-    .then((response) => {
-      api.people.getUser(response.data.userId, response.data.id)
-        .then((userResponse) => {
-          console.log(userResponse.data);
-          if (userResponse.data.motorCarrierId && userResponse.data.accountType !== 'D') {
-            api.motorCarriers.getMotorCarrierDevices(
-              userResponse.data.motorCarrierId,
-              response.data.id,
-            ).then((devicesResponse) => {
-              console.log('FFFF');
-              console.log(devicesResponse);
-              api.motorCarriers.getMotorCarrierVehicles(
-                userResponse.data.motorCarrierId,
-                response.data.id,
-              ).then((vehiclesResponse) => {
-                api.motorCarriers.getMotorCarrierTrailers(
-                  userResponse.data.motorCarrierId,
-                  response.data.id,
-                ).then((trailersResponse) => {
-                  const filter = '{"where": {"accountStatus": "true"}}';
-                  api.motorCarriers.getMotorCarrierPeople(
-                    userResponse.data.motorCarrierId,
-                    response.data.id,
-                    filter,
-                  ).then((peopleResponse) => {
-                    const usersObject = functions.arrayToObject(peopleResponse.data);
-                    const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
-                    const devicesObject = functions.arrayToObject(devicesResponse.data);
-                    const trailersObject = functions.arrayToObject(trailersResponse.data);
-                    api.motorCarriers.getMotorCarrier(
-                      userResponse.data.motorCarrierId,
-                      response.data.id,
-                    ).then((mCresponse) => {
-                    api.lastMod.getLastMod(response.data.id).then((lastModResponse) => {
-                      const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data[0];
-                      dispatch(authSuccess(
-                        response.data.id,
-                        userResponse.data.id,
-                        userResponse.data.accountType,
-                        response,
-                        userResponse.data.motorCarrierId,
-                        trailersObject,
-                        vehiclesObject,
-                        devicesObject,
-                        usersObject,
-                        userResponse.data.image,
-                        userResponse.data.firstName,
-                        userResponse.data.lastName,
-                        mCresponse.data.name,
-                        lastMod,
-                      ));
-                    });
-                  });
-                });
-              });
-            });
-          } else {
-            dispatch(authSuccess(
-              response.data.id,
-              userResponse.data.id,
-              userResponse.data.accountType,
-              response,
-              null,
-              null,
-              null,
-              null,
-              null,
-              userResponse.data.image,
-              userResponse.data.firstName,
-              userResponse.data.lastName,
-              null,
-              {},
-            ));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  try {
+    const response = await api.people.login(authData);
 
-      console.log(response);
-    })
-    .catch((err) => {
-      console.log(err.response);
-      dispatch(authFail(err));
-    });
+    const userResponse = await api.people.getUser(response.data.userId, response.data.id);
+    console.log(userResponse.data);
+
+    if (userResponse.data.motorCarrierId && userResponse.data.accountType !== 'D') {
+      const devicesResponse = await api.motorCarriers.getMotorCarrierDevices(
+        userResponse.data.motorCarrierId,
+        response.data.id,
+      );
+
+      const vehiclesResponse = await api.motorCarriers.getMotorCarrierVehicles(
+        userResponse.data.motorCarrierId,
+        response.data.id,
+      );
+
+      const trailersResponse = await api.motorCarriers.getMotorCarrierTrailers(
+        userResponse.data.motorCarrierId,
+        response.data.id,
+      );
+
+      const filter = '{"where": {"accountStatus": "true"}}';
+
+      const peopleResponse = await api.motorCarriers.getMotorCarrierPeople(
+        userResponse.data.motorCarrierId,
+        response.data.id,
+        filter,
+      );
+      const usersObject = functions.arrayToObject(peopleResponse.data);
+      const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+      const devicesObject = functions.arrayToObject(devicesResponse.data);
+      const trailersObject = functions.arrayToObject(trailersResponse.data);
+
+      const mCresponse = await api.motorCarriers.getMotorCarrier(
+        userResponse.data.motorCarrierId,
+        response.data.id,
+      );
+
+      const lastModResponse = await api.lastMod.getLastMod(response.data.id);
+
+      const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data[0];
+
+      dispatch(authSuccess(
+        response.data.id,
+        userResponse.data.id,
+        userResponse.data.accountType,
+        response,
+        userResponse.data.motorCarrierId,
+        trailersObject,
+        vehiclesObject,
+        devicesObject,
+        usersObject,
+        userResponse.data.image,
+        userResponse.data.firstName,
+        userResponse.data.lastName,
+        mCresponse.data.name,
+        lastMod,
+      ));
+    } else {
+      dispatch(authSuccess(
+        response.data.id,
+        userResponse.data.id,
+        userResponse.data.accountType,
+        response,
+        null,
+        null,
+        null,
+        null,
+        null,
+        userResponse.data.image,
+        userResponse.data.firstName,
+        userResponse.data.lastName,
+        null,
+        {},
+      ));
+    }
+  } catch (err) {
+    console.log(err.response);
+    dispatch(authFail(err));
+  }
 };
 
-export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => (dispatch) => {
+export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => async (dispatch) => {
   dispatch(getMotorCarrierStart());
   console.log(motorCarrierId);
-  api.motorCarriers.getMotorCarrierVehicles(
+  const vehiclesResponse = await api.motorCarriers.getMotorCarrierVehicles(motorCarrierId, token);
+  const trailersResponse = await api.motorCarriers.getMotorCarrierTrailers(motorCarrierId, token);
+  const filter = '{"where": {"accountStatus": "true"}}';
+  const peopleResponse = await api.motorCarriers.getMotorCarrierPeople(
     motorCarrierId,
     token,
-  ).then((vehiclesResponse) => {
-    api.motorCarriers.getMotorCarrierTrailers(
-      motorCarrierId,
-      token,
-    ).then((trailersResponse) => {
-      const filter = '{"where": {"accountStatus": "true"}}';
-      api.motorCarriers.getMotorCarrierPeople(
-        motorCarrierId,
-        token,
-        filter,
-      ).then((peopleResponse) => {
-        const supervisors = peopleResponse.data.filter(user => (
-          user.accountType === 'S'
-        ));
-        const usersObject = functions.arrayToObject(peopleResponse.data);
-        const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
-        const trailersObject = functions.arrayToObject(trailersResponse.data);
-        const supervisorsObject = functions.arrayToObject(supervisors);
-        api.lastMod.getLastMod(token).then((lastModResponse) => {
-          const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data[0];
-          dispatch(getMotorCarrierSuccess(
-            motorCarrierId,
-            vehiclesObject,
-            usersObject,
-            supervisorsObject,
-            motorCarrierName,
-            trailersObject,
-            lastMod,
-          ));
-        });
-      });
-    });
-  });
+    filter,
+  );
+
+  const usersObject = functions.arrayToObject(peopleResponse.data);
+  const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+  const trailersObject = functions.arrayToObject(trailersResponse.data);
+
+  const lastModResponse = await api.lastMod.getLastMod(token);
+
+  const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data[0];
+
+  dispatch(getMotorCarrierSuccess(
+    motorCarrierId,
+    vehiclesObject,
+    usersObject,
+    motorCarrierName,
+    trailersObject,
+    lastMod,
+  ));
 };
 
 export const updateUsers = (motorCarrierId, token) => (dispatch) => {

@@ -166,38 +166,35 @@ class DeviceForm extends React.Component {
             <FormFeedback>{errors.imei}</FormFeedback>
           </FormGroup>
         </div>
+        <div className="field">
+          <Label>{t('Configuration Script')}</Label>
+          <FormGroup>
+            <Input
+              type="textarea"
+              name="configScript"
+              placeholder={t('Configuration Script')}
+              value={data.configScript}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.configScript}
+              invalid={errors.configScript}
+            />
+            <FormFeedback>{errors.configScript}</FormFeedback>
+          </FormGroup>
+        </div>
+        <div className="field">
+          <Label>{t('Configuration Status')}</Label>
+          <FormGroup>
+            <select
+              name="configStatus"
+              value={data.configStatus}
+              onChange={this.onChange}
+            >
+              <option value={false}>No</option>
+              <option value={true}>{t('Yes')}</option>
+            </select>
 
-        <div className="unstackable two fields">
-          <div className="field">
-            <Label>{t('Configuration Script')}</Label>
-            <FormGroup>
-              <Input
-                type="textarea"
-                name="configScript"
-                placeholder={t('Configuration Script')}
-                value={data.configScript}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.configScript}
-                invalid={errors.configScript}
-              />
-              <FormFeedback>{errors.configScript}</FormFeedback>
-            </FormGroup>
-          </div>
-          <div className="field">
-            <Label>{t('Configuration Status')}</Label>
-            <FormGroup>
-              <select
-                name="configStatus"
-                value={data.configStatus}
-                onChange={this.onChange}
-              >
-                <option value={false}>No</option>
-                <option value={true}>{t('Yes')}</option>
-              </select>
-
-              <FormFeedback>{errors.configStatus}</FormFeedback>
-            </FormGroup>
-          </div>
+            <FormFeedback>{errors.configStatus}</FormFeedback>
+          </FormGroup>
         </div>
         <button className="ui button" type="submit">{t('Submit')}</button>
       </form>
