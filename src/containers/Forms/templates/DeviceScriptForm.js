@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import { translate } from 'react-i18next';
+import { connect } from 'react-redux';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 
@@ -62,7 +63,8 @@ class DeviceScriptForm extends React.Component {
 
   getDeviceInfo() {
     console.log('GET DEVICE INFO');
-    return api.devices.getDevice(this.props.match.params.id, this.props.token);
+    return api.motorCarriers.getMotorCarrierDevice(this.props.motorCarrierId,
+      this.props.match.params.id, this.props.token);
   }
 
   stringToBoolean() {
@@ -163,7 +165,14 @@ DeviceScriptForm.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   submit: PropTypes.func.isRequired,
-  t: PropTypes.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
-export default translate('translations')(DeviceScriptForm);
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
+});
+
+
+const translateFunc = translate('translations')(DeviceScriptForm);
+export default connect(mapStateToProps)(translateFunc);

@@ -22,7 +22,7 @@ class DeviceScriptFormView extends React.Component {
       message: '',
       isLoading: false,
     };
-    this.postData = this.postData.bind(this);
+
     this.patchData = this.patchData.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
@@ -37,43 +37,29 @@ class DeviceScriptFormView extends React.Component {
   onFormSubmit(formData) {
     const { t } = this.props; // eslint-disable-line no-use-before-define
     this.setState({ isLoading: true });
-    if (this.props.isCreate) {
-      this.postData(formData.data).then((response) => {
-        if (response.status === 200) {
-          this.props.createDevice(response.data);
-          this.setState({ isLoading: false });
-          this.setState({ type: 'success', message: t('We have created the new device.') });
-        } else {
-          this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
-        }
-      });
-    // Si estamos editando un usuario
-    } else {
-      this.patchData(formData.data).then((response) => {
-        if (response.status === 200) {
-          this.props.createDevice(response.data);
-          this.setState({ isLoading: false });
-          this.setState({ type: 'success', message: t('We have edited the device.') });
-        } else {
-          this.setState({ isLoading: false });
-          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
-        }
-      });
-    }
+
+    this.patchData(formData.data).then((response) => {
+      if (response.status === 200) {
+        this.props.createDevice(response.data);
+        this.setState({ isLoading: false });
+        this.setState({ type: 'success', message: t('We have edited the device.') });
+      } else {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+      }
+    });
   }
 
 
-  postData(data) {
-    return api.motorCarriers.createMotorCarrierDevice(
+
+
+  patchData(data) {
+    return api.motorCarriers.updateMotorCarrierDevice(
       this.props.motorCarrierId,
+      this.props.match.params.id,
       this.props.token,
       data,
     );
-  }
-
-  patchData(data) {
-    return api.devices.updateDevice(this.props.match.params.id, this.props.token, data);
   }
 
   render() {

@@ -63,8 +63,11 @@ class DeviceForm extends React.Component {
 
   getDeviceInfo() {
     console.log('GET DEVICE INFO');
-    return api.motorCarriers.getMotorCarrierDevice(this.props.motorCarrierId,
-      this.props.match.params.id, this.props.token);
+    return api.motorCarriers.getMotorCarrierDevice(
+      this.props.motorCarrierId,
+      this.props.match.params.id,
+      this.props.token,
+    );
   }
 
   isValidData() {
