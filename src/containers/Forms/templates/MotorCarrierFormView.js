@@ -15,16 +15,37 @@ class MotorCarrierFormView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      msg: null,
+      type: null,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
 
   onFormSubmit(data) {
+    const { t } = this.props;
     if (this.props.isCreate) {
       this.props.onRegister(data, this.props.token, 1, null);
     } else {
       this.props.onRegister(data, this.props.token, 0, this.props.match.params.id);
+    }
+    if (this.props.isLoading === false) {
+      console.log(this.props.error);
+      if (this.props.error === null || this.props.error.status === 200) {
+        console.log('ALERTA SUCCESS');
+        if (this.props.isCreate) {
+          this.setState({ msg: t('The Motor Carrier was created successfully'), type: 'success' });
+        } else {
+          this.setState({ msg: t('The Motor Carrier was edited successfully'), type: 'success' });
+        }
+      } else if (this.props.error.status !== 200) {
+        console.log('ALERTA FAIL');
+        if (this.props.isCreate) {
+          this.setState({ msg: t('Error the Motor Carrier could not be created'), type: 'fail' });
+        } else {
+          this.setState({ msg: t('Error the Motor Carrier could not be edited'), type: 'fail' });
+        }
+      }
     }
   }
 
@@ -32,15 +53,12 @@ class MotorCarrierFormView extends React.Component {
     if (this.props.isLoading === true) return <Loader />;
     const { t } = this.props;
     let alert;
-    let msg = '';
-    if (this.props.error === null) {
-      alert = null;
-    } else if (this.props.error.status === 200) {
-      msg = t('The Motor Carrier was created successfully');
-      alert = (<Alert alertType="SUCCESS" message={msg} />);
-    } else {
-      msg = t('Error the Motor Carrier could not be created');
-      alert = (<Alert alertType="FAIL" message={msg} />);
+    if (this.state.type && this.state.msg) {
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.msg} />);
+      } else if (this.state.type === 'fail') {
+        alert = (<Alert alertType="FAIL" message={this.state.msg} />);
+      }
     }
 
     const h1Style = {
