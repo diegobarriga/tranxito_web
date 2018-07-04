@@ -50,11 +50,13 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   onFormSubmit(e) {
+    console.log("entro al form submit");
     this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     const reader = new FileReader();
 
     if (this.state.file.name.split('.')[1] === 'csv') {
+      console.log("es un csv");
       reader.readAsText(this.state.file);
       reader.onload = this.loadHandler;
     } else if (this.state.file.name.split('.')[1] === 'xlsx') {
@@ -87,9 +89,11 @@ class SimpleReactFileUpload extends React.Component {
     };
 
     if (this.props.type === 'drivers') {
+      console.log('tipo: drivers');
       type = 'people';
     } else if (this.props.type === 'devices') {
-      type = 'device';
+      console.log('tipo: devices');
+      type = 'devices';
     }
     return api.file.csvFileUpload(
       formData, config,
@@ -199,34 +203,22 @@ class SimpleReactFileUpload extends React.Component {
       this.checkValid(this.state.file);
       // console.log("Valid: "+this.state.isValid)
 
-      dataString = this.state.data.map(d => `${d[0]},
-        ${d[1]},
-        ${d[2]},
-        ${d[3]},
-        ${d[4]},
-        ${d[5]},
-        ${d[6]},
-        ${d[7]},
-        ${d[8]},
-        ${d[9]},
-        ${d[10]},
-        ${d[11]},
-        ${d[12]}\n`)
+      dataString = this.state.data.map(d => (d[0] ? `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]},${d[9]},${d[10]},${d[11]},${d[12]}\n` : ''))
         .join('');
       // console.log("String: "+dataString)
       const csv = new Blob([dataString], { type: 'text/csv' });
 
       // console.log("STATE EXCEL: "+this.state.file)
 
-      // const reader1 = new FileReader();
-      // reader1.readAsText(csv);
+      const reader1 = new FileReader();
+      reader1.readAsText(csv);
       // reader1.onload = (e) => {
       // // console.log("CSV " + e.target.result)
       // }
 
       this.setState({ file: csv });
       // console.log("STATE CSV: "+this.state.file)
-      // reader1.onload = this.loadHandler;
+      reader1.onload = this.loadHandler;
     };
     if (rABS) reader.readAsBinaryString(this.state.file);
     else reader.readAsArrayBuffer(this.state.file);
@@ -283,6 +275,18 @@ class SimpleReactFileUpload extends React.Component {
         }
         this.setState({ isValid: true });
       }
+    } else if (this.props.type === 'devices') {
+      console.log(data);
+      for (let i = 0; i < data.length; i += 1) {
+        if (data[i].bluetoothMac.length !== 17) {
+          this.setState({ idValid: false });
+          return;
+        } else if (data[i].imei.length !== 15) {
+          this.setState({ idValid: false });
+          return;
+        }
+      }
+      this.setState({ isValid: true });
     } else {
       // Vehicles validation
       console.log(data);
