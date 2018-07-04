@@ -64,7 +64,6 @@ class UserInfo extends React.Component {
   }
 }
 
-
 UserInfo.propTypes = {
   users: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,

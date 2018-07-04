@@ -9,8 +9,6 @@ import '../../../assets/styles/forms.css';
 
 const _ = require('lodash');
 
-console.log(states);
-
 class DriverForm extends Component {
   constructor(props) {
     super(props);
