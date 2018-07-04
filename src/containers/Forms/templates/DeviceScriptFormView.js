@@ -126,7 +126,6 @@ class DeviceScriptFormView extends React.Component {
 
 DeviceScriptFormView.propTypes = {
   title: PropTypes.string.isRequired,
-  isCreate: PropTypes.bool.isRequired,
   motorCarrierId: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,

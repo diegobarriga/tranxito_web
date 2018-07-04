@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { FormGroup, FormFeedback, Input } from 'reactstrap';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import '../../../assets/styles/forms.css';
