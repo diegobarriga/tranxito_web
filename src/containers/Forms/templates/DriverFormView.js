@@ -13,6 +13,7 @@ import Alert from '../../Alert/Alert';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import Aux from '../../../hoc/Aux';
+import getLastMod from '../../../utils/updateStoreFunctions';
 
 class DriverFormView extends React.Component {
   constructor(props) {
@@ -49,27 +50,46 @@ class DriverFormView extends React.Component {
           console.log(submitData);
           // Si estamos creando un usuario
           if (this.props.isCreate) {
-            this.postData(submitData).then((response) => {
+            this.postData(submitData).then(async (response) => {
               if (response.status === 200) {
                 this.props.createUser(response.data);
+
+                const lastModAPI = await getLastMod(this.props.token);
+                const { lastMod } = this.props;
+                lastMod.people = lastModAPI.people;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: t('We have created the new driver.') });
               } else {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           // Si estamos editando un usuario
           } else {
-            this.patchData(submitData).then((response) => {
+            this.patchData(submitData).then(async (response) => {
+              console.log('resp---', response.headers);
               if (response.status === 200) {
                 this.props.createUser(response.data);
+
+                const lastModAPI = await getLastMod(this.props.token);
+                const { lastMod } = this.props;
+                lastMod.people = lastModAPI.people;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: t('We have edited the driver.') });
               } else {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           }
         } else {
@@ -80,26 +100,45 @@ class DriverFormView extends React.Component {
     } else {
       // Si estamos creando un usuario
       if (this.props.isCreate) {
-        this.postData(formData.data).then((response) => {
+        this.postData(formData.data).then(async (response) => {
           if (response.status === 200) {
+            this.props.createUser(response.data);
+
+            const lastModAPI = await getLastMod(this.props.token);
+            const { lastMod } = this.props;
+            lastMod.people = lastModAPI.people;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
             this.setState({ type: 'success', message: t('We have created the new driver.') });
-            this.props.createUser(response.data);
           } else {
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       // Si estamos editando un usuario
       } else {
-        this.patchData(formData.data).then((response) => {
+        this.patchData(formData.data).then(async (response) => {
+          console.log('resp---', response.headers);
           if (response.status === 200) {
             this.props.createUser(response.data);
+
+            const lastModAPI = await getLastMod(this.props.token);
+            const { lastMod } = this.props;
+            lastMod.people = lastModAPI.people;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
             this.setState({ type: 'success', message: t('We have edited the driver.') });
           } else {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       }
     }
@@ -136,7 +175,6 @@ class DriverFormView extends React.Component {
     return items;
   }
 
-
   render() {
     if (this.state.isLoading === true) return <Loader />;
 
@@ -170,7 +208,8 @@ class DriverFormView extends React.Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             <Breadcrumb>
-              <Link className="section" to="/drivers">Home</Link>
+              { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+              { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
               {
                 this.props.navigation.map((x, i) => (
                   <Aux key={i}>
@@ -209,23 +248,31 @@ DriverFormView.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   createUser: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
+  lastMod: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   token: state.auth.token,
+  lastMod: state.auth.lastMod,
   motorCarrierId: state.auth.motorCarrierId,
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
 });
 
 const mapDispatchToProps = dispatch => ({
   createUser: user => dispatch(actions.createUser(user)),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
     urlString,
     restart,

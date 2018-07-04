@@ -4,6 +4,7 @@ import authReducer from './reducers/auth';
 import mCarrierReducer from './reducers/mCarrier';
 import usersReducer from './reducers/users';
 import vehiclesReducer from './reducers/vehicles';
+import trailersReducer from './reducers/trailers';
 import vehicleReducer from './reducers/vehicle';
 import userInfoReducer from './reducers/userInfo';
 import userLogsReducer from './reducers/userLogs';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   mCarrier: mCarrierReducer,
   users: usersReducer,
+  trailers: trailersReducer,
   vehicles: vehiclesReducer,
   vehicle: vehicleReducer,
   userInfo: userInfoReducer,

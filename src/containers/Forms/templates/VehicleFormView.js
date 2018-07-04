@@ -51,24 +51,40 @@ class VehicleFormView extends React.Component {
             this.postData(submitData).then((response) => {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
+
+                const { lastMod } = this.props;
+                lastMod.vehicles = response.headers.lastmod;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: t('We have created the new vehicle.') });
               } else {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           // Si estamos editando un usuario
           } else {
             this.patchData(submitData).then((response) => {
               if (response.status === 200) {
                 this.props.createVehicle(response.data);
+
+                const { lastMod } = this.props;
+                lastMod.vehicles = response.headers.lastmod;
+                this.props.updateLastMod(lastMod);
+
                 this.setState({ isLoading: false });
                 this.setState({ type: 'success', message: t('We have edited the vehicle.') });
               } else {
                 this.setState({ isLoading: false });
                 this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
               }
+            }).catch(() => {
+              this.setState({ isLoading: false });
+              this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
             });
           }
         } else {
@@ -82,24 +98,40 @@ class VehicleFormView extends React.Component {
         this.postData(formData.data).then((response) => {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
+
+            const { lastMod } = this.props;
+            lastMod.vehicles = response.headers.lastmod;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
             this.setState({ type: 'success', message: t('We have created the new vehicle.') });
           } else {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       // Si estamos editando un usuario
       } else {
         this.patchData(formData.data).then((response) => {
           if (response.status === 200) {
             this.props.createVehicle(response.data);
+
+            const { lastMod } = this.props;
+            lastMod.vehicles = response.headers.lastmod;
+            this.props.updateLastMod(lastMod);
+
             this.setState({ isLoading: false });
             this.setState({ type: 'success', message: t('We have edited the vehicle.') });
           } else {
             this.setState({ isLoading: false });
             this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
           }
+        }).catch(() => {
+          this.setState({ isLoading: false });
+          this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
         });
       }
     }
@@ -161,7 +193,8 @@ class VehicleFormView extends React.Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             <Breadcrumb>
-              <Link className="section" to="/drivers">Home</Link>
+              { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+              { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
               {
                 this.props.navigation.map((x, i) => (
                   <Aux key={i}>
@@ -200,11 +233,15 @@ VehicleFormView.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   createVehicle: PropTypes.func.isRequired,
+  updateLastMod: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   addBreadCrumb: PropTypes.func.isRequired,
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
+  lastMod: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -213,10 +250,14 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
+  lastMod: state.auth.lastMod,
 });
 
 const mapDispatchToProps = dispatch => ({
   createVehicle: vehicle => dispatch(actions.createVehicle(vehicle)),
+  updateLastMod: lastMod => dispatch(actions.updateLastMod(lastMod)),
   addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
     urlString,
     restart,

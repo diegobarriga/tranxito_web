@@ -19,7 +19,6 @@ class VehicleForm extends React.Component {
         carMaker: '',
         plaque: '',
         state: '',
-        imeiEld: '',
       },
       picture: '',
       isLoading: false,
@@ -45,7 +44,6 @@ class VehicleForm extends React.Component {
             carMaker: response.data.carMaker,
             plaque: response.data.plaque,
             state: response.data.state,
-            imeiEld: response.data.imeiEld,
             image: response.data.image,
           };
           this.setState({ data: newData });
@@ -92,8 +90,6 @@ class VehicleForm extends React.Component {
       errors.CmvPowerUnitNumber = t('This field is required');
     } else if (_.isEmpty(String(data.CmvPowerUnitNumber.trim()))) {
       errors.CmvPowerUnitNumber = t("This field can't be blank");
-    } else if (data.imeiEld && !data.CmvPowerUnitNumber) {
-      errors.CmvPowerUnitNumber = t('This field is required');
     }
     /* fede pls
     if (_.isEmpty(String(data.model))) {
@@ -106,9 +102,6 @@ class VehicleForm extends React.Component {
       errors.model = t('This field is required');
     } else if (_.isEmpty(String(data.model.trim()))) {
       errors.model = t("This field can't be blank");
-    }
-    if (_.isEmpty(String(data.imeiEld))) {
-      errors.imeiEld = t('This field is required');
     }
     if (_.isEmpty(String(data.carMaker))) {
       errors.carMaker = t('This field is required');
@@ -255,22 +248,6 @@ class VehicleForm extends React.Component {
               <FormFeedback>{errors.state}</FormFeedback>
             </FormGroup>
           </div>
-        </div>
-        <div className="field">
-          <Label>IMEI ELD</Label>
-          <FormGroup>
-            <Input
-              type="number"
-              min={0}
-              name="imeiEld"
-              placeholder="IMEI ELD"
-              value={data.imeiEld}
-              onChange={this.onChange}
-              valid={!this.emptyErrors() && !errors.imeiEld}
-              invalid={errors.imeiEld}
-            />
-            <FormFeedback>{errors.imeiEld}</FormFeedback>
-          </FormGroup>
         </div>
         <div className="field">
           <Label for="image">{t('Image')}</Label>

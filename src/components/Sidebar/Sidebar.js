@@ -17,6 +17,7 @@ class sidebar extends Component {
     this.props.updateSidebar('drivers', false);
     this.props.updateSidebar('vehicles', false);
     this.props.updateSidebar('devices', false);
+    this.props.updateSidebar('trailers', false);
     this.props.updateSidebar('supervisors', false);
 
     if (name === 'dashboards') {
@@ -31,6 +32,9 @@ class sidebar extends Component {
     } else if (name === 'devices') {
       this.props.updateSidebar('devices', true);
       this.props.newBreadCrumb('devices', true, '/devices');
+    } else if (name === 'trailers') {
+      this.props.updateSidebar('trailers', true);
+      this.props.newBreadCrumb('trailers', true, '/trailers');
     } else if (name === 'supervisors') {
       this.props.updateSidebar('supervisors', true);
       this.props.newBreadCrumb('supervisors', true, '/supervisors');
@@ -38,6 +42,7 @@ class sidebar extends Component {
   }
 
   render() {
+    const trailersColor = this.props.sidebarState.trailersClicked ? '#dedede' : 'white';
     const vehiclesColor = this.props.sidebarState.vehiclesClicked ? '#dedede' : 'white';
     const driversColor = this.props.sidebarState.driversClicked ? '#dedede' : 'white';
     const dashboardColor = this.props.sidebarState.dashboardClicked ? '#dedede' : 'white';
@@ -56,7 +61,6 @@ class sidebar extends Component {
                   isAdm={this.props.isAdm}
                   name={this.props.name}
                   last={this.props.last}
-                  mc={this.props.mc}
                 />
                 <Link className="list-group-item-action list-group-item" to="/motor_carriers">Motor Carriers</Link>
               </Aux>
@@ -73,6 +77,7 @@ class sidebar extends Component {
                 <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> {t('Drivers')}</Link>
                 <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> {t('Vehicles')}</Link>
                 <Link style={{ backgroundColor: devicesColor }} className="btn list-group-item-action list-group-item" to="/devices" onClick={() => this.changeColor('devices')}><FontAwesomeIcon icon="hdd" /> {t('Devices')}</Link>
+                <Link style={{ backgroundColor: trailersColor }} className="list-group-item-action list-group-item sidebarBtn" to="/trailers" onClick={() => this.changeColor('trailers')}><FontAwesomeIcon icon="truck" /> {t('Trailers')}</Link>
                 <Link style={{ backgroundColor: supervisorsColor }} className="btn list-group-item-action list-group-item" to="/supervisors" onClick={() => this.changeColor('supervisors')}><FontAwesomeIcon icon="user-cog" /> {t('Supervisors')}</Link>
               </Aux> }
           </ListGroup>
@@ -88,10 +93,14 @@ sidebar.propTypes = {
   profileImage: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   last: PropTypes.string.isRequired,
-  mc: PropTypes.string.isRequired,
+  mc: PropTypes.string,
   newBreadCrumb: PropTypes.func.isRequired,
   updateSidebar: PropTypes.func.isRequired,
   sidebarState: PropTypes.object.isRequired,
+};
+
+sidebar.defaultProps = {
+  mc: null,
 };
 
 const mapDispatchToProps = dispatch => ({

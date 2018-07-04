@@ -18,6 +18,7 @@ class MotorCarrierForm extends Component {
         name: '',
         usdotNumber: '',
         multidayBasisUsed: '7',
+        createDevices: false,
       },
       isLoading: false,
       redirectTo: false,
@@ -39,6 +40,7 @@ class MotorCarrierForm extends Component {
             name: response.data.name,
             usdotNumber: response.data.usdotNumber,
             multidayBasisUsed: response.data.multidayBasisUsed,
+            createDevices: response.data.createDevices,
           };
           this.setState({ ...this.state, data: newData });
         } else {
@@ -67,6 +69,7 @@ class MotorCarrierForm extends Component {
     } else if (_.isEmpty(String(data.name.trim()))) {
       errors.name = t("This field can't be blank");
     } else if (String(data.name.trim()).length > 120 || String(data.name.trim()).length < 4) {
+      // i18n
       errors.name = 'Name must be between 4-120 characters long';
     }
     /* NEED FIX */
@@ -78,6 +81,9 @@ class MotorCarrierForm extends Component {
     if (_.isEmpty(String(data.multidayBasisUsed))) {
       errors.multidayBasisUsed = t('This field is required');
     }
+    if (_.isEmpty(String(data.createDevices))) {
+      errors.createDevices = t('This field is required');
+    }
     return {
       errors,
       isValid: _.isEmpty(errors),
@@ -87,6 +93,7 @@ class MotorCarrierForm extends Component {
   submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidCreate()) {
+      console.log('entro al submit', this.state.data);
       this.setState({ errors: {}, isLoading: true });
       this.props.submit(this.state.data);
     }
@@ -120,7 +127,7 @@ class MotorCarrierForm extends Component {
               valid={!this.emptyErrors() && !errors.name}
               invalid={errors.name}
             />
-            <FormFeedback>{errors.Numberame}</FormFeedback>
+            <FormFeedback>{errors.name}</FormFeedback>
           </FormGroup>
         </div>
         <div className="field">
@@ -156,7 +163,23 @@ class MotorCarrierForm extends Component {
             <FormFeedback>{errors.multidayBasisUsed}</FormFeedback>
           </FormGroup>
         </div>
-
+        <div className="field">
+          <Label>{t('Allow creation of devices')}</Label>
+          <FormGroup>
+            <Input
+              type="select"
+              name="createDevices"
+              value={data.createDevices}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.createDevices}
+              invalid={errors.createDevices}
+            >
+              <option key={0} value={false}>{t('No')}</option>
+              <option key={1} value={true}>{t('Yes')}</option>
+            </Input>
+            <FormFeedback>{errors.createDevices}</FormFeedback>
+          </FormGroup>
+        </div>
         <button className="ui button" type="submit">{t('Submit')}</button>
       </form>
     );

@@ -4,11 +4,17 @@ export {
   signup,
   errorReset,
   logoutToken,
+  getMotorCarrier,
+  updateLastMod,
+  updateUsers,
+  updateVehicles,
+  createSuccess,
 } from './auth';
 
 export {
   initMCarriers,
   carrierRegister,
+  deleteMotorCarrier,
 } from './mCarrier';
 
 export {
@@ -30,6 +36,8 @@ export {
 
 export { getTrackings } from './tracking';
 export { createVehicle } from './vehicle';
+export { createTrailer } from './trailer';
+export { onTrailerDelete } from './trailers';
 export { onVehicleDelete } from './vehicles';
 export { createDevice } from './device';
 export { onDeviceDelete } from './devices';

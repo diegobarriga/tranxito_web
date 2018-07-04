@@ -104,7 +104,7 @@ class Graph extends React.Component {
         console.log(this.state.firstLog.code);
         graphData.datasets[0].data.push({
           x: nownumber,
-          y: t(EVENT_CODES[1][this.state.firstLog.event]),
+          y: t(EVENT_CODES[1][this.state.firstLog.code]),
         });
       }
     }

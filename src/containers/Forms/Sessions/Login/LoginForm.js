@@ -119,7 +119,9 @@ class LoginForm extends Component {
             {t('Show password')}
           </Label>
         </FormGroup>
-        <Button type="submit" >{t('Submit')}</Button>
+        <div style={{ textAlign: 'center' }}>
+          <Button type="submit">{t('Submit')}</Button>
+        </div>
       </Form>
     );
   }

@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
-import { I18nextProvider } from 'react-i18next';
-import { translate } from 'react-i18next';
+import { I18nextProvider, translate } from 'react-i18next';
 import i18n from '../../i18n';
 import UsersInfo from './UsersInfo';
 import Alert from '../Alert/Alert';
@@ -56,7 +55,8 @@ class Users extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/drivers">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -94,6 +94,9 @@ Users.propTypes = {
   len: PropTypes.number.isRequired,
   updateSidebar: PropTypes.func.isRequired,
   error: PropTypes.object,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 Users.defaultProps = {
@@ -106,6 +109,9 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
 const mapDispatchToProps = dispatch => ({

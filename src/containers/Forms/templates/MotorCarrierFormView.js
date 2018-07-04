@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import Loader from '../../../components/Loader/Loader';
 import * as actions from '../../../store/actions/index';
 import MotorCarrierForm from './MotorCarrierForm';
@@ -32,7 +33,6 @@ class MotorCarrierFormView extends React.Component {
     const { t } = this.props;
     let alert;
     let msg = '';
-    console.log(this.props.error);
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {
@@ -120,4 +120,6 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MotorCarrierFormView));
+
+const translateFunc = translate('translations')(MotorCarrierFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));
