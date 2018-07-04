@@ -16,6 +16,7 @@ class sidebar extends Component {
     this.props.updateSidebar('dashboard', false);
     this.props.updateSidebar('drivers', false);
     this.props.updateSidebar('vehicles', false);
+    this.props.updateSidebar('devices', false);
     this.props.updateSidebar('trailers', false);
     this.props.updateSidebar('supervisors', false);
 
@@ -28,6 +29,9 @@ class sidebar extends Component {
     } else if (name === 'vechicles') {
       this.props.updateSidebar('vehicles', true);
       this.props.newBreadCrumb('vehicles', true, '/vehicles');
+    } else if (name === 'devices') {
+      this.props.updateSidebar('devices', true);
+      this.props.newBreadCrumb('devices', true, '/devices');
     } else if (name === 'trailers') {
       this.props.updateSidebar('trailers', true);
       this.props.newBreadCrumb('trailers', true, '/trailers');
@@ -42,6 +46,7 @@ class sidebar extends Component {
     const vehiclesColor = this.props.sidebarState.vehiclesClicked ? '#dedede' : 'white';
     const driversColor = this.props.sidebarState.driversClicked ? '#dedede' : 'white';
     const dashboardColor = this.props.sidebarState.dashboardClicked ? '#dedede' : 'white';
+    const devicesColor = this.props.sidebarState.devicesClicked ? '#dedede' : 'white';
     const supervisorsColor = this.props.sidebarState.supervisorsClicked ? '#dedede' : 'white';
 
     const { t } = this.props;
@@ -71,8 +76,8 @@ class sidebar extends Component {
                 <Link style={{ backgroundColor: dashboardColor }} className="list-group-item-action list-group-item sidebarBtn" to="/dashboard" onClick={() => this.changeColor('dashboards')}><FontAwesomeIcon icon="chart-line" /> {t('Dashboard')}</Link>
                 <Link style={{ backgroundColor: driversColor }} className="list-group-item-action list-group-item sidebarBtn" to="/drivers" onClick={() => this.changeColor('drivers')}><FontAwesomeIcon icon="user" /> {t('Drivers')}</Link>
                 <Link style={{ backgroundColor: vehiclesColor }} className="list-group-item-action list-group-item sidebarBtn" to="/vehicles" onClick={() => this.changeColor('vechicles')}><FontAwesomeIcon icon="car" /> {t('Vehicles')}</Link>
+                <Link style={{ backgroundColor: devicesColor }} className="btn list-group-item-action list-group-item" to="/devices" onClick={() => this.changeColor('devices')}><FontAwesomeIcon icon="hdd" /> {t('Devices')}</Link>
                 <Link style={{ backgroundColor: trailersColor }} className="list-group-item-action list-group-item sidebarBtn" to="/trailers" onClick={() => this.changeColor('trailers')}><FontAwesomeIcon icon="truck" /> {t('Trailers')}</Link>
-                <Link className="btn list-group-item-action list-group-item disabled" onClick={e => e.preventDefault()} to="/"><FontAwesomeIcon icon="hdd" /> {t('Devices')} </Link>
                 <Link style={{ backgroundColor: supervisorsColor }} className="btn list-group-item-action list-group-item" to="/supervisors" onClick={() => this.changeColor('supervisors')}><FontAwesomeIcon icon="user-cog" /> {t('Supervisors')}</Link>
               </Aux> }
           </ListGroup>
