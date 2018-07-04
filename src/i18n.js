@@ -154,6 +154,17 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'SLEEPER BERTH',
         DRIVING: 'DRIVING',
         'ON DUTY NOT DRIVING': 'DRIVING',
+
+        devices: 'devices',
+        IMEI: 'IMEI',
+        new_device: 'new_device',
+
+        'Bluetooth Mac': 'Bluetooth Mac',
+        'Configuration Script': 'Configuration Script',
+        'Configuration Status': 'Configuration Status',
+
+        'Create device': 'Create device',
+        'Create multiple devices': 'Create multiple devices',
       },
     },
     es: {
@@ -170,7 +181,7 @@ i18n.use(LanguageDetector).init({
         Vehicles: 'Vehículos',
         vehicles: 'Vehículos',
         Devices: 'Dispositivos',
-        devices: 'Dispositivos',
+        devices: 'dispositivos',
         Supervisors: 'Supervisores',
         supervisors: 'Supervisores',
 
@@ -313,7 +324,15 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'DESCANSANDO EN LITERA',
         DRIVING: 'CONDUCIENDO',
         'ON DUTY NOT DRIVING': 'EN SERVICIO - NO CONDUCIENDO',
+        new_device: 'nuevo_dispositivo',
+        IMEI: 'IMEI',
 
+        'Bluetooth Mac': 'Bluetooth Mac',
+        'Configuration Script': 'Script de Configuración',
+        'Configuration Status': 'Status de Configuración',
+
+        'Create device': 'Crear dispositivo',
+        'Create multiple devices': 'Crear multiples dispositivos',
       },
     },
   },

@@ -14,6 +14,7 @@ export const authSuccess = (
   response,
   motorCarrierId,
   vehicles,
+  devices,
   users,
   supervisors,
   image,
@@ -28,6 +29,7 @@ export const authSuccess = (
   response,
   motorCarrierId,
   vehicles,
+  devices,
   users,
   supervisors,
   image,
@@ -104,40 +106,49 @@ export const login = (email, password) => (dispatch) => {
         .then((userResponse) => {
           console.log(userResponse.data);
           if (userResponse.data.motorCarrierId && userResponse.data.accountType !== 'D') {
-            api.motorCarriers.getMotorCarrierVehicles(
+            api.motorCarriers.getMotorCarrierDevices(
               userResponse.data.motorCarrierId,
               response.data.id,
-            ).then((vehiclesResponse) => {
-              const filter = '{"where": {"accountStatus": "true"}}';
-              api.motorCarriers.getMotorCarrierPeople(
+            ).then((devicesResponse) => {
+              console.log('FFFF');
+              console.log(devicesResponse);
+              api.motorCarriers.getMotorCarrierVehicles(
                 userResponse.data.motorCarrierId,
                 response.data.id,
-                filter,
-              ).then((peopleResponse) => {
-                const supervisors = peopleResponse.data.filter(user => (
-                  user.accountType === 'S'
-                ));
-                const usersObject = functions.arrayToObject(peopleResponse.data);
-                const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
-                const supervisorsObject = functions.arrayToObject(supervisors);
-                api.motorCarriers.getMotorCarrier(
+              ).then((vehiclesResponse) => {
+                const filter = '{"where": {"accountStatus": "true"}}';
+                api.motorCarriers.getMotorCarrierPeople(
                   userResponse.data.motorCarrierId,
                   response.data.id,
-                ).then((mCresponse) => {
-                  dispatch(authSuccess(
-                    response.data.id,
-                    userResponse.data.id,
-                    userResponse.data.accountType,
-                    response,
-                    userResponse.data.motorCarrierId,
-                    vehiclesObject,
-                    usersObject,
-                    supervisorsObject,
-                    userResponse.data.image,
-                    userResponse.data.firstName,
-                    userResponse.data.lastName,
-                    mCresponse.data.name,
+                  filter,
+                ).then((peopleResponse) => {
+                  const supervisors = peopleResponse.data.filter(user => (
+                    user.accountType === 'S'
                   ));
+                  const usersObject = functions.arrayToObject(peopleResponse.data);
+                  const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+                  const devicesObject = functions.arrayToObject(devicesResponse.data);
+                  const supervisorsObject = functions.arrayToObject(supervisors);
+                  api.motorCarriers.getMotorCarrier(
+                    userResponse.data.motorCarrierId,
+                    response.data.id,
+                  ).then((mCresponse) => {
+                    dispatch(authSuccess(
+                      response.data.id,
+                      userResponse.data.id,
+                      userResponse.data.accountType,
+                      response,
+                      userResponse.data.motorCarrierId,
+                      vehiclesObject,
+                      devicesObject,
+                      usersObject,
+                      supervisorsObject,
+                      userResponse.data.image,
+                      userResponse.data.firstName,
+                      userResponse.data.lastName,
+                      mCresponse.data.name,
+                    ));
+                  });
                 });
               });
             });

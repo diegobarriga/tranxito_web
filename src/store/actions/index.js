@@ -31,4 +31,5 @@ export {
 export { getTrackings } from './tracking';
 export { createVehicle } from './vehicle';
 export { onVehicleDelete } from './vehicles';
-
+export { createDevice } from './device';
+export { onDeviceDelete } from './devices';

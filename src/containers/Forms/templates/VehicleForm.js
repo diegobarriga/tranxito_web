@@ -144,6 +144,7 @@ class VehicleForm extends React.Component {
       // verify credentials
       console.log('submited');
       try {
+        console.log(this.state);
         await this.props.submit(this.state);
       } catch (error) {
         this.setState({ errors: error.response.data.errors, isLoading: false });

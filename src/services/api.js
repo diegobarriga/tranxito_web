@@ -70,6 +70,18 @@ export default {
     getTrackings: (vehicleId, token, conditions) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
+  devices: {
+    getDevices: () =>
+      axios.get(`${apiPath}/Devices`),
+    getDevice: (deviceId, token) =>
+      axios.get(`${apiPath}/Devices/${deviceId}?access_token=${token}`),
+    deleteDevice: (deviceId, token) =>
+      axios.delete(`${apiPath}/Devices/${deviceId}?access_token=${token}`),
+    updateDevice: (deviceId, token, data) =>
+      axios.patch(`${apiPath}/Devices/${deviceId}?access_token=${token}`, data),
+    getDeviceMotorCarrier: deviceId =>
+      axios.get(`${apiPath}/Devices/${deviceId}/motorCarrier`),
+  },
   motorCarriers: {
     getMotorCarriers: token =>
       axios.get(`${apiPath}/MotorCarriers?access_token=${token}`),
@@ -89,6 +101,8 @@ export default {
       axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`, user),
     countMotorCarrierPeople: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count`),
+    getMotorCarrierDevices: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`),
     getMotorCarrierVehicles: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`),
     getMotorCarrierVehicle: (motorCarrierId, vehicleId) =>
@@ -116,6 +130,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getVehiclesDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
+    createMotorCarrierDevice: (motorCarrierId, token, device) =>
+      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`, device),
   },
   events: {
     getEvents: () =>

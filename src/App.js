@@ -29,7 +29,7 @@ import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
 import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 import faSort from '@fortawesome/fontawesome-free-solid/faSort';
 import faExclamationTriangle from '@fortawesome/fontawesome-free-solid/faExclamationTriangle';
-
+import faCog from '@fortawesome/fontawesome-free-solid/faCog';
 
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
@@ -54,13 +54,17 @@ import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import Supervisors from './containers/Supervisors/Supervisors';
 import Devices from './containers/Devices/Devices';
+import CreateDevice from './containers/Forms/devices/CreateDevice';
+import CreateDevices from './containers/Forms/devices/CreateDevices';
+import EditDevice from './containers/Forms/devices/EditDevice';
+import ScriptDevice from './containers/Forms/devices/ScriptDevice';
 
 fontawesome.library.add(
   faFileExcel, faUser, faUsers, faCar, faSearch, faTrash, faEdit, faClock,
   faLocationArrow, faTachometerAlt, faInfoCircle, faSortAlphaUp, faSortAlphaDown,
   faChartLine, faSignInAlt, faSignOutAlt, faSortNumericDown, faSortNumericUp,
   faUserCog, faUserTie, faHdd, faEnvelope, faAddressCard, faFilter,
-  faSortUp, faSortDown, faSort, faExclamationTriangle,
+  faSortUp, faSortDown, faSort, faExclamationTriangle, faCog,
 );
 
 class App extends Component {
@@ -91,6 +95,10 @@ class App extends Component {
           <Route path="/motor_carriers" component={MotorCarriers} />
           <Route path="/supervisors/:id/new_supervisor" component={SignupView} />
           <Route path="/supervisors" component={Supervisors} />
+          <Route path="/devices/new_device" component={CreateDevice} />
+          <Route path="/devices/new_devices" component={CreateDevices} />
+          <Route path="/devices/:id/edit" component={EditDevice} />
+          <Route path="/devices/:id/script" component={ScriptDevice} />
           <Route path="/devices" component={Devices} />
         </Switch>
       </Layout>

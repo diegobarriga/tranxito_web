@@ -65,7 +65,6 @@ class Devices extends React.Component {
           </Row>
           <Row>
             <Col md="11">
-              Devices
               <DevicesInfo />
             </Col>
           </Row>

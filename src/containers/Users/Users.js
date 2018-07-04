@@ -23,6 +23,7 @@ class Users extends React.Component {
     this.props.addBreadCrumb(newCrumb, true, url);
     this.props.updateSidebar('dashboard', false);
     this.props.updateSidebar('vehicles', false);
+    this.props.updateSidebar('devices', false);
     this.props.updateSidebar('supervisors', false);
     this.props.updateSidebar('drivers', true);
   }

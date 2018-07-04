@@ -12,8 +12,9 @@ import '../../assets/styles/forms.css';
 import Loader from '../../components/Loader/Loader';
 
 class DevicesInfo extends React.Component {
-  constructor(props) {
+  constructor(props) { // Acá ya llega devices a las props
     super(props);
+    console.log(this.props);
     this.state = {
       search: '',
       pages: '5',
@@ -33,14 +34,12 @@ class DevicesInfo extends React.Component {
 
   render() {
     if (this.props.isLoading === true) return <Loader />;
+    const filteredDevices = Object.values(this.props.devices).filter(device => (
+      device.bluetoothMac.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+      device.imei.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+    ));
 
-    const filteredVehicles = Object.values(this.props.vehicles).filter(vehicle => (
-      vehicle.vin.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      vehicle.model.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      vehicle.carMaker.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-      vehicle.plaque.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
-
-    const totalVehicles = filteredVehicles.length;
+    const totalDevices = filteredDevices.length;
     const { t } = this.props;
 
     return (
@@ -49,14 +48,14 @@ class DevicesInfo extends React.Component {
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
-            <Link className="btn btn-sm green spacing" to="/vehicles/new_vehicle"><FontAwesomeIcon icon="car" color="white" /> {t('Create vehicle')} </Link>
-            <Link className="btn btn-sm green" to="/vehicles/new_vehicles"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> {t('Create multiple vehicles')} </Link>
+            <Link className="btn btn-sm green spacing" to="/devices/new_device"><FontAwesomeIcon icon="car" color="white" /> {t('Create device')} </Link>
+            <Link className="btn btn-sm green" to="/devices/new_devices"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> {t('Create multiple devices')} </Link>
           </div>
         </div>
 
         <div className="ui divided items">
           {
-              filteredVehicles.sort((a, b) => a.carMaker.localeCompare(b.carMaker))
+              filteredDevices.sort((a, b) => a.bluetoothMac.localeCompare(b.bluetoothMac))
               .slice(
               ((this.state.currentPage * this.state.pages) - 5),
                this.state.currentPage * this.state.pages,
@@ -64,23 +63,23 @@ class DevicesInfo extends React.Component {
               .map(truck => (<DeviceRow
                 key={truck.id}
                 id={truck.id}
-                vin={truck.vin}
-                CmvPowerUnitNumber={truck.CmvPowerUnitNumber}
-                model={truck.model}
-                carMaker={truck.carMaker}
-                plaque={truck.plaque}
+                bluetoothMac={truck.bluetoothMac}
+                configScript={truck.configScript}
+                configStatus={truck.configStatus}
+                imei={truck.imei}
+                motorCarrierId={truck.motorCarrierId}
+                sequenceId={truck.sequenceId}
                 state={truck.state}
-                imeiEld={truck.imeiEld}
-                image={truck.image}
+                vehiceleId={truck.vehiceleId}
               />))
             }
         </div>
         <Col sm="12" md={{ size: 5, offset: 4 }}>
-          { totalVehicles > 5 &&
+          { totalDevices > 5 &&
             <Pagination
               activePage={this.state.currentPage}
               itemsCountPerPage={5}
-              totalItemsCount={totalVehicles}
+              totalItemsCount={totalDevices}
               pageRangeDisplayed={4}
               onChange={this.handlePageChange}
               itemClass="page-item"
@@ -94,13 +93,14 @@ class DevicesInfo extends React.Component {
 }
 
 DevicesInfo.propTypes = {
-  vehicles: PropTypes.object.isRequired,
+  devices: PropTypes.object.isRequired,
+
   isLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.vehicles.loading,
-  vehicles: state.auth.vehicles,
+  isLoading: state.devices.loading,
+  devices: state.auth.devices, // De acá saca los dvices
 });
 
 const translateApp = translate('translations')(DevicesInfo);
