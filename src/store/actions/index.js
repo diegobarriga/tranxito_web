@@ -4,6 +4,7 @@ export {
   signup,
   errorReset,
   logoutToken,
+  getMotorCarrier,
   updateLastMod,
   updateUsers,
   updateVehicles,
@@ -13,6 +14,7 @@ export {
 export {
   initMCarriers,
   carrierRegister,
+  deleteMotorCarrier,
 } from './mCarrier';
 
 export {

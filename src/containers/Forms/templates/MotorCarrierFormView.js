@@ -32,7 +32,6 @@ class MotorCarrierFormView extends React.Component {
     const { t } = this.props;
     let alert;
     let msg = '';
-    console.log(this.props.error);
     if (this.props.error === null) {
       alert = null;
     } else if (this.props.error.status === 200) {

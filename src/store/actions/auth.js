@@ -6,6 +6,30 @@ export const authStart = () => ({
   type: actionTypes.AUTH_START,
 });
 
+export const getMotorCarrierStart = () => ({
+  type: actionTypes.GET_MOTOR_CARRIER_START,
+});
+
+export const getMotorCarrierSuccess = (
+  motorCarrierId,
+  vehicles,
+  users,
+  supervisors,
+  mcName,
+  trailers,
+  lastMod,
+) => ({
+  type: actionTypes.GET_MOTOR_CARRIER_SUCCESS,
+  motorCarrierId,
+  vehicles,
+  users,
+  supervisors,
+  mcName,
+  trailers,
+  lastMod,
+});
+
+
 export const authSuccess = (
   token,
   userId,
@@ -157,10 +181,7 @@ export const login = (email, password) => (dispatch) => {
                     userResponse.data.motorCarrierId,
                     response.data.id,
                   ).then((mCresponse) => {
-                    api.lastMod.getLastMod(
-                      userResponse.data.motorCarrierId,
-                      response.data.id,
-                    ).then((lastModResponse) => {
+                    api.lastMod.getLastMod(response.data.id).then((lastModResponse) => {
                       const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data;
                       dispatch(authSuccess(
                         response.data.id,
@@ -213,6 +234,46 @@ export const login = (email, password) => (dispatch) => {
     });
 };
 
+export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => (dispatch) => {
+  dispatch(getMotorCarrierStart());
+  console.log(motorCarrierId);
+  api.motorCarriers.getMotorCarrierVehicles(
+    motorCarrierId,
+    token,
+  ).then((vehiclesResponse) => {
+    api.motorCarriers.getMotorCarrierTrailers(
+      motorCarrierId,
+      token,
+    ).then((trailersResponse) => {
+      const filter = '{"where": {"accountStatus": "true"}}';
+      api.motorCarriers.getMotorCarrierPeople(
+        motorCarrierId,
+        token,
+        filter,
+      ).then((peopleResponse) => {
+        const supervisors = peopleResponse.data.filter(user => (
+          user.accountType === 'S'
+        ));
+        const usersObject = functions.arrayToObject(peopleResponse.data);
+        const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
+        const trailersObject = functions.arrayToObject(trailersResponse.data);
+        const supervisorsObject = functions.arrayToObject(supervisors);
+        api.lastMod.getLastMod(token).then((lastModResponse) => {
+          const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data;
+          dispatch(getMotorCarrierSuccess(
+            motorCarrierId,
+            vehiclesObject,
+            usersObject,
+            supervisorsObject,
+            motorCarrierName,
+            trailersObject,
+            lastMod,
+          ));
+        });
+      });
+    });
+  });
+};
 
 export const updateUsers = (motorCarrierId, token) => (dispatch) => {
   console.log('entro a updateUsers ---');
@@ -241,10 +302,9 @@ export const updateVehicles = (motorCarrierId, token) => (dispatch) => {
     token,
   ).then((vehiclesResponse) => {
     const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
-
     dispatch(updateVehiclesSuccess(vehiclesObject));
   }).catch((err) => {
     console.log(err.response);
-    dispatch(updateUsersFail(err));
+    dispatch(updateVehiclesFail(err));
   });
 };

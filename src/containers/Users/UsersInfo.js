@@ -32,7 +32,7 @@ class UsersInfo extends React.Component {
 
   async checkLastMod() {
     this.setState({ checking: true });
-    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+    const lastMod = await getLastMod(this.props.token);
 
     if (lastMod.people !== this.props.lastMod.people) {
       this.props.updateUsers(this.props.motorCarrierId, this.props.token);

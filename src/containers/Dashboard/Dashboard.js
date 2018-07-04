@@ -38,7 +38,7 @@ class Dashboard extends React.Component {
 
   async checkLastMod() {
     this.setState({ checking: true });
-    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+    const lastMod = await getLastMod(this.props.token);
 
     if (
       lastMod.people !== this.props.lastMod.people ||
@@ -82,7 +82,8 @@ class Dashboard extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -168,6 +169,8 @@ Dashboard.propTypes = {
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
   lastMod: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   updateUsers: PropTypes.func.isRequired,
@@ -185,6 +188,8 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
   lastMod: state.auth.lastMod,
 });
 

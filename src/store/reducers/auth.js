@@ -71,6 +71,29 @@ const createUser = (state, action) => {
   });
 };
 
+
+// Cuando un admin ingresa a informacion de un motor carrier
+const getMotorCarrierStart = state => updateObject(state, { error: null, loading: true });
+
+const getMotorCarrierSuccess = (state, action) => updateObject(state, {
+  error: null,
+  loading: false,
+  motorCarrierId: action.motorCarrierId,
+  vehicles: action.vehicles,
+  users: action.users,
+  chunkedUsers: action.chunkedUsers,
+  chunkedVehicles: action.chunkedVehicles,
+  supervisors: action.supervisors,
+  mcName: action.mcName,
+  trailers: action.trailers,
+  lastMod: action.lastMod,
+});
+
+const getMotorCarrierFail = (state, action) => updateObject(state, {
+  error: action.error,
+  loading: false,
+});
+
 const updateUsersSuccess = (state, action) => updateObject(state, {
   users: action.users,
   loading: false,
@@ -177,6 +200,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.CREATE_TRAILER: return createTrailer(state, action);
     case actionTypes.DELETE_TRAILER: return onTrailerDeleteSuccess(state, action);
     case actionTypes.CREATE_USER: return createUser(state, action);
+    case actionTypes.GET_MOTOR_CARRIER_SUCCESS: return getMotorCarrierSuccess(state, action);
+    case actionTypes.GET_MOTOR_CARRIER_FAIL: return getMotorCarrierFail(state, action);
+    case actionTypes.GET_MOTOR_CARRIER_START: return getMotorCarrierStart(state, action);
     case actionTypes.UPDATE_LASTMOD: return updateLastMod(state, action);
     case actionTypes.UPDATE_USERS_START: return updateUsersStart(state);
     case actionTypes.UPDATE_USERS_SUCCESS: return updateUsersSuccess(state, action);

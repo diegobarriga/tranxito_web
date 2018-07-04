@@ -45,7 +45,11 @@ i18n.use(LanguageDetector).init({
         'USDOT Number': 'USDOT Number',
         'Multiday basis used': 'Multiday basis used',
         'Register Supervisor': 'Register Supervisor',
+        'List and profiles': 'List and profiles',
+        'Map, stats and more': 'Map, stats and more',
+        'Add Devices': 'Add Devices',
         Email: 'Email',
+
 
         'First name': 'First name',
         'Last name': 'Last name',
@@ -231,6 +235,9 @@ i18n.use(LanguageDetector).init({
         'USDOT Number': 'Número USDOT',
         'Multiday basis used': 'Multiday basis usada',
         'Register Supervisor': 'Registrar Supervisor',
+        'List and profiles': 'Lista y perfiles',
+        'Map, stats and more': 'Mapa, estadísticas y más',
+        'Add Devices': 'Agregar Dispositivos',
         Email: 'Correo electrónico',
 
         'First name': 'Nombre',

@@ -43,7 +43,7 @@ class User extends React.Component {
 
   async checkLastMod() {
     this.setState({ checking: true });
-    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+    const lastMod = await getLastMod(this.props.token);
 
     if (lastMod.people !== this.props.lastMod.people) {
       this.props.updateUsers(this.props.motorCarrierId, this.props.token);
@@ -72,7 +72,8 @@ class User extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/drivers">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -116,12 +117,13 @@ class User extends React.Component {
               </NavLink>
             </NavItem>
             <NavItem>
+              {this.props.role === 'S' &&
               <NavLink
                 className={classnames({ active: this.state.activeTab === '4' })}
                 onClick={() => { this.toggle('4'); }}
               >
                 {'Chat'}
-              </NavLink>
+              </NavLink> }
             </NavItem>
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
@@ -172,6 +174,8 @@ User.propTypes = {
   len: PropTypes.number.isRequired,
   popCrumb: PropTypes.func.isRequired,
   id: PropTypes.number,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
   updateUsers: PropTypes.func.isRequired,
   updateLastMod: PropTypes.func.isRequired,
@@ -201,6 +205,8 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
   isLoading: state.auth.loading,
   lastMod: state.auth.lastMod,
   token: state.auth.token,
