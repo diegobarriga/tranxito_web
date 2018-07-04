@@ -182,7 +182,7 @@ export const login = (email, password) => (dispatch) => {
                     response.data.id,
                   ).then((mCresponse) => {
                     api.lastMod.getLastMod(response.data.id).then((lastModResponse) => {
-                      const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data;
+                      const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data[0];
                       dispatch(authSuccess(
                         response.data.id,
                         userResponse.data.id,
@@ -259,7 +259,7 @@ export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => (dis
         const trailersObject = functions.arrayToObject(trailersResponse.data);
         const supervisorsObject = functions.arrayToObject(supervisors);
         api.lastMod.getLastMod(token).then((lastModResponse) => {
-          const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data;
+          const lastMod = lastModResponse.status === 404 ? { people: '', vehicles: '', devices: '' } : lastModResponse.data[0];
           dispatch(getMotorCarrierSuccess(
             motorCarrierId,
             vehiclesObject,
