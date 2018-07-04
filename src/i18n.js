@@ -179,6 +179,7 @@ i18n.use(LanguageDetector).init({
         'New Drivers': 'New Drivers',
         'New Vehicles': 'New Vehicles',
         'New Devices': 'New Devices',
+        edit: 'edit',
       },
     },
     es: {
@@ -359,6 +360,7 @@ i18n.use(LanguageDetector).init({
         'New Drivers': 'Nuevos Conductores',
         'New Vehicles': 'Nuevos Vehículos',
         'New Devices': 'Nuevos Dispositivos',
+        edit: 'editar',
 
       },
     },
