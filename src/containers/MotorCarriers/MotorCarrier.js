@@ -34,7 +34,8 @@ class MotorCarrier extends React.Component {
         { authRedirect }
         <h1> {this.props.mCarrierName} </h1>
         <div className="buttons">
-          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}><FontAwesomeIcon icon="user" color="white" /> {t('Create Supervisor')}</Link>
+          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}>{t('Add Devices')}</Link>
+          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}>{t('Create Supervisor')}</Link>
         </div>
 
         <div className="ui link cards">

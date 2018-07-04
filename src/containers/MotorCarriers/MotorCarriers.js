@@ -106,8 +106,8 @@ class MotorCarriers extends React.Component {
                       </div>
 
                       <div>
-                        <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/new_supervisor`} >{t('Add Devices')}</Link>
-                        <Link className="btn btn-sm green spacing" to={`/motor_carriers/${carrier.id}/new_supervisor`} >{t('Add Supervisor')}</Link>
+                        <Link className="btn btn-sm green spacing" to={`/supervisors/${carrier.id}/new_supervisor`} >{t('Add Devices')}</Link>
+                        <Link className="btn btn-sm green spacing" to={`/supervisors/${carrier.id}/new_supervisor`} >{t('Add Supervisor')}</Link>
                         <Link className="btn btn-secondary btn-sm" to={`/motor_carriers/${carrier.id}/edit`} ><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
                         <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(carrier.id)}><FontAwesomeIcon icon="trash" color="white" /></Button>
                       </div>
