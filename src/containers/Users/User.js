@@ -117,12 +117,13 @@ class User extends React.Component {
               </NavLink>
             </NavItem>
             <NavItem>
+              {this.props.role === 'S' &&
               <NavLink
                 className={classnames({ active: this.state.activeTab === '4' })}
                 onClick={() => { this.toggle('4'); }}
               >
                 {'Chat'}
-              </NavLink>
+              </NavLink> }
             </NavItem>
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
