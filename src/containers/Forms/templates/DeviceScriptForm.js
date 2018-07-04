@@ -137,21 +137,20 @@ class DeviceScriptForm extends React.Component {
     const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>
-        <div className="unstackable two fields">
-          <div className="field">
-            <FormGroup>
-              <Input
-                type="textarea"
-                name="configScript"
-                placeholder={t('Configuration Script')}
-                value={data.configScript}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.configScript}
-                invalid={errors.configScript}
-              />
-              <FormFeedback>{errors.configScript}</FormFeedback>
-            </FormGroup>
-          </div>
+
+        <div className="field">
+          <FormGroup>
+            <Input
+              type="textarea"
+              name="configScript"
+              placeholder={t('Configuration Script')}
+              value={data.configScript}
+              onChange={this.onChange}
+              valid={!this.emptyErrors() && !errors.configScript}
+              invalid={errors.configScript}
+            />
+            <FormFeedback>{errors.configScript}</FormFeedback>
+          </FormGroup>
         </div>
         <button className="ui button" type="submit">{t('Submit')}</button>
       </form>

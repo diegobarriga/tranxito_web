@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import { translate } from 'react-i18next';
+import { connect } from 'react-redux';
 import '../../../assets/styles/forms.css';
 import api from '../../../services/api';
 
@@ -62,13 +63,8 @@ class DeviceForm extends React.Component {
 
   getDeviceInfo() {
     console.log('GET DEVICE INFO');
-    return api.devices.getDevice(this.props.match.params.id, this.props.token);
-  }
-
-  stringToBoolean() {
-    if(this.state.data.configStatus === 'true') {
-      this.state.data.configStatus = true;
-    }
+    return api.motorCarriers.getMotorCarrierDevice(this.props.motorCarrierId,
+      this.props.match.params.id, this.props.token);
   }
 
   isValidData() {
@@ -159,6 +155,7 @@ class DeviceForm extends React.Component {
               type="text"
               name="imei"
               placeholder={t('IMEI')}
+              value={data.imei}
               onChange={this.onChange}
               valid={!this.emptyErrors() && !errors.imei}
               invalid={errors.imei}
@@ -194,6 +191,7 @@ class DeviceForm extends React.Component {
                 <option value={false}>No</option>
                 <option value={true}>Yes</option>
               </select>
+
               <FormFeedback>{errors.configStatus}</FormFeedback>
             </FormGroup>
           </div>
@@ -209,7 +207,13 @@ DeviceForm.propTypes = {
   token: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   submit: PropTypes.func.isRequired,
-  t: PropTypes.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
-export default translate('translations')(DeviceForm);
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
+});
+
+const translateFunc = translate('translations')(DeviceForm);
+export default connect(mapStateToProps)(translateFunc);

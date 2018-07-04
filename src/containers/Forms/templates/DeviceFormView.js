@@ -50,6 +50,7 @@ class DeviceFormView extends React.Component {
       });
     // Si estamos editando un usuario
     } else {
+      console.log(formData.data)
       this.patchData(formData.data).then((response) => {
         if (response.status === 200) {
           this.props.createDevice(response.data);
@@ -73,7 +74,12 @@ class DeviceFormView extends React.Component {
   }
 
   patchData(data) {
-    return api.devices.updateDevice(this.props.match.params.id, this.props.token, data);
+    return api.motorCarriers.updateMotorCarrierDevice(
+      this.props.motorCarrierId,
+      this.props.match.params.id,
+      this.props.token,
+      data,
+    );
   }
 
   render() {

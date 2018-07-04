@@ -15,8 +15,9 @@ export const getDevicesFail = error => ({
   error,
 });
 
-export const onDeviceDeleteSuccess = (deviceId, response) => ({
+export const onDeviceDeleteSuccess = (motorCarrierId, deviceId, response) => ({
   type: actionTypes.DELETE_DEVICE,
+  motorCarrierId,
   deviceId,
   response,
 });
@@ -26,12 +27,12 @@ export const delVErrorReset = () => ({
 });
 
 
-export const onDeviceDelete = (deviceId, token) => (dispatch) => {
+export const onDeviceDelete = (motorCarrierId, deviceId, token) => (dispatch) => {
   console.log(deviceId);
-  api.devices.deleteDevice(deviceId, token)
+  api.motorCarriers.deleteMotorCarrierDevice(motorCarrierId, deviceId, token)
     .then((response) => {
       console.log(response);
-      dispatch(onDeviceDeleteSuccess(deviceId, response));
+      dispatch(onDeviceDeleteSuccess(motorCarrierId, deviceId, response));
     })
     .catch((err) => {
       console.log(err);

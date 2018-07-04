@@ -88,6 +88,8 @@ class SimpleReactFileUpload extends React.Component {
 
     if (this.props.type === 'drivers') {
       type = 'people';
+    } else if (this.props.type === 'devices') {
+      type = 'device';
     }
     return api.file.csvFileUpload(
       formData, config,

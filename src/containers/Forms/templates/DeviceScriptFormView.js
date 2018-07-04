@@ -126,7 +126,7 @@ class DeviceScriptFormView extends React.Component {
         </Row>
         <Row>
           <Col sm="12" md={{ size: 8 }}>
-            <h1 style={h1Style}>{t(title)}</h1>
+            <h4 style={h1Style}>{t(title)}</h4>
             <DeviceScriptForm
               submit={this.onFormSubmit}
               isCreate={false}

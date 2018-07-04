@@ -9,6 +9,7 @@ import Pagination from 'react-js-pagination';
 import { translate } from 'react-i18next';
 import DeviceRow from './DeviceRow';
 import '../../assets/styles/forms.css';
+import api from '../../services/api';
 import Loader from '../../components/Loader/Loader';
 
 class DevicesInfo extends React.Component {
@@ -19,9 +20,30 @@ class DevicesInfo extends React.Component {
       search: '',
       pages: '5',
       currentPage: '1',
+      createDevices: false,
+      loading: false,
     };
     this.updateSearch = this.updateSearch.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.getStatusMC = this.getStatusMC.bind(this);
+  }
+
+  componentDidMount() {
+    this.getStatusMC();
+
+  }
+
+  async getStatusMC() {
+    this.setState({ loading: true });
+    const response = await api.motorCarriers.getMotorCarrier(
+      this.props.motorCarrierId,
+      this.props.token,
+    );
+    if (response.status === 200) {
+      this.setState({ createDevices: response.data.createDevices, loading: false });
+    } else {
+      this.setState({ createDevices: false, loading: false });
+    }
   }
 
   handlePageChange(pageNumber) {
@@ -33,7 +55,7 @@ class DevicesInfo extends React.Component {
   }
 
   render() {
-    if (this.props.isLoading === true) return <Loader />;
+    if (this.props.isLoading || this.state.loading) return <Loader />;
     const filteredDevices = Object.values(this.props.devices).filter(device => (
       device.bluetoothMac.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       device.imei.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
@@ -47,10 +69,13 @@ class DevicesInfo extends React.Component {
 
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
-          <div className="buttons">
-            <Link className="btn btn-sm green spacing" to="/devices/new_device"><FontAwesomeIcon icon="car" color="white" /> {t('Create device')} </Link>
-            <Link className="btn btn-sm green" to="/devices/new_devices"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> {t('Create multiple devices')} </Link>
-          </div>
+          { this.state.createDevices &&
+            <div className="buttons">
+              <Link className="btn btn-sm green spacing" to="/devices/new_device"><FontAwesomeIcon icon="car" color="white" /> {t('Create device')} </Link>
+              <Link className="btn btn-sm green" to="/devices/new_devices"><FontAwesomeIcon icon="car" color="white" /><FontAwesomeIcon icon="car" color="white" /> {t('Create multiple devices')} </Link>
+            </div>
+          }
+
         </div>
 
         <div className="ui divided items">
@@ -94,13 +119,17 @@ class DevicesInfo extends React.Component {
 
 DevicesInfo.propTypes = {
   devices: PropTypes.object.isRequired,
-
+  mcCreateDevices: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   isLoading: state.devices.loading,
   devices: state.auth.devices, // De acá saca los dvices
+  motorCarrierId: state.auth.motorCarrierId,
+  token: state.auth.token,
 });
 
 const translateApp = translate('translations')(DevicesInfo);

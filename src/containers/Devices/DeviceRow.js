@@ -9,10 +9,10 @@ import '../../assets/styles/trucks.css';
 import * as actions from '../../store/actions/index';
 
 class DeviceRow extends React.Component {
-  onDeleteBtnClick(userId, token) {
+  onDeleteBtnClick(motorCarrierId, deviceId, token) {
     const confirmDelete = window.confirm('Are you sure you want to delete this device?');
     if (confirmDelete) {
-      this.props.deleteDevice(userId, token);
+      this.props.deleteDevice(motorCarrierId, deviceId, token);
     }
   }
 
@@ -34,7 +34,7 @@ class DeviceRow extends React.Component {
         <div style={pStyle}>
           <Link className="btn btn-secondary btn-sm" style={{ backgroundColor: 'orange', border: 'orange' }} to={`/devices/${this.props.id}/script`}><FontAwesomeIcon icon="cog" /></Link>{' '}
           <Link className="btn btn-secondary btn-sm" to={`/devices/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
-          <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
+          <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.motorCarrierId, this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
         </div>
       </div>
     );
@@ -47,7 +47,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteDevice: (deviceId, token) => dispatch(actions.onDeviceDelete(deviceId, token)),
+  deleteDevice: (motorCarrierId, deviceId, token) =>
+    dispatch(actions.onDeviceDelete(motorCarrierId, deviceId, token)),
 });
 
 
@@ -57,6 +58,7 @@ DeviceRow.propTypes = {
   imei: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   deleteDevice: PropTypes.func.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 
 };
 

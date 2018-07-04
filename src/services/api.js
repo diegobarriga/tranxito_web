@@ -82,6 +82,7 @@ export default {
     getDeviceMotorCarrier: deviceId =>
       axios.get(`${apiPath}/Devices/${deviceId}/motorCarrier`),
   },
+  // `MotorCarrier/{id}/devices/{id}`
   motorCarriers: {
     getMotorCarriers: token =>
       axios.get(`${apiPath}/MotorCarriers?access_token=${token}`),
@@ -103,6 +104,12 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count`),
     getMotorCarrierDevices: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`),
+    getMotorCarrierDevice: (motorCarrierId, deviceId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`),
+    updateMotorCarrierDevice: (motorCarrierId, deviceId, token, data) =>
+      axios.put(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`, data),
+    deleteMotorCarrierDevice: (motorCarrierId, deviceId, token) =>
+      axios.delete(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`),
     getMotorCarrierVehicles: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`),
     getMotorCarrierVehicle: (motorCarrierId, vehicleId) =>

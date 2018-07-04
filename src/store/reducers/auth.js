@@ -67,6 +67,14 @@ const createUser = (state, action) => {
   });
 };
 
+const createDevice = (state, action) => {
+  const newDevice = { ...state.devices };
+  newDevice[action.device.id] = action.device;
+  return updateObject(state, {
+    devices: newDevice,
+  });
+};
+
 const authSuccess = (state, action) => updateObject(state, {
   token: action.token,
   userId: action.userId,
@@ -84,7 +92,6 @@ const authSuccess = (state, action) => updateObject(state, {
   firstName: action.firstName,
   lastName: action.lastName,
   mcName: action.mcName,
-
 });
 
 const authFail = (state, action) => updateObject(state, {
@@ -113,6 +120,17 @@ const onVehicleDeleteSuccess = (state, action) => {
   });
 };
 
+const onDeviceDeleteSuccess = (state, action) => {
+  const tmpDevices = { ...state.devices };
+  delete tmpDevices[action.deviceId];
+  return updateObject(state, {
+    error: action.response,
+    loading: false,
+    devices: tmpDevices,
+  });
+};
+
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START: return authStart(state);
@@ -125,6 +143,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.DELETE_VEHICLE: return onVehicleDeleteSuccess(state, action);
     case actionTypes.CREATE_VEHICLE: return createVehicle(state, action);
     case actionTypes.CREATE_USER: return createUser(state, action);
+    case actionTypes.DELETE_DEVICE: return onDeviceDeleteSuccess(state, action);
+    case actionTypes.CREATE_DEVICE: return createDevice(state, action);
 
     default:
       return state;

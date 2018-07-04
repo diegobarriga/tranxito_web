@@ -162,9 +162,11 @@ export const login = (email, password) => (dispatch) => {
               null,
               null,
               null,
+              null,
               userResponse.data.image,
               userResponse.data.firstName,
               userResponse.data.lastName,
+              null,
             ));
           }
         })
