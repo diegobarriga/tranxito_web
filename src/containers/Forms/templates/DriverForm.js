@@ -19,16 +19,14 @@ class DriverForm extends Component {
         email: '',
         driverLicenseNumber: '',
         licenseIssuingState: '',
-        exemptDriverConfiguration: '0',
-        timeZoneOffsetUtc: '',
+        timeZoneOffsetUtc: 4,
         startingTime24HourPeriod: '',
-        moveYardsUse: '0',
-        personalUse: '0',
         username: '',
         password: '',
         passwordConfirmation: '',
         accountType: 'D',
         accountStatus: true,
+        defaultUse: true,
       },
       picture: '',
       isLoading: false,
@@ -54,12 +52,8 @@ class DriverForm extends Component {
             email: response.data.email,
             driverLicenseNumber: response.data.driverLicenseNumber,
             licenseIssuingState: response.data.licenseIssuingState,
-            exemptDriverConfiguration: response.data.exemptDriverConfiguration,
             timeZoneOffsetUtc: response.data.timeZoneOffsetUtc,
             startingTime24HourPeriod: response.data.startingTime24HourPeriod,
-            moveYardsUse: response.data.moveYardsUse,
-            defaultUse: response.data.defaultUse,
-            personalUse: response.data.personalUse,
             image: response.data.image,
             username: response.data.username,
             password: '',
@@ -200,6 +194,7 @@ class DriverForm extends Component {
   async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidData()) {
+      console.log('antes de enviar----', this.state);
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
       try {
@@ -373,24 +368,6 @@ class DriverForm extends Component {
 
         <div className="unstackable two fields">
           <div className="field">
-            <Label>{t('Exempt driver configuration')}</Label>
-            <FormGroup>
-              <Input
-                label="Exempt Driver Configuration"
-                type="select"
-                name="exemptDriverConfiguration"
-                value={data.exemptDriverConfiguration}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.exemptDriverConfiguration}
-                invalid={errors.exemptDriverConfiguration}
-              >
-                <option value="0">0</option>
-                <option value="E">E</option>
-              </Input>
-              <FormFeedback>{errors.exemptDriverConfiguration}</FormFeedback>
-            </FormGroup>
-          </div>
-          <div className="field">
             <Label>{t('Time Zone Offset in UTC')}</Label>
             <FormGroup>
               <Input
@@ -406,69 +383,18 @@ class DriverForm extends Component {
               <FormFeedback>{errors.timeZoneOffsetUtc}</FormFeedback>
             </FormGroup>
           </div>
-        </div>
 
-        <div className="field">
-          <Label>{t('Starting Time 24 Hour Period')}</Label>
-          <FormGroup>
-            <Input
-              type="datetime-local"
-              name="startingTime24HourPeriod"
-              value={data.startingTime24HourPeriod}
-              valid={!this.emptyErrors() && !errors.startingTime24HourPeriod}
-              invalid={errors.startingTime24HourPeriod}
-              onChange={this.onChange}
-            />
-          </FormGroup>
-        </div>
-
-        <div className="unstackable three fields">
           <div className="field">
-            <Label>{t('Move Yards Use')}</Label>
+            <Label>{t('Starting Time 24 Hour Period')}</Label>
             <FormGroup>
               <Input
-                type="select"
-                name="moveYardsUse"
-                value={data.moveYardsUse}
+                type="datetime-local"
+                name="startingTime24HourPeriod"
+                value={data.startingTime24HourPeriod}
+                valid={!this.emptyErrors() && !errors.startingTime24HourPeriod}
+                invalid={errors.startingTime24HourPeriod}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.moveYardsUse}
-                invalid={errors.moveYardsUse}
-              >
-                {this.createSelectItems(0, 1)}
-              </Input>
-              <FormFeedback>{errors.moveYardsUse}</FormFeedback>
-            </FormGroup>
-          </div>
-          <div className="field">
-            <Label>{t('Default Use')}</Label>
-            <FormGroup>
-              <Input
-                type="select"
-                name="defaultUse"
-                value={data.defaultUse}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.defaultUse}
-                invalid={errors.defaultUse}
-              >
-                {this.createSelectItems(0, 1)}
-              </Input>
-              <FormFeedback>{errors.defaultUse}</FormFeedback>
-            </FormGroup>
-          </div>
-          <div className="field">
-            <Label>{t('Personal Use')}</Label>
-            <FormGroup>
-              <Input
-                type="select"
-                name="personalUse"
-                value={data.personalUse}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.personalUse}
-                invalid={errors.personalUse}
-              >
-                {this.createSelectItems(0, 1)}
-              </Input>
-              <FormFeedback>{errors.personalUse}</FormFeedback>
+              />
             </FormGroup>
           </div>
         </div>

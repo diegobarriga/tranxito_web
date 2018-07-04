@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
+import { translate } from 'react-i18next';
 // import { Marker, InfoWindow } from 'react-google-maps';
 // import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -109,48 +110,48 @@ class Summary extends Component {
 
   render() {
     if (this.state.loading === true) return <div />;
-
+    const { t } = this.props;
     return (
       <div className="summary">
 
         <a data-tip data-for="sp"> <p><FontAwesomeIcon icon="user-cog" />: {this.state.numberSP}</p></a>
         <ReactTooltip id="sp" type="info" effect="solid" className="tooltip">
-          <span>Amount of Support Personnels</span>
+          <span>{t('Amount of Support Personnels')}</span>
         </ReactTooltip>
 
         <a data-tip data-for="drivers"><p><FontAwesomeIcon icon="user" />: {this.state.numberUsers - this.state.numberSP}</p></a>
         <ReactTooltip id="drivers" type="info" effect="solid" className="tooltip">
-          <span>Amount of Drivers</span>
+          <span>{t('Amount of Drivers')}</span>
         </ReactTooltip>
 
         <a data-tip data-for="vehicles"><p><FontAwesomeIcon icon="car" />: {this.state.numberTrucks}</p></a>
         <ReactTooltip id="vehicles" type="info" effect="solid" className="tooltip">
-          <span>Amount of Vehicles</span>
+          <span>{t('Amount of Vehicles')}</span>
         </ReactTooltip>
 
         <a data-tip data-for="d1"><p><img src={icon1} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[1]}</p></a>
         <ReactTooltip id="d1" type="info" effect="solid" className="tooltip">
-          <span>Amount of vehicles {DUTY_STATUS_LONG[1].toLowerCase()}</span>
+          <span>{t(`Amount of vehicles ${DUTY_STATUS_LONG[1].toLowerCase()}`)}</span>
         </ReactTooltip>
 
         <a data-tip data-for="d2"><p><img src={icon2} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[2]}</p></a>
         <ReactTooltip id="d2" type="info" effect="solid" className="tooltip">
-          <span>Amount of vehicles in {DUTY_STATUS_LONG[2].toLowerCase()}</span>
+          <span>{t(`Amount of vehicles in ${DUTY_STATUS_LONG[2].toLowerCase()}`)}</span>
         </ReactTooltip>
 
         <a data-tip data-for="d3"><p><img src={icon3} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[3]}</p></a>
         <ReactTooltip id="d3" type="info" effect="solid" className="tooltip">
-          <span>Amount of vehicles {DUTY_STATUS_LONG[3].toLowerCase()}</span>
+          <span>{t(`Amount of vehicles ${DUTY_STATUS_LONG[3].toLowerCase()}`)}</span>
         </ReactTooltip>
 
         <a data-tip data-for="d4"><p><img src={icon4} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[4]}</p></a>
         <ReactTooltip id="d4" type="info" effect="solid" className="tooltip">
-          <span>Amount of vehicles {DUTY_STATUS_LONG[4].toLowerCase()}</span>
+          <span>{t(`Amount of vehicles ${DUTY_STATUS_LONG[4].toLowerCase()}`)}</span>
         </ReactTooltip>
 
         <a data-tip data-for="d5"><p><img src={icon5} alt="OC2" height="20" width="20" />: {this.state.numberPerDutyStatus[5]}</p></a>
         <ReactTooltip id="d5" type="info" effect="solid" className="tooltip">
-          <span>Amount of vehicles {DUTY_STATUS_LONG[5].toLowerCase()}</span>
+          <span>{t(`Amount of vehicles ${DUTY_STATUS_LONG[5].toLowerCase()}`)}</span>
         </ReactTooltip>
       </div>
     );
@@ -173,4 +174,5 @@ const mapStateToProps = state => ({
   token: state.auth.token,
 });
 
-export default connect(mapStateToProps)(Summary);
+const translateFunc = translate('translations')(Summary);
+export default connect(mapStateToProps)(translateFunc);
