@@ -8,7 +8,6 @@ import { translate } from 'react-i18next';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import '../../assets/styles/dashboard.css';
 import api from '../../services/api';
-import { DUTY_STATUS_LONG } from '../../utils/eventTypes';
 
 const icon1 = require('../../assets/images/truck_icon_1.svg');
 const icon2 = require('../../assets/images/truck_icon_2.svg');

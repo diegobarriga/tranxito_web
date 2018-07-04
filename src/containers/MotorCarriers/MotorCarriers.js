@@ -76,7 +76,7 @@ class MotorCarriers extends React.Component {
         { authRedirect }
 
         <Container>
-          <div className="inlineBox">
+          <div className="inlineBox" style={rowStyle}>
             <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
             <div className="buttons">
               <Link className="btn btn-sm green spacing" to="/motor_carriers/create"><FontAwesomeIcon icon="user" color="white" /> {t('Create MotorCarrier')} </Link>
