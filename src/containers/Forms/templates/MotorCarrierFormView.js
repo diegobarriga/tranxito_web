@@ -29,16 +29,17 @@ class MotorCarrierFormView extends React.Component {
     } else {
       this.props.onRegister(data, this.props.token, 0, this.props.match.params.id);
     }
+    console.log('ya hizo el submit', this.props.isLoading, this.props.error);
     if (this.props.isLoading === false) {
       console.log(this.props.error);
-      if (this.props.error === null || this.props.error.status === 200) {
+      if (this.props.error === null || this.props.error.response.status === 200) {
         console.log('ALERTA SUCCESS');
         if (this.props.isCreate) {
           this.setState({ msg: t('The Motor Carrier was created successfully'), type: 'success' });
         } else {
           this.setState({ msg: t('The Motor Carrier was edited successfully'), type: 'success' });
         }
-      } else if (this.props.error.status !== 200) {
+      } else if (this.props.error.response.status !== 200) {
         console.log('ALERTA FAIL');
         if (this.props.isCreate) {
           this.setState({ msg: t('Error the Motor Carrier could not be created'), type: 'fail' });
@@ -111,13 +112,8 @@ MotorCarrierFormView.propTypes = {
   match: PropTypes.object.isRequired,
   isCreate: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.object.isRequired,
 };
-
-MotorCarrierFormView.defaultProps = {
-  error: null,
-};
-
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
