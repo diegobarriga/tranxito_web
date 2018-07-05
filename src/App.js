@@ -53,6 +53,7 @@ import CreateVehicles from './containers/Forms/vehicles/CreateVehicles';
 import EditVehicle from './containers/Forms/vehicles/EditVehicle';
 import Trailers from './containers/Trailers/Trailers';
 import CreateTrailer from './containers/Forms/Trailers/CreateTrailer';
+import CreateTrailers from './containers/Forms/Trailers/CreateTrailers';
 import EditTrailer from './containers/Forms/Trailers/EditTrailer';
 import CreateMotorCarrier from './containers/Forms/MotorCarriers/CreateMotorCarrier';
 import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier';
@@ -91,6 +92,7 @@ class App extends Component {
           <Route path="/vehicles/:id" component={Vehicle} />
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/trailers/new_trailer" component={CreateTrailer} />
+          <Route path="/trailers/new_trailers" component={CreateTrailers} />
           <Route path="/trailers/:id/edit" component={EditTrailer} />
           <Route path="/trailers" component={Trailers} />
           <Route path="/logs" component={Logs} />

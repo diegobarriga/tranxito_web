@@ -1,1 +1,1 @@
-firstName,lastName,email,driverLicenseNumber,licenseIssuingState,timeZoneOffsetUtc,startingTime24HourPeriod,username,password
+firstName,lastName,email,driverLicenseNumber,licenseIssuingState,licenseIssuingCountry,timeZoneOffsetUtc,startingTime24HourPeriod,username,password

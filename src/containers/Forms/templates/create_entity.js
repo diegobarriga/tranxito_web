@@ -44,6 +44,9 @@ class SimpleReactFileUpload extends React.Component {
     } else if (newCrumb[newCrumb.length - 1] === 'devices') {
       newCrumb[newCrumb.length - 2] = 'New';
       newCrumb[newCrumb.length - 1] = 'Devices';
+    } else if (newCrumb[newCrumb.length - 1] === 'trailers') {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Trailers';
     } else {
       newCrumb[newCrumb.length - 2] = 'New';
       newCrumb[newCrumb.length - 1] = 'Drivers';
@@ -97,11 +100,15 @@ class SimpleReactFileUpload extends React.Component {
     } else if (this.props.type === 'devices') {
       console.log('tipo: devices');
       type = 'devices';
+    } else if (this.props.type === 'trailers') {
+      console.log('tipo: trailers');
+      type = 'trailers';
     }
     return api.file.csvFileUpload(
       formData, config,
       this.props.token,
-      this.props.motorCarrierId, type,
+      this.props.motorCarrierId,
+      type,
     );
   }
 
@@ -272,6 +279,36 @@ class SimpleReactFileUpload extends React.Component {
           return;
         } else if (data[i].imei.length !== 15) {
           this.setState({ idValid: false });
+          console.log('arregladisimo');
+          return;
+        }
+      }
+      this.setState({ isValid: true });
+    } else if (this.props.type === 'trailers') {
+      console.log(data);
+      for (let i = 0; i < data.length; i += 1) {
+        if (data[i].vin.length < 17 && data[i].vin.length > 18) {
+          this.setState({ isValid: false });
+          console.log('firstname');
+          return;
+        } else if (data[i].manufacturer.length === 0) {
+          this.setState({ isValid: false });
+          return;
+        } else if (data[i].number.lenght > 10) {
+          this.setState({ isValid: false });
+          console.log('lastname');
+          return;
+        } else if (data[i].model.length === 0) {
+          this.setState({ isValid: false });
+          console.log('driverlicensenumber');
+          return;
+        } else if (data[i].year.length === 0) {
+          this.setState({ isValid: false });
+          console.log('time');
+          return;
+        } else if (data[i].gvw.length === 0) {
+          this.setState({ isValid: false });
+          console.log('24period');
           return;
         }
       }

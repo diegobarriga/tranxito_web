@@ -184,12 +184,12 @@ i18n.use(LanguageDetector).init({
         'We have created the new device.': 'We have created the new device.',
         'We have edited the device.': 'We have edited the device.',
         'Are you sure you want to delete this device?': 'Are you sure you want to delete this device?',
-        'new device': 'new device',
 
         'New Drivers': 'New Drivers',
         'New Vehicles': 'New Vehicles',
         'New Devices': 'New Devices',
-        edit: 'edit',
+        'New Trailers': 'New Trailers',
+
         // trailers
         Trailers: 'Trailers',
         'Create New Trailer': 'Create New Trailer',
@@ -210,6 +210,7 @@ i18n.use(LanguageDetector).init({
         'Create trailer': 'Create trailer',
         edit: 'edit',
         'Trailer was deleted successfully': 'Trailer was deleted successfully',
+        'Create multiple trailers': 'Create multiple trailers',
 
         // Supervisors
         'We have created the new supervisor.': 'We have created the new supervisor.',
@@ -423,6 +424,7 @@ i18n.use(LanguageDetector).init({
         'New Drivers': 'Nuevos Conductores',
         'New Vehicles': 'Nuevos Vehículos',
         'New Devices': 'Nuevos Dispositivos',
+        'New Trailers': 'Nuevos Trailers',
         edit: 'editar',
 
         // trailers
@@ -443,6 +445,7 @@ i18n.use(LanguageDetector).init({
         trailers: 'tráilers',
         'Serial Number': 'Número de serie',
         'Create trailer': 'Crear tráiler',
+        'Create multiple trailers': 'Crear multiples trailers',
         edit: 'editar',
         'Trailer was deleted successfully': 'El tráiler fue eliminado satisfactoriamente',
 
