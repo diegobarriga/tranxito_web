@@ -74,7 +74,7 @@ class UserInfo extends React.Component {
           </div>
           <div style={styles.pStyle}>
             { !this.props.isDriver &&
-              <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>
+              <Link className="btn btn-secondary btn-sm btn-pad" to={`/drivers/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>
             }
 
             { !this.props.isDriver &&

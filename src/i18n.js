@@ -230,6 +230,7 @@ i18n.use(LanguageDetector).init({
         'Certify Events': 'Certify Events',
         'Assign Events': 'Assign Events',
         'No events to be certified': 'No events to be certified',
+        'No events to be assigned': 'No events to be assigned',
         'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.':'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.',
         'Are you sure you want to assign this events to you?.': 'Are you sure you want to assign this events to you?.',
         'Certify My Logs': 'Certify My Logs',
@@ -487,6 +488,7 @@ i18n.use(LanguageDetector).init({
         'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.': 'Por este medio, certifico que mis entradas de datos y mi registro de estado de servicio para este período de 24 horas son verdaderos y correctos.',
         'Are you sure you want to assign this events to you?.': 'Estas seguro que deseas asignarte estos eventos?',
         'Certify My Logs': 'Certificar Mis Logs',
+        'No events to be assigned': 'No hay evento para ser asignados',
 
         // Configurations
         Yes: 'Si',

@@ -319,7 +319,13 @@ class Logs extends React.Component {
               </Table.Footer>
             </Table>
           :
-            <h2>{t('No logs to be certified')}</h2>
+            <h2>
+              { this.props.isCerti ?
+                t('No events to be certified')
+              :
+                t('No events to be assigned')
+              }
+            </h2>
           }
         </Col>
       </Row>
