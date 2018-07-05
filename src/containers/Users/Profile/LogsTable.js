@@ -313,7 +313,7 @@ class Logs extends React.Component {
                       delLogs={this.deleteLogs}
                       content={this.props.content}
                     />
-                    <Button size="small" onClick={this.handleSelectAll}>{this.state.selectMessage}</Button>
+                    <Button size="small" onClick={this.handleSelectAll}>{t(this.state.selectMessage)}</Button>
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>

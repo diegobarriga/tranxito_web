@@ -236,6 +236,8 @@ i18n.use(LanguageDetector).init({
         'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.':'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.',
         'Are you sure you want to assign this events to you?.': 'Are you sure you want to assign this events to you?.',
         'Certify My Logs': 'Certify My Logs',
+        'Unselect All': 'Unselect All',
+        'Select All': 'Select All',
 
         // Configurations
         Yes: 'Yes',
@@ -246,6 +248,7 @@ i18n.use(LanguageDetector).init({
         'We have aplied the configurations.': 'We have aplied the configurations.',
         'Explanation for the configuration of exemption': 'Explanation for the configuration of exemption',
         Annotation: 'Annotation',
+        
 
         // Summary
         'Amount of Support Personnels': 'Amount of Support Personnels',
@@ -513,6 +516,8 @@ i18n.use(LanguageDetector).init({
         'Amount of vehicles driving': 'Cantidad de vehículos conduciendo',
         'Amount of vehicles on duty not driving': 'Cantidad de vehículos en servicio - no conduciendo',
         'Amount of vehicles undefined': 'Cantidad de vehículos indefinidos',
+        'Unselect All': 'Deseleccionar Todo',
+        'Select All': 'Seleccionar Todo',
 
       },
     },

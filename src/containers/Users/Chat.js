@@ -9,7 +9,7 @@ class Chat extends React.Component {
 
     const { lastName, driverLicenseNumber } = this.props.users[this.props.id];
     const { firstName } = this.props.users[this.props.userId];
-    const url = lastName ? (`http://embed.tlk.io/${lastName}-${driverLicenseNumber}`) : '';
+    const url = lastName ? (`https://embed.tlk.io/${lastName}-${driverLicenseNumber}`) : '';
     const uri = `${url}?theme=theme--night&nickname=${firstName}`;
 
     return (
