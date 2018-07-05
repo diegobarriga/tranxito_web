@@ -10,6 +10,7 @@ const getVehicleFail = (state, action) => updateObject(state, {
   error: action.error,
   loading: false,
 });
+
 const getVehicleSuccess = (state, action) => updateObject(state, {
   vehicle: action.vehicle,
   loading: false,

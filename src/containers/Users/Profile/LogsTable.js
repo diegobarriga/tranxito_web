@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Col, Badge } from 'reactstrap';
 import { Button, Checkbox, Table } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import Loader from '../../../components/Loader/Loader';
 import { EVENT_TYPES, EVENT_CODES, DUTY_STATUS } from '../../../utils/eventTypes';
@@ -73,6 +74,7 @@ class Logs extends React.Component {
     this.sortByTimestampDown = this.sortByTimestampDown.bind(this);
     this.filterByEvent = this.filterByEvent.bind(this);
     this.handleSelectAll = this.handleSelectAll.bind(this);
+    this.deleteLogs = this.deleteLogs.bind(this);
   }
 
   componentDidMount() {
@@ -115,7 +117,7 @@ class Logs extends React.Component {
 
   getNotAuthLogs(apiCall) {
     this.setState({ loading: true });
-    const mess = 'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.';
+    const mess = 'Are you sure you want to assign this events to you?.';
     this.setState({ message: mess });
     const filter = '{"where": {"recordStatus": "1"}}';
     apiCall(this.state.mcId, this.props.token, filter)
@@ -204,6 +206,22 @@ class Logs extends React.Component {
     this.setState({ result: arrayOfKeys });
   }
 
+  deleteLogs(idsArray) {
+    console.log('deleteLogs');
+    console.log(this.state.logs);
+    const auxLogs = { ...this.state.logs };
+    console.log(auxLogs);
+
+    idsArray.forEach((id) => {
+      delete auxLogs[id];
+    });
+    console.log(auxLogs);
+    const filteredLogs = this.state.filterLogs.filter(log => (
+      !idsArray.includes(log.id)
+    ));
+    this.setState({ logs: auxLogs, filterLogs: filteredLogs });
+  }
+
   render() {
     if (this.state.loading) return <Loader />;
     // this.state.logs.reverse();
@@ -236,66 +254,73 @@ class Logs extends React.Component {
         </button>
       );
     }
+    const { t } = this.props;
     return (
       <Row>
         <Col sm="12" md={{ size: 12 }}>
-          <Table celled compact definition>
-            <Table.Header fullWidth>
-              <Table.Row>
-                <Table.HeaderCell style={styles.head} />
-                <Table.HeaderCell style={styles.headDos} >
-                  <select id="bender" value={this.state.filterOption} onChange={this.filterByEvent}>
-                    <option key={-1} value={-1}>All Events</option>
-                    {Object.keys(EVENT_TYPES).map(key => (
-                      <option key={key} value={key}>{EVENT_TYPES[key]}</option>
-                  ))}
-                  </select>
-                </Table.HeaderCell>
-                <Table.HeaderCell style={styles.headTres}>Detail</Table.HeaderCell>
-                <Table.HeaderCell style={styles.time}>
-                  <Aux>
-                    Timestamp
-                    {button}
-                  </Aux>
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-
-            <Table.Body>
-              {this.state.filterLogs.map(event => (
-                <Table.Row key={event.id}>
-                  <Table.Cell style={styles.head} collapsing>
-                    <Checkbox checked={this.state.logs[event.id][1]} onClick={() => this.handleCheck(event.id)} value={event.id} />
-                  </Table.Cell>
-                  <Table.Cell style={styles.table}>{event.type === 1 &&
-                    <Badge className={`event${event.code}`} style={styles.badge}>
-                      {DUTY_STATUS[event.code]}
-                    </Badge>}
-                    {'  '}{EVENT_TYPES[event.type]}
-                  </Table.Cell>
-                  <Table.Cell style={styles.table}>
-                    {EVENT_CODES[event.type][event.code]}
-                  </Table.Cell>
-                  <Table.Cell style={styles.timeDos}>
-                    {funct.formatDate(event.timestamp)}
-                  </Table.Cell>
-                </Table.Row>
-
+          {Object.values(this.state.logs).length > 0 ?
+            <Table celled compact definition>
+              <Table.Header fullWidth>
+                <Table.Row>
+                  <Table.HeaderCell style={styles.head} />
+                  <Table.HeaderCell style={styles.headDos} >
+                    <select id="bender" value={this.state.filterOption} onChange={this.filterByEvent}>
+                      <option key={-1} value={-1}>{t('All Events')}</option>
+                      {Object.keys(EVENT_TYPES).map(key => (
+                        <option key={key} value={key}>{t(EVENT_TYPES[key])}</option>
                     ))}
-            </Table.Body>
-            <Table.Footer fullWidth>
-              <Table.Row>
-                <Table.HeaderCell colSpan="4">
-                  <Modal
-                    isCerti={this.props.isCerti}
-                    text={this.state.message}
-                    logs={this.state.result}
-                  />
-                  <Button size="small" onClick={this.handleSelectAll}>{this.state.selectMessage}</Button>
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Footer>
-          </Table>
+                    </select>
+                  </Table.HeaderCell>
+                  <Table.HeaderCell style={styles.headTres}>{t('Detail')}</Table.HeaderCell>
+                  <Table.HeaderCell style={styles.time}>
+                    <Aux>
+                      {t('Timestamp')}
+                      {button}
+                    </Aux>
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {this.state.filterLogs.map(event => (
+                  <Table.Row key={event.id}>
+                    <Table.Cell style={styles.head} collapsing>
+                      <Checkbox checked={this.state.logs[event.id][1]} onClick={() => this.handleCheck(event.id)} value={event.id} />
+                    </Table.Cell>
+                    <Table.Cell style={styles.table}>{event.type === 1 &&
+                      <Badge className={`event${event.code}`} style={styles.badge}>
+                        {t(DUTY_STATUS[event.code])}
+                      </Badge>}
+                      {'  '}{t(EVENT_TYPES[event.type])}
+                    </Table.Cell>
+                    <Table.Cell style={styles.table}>
+                      {t(EVENT_CODES[event.type][event.code])}
+                    </Table.Cell>
+                    <Table.Cell style={styles.timeDos}>
+                      {funct.formatDate(event.timestamp)}
+                    </Table.Cell>
+                  </Table.Row>
+
+                      ))}
+              </Table.Body>
+              <Table.Footer fullWidth>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="4">
+                    <Modal
+                      isCerti={this.props.isCerti}
+                      text={this.state.message}
+                      logs={this.state.result}
+                      delLogs={this.deleteLogs}
+                      content={this.props.content}
+                    />
+                    <Button size="small" onClick={this.handleSelectAll}>{this.state.selectMessage}</Button>
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Footer>
+            </Table>
+          :
+            <h2>{t('No logs to be certified')}</h2>
+          }
         </Col>
       </Row>
 
@@ -309,6 +334,7 @@ Logs.propTypes = {
   type: PropTypes.string.isRequired,
   isNotAuth: PropTypes.bool.isRequired,
   isCerti: PropTypes.bool.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -316,4 +342,5 @@ const mapStateToProps = state => ({
   loading: state.userLogs.loading,
 });
 
-export default connect(mapStateToProps)(Logs);
+const translateFunc = translate('translations')(Logs);
+export default connect(mapStateToProps)(translateFunc);

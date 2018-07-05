@@ -2,6 +2,7 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
 import { Button, Header } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Aux from '../../hoc/Aux';
@@ -89,6 +90,7 @@ class ConfirmModal extends React.Component {
         console.log(response);
         if (response.status === 200) {
           this.handleCloseModal();
+          this.props.delLogs(this.props.logs);
         }
       });
     } else {
@@ -111,6 +113,7 @@ class ConfirmModal extends React.Component {
           if (response.status === 200) {
             console.log(response);
             this.handleCloseModal();
+            this.props.delLogs(this.props.logs);
           }
         });
       });
@@ -118,10 +121,15 @@ class ConfirmModal extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <Aux>
         {this.state.toggleAlert && <Alert message="No logs selected" alertType="d" />}
-        <Button onClick={this.handleOpenModal} style={{ paddingRight: 'none !important' }} floated="right" primary size="small" >Certify Events</Button>
+        {this.props.isCerti ?
+          <Button onClick={this.handleOpenModal} style={{ paddingRight: 'none !important' }} floated="right" primary size="small" >{t('Certify Events')}</Button>
+        :
+          <Button onClick={this.handleOpenModal} style={{ paddingRight: 'none !important' }} floated="right" primary size="small" >{t('Assign Events')}</Button>
+        }
         <ReactModal
           isOpen={this.state.showModal}
           contentLabel="Minimal Modal Example"
@@ -131,17 +139,17 @@ class ConfirmModal extends React.Component {
             <div>
               <Button style={Styles.button} onClick={this.handleCloseModal}>&#10006;</Button>
               <br />
-              <Header icon="archive" content="Certify My Logs" />
+              <Header icon="archive" content={t(this.props.content)} />
             </div>
             <br />
             <div style={Styles.content}>
-              <p style={Styles.pFont}> {this.props.text} </p>
+              <p style={Styles.pFont}> {t(this.props.text)} </p>
             </div>
             <br />
             <div style={Styles.actionn}>
               <button style={Styles.button1} onClick={this.handleSubmit} className="ui green button">
                 <i aria-hidden="true" className="checkmark icon" />
-                 Yes
+                 {t('Yes')}
               </button>
               <button style={Styles.button2} onClick={this.handleCloseModal} className="ui red button">
                 <i aria-hidden="true" className="remove icon" />
@@ -164,6 +172,8 @@ ConfirmModal.propTypes = {
   id: PropTypes.number.isRequired,
   logs: PropTypes.array,
   isCerti: PropTypes.bool.isRequired,
+  delLogs: PropTypes.func.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 ConfirmModal.defaultProps = {
@@ -175,4 +185,5 @@ const mapStateToProps = state => ({
   id: state.auth.userId,
 });
 
-export default connect(mapStateToProps)(ConfirmModal);
+const translateFunc = translate('translations')(ConfirmModal);
+export default connect(mapStateToProps)(translateFunc);

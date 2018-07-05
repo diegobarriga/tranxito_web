@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import UserInfo from '../UserInfo';
 import '../../../assets/styles/tabs.css';
 import LogsTable from './LogsTable';
-import VehiclesTab from './VehiclesTab';
 // import * as actions from '../../../store/actions/index';
 
 
@@ -32,6 +32,7 @@ class DriverProfile extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <Container>
         <Row className="driver-container">
@@ -46,7 +47,7 @@ class DriverProfile extends React.Component {
               className={classnames({ active: this.state.activeTab === '1' })}
               onClick={() => { this.toggle('1'); }}
             >
-                Certify Logs
+                {t('Certify Events')}
             </NavLink>
           </NavItem>
           <NavItem>
@@ -54,7 +55,7 @@ class DriverProfile extends React.Component {
               className={classnames({ active: this.state.activeTab === '2' })}
               onClick={() => { this.toggle('2'); }}
             >
-                Assign Logs
+                {t('Assign Events')}
             </NavLink>
           </NavItem>
         </Nav>
@@ -68,6 +69,7 @@ class DriverProfile extends React.Component {
                 id={this.props.id}
                 isNotAuth={false}
                 isCerti={true}
+                content="Certify My Logs"
               />
               <br />
               <br />
@@ -81,6 +83,7 @@ class DriverProfile extends React.Component {
                 id={this.props.id}
                 isNotAuth={true}
                 isCerti={false}
+                content="Assign Events"
               />
               <br />
               <br />
@@ -107,4 +110,5 @@ const mapStateToProps = state => ({
   token: state.auth.token,
 });
 
-export default withRouter(connect(mapStateToProps)(DriverProfile));
+const translateFunc = translate('translations')(DriverProfile);
+export default withRouter(connect(mapStateToProps)(translateFunc));
