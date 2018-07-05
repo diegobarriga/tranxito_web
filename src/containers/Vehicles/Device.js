@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row, Container, Col } from 'reactstrap';
+import { Row, Container, Col, Button, Form, FormGroup, Input, FormFeedback, Label } from 'reactstrap';
 import { translate } from 'react-i18next';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import Loader from '../../components/Loader/Loader';
+import VehicleDeviceForm from '../Forms/templates/VehicleDeviceForm';
 import '../../assets/styles/buttons.css';
+
 // import getLastMod from '../../utils/updateStoreFunctions';
 import syrusImg from './../../assets/images/syrus.png';
 import api from '../../services/api';
@@ -25,10 +27,12 @@ class Device extends React.Component {
         configStatus: false,
         sequenceId: -1,
       },
+      loadUnlink: false,
       isLoading: false,
     };
     this.linkVehicle = this.linkVehicle.bind(this);
     this.unlinkVehicle = this.unlinkVehicle.bind(this);
+    this.unlink = this.unlink.bind(this);
     this.getVehicleDevice = this.getVehicleDevice.bind(this);
     // this.onFormSubmit = this.onFormSubmit.bind(this);
   }
@@ -37,30 +41,25 @@ class Device extends React.Component {
     this.getVehicleDevice();
   }
 
-  // onFormSubmit(formData) {
-  //   const { t } = this.props;
-  //   this.setState({ isLoading: true });
-  //
-  //   this.patchData(formData.data).then(async (response) => {
-  //     // console.log('resp---', response.headers);
-  //     if (response.status === 200) {
-  //
-  //       const lastModAPI = await getLastMod(this.props.token);
-  //       const { lastMod } = this.props;
-  //       lastMod.people = lastModAPI.people;
-  //       this.props.updateLastMod(lastMod);
-  //
-  //       this.setState({ isLoading: false });
-  //       this.setState({ type: 'success', message: t('We have aplied the configurations.') });
-  //     } else {
-  //       this.setState({ isLoading: false });
-  //       this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
-  //     }
-  //   }).catch(() => {
-  //     this.setState({ isLoading: false });
-  //     this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
-  //   });
-  // }
+  onFormSubmit(formData) {
+    const { t } = this.props;
+    this.setState({ isLoading: true });
+    this.linkVehicle(formData.data).then(async (response) => {
+      // console.log('resp---', response.headers);
+      if (response.status === 200) {
+
+        this.setState({ isLoading: false });
+        this.setState({ type: 'success', message: t('We have aplied the configurations.') });
+      } else {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+      }
+    }).catch(() => {
+      this.setState({ isLoading: false });
+      this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+    });
+  }
+
 
   getVehicleDevice() {
     this.setState({ isLoading: true });
@@ -78,8 +77,13 @@ class Device extends React.Component {
     return api.devices.linkVehicle(deviceId, this.props.token, data);
   }
 
+  unlink() {
+    this.setState({ loadUnlink: true });
+    this.unlinkVehicle(this.state.device.id).then(this.setState({ loadUnlink: false }));
+  }
+
   unlinkVehicle(deviceId) {
-    return api.people.unlinkVehicle(deviceId, this.props.token);
+    return api.devices.unlinkVehicle(deviceId, this.props.token);
   }
 
   render() {
@@ -91,6 +95,7 @@ class Device extends React.Component {
       isLoading,
       type,
       message,
+      loadUnlink,
     } = this.state;
     const {
       bluetoothMac,
@@ -140,12 +145,14 @@ class Device extends React.Component {
                 <b>{t('Configuration status')}:</b> {configStatus ? <FontAwesomeIcon icon="check" color="green" /> : <FontAwesomeIcon icon="times" color="red" />}
               </p>
             </div>
+            <Button onClick={this.unlink} disabled={loadUnlink}>{t('Unlink')}</Button>
           </Col>
         </Row>
         <hr />
         <Row>
           <Col sm="12" md={{ size: 9 }}>
             <h4 style={h1Style}>{t('Link Device')}</h4>
+              <VehicleDeviceForm submit={this.onFormSubmit} />
           </Col>
         </Row>
       </Container>
