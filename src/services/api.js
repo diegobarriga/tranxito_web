@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const apiPath = 'https://eld-test.azurewebsites.net/api';
-// const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
+// const apiPath = 'https://eld-test.azurewebsites.net/api';
+const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
 
 // These are most of the API endpoints
@@ -84,9 +84,9 @@ export default {
     getDeviceMotorCarrier: deviceId =>
       axios.get(`${apiPath}/Devices/${deviceId}/motorCarrier`),
     linkVehicle: (deviceId, token, data) =>
-      axios.post(`${apiPath}/Devices/${deviceId}/linkVehicle=${token}`, data),
+      axios.post(`${apiPath}/Devices/${deviceId}/linkVehicle?access_token=${token}&vehicleId=${data}`),
     unlinkVehicle: (deviceId, token) =>
-      axios.post(`${apiPath}/Devices/${deviceId}/unlink=${token}`),
+      axios.post(`${apiPath}/Devices/${deviceId}/unlink?access_token=${token}`),
   },
   // `MotorCarrier/{id}/devices/{id}`
   trailers: {

@@ -29,27 +29,68 @@ class Device extends React.Component {
       },
       loadUnlink: false,
       isLoading: false,
+      loadLink: false,
     };
     this.linkVehicle = this.linkVehicle.bind(this);
     this.unlinkVehicle = this.unlinkVehicle.bind(this);
     this.unlink = this.unlink.bind(this);
     this.getVehicleDevice = this.getVehicleDevice.bind(this);
-    // this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   componentDidMount() {
     this.getVehicleDevice();
   }
 
-  onFormSubmit(formData) {
+  async onFormSubmit(formData) {
+    console.log('entro acaaa----');
     const { t } = this.props;
     this.setState({ isLoading: true });
-    this.linkVehicle(formData.data).then(async (response) => {
+    try {
+      const response = await this.linkVehicle(formData);
+      console.log('resp---', response.headers);
+      if (response.status === 200) {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'success', message: t('We have linked the device to te vehicle.') });
+      } else {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+      }
+    } catch (err) {
+      this.setState({ isLoading: false });
+      this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+    }
+  }
+
+
+  async getVehicleDevice() {
+    this.setState({ isLoading: true });
+    try {
+      const res = await api.vehicles.getVehicleDevice(this.props.id, this.props.token);
+      console.log(res);
+      if (res.status === 200) {
+        this.setState({ device: res.data, isLoading: false });
+      } else {
+        this.setState({ device: null, isLoading: false });
+      }
+    } catch (err) {
+      console.log(err);
+      this.setState({ device: null, isLoading: false });
+    }
+  }
+
+  linkVehicle(data) {
+    return api.devices.linkVehicle(data.deviceId, this.props.token, this.props.id);
+  }
+
+  unlink() {
+    const { t } = this.props;
+    this.setState({ isLoading: true });
+    this.unlinkVehicle(this.state.device.id).then(async (response) => {
       // console.log('resp---', response.headers);
       if (response.status === 200) {
-
         this.setState({ isLoading: false });
-        this.setState({ type: 'success', message: t('We have aplied the configurations.') });
+        this.setState({ type: 'success', message: t('We have unlinked the device to te vehicle.') });
       } else {
         this.setState({ isLoading: false });
         this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
@@ -58,28 +99,6 @@ class Device extends React.Component {
       this.setState({ isLoading: false });
       this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
     });
-  }
-
-
-  getVehicleDevice() {
-    this.setState({ isLoading: true });
-    api.vehicles.getVehicleDevice(this.props.id, this.props.token).then((res) => {
-      try {
-        this.setState({ device: res.data, isLoading: false });
-      } catch (err) {
-        console.log(err);
-        this.setState({ isLoading: false });
-      }
-    });
-  }
-
-  linkVehicle(deviceId, data) {
-    return api.devices.linkVehicle(deviceId, this.props.token, data);
-  }
-
-  unlink() {
-    this.setState({ loadUnlink: true });
-    this.unlinkVehicle(this.state.device.id).then(this.setState({ loadUnlink: false }));
   }
 
   unlinkVehicle(deviceId) {
@@ -96,15 +115,10 @@ class Device extends React.Component {
       type,
       message,
       loadUnlink,
+      loadLink,
     } = this.state;
-    const {
-      bluetoothMac,
-      imei,
-      sequenceId,
-      configStatus,
-    } = this.state.device;
 
-    if (isLoading) return <Loader />;
+    if (isLoading || loadUnlink || loadLink) return <Loader />;
 
     let alert;
     if (type && message) {
@@ -125,34 +139,38 @@ class Device extends React.Component {
             { alert }
           </Col>
         </Row>
-        <Row>
-          <Col sm="12" md={{ size: 12 }}>
-            <h4 style={h1Style}>{t('Current device')}</h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm="4" md={{ size: 4 }}>
-            <img className="media-object" alt="syrus-img" width="250" src={syrusImg} />
-          </Col>
-          <Col sm="8" md={{ size: 8 }}>
-            <div className="right">
-              <p><b>Sequence Id:</b> {sequenceId}</p>
-              <p><b>{t('IMEI')}:</b> {imei}</p>
-              <p>
-                <b>MAC Address (Bluetooth):</b>  {bluetoothMac.toUpperCase()}
-              </p>
-              <p>
-                <b>{t('Configuration status')}:</b> {configStatus ? <FontAwesomeIcon icon="check" color="green" /> : <FontAwesomeIcon icon="times" color="red" />}
-              </p>
-            </div>
-            <Button onClick={this.unlink} disabled={loadUnlink}>{t('Unlink')}</Button>
-          </Col>
-        </Row>
-        <hr />
+        { this.state.device &&
+          <div>
+            <Row>
+              <Col sm="12" md={{ size: 12 }}>
+                <h4 style={h1Style}>{t('Current device')}</h4>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm="4" md={{ size: 4 }}>
+                <img className="media-object" alt="syrus-img" width="250" src={syrusImg} />
+              </Col>
+              <Col sm="8" md={{ size: 8 }}>
+                <div className="right">
+                  <p><b>Sequence Id:</b> {this.state.device.sequenceId}</p>
+                  <p><b>{t('IMEI')}:</b> {this.state.device.imei}</p>
+                  <p>
+                    <b>MAC Address (Bluetooth):</b>  {this.state.device.bluetoothMac.toUpperCase()}
+                  </p>
+                  <p>
+                    <b>{t('Configuration status')}:</b> {this.state.device.configStatus ? <FontAwesomeIcon icon="check" color="green" /> : <FontAwesomeIcon icon="times" color="red" />}
+                  </p>
+                </div>
+                <Button onClick={this.unlink} disabled={loadUnlink}>{t('Unlink')}</Button>
+              </Col>
+            </Row>
+            <hr />
+          </div>
+        }
         <Row>
           <Col sm="12" md={{ size: 9 }}>
             <h4 style={h1Style}>{t('Link Device')}</h4>
-              <VehicleDeviceForm submit={this.onFormSubmit} />
+            <VehicleDeviceForm submit={this.onFormSubmit} />
           </Col>
         </Row>
       </Container>
