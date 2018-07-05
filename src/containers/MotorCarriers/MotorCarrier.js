@@ -34,7 +34,8 @@ class MotorCarrier extends React.Component {
         { authRedirect }
         <h1> {this.props.mCarrierName} </h1>
         <div className="buttons">
-          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}>{t('Add Devices')}</Link>
+          <Link className="btn btn-sm green spacing" to="/devices/new_device"><FontAwesomeIcon icon="hdd" color="white" /> {t('Add Device')}</Link>
+          <Link className="btn btn-sm green spacing" to="/devices/new_devices"><FontAwesomeIcon icon="hdd" color="white" /><FontAwesomeIcon icon="hdd" color="white" /> {t('Add Devices')}</Link>
           <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}>{t('Create Supervisor')}</Link>
         </div>
 
@@ -68,7 +69,7 @@ class MotorCarrier extends React.Component {
               </div>
             </div>
           </Link>
-          <Link className="card" to="/vehicles">
+          <Link className="card" to="/devices">
             <img className="paddingBottom padding" src={syrusImg} alt="Devices" />
             <div className="content">
               <span className="header">{t('Devices')}</span>
