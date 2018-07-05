@@ -35,7 +35,6 @@ import faCog from '@fortawesome/fontawesome-free-solid/faCog';
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 
-import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
 import Layout from './containers/Layout/Layout';
 import Users from './containers/Users/Users';
