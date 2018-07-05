@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import '../../assets/styles/forms.css';
 import '../../assets/styles/dashboardAdmin.css';
 import Aux from '../../hoc/Aux';
@@ -33,7 +34,8 @@ class MotorCarrier extends React.Component {
         { authRedirect }
         <h1> {this.props.mCarrierName} </h1>
         <div className="buttons">
-          <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}>{t('Add Devices')}</Link>
+          <Link className="btn btn-sm green spacing" to="/devices/new_device"><FontAwesomeIcon icon="hdd" color="white" /> {t('Add Device')}</Link>
+          <Link className="btn btn-sm green spacing" to="/devices/new_devices"><FontAwesomeIcon icon="hdd" color="white" /><FontAwesomeIcon icon="hdd" color="white" /> {t('Add Devices')}</Link>
           <Link className="btn btn-sm green spacing" to={`/supervisors/${id}/new_supervisor`}>{t('Create Supervisor')}</Link>
         </div>
 

@@ -57,6 +57,7 @@ i18n.use(LanguageDetector).init({
         'List and profiles': 'List and profiles',
         'Map, stats and more': 'Map, stats and more',
         'Add Devices': 'Add Devices',
+        'Add Device': 'Add Device',
         Email: 'Email',
 
 
