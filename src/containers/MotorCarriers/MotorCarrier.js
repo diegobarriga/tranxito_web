@@ -67,7 +67,7 @@ class MotorCarrier extends React.Component {
               </div>
             </div>
           </Link>
-          <Link className="card" to="/vehicles">
+          <Link className="card" to="/devices">
             <img className="paddingBottom padding" src={syrusImg} alt="Devices" />
             <div className="content">
               <span className="header">{t('Devices')}</span>
