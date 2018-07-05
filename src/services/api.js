@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const apiPath = 'https://eld-test.azurewebsites.net/api';
-// const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
+// const apiPath = 'https://eld-test.azurewebsites.net/api';
+const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
 
 // These are most of the API endpoints
@@ -41,6 +41,10 @@ export default {
       axios.post(`${apiPath}/People/reset`, { options }),
     getUserEvents: (userId, token) =>
       axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`),
+    getUserNotCertifiedEvents: (userId, token, filters) =>
+      axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`, { params: { filter: filters } }),
+    userCertifyEvents: (userId, token) =>
+      axios.patch(`${apiPath}/People/${userId}/certifyEvents?access_token=${token}`),
     createUserEvents: (userId, eventData) =>
       axios.post(`${apiPath}/People/${userId}/events`, { eventData }),
     getUserMotorCarrier: userId =>
@@ -163,8 +167,11 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getVehiclesDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
+    getNonAuthEvents: (motorCarrierId, token, filters) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/nonAuthEvents?access_token=${token}`, { params: { filter: filters } }),
     createMotorCarrierDevice: (motorCarrierId, token, device) =>
       axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`, device),
+
   },
   events: {
     getEvents: () =>
@@ -179,6 +186,8 @@ export default {
       axios.get(`${apiPath}/Events/${eventId}/vehicle`),
     getEventMotorCarrier: eventId =>
       axios.get(`${apiPath}/Events/${eventId}/motorCarrier`),
+    patchEvent: (eventId, token, data) =>
+      axios.patch(`${apiPath}/Events/${eventId}?access_token=${token}`, data),
   },
   images: {
     userImageLink: image => `${apiPath}/imageContainers/People/download/${image}`,

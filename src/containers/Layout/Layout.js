@@ -3,35 +3,36 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { I18nextProvider } from 'react-i18next';
 import Aux from '../../hoc/Aux';
+import i18n from '../../i18n';
 import Navibar from '../../components/NaviBar/NaviBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import i18n from '../../i18n';
 import '../../assets/styles/layout.css';
 
 
 class Layout extends Component {
+  componentDidMount() {
+    console.log(this.props.showSidebar);
+  }
+
   render() {
     return (
       <Aux>
         <I18nextProvider i18n={i18n}>
           <div className="app">
             <header className="appNavbar" >
-
               <Navibar
                 isAuth={this.props.isAuthenticated}
                 userId={this.props.userId}
                 token={this.props.token}
               />
-
             </header>
             <main className="appBody">
               <div className="appMain">
                 <div className="centerArea">
                   { this.props.children }
                 </div>
-                { this.props.isAuthenticated &&
+                { this.props.showSidebar &&
                 <div className="leftSidebar">
-
                   <Sidebar
                     isAdm={this.props.isAdmin}
                     profileImage={this.props.image}
@@ -39,7 +40,6 @@ class Layout extends Component {
                     last={this.props.last}
                     mc={this.props.mcName}
                   />
-
                 </div>
                 }
               </div>
@@ -58,10 +58,12 @@ Layout.propTypes = {
   token: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  showSidebar: PropTypes.bool.isRequired,
   image: PropTypes.string,
   name: PropTypes.string,
   last: PropTypes.string,
   mcName: PropTypes.string,
+
 };
 
 Layout.defaultProps = {
@@ -75,6 +77,7 @@ Layout.defaultProps = {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
+  showSidebar: state.auth.token !== null && state.auth.role !== 'D',
   userId: state.auth.userId,
   token: state.auth.token,
   isAdmin: state.auth.role === 'A',
