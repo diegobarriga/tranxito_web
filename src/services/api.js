@@ -67,6 +67,8 @@ export default {
       axios.get(`${apiPath}/Vehicles/${vehicleId}/setImage`, { url }),
     getVehicleMotorCarrier: vehicleId =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/motorCarrier`),
+    getVehicleDevice: (vehicleId, token) =>
+      axios.get(`${apiPath}/Vehicles/${vehicleId}/devices?access_token=${token}`),
     exists: vehicleId =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/exists`),
     getLogs: (vehicleId, token) =>
@@ -85,6 +87,10 @@ export default {
       axios.patch(`${apiPath}/Devices/${deviceId}?access_token=${token}`, data),
     getDeviceMotorCarrier: deviceId =>
       axios.get(`${apiPath}/Devices/${deviceId}/motorCarrier`),
+    linkVehicle: (deviceId, token, data) =>
+      axios.post(`${apiPath}/Devices/${deviceId}/linkVehicle?access_token=${token}&vehicleId=${data}`),
+    unlinkVehicle: (deviceId, token) =>
+      axios.post(`${apiPath}/Devices/${deviceId}/unlink?access_token=${token}`),
   },
   // `MotorCarrier/{id}/devices/{id}`
   trailers: {

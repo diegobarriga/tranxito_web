@@ -8,8 +8,9 @@ import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 
 import classnames from 'classnames';
 import { translate } from 'react-i18next';
 import VehicleInfo from './VehicleInfo';
+import Device from './Device';
 import Logs from '../Logs/Logs';
-import Heatmap from './Heatmap';
+// import Heatmap from './Heatmap';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
@@ -106,6 +107,14 @@ class Vehicle extends React.Component {
               {t('Heatmap')}
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              {t('Device')}
+            </NavLink>
+          </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
@@ -119,7 +128,14 @@ class Vehicle extends React.Component {
           <TabPane tabId="2">
             <div className="tabDiv">
               <Container>
-                <Heatmap id={id} />
+                
+              </Container>
+            </div>
+          </TabPane>
+          <TabPane tabId="3">
+            <div className="tabDiv">
+              <Container>
+                <Device id={id} />
               </Container>
             </div>
           </TabPane>
