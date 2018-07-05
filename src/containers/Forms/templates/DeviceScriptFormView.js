@@ -1,0 +1,162 @@
+import React from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Container, Row, Col } from 'reactstrap';
+import { Breadcrumb } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { translate } from 'react-i18next';
+import DeviceScriptForm from './DeviceScriptForm';
+import '../../../assets/styles/forms.css';
+import api from '../../../services/api';
+import Alert from '../../Alert/Alert';
+import Loader from '../../../components/Loader/Loader';
+import * as actions from '../../../store/actions/index';
+import Aux from '../../../hoc/Aux';
+
+class DeviceScriptFormView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      type: '',
+      message: '',
+      isLoading: false,
+    };
+
+    this.patchData = this.patchData.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const auxArray = this.props.location.pathname.split('/');
+    const crumbUrl = this.props.location.pathname;
+    const newCrumb = auxArray[auxArray.length - 1].split('_').join(' ');
+    this.props.addBreadCrumb(newCrumb, false, crumbUrl);
+  }
+
+  onFormSubmit(formData) {
+    const { t } = this.props; // eslint-disable-line no-use-before-define
+    this.setState({ isLoading: true });
+
+    this.patchData(formData.data).then((response) => {
+      if (response.status === 200) {
+        this.props.createDevice(response.data);
+        this.setState({ isLoading: false });
+        this.setState({ type: 'success', message: t('We have edited the device.') });
+      } else {
+        this.setState({ isLoading: false });
+        this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
+      }
+    });
+  }
+
+
+  patchData(data) {
+    return api.motorCarriers.updateMotorCarrierDevice(
+      this.props.motorCarrierId,
+      this.props.match.params.id,
+      this.props.token,
+      data,
+    );
+  }
+
+  render() {
+    if (this.state.isLoading === true) return <Loader />;
+    let alert;
+    const {
+      title,
+      token,
+      match,
+    } = this.props;
+
+    if (this.state.type && this.state.message) {
+      if (this.state.type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
+      } else if (this.state.type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+      }
+    }
+
+    const h1Style = {
+      marginTop: '1rem',
+      marginBottom: '2rem',
+    };
+    const { t } = this.props;
+    return (
+      <Container>
+        <Row>
+          <Col sm="12" md={{ size: 12 }}>
+            { alert }
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 8 }}>
+            <Breadcrumb>
+              { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+              { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
+              {
+                this.props.navigation.map((x, i) => (
+                  <Aux key={i}>
+                    <Breadcrumb.Divider icon="right chevron" />
+                    { this.props.len - 1 > i ?
+                      <Link className="section capitalize" to={this.props.naviLinks[i]}> {t(x)} </Link>
+                      :
+                      <Breadcrumb.Section className="capitalize" active> {t(x)} </Breadcrumb.Section>
+                    }
+                  </Aux>
+                ))
+              }
+            </Breadcrumb>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12" md={{ size: 8 }}>
+            <h4 style={h1Style}>{t(title)}</h4>
+            <DeviceScriptForm
+              submit={this.onFormSubmit}
+              isCreate={false}
+              token={token}
+              match={match}
+            />
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+}
+
+DeviceScriptFormView.propTypes = {
+  title: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired,
+  createDevice: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  addBreadCrumb: PropTypes.func.isRequired,
+  navigation: PropTypes.array.isRequired,
+  naviLinks: PropTypes.array.isRequired,
+  len: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  motorCarrierId: state.auth.motorCarrierId,
+  navigation: state.breadcrumbs.breadcrumbs,
+  len: state.breadcrumbs.breadcrumbs.length,
+  naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
+});
+
+const mapDispatchToProps = dispatch => ({
+  createDevice: device => dispatch(actions.createDevice(device)),
+  addBreadCrumb: (urlString, restart, crumbUrl) => dispatch(actions.addNewBreadCrumb(
+    urlString,
+    restart,
+    crumbUrl,
+  )),
+});
+const translateFunc = translate('translations')(DeviceScriptFormView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translateFunc));

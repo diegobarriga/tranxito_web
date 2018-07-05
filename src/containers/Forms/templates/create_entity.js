@@ -39,22 +39,30 @@ class SimpleReactFileUpload extends React.Component {
     const crumbUrl = this.props.location.pathname;
     let newCrumb = auxArray[auxArray.length - 1].split('_');
     if (newCrumb[newCrumb.length - 1] === 'vehicles') {
-      newCrumb[newCrumb.length - 2] = t('New');
-      newCrumb[newCrumb.length - 1] = t('Vehicle(s)');
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Vehicles';
+    } else if (newCrumb[newCrumb.length - 1] === 'devices') {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Devices';
+    } else if (newCrumb[newCrumb.length - 1] === 'trailers') {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Trailers';
     } else {
-      newCrumb[newCrumb.length - 2] = t('New');
-      newCrumb[newCrumb.length - 1] = t('Driver(s)');
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Drivers';
     }
     newCrumb = newCrumb.join(' ');
     this.props.addBreadCrumb(newCrumb, false, crumbUrl);
   }
 
   onFormSubmit(e) {
+    console.log("entro al form submit");
     this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     const reader = new FileReader();
 
     if (this.state.file.name.split('.')[1] === 'csv') {
+      console.log("es un csv");
       reader.readAsText(this.state.file);
       reader.onload = this.loadHandler;
     } else if (this.state.file.name.split('.')[1] === 'xlsx') {
@@ -87,12 +95,20 @@ class SimpleReactFileUpload extends React.Component {
     };
 
     if (this.props.type === 'drivers') {
+      console.log('tipo: drivers');
       type = 'people';
+    } else if (this.props.type === 'devices') {
+      console.log('tipo: devices');
+      type = 'devices';
+    } else if (this.props.type === 'trailers') {
+      console.log('tipo: trailers');
+      type = 'trailers';
     }
     return api.file.csvFileUpload(
       formData, config,
       this.props.token,
-      this.props.motorCarrierId, type,
+      this.props.motorCarrierId,
+      type,
     );
   }
 
@@ -137,6 +153,8 @@ class SimpleReactFileUpload extends React.Component {
     JSON.stringify(drivers);
 
     this.checkValid(drivers);
+
+    console.log('valid', this.state.isValid, this.state.loading);
 
     if (this.state.isValid === true && this.state.loading === true) {
       console.log('valid');
@@ -197,34 +215,22 @@ class SimpleReactFileUpload extends React.Component {
       this.checkValid(this.state.file);
       // console.log("Valid: "+this.state.isValid)
 
-      dataString = this.state.data.map(d => `${d[0]},
-        ${d[1]},
-        ${d[2]},
-        ${d[3]},
-        ${d[4]},
-        ${d[5]},
-        ${d[6]},
-        ${d[7]},
-        ${d[8]},
-        ${d[9]},
-        ${d[10]},
-        ${d[11]},
-        ${d[12]}\n`)
-        .join('');
-      // console.log("String: "+dataString)
+      dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]}\n`).join('');
+      // console.log("String: ", dataString);
+
       const csv = new Blob([dataString], { type: 'text/csv' });
 
       // console.log("STATE EXCEL: "+this.state.file)
 
-      // const reader1 = new FileReader();
-      // reader1.readAsText(csv);
+      const reader1 = new FileReader();
+      reader1.readAsText(csv);
       // reader1.onload = (e) => {
       // // console.log("CSV " + e.target.result)
       // }
 
       this.setState({ file: csv });
       // console.log("STATE CSV: "+this.state.file)
-      // reader1.onload = this.loadHandler;
+      reader1.onload = this.loadHandler;
     };
     if (rABS) reader.readAsBinaryString(this.state.file);
     else reader.readAsArrayBuffer(this.state.file);
@@ -254,22 +260,6 @@ class SimpleReactFileUpload extends React.Component {
           this.setState({ isValid: false });
           console.log('driverlicensenumber');
           return;
-        } else if (data[i].moveYardsUse.length !== 1) {
-          this.setState({ isValid: false });
-          console.log('move_yards');
-          return;
-        } else if (data[i].defaultUse.length !== 1) {
-          this.setState({ isValid: false });
-          console.log('defaultuse');
-          return;
-        } else if (data[i].personalUse.length !== 1) {
-          this.setState({ isValid: false });
-          console.log('personaluse');
-          return;
-        } else if (data[i].exemptDriverConfiguration.length === 0) {
-          this.setState({ isValid: false });
-          console.log('driverconfig');
-          return;
         } else if (data[i].timeZoneOffsetUtc.length === 0) {
           this.setState({ isValid: false });
           console.log('time');
@@ -281,6 +271,48 @@ class SimpleReactFileUpload extends React.Component {
         }
         this.setState({ isValid: true });
       }
+    } else if (this.props.type === 'devices') {
+      console.log(data);
+      for (let i = 0; i < data.length; i += 1) {
+        if (data[i].bluetoothMac.length !== 17) {
+          this.setState({ idValid: false });
+          return;
+        } else if (data[i].imei.length !== 15) {
+          this.setState({ idValid: false });
+          console.log('arregladisimo');
+          return;
+        }
+      }
+      this.setState({ isValid: true });
+    } else if (this.props.type === 'trailers') {
+      console.log(data);
+      for (let i = 0; i < data.length; i += 1) {
+        if (data[i].vin.length < 17 && data[i].vin.length > 18) {
+          this.setState({ isValid: false });
+          console.log('firstname');
+          return;
+        } else if (data[i].manufacturer.length === 0) {
+          this.setState({ isValid: false });
+          return;
+        } else if (data[i].number.lenght > 10) {
+          this.setState({ isValid: false });
+          console.log('lastname');
+          return;
+        } else if (data[i].model.length === 0) {
+          this.setState({ isValid: false });
+          console.log('driverlicensenumber');
+          return;
+        } else if (data[i].year.length === 0) {
+          this.setState({ isValid: false });
+          console.log('time');
+          return;
+        } else if (data[i].gvw.length === 0) {
+          this.setState({ isValid: false });
+          console.log('24period');
+          return;
+        }
+      }
+      this.setState({ isValid: true });
     } else {
       // Vehicles validation
       console.log(data);
@@ -296,6 +328,7 @@ class SimpleReactFileUpload extends React.Component {
       this.setState({ isValid: true });
     }
   }
+
   render() {
     if (this.state.loading === true) return <Loader />;
     let alert;
@@ -315,7 +348,8 @@ class SimpleReactFileUpload extends React.Component {
           <Row>
             <Col sm="12" md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/drivers">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -369,6 +403,8 @@ SimpleReactFileUpload.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -378,6 +414,8 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
 });
 
 const mapDispatchToProps = dispatch => ({

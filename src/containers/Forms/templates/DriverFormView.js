@@ -54,7 +54,7 @@ class DriverFormView extends React.Component {
               if (response.status === 200) {
                 this.props.createUser(response.data);
 
-                const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+                const lastModAPI = await getLastMod(this.props.token);
                 const { lastMod } = this.props;
                 lastMod.people = lastModAPI.people;
                 this.props.updateLastMod(lastMod);
@@ -76,7 +76,7 @@ class DriverFormView extends React.Component {
               if (response.status === 200) {
                 this.props.createUser(response.data);
 
-                const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+                const lastModAPI = await getLastMod(this.props.token);
                 const { lastMod } = this.props;
                 lastMod.people = lastModAPI.people;
                 this.props.updateLastMod(lastMod);
@@ -104,7 +104,7 @@ class DriverFormView extends React.Component {
           if (response.status === 200) {
             this.props.createUser(response.data);
 
-            const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+            const lastModAPI = await getLastMod(this.props.token);
             const { lastMod } = this.props;
             lastMod.people = lastModAPI.people;
             this.props.updateLastMod(lastMod);
@@ -125,7 +125,7 @@ class DriverFormView extends React.Component {
           if (response.status === 200) {
             this.props.createUser(response.data);
 
-            const lastModAPI = await getLastMod(this.props.motorCarrierId, this.props.token);
+            const lastModAPI = await getLastMod(this.props.token);
             const { lastMod } = this.props;
             lastMod.people = lastModAPI.people;
             this.props.updateLastMod(lastMod);
@@ -208,7 +208,8 @@ class DriverFormView extends React.Component {
         <Row>
           <Col sm="12" md={{ size: 8 }}>
             <Breadcrumb>
-              <Link className="section" to="/drivers">Home</Link>
+              { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+              { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
               {
                 this.props.navigation.map((x, i) => (
                   <Aux key={i}>
@@ -253,6 +254,8 @@ DriverFormView.propTypes = {
   navigation: PropTypes.array.isRequired,
   naviLinks: PropTypes.array.isRequired,
   len: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
   lastMod: PropTypes.object.isRequired,
 };
 
@@ -263,6 +266,8 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
 });
 
 const mapDispatchToProps = dispatch => ({

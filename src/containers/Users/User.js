@@ -12,6 +12,7 @@ import Logs from '../Logs/Logs';
 import UserInfo from './UserInfo';
 import Alerts from './Alerts';
 import Chat from './Chat';
+import Configurations from './Configurations';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
@@ -43,7 +44,7 @@ class User extends React.Component {
 
   async checkLastMod() {
     this.setState({ checking: true });
-    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
+    const lastMod = await getLastMod(this.props.token);
 
     if (lastMod.people !== this.props.lastMod.people) {
       this.props.updateUsers(this.props.motorCarrierId, this.props.token);
@@ -72,7 +73,8 @@ class User extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/drivers">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -116,11 +118,20 @@ class User extends React.Component {
               </NavLink>
             </NavItem>
             <NavItem>
+              {this.props.role === 'S' &&
               <NavLink
                 className={classnames({ active: this.state.activeTab === '4' })}
                 onClick={() => { this.toggle('4'); }}
               >
                 {'Chat'}
+              </NavLink> }
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '5' })}
+                onClick={() => { this.toggle('5'); }}
+              >
+                {t('Configurations')}
               </NavLink>
             </NavItem>
           </Nav>
@@ -155,6 +166,13 @@ class User extends React.Component {
                 </Container>
               </div>
             </TabPane>
+            <TabPane tabId="5">
+              <div className="tabDiv">
+                <Container>
+                  <Configurations id={id} activeTab={this.state.activeTab} />
+                </Container>
+              </div>
+            </TabPane>
           </TabContent>
         </Container>
       </Aux>
@@ -172,6 +190,8 @@ User.propTypes = {
   len: PropTypes.number.isRequired,
   popCrumb: PropTypes.func.isRequired,
   id: PropTypes.number,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
   updateUsers: PropTypes.func.isRequired,
   updateLastMod: PropTypes.func.isRequired,
@@ -201,6 +221,8 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
   isLoading: state.auth.loading,
   lastMod: state.auth.lastMod,
   token: state.auth.token,

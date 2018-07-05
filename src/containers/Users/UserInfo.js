@@ -55,6 +55,7 @@ class UserInfo extends React.Component {
               }
               <div>
                 <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
+
                 { this.props.isDriver ?
                   <Aux>{this.props.user.driverLicenseNumber}</Aux>
                 :
@@ -85,7 +86,6 @@ class UserInfo extends React.Component {
     );
   }
 }
-
 
 UserInfo.propTypes = {
   users: PropTypes.object,

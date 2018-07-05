@@ -74,6 +74,19 @@ export default {
     getTrackings: (vehicleId, token, conditions) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
+  devices: {
+    getDevices: () =>
+      axios.get(`${apiPath}/Devices`),
+    getDevice: (deviceId, token) =>
+      axios.get(`${apiPath}/Devices/${deviceId}?access_token=${token}`),
+    deleteDevice: (deviceId, token) =>
+      axios.delete(`${apiPath}/Devices/${deviceId}?access_token=${token}`),
+    updateDevice: (deviceId, token, data) =>
+      axios.patch(`${apiPath}/Devices/${deviceId}?access_token=${token}`, data),
+    getDeviceMotorCarrier: deviceId =>
+      axios.get(`${apiPath}/Devices/${deviceId}/motorCarrier`),
+  },
+  // `MotorCarrier/{id}/devices/{id}`
   trailers: {
     getTrailers: () =>
       axios.get(`${apiPath}/Trailers`),
@@ -95,6 +108,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers?access_token=${token}`),
     getMotorCarrier: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`),
+    deleteMotorCarrier: (motorCarrierId, token) =>
+      axios.delete(`${apiPath}/MotorCarriers/${motorCarrierId}?access_token=${token}`),
     createMotorCarrier: (motorCarrier, token) =>
       axios.post(`${apiPath}/MotorCarriers?access_token=${token}`, motorCarrier),
     updateMotorCarrier: (motorCarrierId, data, token) =>
@@ -109,6 +124,14 @@ export default {
       axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`, user),
     countMotorCarrierPeople: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count`),
+    getMotorCarrierDevices: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`),
+    getMotorCarrierDevice: (motorCarrierId, deviceId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`),
+    updateMotorCarrierDevice: (motorCarrierId, deviceId, token, data) =>
+      axios.put(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`, data),
+    deleteMotorCarrierDevice: (motorCarrierId, deviceId, token) =>
+      axios.delete(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`),
     getMotorCarrierVehicles: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`),
     getMotorCarrierVehicle: (motorCarrierId, vehicleId) =>
@@ -146,6 +169,9 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getNonAuthEvents: (motorCarrierId, token, filters) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/nonAuthEvents?access_token=${token}`, { params: { filter: filters } }),
+    createMotorCarrierDevice: (motorCarrierId, token, device) =>
+      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`, device),
+
   },
   events: {
     getEvents: () =>
@@ -181,7 +207,7 @@ export default {
     getFileUploadErrors: id => axios.get(`${apiPath}/file-uploads/${id}/errors`),
   },
   lastMod: {
-    getLastMod: (motorCarrierId, token) =>
-      axios.get(`${apiPath}/LastMods/${motorCarrierId}?access_token=${token}`),
+    getLastMod: token =>
+      axios.get(`${apiPath}/LastMods/?access_token=${token}`),
   },
 };

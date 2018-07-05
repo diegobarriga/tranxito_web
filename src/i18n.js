@@ -12,6 +12,7 @@ i18n.use(LanguageDetector).init({
         Profile: 'Profile',
         // Sidebar
         Dashboard: 'Dashboard',
+        dashboard: 'dashboard',
         Drivers: 'Drivers',
         Vehicles: 'Vehicles',
         Devices: 'Devices',
@@ -29,6 +30,14 @@ i18n.use(LanguageDetector).init({
         'Duty Status Stats': 'Duty Status Stats',
         'Alerts Stats': 'Alerts Stats',
         'Accumulated Duty Status Hours Per Type': 'Accumulated Duty Status Hours Per Type',
+        'Amount of Support Personnel': 'Amount of Support Personnel',
+        'Amount of Drivers': 'Amount of Drivers',
+        'Amount of Vehicles': 'Amount of Vehicles',
+        'Amount of vehicles off dutty': 'Amount of vehicles off dutty',
+        'Amount of vehicles in sleeper berth': 'Amount of vehicles in sleeper berth',
+        'Amount of vehicles driving': 'Amount of vehicles driving',
+        'Amount of vehicles on duty not driving': 'Amount of vehicles on duty not driving',
+        'Amount of vehicles undefined': 'Amount of vehicles undefined',
         // Drivers, Vehicles and MotorCarriers
         Search: 'Search',
         'Create driver': 'Create driver',
@@ -45,7 +54,12 @@ i18n.use(LanguageDetector).init({
         'USDOT Number': 'USDOT Number',
         'Multiday basis used': 'Multiday basis used',
         'Register Supervisor': 'Register Supervisor',
+        'List and profiles': 'List and profiles',
+        'Map, stats and more': 'Map, stats and more',
+        'Add Devices': 'Add Devices',
+        'Add Device': 'Add Device',
         Email: 'Email',
+
 
         'First name': 'First name',
         'Last name': 'Last name',
@@ -110,6 +124,7 @@ i18n.use(LanguageDetector).init({
         'Invalid file format': 'Invalid file format',
         'Must only contain numbers and letters (0-9/A-Z)': 'Must only contain numbers and letters (0-9/A-Z)',
         'Must have ≤ 20 characters': 'Must have ≤ 20 characters',
+        'Must have ≤ 60 characters': 'Must have ≤ 60 characters',
         'Not a valid state': 'Not a valid state',
         'We have created the new driver.': 'We have created the new driver.',
         'We have edited the driver.': 'We have edited the driver.',
@@ -157,6 +172,33 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'SLEEPER BERTH',
         DRIVING: 'DRIVING',
         'ON DUTY NOT DRIVING': 'DRIVING',
+
+        devices: 'devices',
+        IMEI: 'IMEI',
+        'new device': 'new device',
+        'Configuration status': 'Configuration status',
+
+        'Bluetooth Mac': 'Bluetooth Mac',
+        'Configuration Script': 'Configuration Script',
+        'Configuration Status': 'Configuration Status',
+
+        'Create device': 'Create device',
+        'Create multiple devices': 'Create multiple devices',
+        'The device was deleted successfully': 'The device was deleted successfully',
+        'Error the device was not deleted': 'Error the device was not deleted',
+        'Create New Device': 'Create New Device',
+        'Edit Device': 'Edit Device',
+        'Configure Device': 'Configure Device',
+        Yes: 'Yes',
+        'We have created the new device.': 'We have created the new device.',
+        'We have edited the device.': 'We have edited the device.',
+        'Are you sure you want to delete this device?': 'Are you sure you want to delete this device?',
+
+        'New Drivers': 'New Drivers',
+        'New Vehicles': 'New Vehicles',
+        'New Devices': 'New Devices',
+        'New Trailers': 'New Trailers',
+
         // trailers
         Trailers: 'Trailers',
         'Create New Trailer': 'Create New Trailer',
@@ -177,19 +219,41 @@ i18n.use(LanguageDetector).init({
         'Create trailer': 'Create trailer',
         edit: 'edit',
         'Trailer was deleted successfully': 'Trailer was deleted successfully',
+        'Create multiple trailers': 'Create multiple trailers',
 
         // Supervisors
         'We have created the new supervisor.': 'We have created the new supervisor.',
         'We have edited the supervisor.': 'We have edited the supervisor.',
 
+
         // Driver
         'Certify Events': 'Certify Events',
         'Assign Events': 'Assign Events',
         'No events to be certified': 'No events to be certified',
-        'Yes': 'Yes',
         'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.':'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.',
         'Are you sure you want to assign this events to you?.': 'Are you sure you want to assign this events to you?.',
         'Certify My Logs': 'Certify My Logs',
+        
+        // Configurations
+        Yes: 'Yes',
+        No: 'No',
+        'Categories configurations': 'Categories configurations',
+        'Exempt driver configurations': 'Exempt driver configurations',
+        Configurations: 'Configurations',
+        'We have aplied the configurations.': 'We have aplied the configurations.',
+        'Explanation for the configuration of exemption': 'Explanation for the configuration of exemption',
+        Annotation: 'Annotation',
+
+        // Summary
+        'Amount of Support Personnels': 'Amount of Support Personnels',
+        'Amount of Drivers': 'Amount of Drivers',
+        'Amount of Vehicles': 'Amount of Vehicles',
+        'Amount of vehicles off dutty': 'Amount of vehicles off dutty',
+        'Amount of vehicles in sleeper berth': 'Amount of vehicles in sleeper berth',
+        'Amount of vehicles driving': 'Amount of vehicles driving',
+        'Amount of vehicles on duty not driving': 'Amount of vehicles on duty not driving',
+        'Amount of vehicles undefined': 'Amount of vehicles undefined',
+
       },
     },
     es: {
@@ -200,17 +264,17 @@ i18n.use(LanguageDetector).init({
         Profile: 'Perfil',
         // Sidebar
         Dashboard: 'Panel',
-        dashboard: 'Panel',
+        dashboard: 'panel',
         Drivers: 'Conductores',
         drivers: 'Conductores',
         Vehicles: 'Vehículos',
         vehicles: 'Vehículos',
         Devices: 'Dispositivos',
-        devices: 'Dispositivos',
+        devices: 'dispositivos',
         Supervisors: 'Supervisores',
         supervisors: 'supervisores',
 
-        Administrator: 'Administrator',
+        Administrator: 'Administrador',
         // Dashboard
 
         'Drivers with the most Speeding Alerts': 'Conductores con la mayor cantidad de Alertas de Exceso de Velocidad',
@@ -223,7 +287,15 @@ i18n.use(LanguageDetector).init({
         Map: 'Mapa',
         'Duty Status Stats': 'Estadísticas de Estado de Servicio',
         'Alerts Stats': 'Estadísticas de Alertas',
-        'Accumulated Duty Status Hours Per Type': 'Horas Duty Status Por Tipo Acumuladas',
+        'Accumulated Duty Status Hours Per Type': 'Horas Estado de Servicio Por Tipo Acumuladas',
+        'Amount of Support Personnel': 'Cantidad de personal de soporte',
+        'Amount of Drivers': 'Cantidad de conductores',
+        'Amount of Vehicles': 'Cantidad de vehículos',
+        'Amount of vehicles off dutty': 'Cantidad de vehículos fuera de servicio',
+        'Amount of vehicles in sleeper berth': 'Cantidad de vehículos descansando en litera',
+        'Amount of vehicles driving': 'Cantidad de vehículos conduciendo',
+        'Amount of vehicles on duty not driving': 'Cantidad de vehículos en servicio - no conduciendo',
+        'Amount of vehicles undefined': 'Cantidad de vehículos indefinidos',
         // Conductores, vehículos y MotorCarriers
         Search: 'Buscar',
         'Create driver': 'Crear conductor',
@@ -240,6 +312,10 @@ i18n.use(LanguageDetector).init({
         'USDOT Number': 'Número USDOT',
         'Multiday basis used': 'Multiday basis usada',
         'Register Supervisor': 'Registrar Supervisor',
+        'List and profiles': 'Lista y perfiles',
+        'Map, stats and more': 'Mapa, estadísticas y más',
+        'Add Devices': 'Agregar Dispositivos',
+        'Add Device': 'Agregar Dispositivo',
         Email: 'Correo electrónico',
 
         'First name': 'Nombre',
@@ -250,7 +326,7 @@ i18n.use(LanguageDetector).init({
         Image: 'Imagen',
         'Driver license number': 'Número de licencia',
         'Licenses issuing state': 'Estado emisor de licencia',
-        'Exempt driver configuration': 'Configutación Conductor Eximido',
+        'Exempt driver configuration': 'Configuración Conductor Eximido',
         'Time Zone Offset in UTC': 'Desfase zona horaria en UTC',
         'Starting Time 24 Hour Period': 'Hora inicial Periodo de 24 Horaas',
         'Move Yards Use': 'Uso Move Yards',
@@ -303,6 +379,7 @@ i18n.use(LanguageDetector).init({
         'Invalid file format': 'Formato Inválido',
         'Must only contain numbers and letters (0-9/A-Z)': 'Solo debe contener numeros y letras (0-9/A-Z)',
         'Must have ≤ 20 characters': 'Debe tener ≤ 20 caracateres',
+        'Must have ≤ 60 characters': 'Debe tener ≤ 60 caracateres',
         'Not a valid state': 'No es un estado válido',
         'We have created the new driver.': 'Hemos creado el nuevo conductor',
         'We have edited the driver.': 'Hemos editado el conductor',
@@ -351,6 +428,32 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'DESCANSANDO EN LITERA',
         DRIVING: 'CONDUCIENDO',
         'ON DUTY NOT DRIVING': 'EN SERVICIO - NO CONDUCIENDO',
+        IMEI: 'IMEI',
+
+        'new device': 'nuevo dispositivo',
+        'Configuration status': 'Estado de configuración',
+
+        'Bluetooth Mac': 'Bluetooth Mac',
+        'Configuration Script': 'Script de Configuración',
+        'Configuration Status': 'Status de Configuración',
+
+        'Create device': 'Crear dispositivo',
+        'Create multiple devices': 'Crear multiples dispositivos',
+        'The device was deleted successfully': 'El device fue correctamente eliminado',
+        'Error the device was not deleted': 'Error, el device no fue eliminado',
+        'Create New Device': 'Crear un Nuevo Dispositivo',
+        'Edit Device': 'Editar Dispositivo',
+        'Configure Device': 'Configurar Dispositivo',
+        Yes: 'Si',
+        'We have created the new device.': 'Hemos creado el nuevo dispositivo',
+        'We have edited the device.': 'Hemos editado el dispositivo',
+        'Are you sure you want to delete this device?': 'Estás seguro que quieres eliminar este dispositivo?',
+
+        'New Drivers': 'Nuevos Conductores',
+        'New Vehicles': 'Nuevos Vehículos',
+        'New Devices': 'Nuevos Dispositivos',
+        'New Trailers': 'Nuevos Trailers',
+        edit: 'editar',
 
         // trailers
         Trailers: 'Tráilers',
@@ -370,6 +473,7 @@ i18n.use(LanguageDetector).init({
         trailers: 'tráilers',
         'Serial Number': 'Número de serie',
         'Create trailer': 'Crear tráiler',
+        'Create multiple trailers': 'Crear multiples trailers',
         edit: 'editar',
         'Trailer was deleted successfully': 'El tráiler fue eliminado satisfactoriamente',
 
@@ -380,10 +484,30 @@ i18n.use(LanguageDetector).init({
         'Certify Events': 'Certicar Eventos',
         'Assign Events': 'Asignar Eventos',
         'No events to be certified': 'No hay eventos que certificar',
-        'Yes': 'Si',
         'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.': 'Por este medio, certifico que mis entradas de datos y mi registro de estado de servicio para este período de 24 horas son verdaderos y correctos.',
         'Are you sure you want to assign this events to you?.': 'Estas seguro que deseas asignarte estos eventos?',
         'Certify My Logs': 'Certificar Mis Logs',
+
+        // Configurations
+        Yes: 'Si',
+        No: 'No',
+        'Categories configurations': 'Configuración de categorías',
+        'Exempt driver configurations': 'Configuraciones de conductor eximido',
+        Configurations: 'Configuraciones',
+        'We have aplied the configurations.': 'Hemos aplicado las configuraciones.',
+        'Explanation for the configuration of exemption': 'Explicación para la configuración de la eximición',
+        Annotation: 'Anotación',
+
+        // Summary
+        'Amount of Support Personnels': 'Cantidad de personal de apoyo',
+        'Amount of Drivers': 'Cantidad de conductores',
+        'Amount of Vehicles': 'Cantidad de vehículos',
+        'Amount of vehicles off dutty': 'Cantidad de vehículos fuera de servicio',
+        'Amount of vehicles in sleeper berth': 'Cantidad de vehículos descansando en litera',
+        'Amount of vehicles driving': 'Cantidad de vehículos conduciendo',
+        'Amount of vehicles on duty not driving': 'Cantidad de vehículos en servicio - no conduciendo',
+        'Amount of vehicles undefined': 'Cantidad de vehículos indefinidos',
+
       },
     },
   },

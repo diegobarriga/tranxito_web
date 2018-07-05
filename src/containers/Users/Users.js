@@ -22,6 +22,7 @@ class Users extends React.Component {
     this.props.addBreadCrumb(newCrumb, true, url);
     this.props.updateSidebar('dashboard', false);
     this.props.updateSidebar('vehicles', false);
+    this.props.updateSidebar('devices', false);
     this.props.updateSidebar('supervisors', false);
     this.props.updateSidebar('drivers', true);
   }
@@ -54,7 +55,8 @@ class Users extends React.Component {
           <Row>
             <Col md={{ size: 8 }}>
               <Breadcrumb>
-                <Link className="section" to="/drivers">Home</Link>
+                { this.props.role === 'S' && <Link className="section" to="/">Home</Link>}
+                { this.props.role === 'A' && <Link className="section" to={`/motor_carriers/${this.props.motorCarrierId}`}>{this.props.mcName}</Link>}
                 {
                   this.props.navigation.map((x, i) => (
                     <Aux key={i}>
@@ -92,6 +94,9 @@ Users.propTypes = {
   len: PropTypes.number.isRequired,
   updateSidebar: PropTypes.func.isRequired,
   error: PropTypes.object,
+  role: PropTypes.string.isRequired,
+  mcName: PropTypes.string.isRequired,
+  motorCarrierId: PropTypes.number.isRequired,
 };
 
 Users.defaultProps = {
@@ -104,6 +109,9 @@ const mapStateToProps = state => ({
   navigation: state.breadcrumbs.breadcrumbs,
   len: state.breadcrumbs.breadcrumbs.length,
   naviLinks: state.breadcrumbs.links,
+  role: state.auth.role,
+  mcName: state.auth.mcName,
+  motorCarrierId: state.auth.motorCarrierId,
 });
 
 const mapDispatchToProps = dispatch => ({

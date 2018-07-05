@@ -11,6 +11,7 @@ import userLogsReducer from './reducers/userLogs';
 import trackingReducer from './reducers/tracking';
 import breadcrumbsReducer from './reducers/breadcrumbs';
 import sidebarReducer from './reducers/sidebar';
+import devicesReducer from './reducers/devices';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   trackings: trackingReducer,
   breadcrumbs: breadcrumbsReducer,
   sidebar: sidebarReducer,
+  devices: devicesReducer,
 });
 
 

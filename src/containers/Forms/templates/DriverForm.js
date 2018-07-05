@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
 import { translate } from 'react-i18next';
 import api from '../../../services/api';
+import states from '../../../utils/states.json';
 import '../../../assets/styles/forms.css';
 
 const _ = require('lodash');
@@ -19,16 +20,15 @@ class DriverForm extends Component {
         email: '',
         driverLicenseNumber: '',
         licenseIssuingState: '',
-        exemptDriverConfiguration: '0',
-        timeZoneOffsetUtc: '',
+        licenseIssuingCountry: '',
+        timeZoneOffsetUtc: 4,
         startingTime24HourPeriod: '',
-        moveYardsUse: '0',
-        personalUse: '0',
         username: '',
         password: '',
         passwordConfirmation: '',
         accountType: 'D',
         accountStatus: true,
+        defaultUse: true,
       },
       picture: '',
       isLoading: false,
@@ -54,12 +54,9 @@ class DriverForm extends Component {
             email: response.data.email,
             driverLicenseNumber: response.data.driverLicenseNumber,
             licenseIssuingState: response.data.licenseIssuingState,
-            exemptDriverConfiguration: response.data.exemptDriverConfiguration,
+            licenseIssuingCountry: response.data.licenseIssuingCountry,
             timeZoneOffsetUtc: response.data.timeZoneOffsetUtc,
             startingTime24HourPeriod: response.data.startingTime24HourPeriod,
-            moveYardsUse: response.data.moveYardsUse,
-            defaultUse: response.data.defaultUse,
-            personalUse: response.data.personalUse,
             image: response.data.image,
             username: response.data.username,
             password: '',
@@ -155,6 +152,14 @@ class DriverForm extends Component {
     } else if (String(data.licenseIssuingState).length !== 2) {
       errors.licenseIssuingState = t('Not a valid state');
     }
+
+    if (_.isEmpty(String(data.licenseIssuingCountry))) {
+      errors.licenseIssuingCountry = t('This field is required');
+    } else if (_.isEmpty(String(data.licenseIssuingCountry.trim()))) {
+      errors.licenseIssuingCountry = t("This field can't be blank");
+    } else if (!['USA', 'Mexico', 'Canada', 'Other'].includes(data.licenseIssuingCountry)) {
+      errors.licenseIssuingCountry = t("Issuing country can only be one of 'USA', 'Mexico', 'Canada' or 'Other'");
+    }
     /*
     if (_.isEmpty(String(data.exemptDriverConfiguration))) {
       errors.exemptDriverConfiguration = 'This field is required';
@@ -200,6 +205,7 @@ class DriverForm extends Component {
   async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidData()) {
+      console.log('antes de enviar----', this.state);
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
       try {
@@ -355,41 +361,54 @@ class DriverForm extends Component {
             </FormGroup>
           </div>
           <div className="field">
+            <Label>{t('Licenses issuing country')}</Label>
+            <FormGroup>
+              <Input
+                type="select"
+                name="licenseIssuingCountry"
+                placeholder={t('Licenses issuing country')}
+                value={data.licenseIssuingCountry}
+                onChange={this.onChange}
+                valid={!this.emptyErrors() && !errors.licenseIssuingCountry}
+                invalid={errors.licenseIssuingCountry}
+              >
+                <option value="">Select Country</option>
+                <option>Canada</option>
+                <option>Mexico</option>
+                <option>USA</option>
+                <option>Other</option>
+              </Input>
+              <FormFeedback>{errors.licenseIssuingCountry}</FormFeedback>
+            </FormGroup>
+          </div>
+          <div className="field">
             <Label>{t('Licenses issuing state')}</Label>
             <FormGroup>
               <Input
-                type="text"
+                type="select"
                 name="licenseIssuingState"
                 placeholder={t('Licenses issuing state')}
                 value={data.licenseIssuingState}
                 onChange={this.onChange}
                 valid={!this.emptyErrors() && !errors.licenseIssuingState}
                 invalid={errors.licenseIssuingState}
-              />
+                disabled={data.licenseIssuingCountry === ''}
+              >
+                <option value="">Select State</option>
+                {data.licenseIssuingCountry !== '' ? (
+                  states[data.licenseIssuingCountry].map(state => (
+                    <option value={state.code}>
+                      ({state.code}) {state.name}
+                    </option>
+                    ))
+                ) : ''}
+              </Input>
               <FormFeedback>{errors.licenseIssuingState}</FormFeedback>
             </FormGroup>
           </div>
         </div>
 
         <div className="unstackable two fields">
-          <div className="field">
-            <Label>{t('Exempt driver configuration')}</Label>
-            <FormGroup>
-              <Input
-                label="Exempt Driver Configuration"
-                type="select"
-                name="exemptDriverConfiguration"
-                value={data.exemptDriverConfiguration}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.exemptDriverConfiguration}
-                invalid={errors.exemptDriverConfiguration}
-              >
-                <option value="0">0</option>
-                <option value="E">E</option>
-              </Input>
-              <FormFeedback>{errors.exemptDriverConfiguration}</FormFeedback>
-            </FormGroup>
-          </div>
           <div className="field">
             <Label>{t('Time Zone Offset in UTC')}</Label>
             <FormGroup>
@@ -406,69 +425,18 @@ class DriverForm extends Component {
               <FormFeedback>{errors.timeZoneOffsetUtc}</FormFeedback>
             </FormGroup>
           </div>
-        </div>
 
-        <div className="field">
-          <Label>{t('Starting Time 24 Hour Period')}</Label>
-          <FormGroup>
-            <Input
-              type="datetime-local"
-              name="startingTime24HourPeriod"
-              value={data.startingTime24HourPeriod}
-              valid={!this.emptyErrors() && !errors.startingTime24HourPeriod}
-              invalid={errors.startingTime24HourPeriod}
-              onChange={this.onChange}
-            />
-          </FormGroup>
-        </div>
-
-        <div className="unstackable three fields">
           <div className="field">
-            <Label>{t('Move Yards Use')}</Label>
+            <Label>{t('Starting Time 24 Hour Period')}</Label>
             <FormGroup>
               <Input
-                type="select"
-                name="moveYardsUse"
-                value={data.moveYardsUse}
+                type="datetime-local"
+                name="startingTime24HourPeriod"
+                value={data.startingTime24HourPeriod}
+                valid={!this.emptyErrors() && !errors.startingTime24HourPeriod}
+                invalid={errors.startingTime24HourPeriod}
                 onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.moveYardsUse}
-                invalid={errors.moveYardsUse}
-              >
-                {this.createSelectItems(0, 1)}
-              </Input>
-              <FormFeedback>{errors.moveYardsUse}</FormFeedback>
-            </FormGroup>
-          </div>
-          <div className="field">
-            <Label>{t('Default Use')}</Label>
-            <FormGroup>
-              <Input
-                type="select"
-                name="defaultUse"
-                value={data.defaultUse}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.defaultUse}
-                invalid={errors.defaultUse}
-              >
-                {this.createSelectItems(0, 1)}
-              </Input>
-              <FormFeedback>{errors.defaultUse}</FormFeedback>
-            </FormGroup>
-          </div>
-          <div className="field">
-            <Label>{t('Personal Use')}</Label>
-            <FormGroup>
-              <Input
-                type="select"
-                name="personalUse"
-                value={data.personalUse}
-                onChange={this.onChange}
-                valid={!this.emptyErrors() && !errors.personalUse}
-                invalid={errors.personalUse}
-              >
-                {this.createSelectItems(0, 1)}
-              </Input>
-              <FormFeedback>{errors.personalUse}</FormFeedback>
+              />
             </FormGroup>
           </div>
         </div>

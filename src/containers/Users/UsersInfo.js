@@ -31,10 +31,14 @@ class UsersInfo extends React.Component {
   }
 
   async checkLastMod() {
+    console.log('checking last mod');
     this.setState({ checking: true });
-    const lastMod = await getLastMod(this.props.motorCarrierId, this.props.token);
-
+    const lastMod = await getLastMod(this.props.token);
+    // console.log(lastMod);
+    // console.log(lastMod.people, this.props.lastMod.people);
+    // console.log(lastMod.people !== this.props.lastMod.people);
     if (lastMod.people !== this.props.lastMod.people) {
+      console.log('son distintos');
       this.props.updateUsers(this.props.motorCarrierId, this.props.token);
       this.props.updateLastMod(lastMod);
     }
@@ -83,6 +87,7 @@ class UsersInfo extends React.Component {
                 firstName={user.firstName}
                 lastName={user.lastName}
                 username={user.username}
+                email={user.email}
                 license_number={user.driverLicenseNumber}
                 image={user.image}
               />))
