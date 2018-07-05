@@ -43,15 +43,14 @@ class Device extends React.Component {
   }
 
   async onFormSubmit(formData) {
-    console.log('entro acaaa----');
     const { t } = this.props;
     this.setState({ isLoading: true });
     try {
       const response = await this.linkVehicle(formData);
       console.log('resp---', response.headers);
       if (response.status === 200) {
-        this.setState({ isLoading: false });
         this.setState({ type: 'success', message: t('We have linked the device to te vehicle.') });
+        this.getVehicleDevice();
       } else {
         this.setState({ isLoading: false });
         this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
@@ -89,7 +88,7 @@ class Device extends React.Component {
     this.unlinkVehicle(this.state.device.id).then(async (response) => {
       // console.log('resp---', response.headers);
       if (response.status === 200) {
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false, device: null });
         this.setState({ type: 'success', message: t('We have unlinked the device to te vehicle.') });
       } else {
         this.setState({ isLoading: false });
@@ -161,7 +160,7 @@ class Device extends React.Component {
                     <b>{t('Configuration status')}:</b> {this.state.device.configStatus ? <FontAwesomeIcon icon="check" color="green" /> : <FontAwesomeIcon icon="times" color="red" />}
                   </p>
                 </div>
-                <Button onClick={this.unlink} disabled={loadUnlink}>{t('Unlink')}</Button>
+                <Button style={{ marginTop: '5px' }} onClick={this.unlink} disabled={loadUnlink}>{t('Unlink')}</Button>
               </Col>
             </Row>
             <hr />
