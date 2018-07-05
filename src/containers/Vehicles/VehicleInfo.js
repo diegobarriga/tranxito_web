@@ -47,7 +47,7 @@ class VehicleInfo extends React.Component {
               <p><strong>{t('Plaque')}:</strong> {this.props.vehicles[this.props.id].plaque}</p>
               <p><strong>{t('State')}:</strong> {this.props.vehicles[this.props.id].state}</p>
               <p><strong>VIN:</strong> {this.props.vehicles[this.props.id].vin}</p>
-              {/* /* <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p> */} */}
+              {/* /* <p><strong>ELD:</strong> {this.props.vehicles[this.props.id].imeiEld}</p> */}
             </div>
           </div>
           <div style={styles.pStyle}>
