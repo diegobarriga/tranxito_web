@@ -135,7 +135,7 @@ class Vehicle extends React.Component {
           <TabPane tabId="3">
             <div className="tabDiv">
               <Container>
-                <Device id={id}/>
+                <Device id={id} />
               </Container>
             </div>
           </TabPane>

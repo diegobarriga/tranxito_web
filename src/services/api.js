@@ -63,6 +63,8 @@ export default {
       axios.get(`${apiPath}/Vehicles/${vehicleId}/setImage`, { url }),
     getVehicleMotorCarrier: vehicleId =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/motorCarrier`),
+    getVehicleDevice: (vehicleId, token) =>
+      axios.get(`${apiPath}/Vehicles/${vehicleId}/devices?access_token=${token}`),
     exists: vehicleId =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/exists`),
     getLogs: (vehicleId, token) =>

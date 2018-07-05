@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row, Container, Col } from 'reactstrap';
 import { translate } from 'react-i18next';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import Loader from '../../components/Loader/Loader';
 import '../../assets/styles/buttons.css';
-import getLastMod from '../../utils/updateStoreFunctions';
+// import getLastMod from '../../utils/updateStoreFunctions';
+import syrusImg from './../../assets/images/syrus.png';
 import api from '../../services/api';
 import * as actions from '../../store/actions/index';
 import Alert from '../Alert/Alert';
@@ -16,15 +18,23 @@ class Device extends React.Component {
     this.state = {
       type: '',
       message: '',
+      device: {
+        bluetoothMac: '',
+        imei: '',
+        configScript: '',
+        configStatus: false,
+        sequenceId: -1,
+      },
       isLoading: false,
     };
     this.linkVehicle = this.linkVehicle.bind(this);
     this.unlinkVehicle = this.unlinkVehicle.bind(this);
+    this.getVehicleDevice = this.getVehicleDevice.bind(this);
     // this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   componentDidMount() {
-    // this.props.getUserLogs(this.props.token, this.props.id);
+    this.getVehicleDevice();
   }
 
   // onFormSubmit(formData) {
@@ -52,12 +62,24 @@ class Device extends React.Component {
   //   });
   // }
 
-  linkVehicle(data) {
-    return api.devices.linkVehicle(this.props.id, this.props.token, data);
+  getVehicleDevice() {
+    this.setState({ isLoading: true });
+    api.vehicles.getVehicleDevice(this.props.id, this.props.token).then((res) => {
+      try {
+        this.setState({ device: res.data, isLoading: false });
+      } catch (err) {
+        console.log(err);
+        this.setState({ isLoading: false });
+      }
+    });
   }
 
-  unlinkVehicle() {
-    return api.people.unlinkVehicle(this.props.id, this.props.token);
+  linkVehicle(deviceId, data) {
+    return api.devices.linkVehicle(deviceId, this.props.token, data);
+  }
+
+  unlinkVehicle(deviceId) {
+    return api.people.unlinkVehicle(deviceId, this.props.token);
   }
 
   render() {
@@ -65,19 +87,32 @@ class Device extends React.Component {
       marginTop: '1rem',
       marginBottom: '2rem',
     };
+    const {
+      isLoading,
+      type,
+      message,
+    } = this.state;
+    const {
+      bluetoothMac,
+      imei,
+      sequenceId,
+      configStatus,
+    } = this.state.device;
 
-    if (this.state.isLoading) return <Loader />;
+    if (isLoading) return <Loader />;
 
     let alert;
-    if (this.state.type && this.state.message) {
-      if (this.state.type === 'success') {
-        alert = (<Alert alertType="SUCCESS" message={this.state.message} />);
-      } else if (this.state.type === 'danger') {
-        alert = (<Alert alertType="FAIL" message={this.state.message} />);
+    if (type && message) {
+      if (type === 'success') {
+        alert = (<Alert alertType="SUCCESS" message={message} />);
+      } else if (type === 'danger') {
+        alert = (<Alert alertType="FAIL" message={message} />);
       }
     }
 
     const { t } = this.props;
+
+    // console.log(device);
     return (
       <Container>
         <Row>
@@ -92,10 +127,19 @@ class Device extends React.Component {
         </Row>
         <Row>
           <Col sm="4" md={{ size: 4 }}>
-
+            <img className="media-object" alt="syrus-img" width="250" src={syrusImg} />
           </Col>
           <Col sm="8" md={{ size: 8 }}>
-            <p>{}</p>
+            <div className="right">
+              <p><b>Sequence Id:</b> {sequenceId}</p>
+              <p><b>{t('IMEI')}:</b> {imei}</p>
+              <p>
+                <b>MAC Address (Bluetooth):</b>  {bluetoothMac.toUpperCase()}
+              </p>
+              <p>
+                <b>{t('Configuration status')}:</b> {configStatus ? <FontAwesomeIcon icon="check" color="green" /> : <FontAwesomeIcon icon="times" color="red" />}
+              </p>
+            </div>
           </Col>
         </Row>
         <hr />
@@ -113,17 +157,13 @@ class Device extends React.Component {
 Device.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  updateLastMod: PropTypes.func.isRequired,
-  lastMod: PropTypes.object.isRequired,
+  // updateLastMod: PropTypes.func.isRequired,
+  // lastMod: PropTypes.object.isRequired,
 };
 
 
 const mapStateToProps = state => ({
-  users: state.auth.users,
-  id: PropTypes.string.isRequired,
   token: state.auth.token,
-  lastMod: state.auth.lastMod,
-  motorCarrierId: state.auth.motorCarrierId,
 });
 
 const mapDispatchToProps = dispatch => ({
