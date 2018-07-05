@@ -96,6 +96,7 @@ const getMotorCarrierSuccess = (state, action) => updateObject(state, {
   mcName: action.mcName,
   trailers: action.trailers,
   lastMod: action.lastMod,
+  devices: action.devices,
 });
 
 const getMotorCarrierFail = (state, action) => updateObject(state, {

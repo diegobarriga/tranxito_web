@@ -17,6 +17,7 @@ export const getMotorCarrierSuccess = (
   mcName,
   trailers,
   lastMod,
+  devices,
 ) => ({
   type: actionTypes.GET_MOTOR_CARRIER_SUCCESS,
   motorCarrierId,
@@ -25,6 +26,7 @@ export const getMotorCarrierSuccess = (
   mcName,
   trailers,
   lastMod,
+  devices,
 });
 
 
@@ -248,10 +250,15 @@ export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => asyn
     token,
     filter,
   );
+  const devicesResponse = await api.motorCarriers.getMotorCarrierDevices(
+    motorCarrierId,
+    token,
+  );
 
   const usersObject = functions.arrayToObject(peopleResponse.data);
   const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
   const trailersObject = functions.arrayToObject(trailersResponse.data);
+  const devicesObject = functions.arrayToObject(devicesResponse.data);
 
   const lastModResponse = await api.lastMod.getLastMod(token);
 
@@ -264,6 +271,7 @@ export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => asyn
     motorCarrierName,
     trailersObject,
     lastMod,
+    devicesObject,
   ));
 };
 

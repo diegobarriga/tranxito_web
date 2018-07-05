@@ -69,7 +69,7 @@ class SignupView extends Component {
 
   postData(data) {
     return api.motorCarriers.createMotorCarrierPeople(
-      parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId,
+      parseInt(this.props.match.params.id, 10) || this.props.motorCarrierId,
       this.props.token,
       data,
     );
@@ -127,7 +127,7 @@ class SignupView extends Component {
             <SignupForm
               submit={this.onFormSubmit}
               token={this.props.token}
-              motorCarrierId={parseInt(this.props.match.params.mc, 10) || this.props.motorCarrierId}
+              motorCarrierId={parseInt(this.props.match.params.id, 10) || this.props.motorCarrierId}
               match={match}
               isCreate={isCreate}
             />
@@ -150,7 +150,11 @@ SignupView.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   updateLastMod: PropTypes.func.isRequired,
   lastMod: PropTypes.object.isRequired,
+  motorCarrierIdAux: PropTypes.object,
+};
 
+SignupView.defaultProps = {
+  motorCarrierIdAux: null,
 };
 
 const mapStateToProps = state => ({
