@@ -6,6 +6,8 @@ i18n.use(LanguageDetector).init({
   resources: {
     en: {
       translations: {
+        'We are still creating the ': 'We are still creating the ',
+        ' please check in a few minutes.': ' please check in a few minutes.',
         // Navibar
         Login: 'Login',
         Logout: 'Logout',
@@ -234,7 +236,7 @@ i18n.use(LanguageDetector).init({
         'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.':'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.',
         'Are you sure you want to assign this events to you?.': 'Are you sure you want to assign this events to you?.',
         'Certify My Logs': 'Certify My Logs',
-        
+
         // Configurations
         Yes: 'Yes',
         No: 'No',
@@ -259,6 +261,8 @@ i18n.use(LanguageDetector).init({
     },
     es: {
       translations: {
+        'We are still creating the ': 'Todavia estamos creando a los ',
+        ' please check in a few minutes.': ' por favor revisa en unos minutos.',
         // Navibar
         Login: 'Iniciar Sesión',
         Logout: 'Cerrar Sesión',

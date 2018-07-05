@@ -171,7 +171,10 @@ class SimpleReactFileUpload extends React.Component {
             console.log(status);
             if (status === 'SUCCESS') {
               this.setState({ ...this.state, loading: false });
-              this.setState({ type: 'success', message: t('We have created all the new') + t(this.props.type) });
+              this.setState({ type: 'success', message: t('We have created all the new ') + t(this.props.type) });
+            } else if (status === 'PENDING') {
+              this.setState({ ...this.state, loading: false });
+              this.setState({ type: 'danger', message: t('We are still creating the ') + t(this.props.type) + t(' please check in a few minutes.') });
             } else {
               const { id } = res.data[0];
               this.getErrors(id).then((resp) => {
