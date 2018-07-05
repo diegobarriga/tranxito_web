@@ -6,6 +6,8 @@ i18n.use(LanguageDetector).init({
   resources: {
     en: {
       translations: {
+        'We are still creating the ': 'We are still creating the ',
+        ' please check in a few minutes.': ' please check in a few minutes.',
         // Navibar
         Login: 'Login',
         Logout: 'Logout',
@@ -225,6 +227,16 @@ i18n.use(LanguageDetector).init({
         'We have created the new supervisor.': 'We have created the new supervisor.',
         'We have edited the supervisor.': 'We have edited the supervisor.',
 
+
+        // Driver
+        'Certify Events': 'Certify Events',
+        'Assign Events': 'Assign Events',
+        'No events to be certified': 'No events to be certified',
+        'No events to be assigned': 'No events to be assigned',
+        'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.':'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.',
+        'Are you sure you want to assign this events to you?.': 'Are you sure you want to assign this events to you?.',
+        'Certify My Logs': 'Certify My Logs',
+
         // Configurations
         Yes: 'Yes',
         No: 'No',
@@ -244,10 +256,13 @@ i18n.use(LanguageDetector).init({
         'Amount of vehicles driving': 'Amount of vehicles driving',
         'Amount of vehicles on duty not driving': 'Amount of vehicles on duty not driving',
         'Amount of vehicles undefined': 'Amount of vehicles undefined',
+
       },
     },
     es: {
       translations: {
+        'We are still creating the ': 'Todavia estamos creando a los ',
+        ' please check in a few minutes.': ' por favor revisa en unos minutos.',
         // Navibar
         Login: 'Iniciar Sesión',
         Logout: 'Cerrar Sesión',
@@ -471,6 +486,14 @@ i18n.use(LanguageDetector).init({
         'We have created the new supervisor.': 'Hemos creado al nuevo supervisor.',
         'We have edited the supervisor.': 'Hemos editado al supervisor.',
 
+        'Certify Events': 'Certicar Eventos',
+        'Assign Events': 'Asignar Eventos',
+        'No events to be certified': 'No hay eventos que certificar',
+        'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.': 'Por este medio, certifico que mis entradas de datos y mi registro de estado de servicio para este período de 24 horas son verdaderos y correctos.',
+        'Are you sure you want to assign this events to you?.': 'Estas seguro que deseas asignarte estos eventos?',
+        'Certify My Logs': 'Certificar Mis Logs',
+        'No events to be assigned': 'No hay evento para ser asignados',
+
         // Configurations
         Yes: 'Si',
         No: 'No',
@@ -490,6 +513,7 @@ i18n.use(LanguageDetector).init({
         'Amount of vehicles driving': 'Cantidad de vehículos conduciendo',
         'Amount of vehicles on duty not driving': 'Cantidad de vehículos en servicio - no conduciendo',
         'Amount of vehicles undefined': 'Cantidad de vehículos indefinidos',
+
       },
     },
   },

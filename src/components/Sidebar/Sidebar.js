@@ -11,6 +11,10 @@ import Aux from '../../hoc/Aux';
 import UserView from './UserView';
 
 class sidebar extends Component {
+  componentDidMount() {
+    console.log('sidebarMounted');
+  }
+
   changeColor(name) {
     // Unmark all
     this.props.updateSidebar('dashboard', false);

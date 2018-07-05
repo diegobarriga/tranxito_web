@@ -45,6 +45,8 @@ export const authSuccess = (
   lastName,
   mcName,
   lastMod,
+  email,
+  driverLicenseNumber,
 ) => ({
   type: actionTypes.AUTH_SUCCESS,
   token,
@@ -61,6 +63,8 @@ export const authSuccess = (
   lastName,
   mcName,
   lastMod,
+  email,
+  driverLicenseNumber,
 });
 
 export const authFail = error => ({
@@ -158,7 +162,6 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const response = await api.people.login(authData);
-
     const userResponse = await api.people.getUser(response.data.userId, response.data.id);
     console.log(userResponse.data);
 
@@ -214,6 +217,8 @@ export const login = (email, password) => async (dispatch) => {
         userResponse.data.lastName,
         mCresponse.data.name,
         lastMod,
+        userResponse.data.email,
+        userResponse.data.driverLicenseNumber,
       ));
     } else {
       dispatch(authSuccess(
@@ -231,6 +236,8 @@ export const login = (email, password) => async (dispatch) => {
         userResponse.data.lastName,
         null,
         {},
+        userResponse.data.email,
+        userResponse.data.driverLicenseNumber,
       ));
     }
   } catch (err) {

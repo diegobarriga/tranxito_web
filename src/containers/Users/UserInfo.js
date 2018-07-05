@@ -6,6 +6,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Row, Button } from 'reactstrap';
 import Avatar from '../../components/Avatar';
 import api from '../../services/api';
+import Aux from '../../hoc/Aux';
 import * as actions from '../../store/actions/index';
 import '../../assets/styles/users.css';
 
@@ -40,23 +41,45 @@ class UserInfo extends React.Component {
         <Row style={styles.userProfile} className="user-profile-info">
           <div className="user_wrapper">
             <div className="profile-image">
-              <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
+              { this.props.isDriver ?
+                <Avatar src={api.images.userImageLink(this.props.user.image)} />
+              :
+                <Avatar src={api.images.userImageLink(this.props.users[this.props.id].image)} />
+              }
             </div>
             <div style={styles.userData}>
-              <h5>{`${this.props.users[this.props.id].firstName} ${this.props.users[this.props.id].lastName}`}</h5>
+              { this.props.isDriver ?
+                <h5>{`${this.props.user.firstName} ${this.props.user.lastName}`}</h5>
+              :
+                <h5>{`${this.props.users[this.props.id].firstName} ${this.props.users[this.props.id].lastName}`}</h5>
+              }
               <div>
                 <FontAwesomeIcon icon="address-card" className="customIcon" />{'   '}
-                {this.props.users[this.props.id].driverLicenseNumber}       <b>State:</b> {this.props.users[this.props.id].licenseIssuingState} ({this.props.users[this.props.id].licenseIssuingCountry})
+
+                { this.props.isDriver ?
+                  <Aux>{this.props.user.driverLicenseNumber}</Aux>
+                :
+                  <Aux>{this.props.users[this.props.id].driverLicenseNumber}</Aux>
+                }
               </div>
               <div>
                 <FontAwesomeIcon icon="envelope" className="customIcon" />{'   '}
-                {this.props.users[this.props.id].email.toLowerCase()}
+                { this.props.isDriver ?
+                  <Aux>{this.props.user.email}</Aux>
+                :
+                  <Aux>{this.props.users[this.props.id].email}</Aux>
+                }
               </div>
             </div>
           </div>
           <div style={styles.pStyle}>
-            <Link className="btn btn-secondary btn-sm" to={`/drivers/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>{' '}
-            <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
+            { !this.props.isDriver &&
+              <Link className="btn btn-secondary btn-sm btn-pad" to={`/drivers/${this.props.id}/edit`}><FontAwesomeIcon icon="edit" color="white" /></Link>
+            }
+
+            { !this.props.isDriver &&
+              <Button color="danger" size="sm" onClick={() => this.onDeleteBtnClick(this.props.id, this.props.token)}><FontAwesomeIcon icon="trash" color="white" /></Button>
+            }
           </div>
         </Row>
       </div>
@@ -65,18 +88,25 @@ class UserInfo extends React.Component {
 }
 
 UserInfo.propTypes = {
-  users: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
+  users: PropTypes.object,
+  id: PropTypes.any.isRequired,
   token: PropTypes.string.isRequired,
   deleteUser: PropTypes.func.isRequired,
+  isDriver: PropTypes.bool,
+  user: PropTypes.object.isRequired,
 };
 
+UserInfo.defaultProps = {
+  users: null,
+  isDriver: undefined,
+};
 const mapDispatchToProps = dispatch => ({
   deleteUser: (userId, token) => dispatch(actions.onDelete(userId, token)),
 });
 
 const mapStateToProps = state => ({
   users: state.auth.users,
+  user: state.auth,
   token: state.auth.token,
 });
 

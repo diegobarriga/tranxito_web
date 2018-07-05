@@ -29,13 +29,14 @@ import faFilter from '@fortawesome/fontawesome-free-solid/faFilter';
 import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
 import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 import faSort from '@fortawesome/fontawesome-free-solid/faSort';
+import faWindowClose from '@fortawesome/fontawesome-free-solid/faWindowClose';
 import faExclamationTriangle from '@fortawesome/fontawesome-free-solid/faExclamationTriangle';
 import faCog from '@fortawesome/fontawesome-free-solid/faCog';
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 
-import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
+import Layout from './containers/Layout/Layout';
 import Users from './containers/Users/Users';
 import User from './containers/Users/User';
 import Vehicles from './containers/Vehicles/Vehicles';
@@ -60,6 +61,7 @@ import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier'
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import Supervisors from './containers/Supervisors/Supervisors';
+import Profile from './containers/Users/Profile/Profile';
 import Devices from './containers/Devices/Devices';
 import CreateDevice from './containers/Forms/devices/CreateDevice';
 import CreateDevices from './containers/Forms/devices/CreateDevices';
@@ -74,6 +76,7 @@ fontawesome.library.add(
   faChartLine, faSignInAlt, faSignOutAlt, faSortNumericDown, faSortNumericUp,
   faUserCog, faUserTie, faHdd, faEnvelope, faAddressCard, faFilter,
   faSortUp, faSortDown, faSort, faExclamationTriangle, faCog, faCheck, faTimes,
+  faWindowClose,
 );
 
 class App extends Component {
@@ -108,6 +111,7 @@ class App extends Component {
           <Route path="/supervisors/:id/new_supervisor" component={CreateSupervisor} />
           <Route path="/supervisors/:id/edit" component={EditSupervisor} />
           <Route path="/supervisors" component={Supervisors} />
+          <Route path="/profile" component={Profile} />
           <Route path="/devices/new_device" component={CreateDevice} />
           <Route path="/devices/new_devices" component={CreateDevices} />
           <Route path="/devices/:id/edit" component={EditDevice} />

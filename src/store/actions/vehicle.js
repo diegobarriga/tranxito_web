@@ -20,6 +20,7 @@ export const createVehicle = vehicle => ({
   vehicle,
 });
 
+
 export const getVehicle = (token, vehicleId) => (dispatch) => {
   console.log('entor a getvehicle');
   dispatch(getVehicleStart());

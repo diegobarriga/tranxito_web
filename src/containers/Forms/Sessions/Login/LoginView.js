@@ -22,10 +22,12 @@ class LoginView extends Component {
 
     let authRedirect = null;
     if (this.props.isAuthenticated) {
-      if (this.props.isAdmin) {
+      if (this.props.role === 'A') {
         authRedirect = <Redirect to="/motor_carriers" />;
-      } else {
+      } else if (this.props.role === 'S') {
         authRedirect = <Redirect to="/drivers" />;
+      } else if (this.props.role === 'D') {
+        authRedirect = <Redirect to="/profile" />;
       }
     }
 
@@ -59,7 +61,7 @@ class LoginView extends Component {
 }
 
 LoginView.propTypes = {
-  isAdmin: PropTypes.bool.isRequired,
+  role: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
@@ -69,11 +71,12 @@ LoginView.propTypes = {
 
 LoginView.defaultProps = {
   error: null,
+  role: null,
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.token !== null,
-  isAdmin: state.auth.role === 'A',
+  role: state.auth.role,
   isLoading: state.auth.loading,
   error: state.auth.error,
 });
