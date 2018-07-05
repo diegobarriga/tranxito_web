@@ -10,7 +10,7 @@ import { translate } from 'react-i18next';
 import VehicleInfo from './VehicleInfo';
 import Device from './Device';
 import Logs from '../Logs/Logs';
-// import Heatmap from './Heatmap';
+import Heatmap from './Heatmap';
 import '../../assets/styles/tabs.css';
 import * as actions from '../../store/actions/index';
 import Aux from '../../hoc/Aux';
@@ -128,7 +128,7 @@ class Vehicle extends React.Component {
           <TabPane tabId="2">
             <div className="tabDiv">
               <Container>
-                
+                <Heatmap id={id} />
               </Container>
             </div>
           </TabPane>
