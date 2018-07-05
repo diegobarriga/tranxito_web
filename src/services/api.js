@@ -43,8 +43,8 @@ export default {
       axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`),
     getUserNotCertifiedEvents: (userId, token, filters) =>
       axios.get(`${apiPath}/People/${userId}/events?access_token=${token}`, { params: { filter: filters } }),
-    userCertifyEvents: (userId, token, data) =>
-      axios.patch(`${apiPath}/People/${userId}/certifyEvents?access_token=${token}`, data),
+    userCertifyEvents: (userId, token) =>
+      axios.patch(`${apiPath}/People/${userId}/certifyEvents?access_token=${token}`),
     createUserEvents: (userId, eventData) =>
       axios.post(`${apiPath}/People/${userId}/events`, { eventData }),
     getUserMotorCarrier: userId =>
@@ -144,8 +144,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getVehiclesDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
-    getNonAuthEvents: (motorCarrierId, token) =>
-      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/nonAuthEvents?access_token=${token}`),
+    getNonAuthEvents: (motorCarrierId, token, filters) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/nonAuthEvents?access_token=${token}`, { params: { filter: filters } }),
   },
   events: {
     getEvents: () =>
@@ -160,6 +160,8 @@ export default {
       axios.get(`${apiPath}/Events/${eventId}/vehicle`),
     getEventMotorCarrier: eventId =>
       axios.get(`${apiPath}/Events/${eventId}/motorCarrier`),
+    patchEvent: (eventId, token, data) =>
+      axios.patch(`${apiPath}/Events/${eventId}?access_token=${token}`, data),
   },
   images: {
     userImageLink: image => `${apiPath}/imageContainers/People/download/${image}`,

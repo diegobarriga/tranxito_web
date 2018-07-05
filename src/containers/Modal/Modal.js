@@ -79,15 +79,42 @@ class ConfirmModal extends React.Component {
 
   handleSubmit() {
     console.log(this.props.logs);
-    api.people.userCertifyEvents(
-      this.props.id,
-      this.props.token,
-      this.props.logs,
-    ).then((response) => {
-      if (response.status === 200) {
-        this.handleCloseModal();
-      }
-    });
+    if (this.props.isCerti) {
+      console.log('notcertified');
+      api.people.userCertifyEvents(
+        this.props.id,
+        this.props.token,
+        // this.props.logs,
+      ).then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          this.handleCloseModal();
+        }
+      });
+    } else {
+      console.log('unusigned');
+      const data = {
+        data: {
+          driverId: this.props.id,
+          recordStatus: 1,
+          annotation: 'Auto assignation',
+        },
+      };
+      console.log(data);
+      console.log(this.props.logs);
+      this.props.logs.forEach((log) => {
+        api.events.patchEvent(
+          log,
+          this.props.token,
+          data,
+        ).then((response) => {
+          if (response.status === 200) {
+            console.log(response);
+            this.handleCloseModal();
+          }
+        });
+      });
+    }
   }
 
   render() {
@@ -136,6 +163,7 @@ ConfirmModal.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   logs: PropTypes.array,
+  isCerti: PropTypes.bool.isRequired,
 };
 
 ConfirmModal.defaultProps = {

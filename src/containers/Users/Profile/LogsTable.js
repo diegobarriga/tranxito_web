@@ -93,12 +93,15 @@ class Logs extends React.Component {
     this.setState({ loading: true });
     const mess = 'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.';
     this.setState({ message: mess });
-    const filter = '{"where": {"recordStatus": "1"}}';
+    const filter = '{"where": {"and": [ {"recordStatus": "1"}, { "or": [{"type": "1"},{"type": "2"},{"type": "3"},{"type": "5"},{"type": "6"},{"type": "7"}]}  ]}}';
+    // const filter = '{"where": {"recordStatus": "1"}}';
     apiCall(this.props.id, this.props.token, filter)
       .then((response) => {
         try {
-          const logs = response.data;
-          // console.log(logs);
+          const logs = response.data.filter(log => (
+            log.certified === false
+          ));
+          console.log(logs);
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
           const objectLogs = functions.arrayToObjectLogs(logs);
           // console.log(objectLogs);
@@ -114,11 +117,16 @@ class Logs extends React.Component {
     this.setState({ loading: true });
     const mess = 'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.';
     this.setState({ message: mess });
-    apiCall(this.state.mcId, this.props.token)
+    const filter = '{"where": {"recordStatus": "1"}}';
+    apiCall(this.state.mcId, this.props.token, filter)
       .then((response) => {
         try {
-          const logs = response.data;
-          // console.log(logs);
+          const logs = response.data.filter(log => (
+            log.driverId === null &&
+            log.recordStatus !== 2
+          ));
+          console.log('inf');
+          console.log(logs);
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
           const objectLogs = functions.arrayToObjectLogs(logs);
           // console.log(objectLogs);
@@ -279,6 +287,7 @@ class Logs extends React.Component {
               <Table.Row>
                 <Table.HeaderCell colSpan="4">
                   <Modal
+                    isCerti={this.props.isCerti}
                     text={this.state.message}
                     logs={this.state.result}
                   />
@@ -299,6 +308,7 @@ Logs.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   isNotAuth: PropTypes.bool.isRequired,
+  isCerti: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
