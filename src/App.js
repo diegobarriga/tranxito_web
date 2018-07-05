@@ -30,7 +30,9 @@ import faSortUp from '@fortawesome/fontawesome-free-solid/faSortUp';
 import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 import faSort from '@fortawesome/fontawesome-free-solid/faSort';
 import faExclamationTriangle from '@fortawesome/fontawesome-free-solid/faExclamationTriangle';
-
+import faCog from '@fortawesome/fontawesome-free-solid/faCog';
+import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
+import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 
 import Layout from './containers/Layout/Layout';
 import './assets/styles/App.css';
@@ -51,12 +53,18 @@ import CreateVehicles from './containers/Forms/vehicles/CreateVehicles';
 import EditVehicle from './containers/Forms/vehicles/EditVehicle';
 import Trailers from './containers/Trailers/Trailers';
 import CreateTrailer from './containers/Forms/Trailers/CreateTrailer';
+import CreateTrailers from './containers/Forms/Trailers/CreateTrailers';
 import EditTrailer from './containers/Forms/Trailers/EditTrailer';
 import CreateMotorCarrier from './containers/Forms/MotorCarriers/CreateMotorCarrier';
 import EditMotorCarrier from './containers/Forms/MotorCarriers/EditMotorCarrier';
 import MotorCarriers from './containers/MotorCarriers/MotorCarriers';
 import MotorCarrier from './containers/MotorCarriers/MotorCarrier';
 import Supervisors from './containers/Supervisors/Supervisors';
+import Devices from './containers/Devices/Devices';
+import CreateDevice from './containers/Forms/devices/CreateDevice';
+import CreateDevices from './containers/Forms/devices/CreateDevices';
+import EditDevice from './containers/Forms/devices/EditDevice';
+import ScriptDevice from './containers/Forms/devices/ScriptDevice';
 import CreateSupervisor from './containers/Forms/supervisors/CreateSupervisor';
 import EditSupervisor from './containers/Forms/supervisors/EditSupervisor';
 
@@ -65,7 +73,7 @@ fontawesome.library.add(
   faLocationArrow, faTachometerAlt, faInfoCircle, faSortAlphaUp, faSortAlphaDown,
   faChartLine, faSignInAlt, faSignOutAlt, faSortNumericDown, faSortNumericUp,
   faUserCog, faUserTie, faHdd, faEnvelope, faAddressCard, faFilter,
-  faSortUp, faSortDown, faSort, faExclamationTriangle,
+  faSortUp, faSortDown, faSort, faExclamationTriangle, faCog, faCheck, faTimes,
 );
 
 class App extends Component {
@@ -84,6 +92,7 @@ class App extends Component {
           <Route path="/vehicles/:id" component={Vehicle} />
           <Route path="/vehicles" component={Vehicles} />
           <Route path="/trailers/new_trailer" component={CreateTrailer} />
+          <Route path="/trailers/new_trailers" component={CreateTrailers} />
           <Route path="/trailers/:id/edit" component={EditTrailer} />
           <Route path="/trailers" component={Trailers} />
           <Route path="/logs" component={Logs} />
@@ -99,6 +108,11 @@ class App extends Component {
           <Route path="/supervisors/:id/new_supervisor" component={CreateSupervisor} />
           <Route path="/supervisors/:id/edit" component={EditSupervisor} />
           <Route path="/supervisors" component={Supervisors} />
+          <Route path="/devices/new_device" component={CreateDevice} />
+          <Route path="/devices/new_devices" component={CreateDevices} />
+          <Route path="/devices/:id/edit" component={EditDevice} />
+          <Route path="/devices/:id/script" component={ScriptDevice} />
+          <Route path="/devices" component={Devices} />
         </Switch>
       </Layout>
     );

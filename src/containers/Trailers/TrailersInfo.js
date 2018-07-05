@@ -50,7 +50,8 @@ class TrailersInfo extends React.Component {
         <div className="inlineBox">
           <FontAwesomeIcon icon="search" className="customIcon" /><input className="customInput" type="text" placeholder={t('Search')} value={this.state.search} onChange={this.updateSearch} />
           <div className="buttons">
-            <Link className="btn btn-sm green spacing" to="/trailers/new_trailer"><FontAwesomeIcon icon="car" color="white" /> {t('Create trailer')} </Link>
+            <Link className="btn btn-sm green spacing" to="/trailers/new_trailer"><FontAwesomeIcon icon="truck" color="white" /> {t('Create trailer')} </Link>
+            <Link className="btn btn-sm green spacing" to="/trailers/new_trailers"><FontAwesomeIcon icon="truck" color="white" /><FontAwesomeIcon icon="truck" color="white" /> {t('Create multiple trailers')} </Link>
           </div>
         </div>
 

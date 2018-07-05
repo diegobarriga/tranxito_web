@@ -35,6 +35,7 @@ class UserRow extends React.Component {
             <ul>
               <li><Link to={`/drivers/${this.props.id}`}>{this.props.firstName} {this.props.lastName}</Link></li>
               <li>{t('Username')}: {this.props.username}</li>
+              <li>{t('Email')}: {this.props.email}</li>
             </ul>
           </div>
         </div>
@@ -61,6 +62,7 @@ UserRow.propTypes = {
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   deleteUser: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,

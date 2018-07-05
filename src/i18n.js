@@ -171,6 +171,33 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'SLEEPER BERTH',
         DRIVING: 'DRIVING',
         'ON DUTY NOT DRIVING': 'DRIVING',
+
+        devices: 'devices',
+        IMEI: 'IMEI',
+        'new device': 'new device',
+        'Configuration status': 'Configuration status',
+
+        'Bluetooth Mac': 'Bluetooth Mac',
+        'Configuration Script': 'Configuration Script',
+        'Configuration Status': 'Configuration Status',
+
+        'Create device': 'Create device',
+        'Create multiple devices': 'Create multiple devices',
+        'The device was deleted successfully': 'The device was deleted successfully',
+        'Error the device was not deleted': 'Error the device was not deleted',
+        'Create New Device': 'Create New Device',
+        'Edit Device': 'Edit Device',
+        'Configure Device': 'Configure Device',
+        Yes: 'Yes',
+        'We have created the new device.': 'We have created the new device.',
+        'We have edited the device.': 'We have edited the device.',
+        'Are you sure you want to delete this device?': 'Are you sure you want to delete this device?',
+
+        'New Drivers': 'New Drivers',
+        'New Vehicles': 'New Vehicles',
+        'New Devices': 'New Devices',
+        'New Trailers': 'New Trailers',
+
         // trailers
         Trailers: 'Trailers',
         'Create New Trailer': 'Create New Trailer',
@@ -191,6 +218,7 @@ i18n.use(LanguageDetector).init({
         'Create trailer': 'Create trailer',
         edit: 'edit',
         'Trailer was deleted successfully': 'Trailer was deleted successfully',
+        'Create multiple trailers': 'Create multiple trailers',
 
         // Supervisors
         'We have created the new supervisor.': 'We have created the new supervisor.',
@@ -231,7 +259,7 @@ i18n.use(LanguageDetector).init({
         Vehicles: 'Vehículos',
         vehicles: 'Vehículos',
         Devices: 'Dispositivos',
-        devices: 'Dispositivos',
+        devices: 'dispositivos',
         Supervisors: 'Supervisores',
         supervisors: 'supervisores',
 
@@ -388,6 +416,32 @@ i18n.use(LanguageDetector).init({
         'SLEEPER BERTH': 'DESCANSANDO EN LITERA',
         DRIVING: 'CONDUCIENDO',
         'ON DUTY NOT DRIVING': 'EN SERVICIO - NO CONDUCIENDO',
+        IMEI: 'IMEI',
+
+        'new device': 'nuevo dispositivo',
+        'Configuration status': 'Estado de configuración',
+
+        'Bluetooth Mac': 'Bluetooth Mac',
+        'Configuration Script': 'Script de Configuración',
+        'Configuration Status': 'Status de Configuración',
+
+        'Create device': 'Crear dispositivo',
+        'Create multiple devices': 'Crear multiples dispositivos',
+        'The device was deleted successfully': 'El device fue correctamente eliminado',
+        'Error the device was not deleted': 'Error, el device no fue eliminado',
+        'Create New Device': 'Crear un Nuevo Dispositivo',
+        'Edit Device': 'Editar Dispositivo',
+        'Configure Device': 'Configurar Dispositivo',
+        Yes: 'Si',
+        'We have created the new device.': 'Hemos creado el nuevo dispositivo',
+        'We have edited the device.': 'Hemos editado el dispositivo',
+        'Are you sure you want to delete this device?': 'Estás seguro que quieres eliminar este dispositivo?',
+
+        'New Drivers': 'Nuevos Conductores',
+        'New Vehicles': 'Nuevos Vehículos',
+        'New Devices': 'Nuevos Dispositivos',
+        'New Trailers': 'Nuevos Trailers',
+        edit: 'editar',
 
         // trailers
         Trailers: 'Tráilers',
@@ -407,6 +461,7 @@ i18n.use(LanguageDetector).init({
         trailers: 'tráilers',
         'Serial Number': 'Número de serie',
         'Create trailer': 'Crear tráiler',
+        'Create multiple trailers': 'Crear multiples trailers',
         edit: 'editar',
         'Trailer was deleted successfully': 'El tráiler fue eliminado satisfactoriamente',
 

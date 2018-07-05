@@ -39,22 +39,30 @@ class SimpleReactFileUpload extends React.Component {
     const crumbUrl = this.props.location.pathname;
     let newCrumb = auxArray[auxArray.length - 1].split('_');
     if (newCrumb[newCrumb.length - 1] === 'vehicles') {
-      newCrumb[newCrumb.length - 2] = t('New');
-      newCrumb[newCrumb.length - 1] = t('Vehicle(s)');
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Vehicles';
+    } else if (newCrumb[newCrumb.length - 1] === 'devices') {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Devices';
+    } else if (newCrumb[newCrumb.length - 1] === 'trailers') {
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Trailers';
     } else {
-      newCrumb[newCrumb.length - 2] = t('New');
-      newCrumb[newCrumb.length - 1] = t('Driver(s)');
+      newCrumb[newCrumb.length - 2] = 'New';
+      newCrumb[newCrumb.length - 1] = 'Drivers';
     }
     newCrumb = newCrumb.join(' ');
     this.props.addBreadCrumb(newCrumb, false, crumbUrl);
   }
 
   onFormSubmit(e) {
+    console.log("entro al form submit");
     this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     const reader = new FileReader();
 
     if (this.state.file.name.split('.')[1] === 'csv') {
+      console.log("es un csv");
       reader.readAsText(this.state.file);
       reader.onload = this.loadHandler;
     } else if (this.state.file.name.split('.')[1] === 'xlsx') {
@@ -87,12 +95,20 @@ class SimpleReactFileUpload extends React.Component {
     };
 
     if (this.props.type === 'drivers') {
+      console.log('tipo: drivers');
       type = 'people';
+    } else if (this.props.type === 'devices') {
+      console.log('tipo: devices');
+      type = 'devices';
+    } else if (this.props.type === 'trailers') {
+      console.log('tipo: trailers');
+      type = 'trailers';
     }
     return api.file.csvFileUpload(
       formData, config,
       this.props.token,
-      this.props.motorCarrierId, type,
+      this.props.motorCarrierId,
+      type,
     );
   }
 
@@ -201,6 +217,7 @@ class SimpleReactFileUpload extends React.Component {
 
       dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]}\n`).join('');
       // console.log("String: ", dataString);
+
       const csv = new Blob([dataString], { type: 'text/csv' });
 
       // console.log("STATE EXCEL: "+this.state.file)
@@ -254,6 +271,48 @@ class SimpleReactFileUpload extends React.Component {
         }
         this.setState({ isValid: true });
       }
+    } else if (this.props.type === 'devices') {
+      console.log(data);
+      for (let i = 0; i < data.length; i += 1) {
+        if (data[i].bluetoothMac.length !== 17) {
+          this.setState({ idValid: false });
+          return;
+        } else if (data[i].imei.length !== 15) {
+          this.setState({ idValid: false });
+          console.log('arregladisimo');
+          return;
+        }
+      }
+      this.setState({ isValid: true });
+    } else if (this.props.type === 'trailers') {
+      console.log(data);
+      for (let i = 0; i < data.length; i += 1) {
+        if (data[i].vin.length < 17 && data[i].vin.length > 18) {
+          this.setState({ isValid: false });
+          console.log('firstname');
+          return;
+        } else if (data[i].manufacturer.length === 0) {
+          this.setState({ isValid: false });
+          return;
+        } else if (data[i].number.lenght > 10) {
+          this.setState({ isValid: false });
+          console.log('lastname');
+          return;
+        } else if (data[i].model.length === 0) {
+          this.setState({ isValid: false });
+          console.log('driverlicensenumber');
+          return;
+        } else if (data[i].year.length === 0) {
+          this.setState({ isValid: false });
+          console.log('time');
+          return;
+        } else if (data[i].gvw.length === 0) {
+          this.setState({ isValid: false });
+          console.log('24period');
+          return;
+        }
+      }
+      this.setState({ isValid: true });
     } else {
       // Vehicles validation
       console.log(data);

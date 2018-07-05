@@ -10,6 +10,7 @@ const initialState = {
   motorCarrierId: null,
   trailers: null,
   vehicles: null,
+  devices: null,
   users: null,
   image: null,
   firstName: null,
@@ -46,6 +47,7 @@ const authLogout = (state) => {
     motorCarrierId: null,
     trailers: null,
     vehicles: null,
+    devices: null,
     users: null,
     image: null,
     firstName: null,
@@ -72,6 +74,14 @@ const createUser = (state, action) => {
 };
 
 
+const createDevice = (state, action) => {
+  const newDevice = { ...state.devices };
+  newDevice[action.device.id] = action.device;
+  return updateObject(state, {
+    devices: newDevice,
+  });
+};
+
 // Cuando un admin ingresa a informacion de un motor carrier
 const getMotorCarrierStart = state => updateObject(state, { error: null, loading: true });
 
@@ -83,7 +93,6 @@ const getMotorCarrierSuccess = (state, action) => updateObject(state, {
   users: action.users,
   chunkedUsers: action.chunkedUsers,
   chunkedVehicles: action.chunkedVehicles,
-  supervisors: action.supervisors,
   mcName: action.mcName,
   trailers: action.trailers,
   lastMod: action.lastMod,
@@ -129,6 +138,7 @@ const authSuccess = (state, action) => updateObject(state, {
   motorCarrierId: action.motorCarrierId,
   trailers: action.trailers,
   vehicles: action.vehicles,
+  devices: action.devices,
   users: action.users,
   chunkedUsers: action.chunkedUsers,
   chunkedVehicles: action.chunkedVehicles,
@@ -176,6 +186,16 @@ const onVehicleDeleteSuccess = (state, action) => {
   });
 };
 
+const onDeviceDeleteSuccess = (state, action) => {
+  const tmpDevices = { ...state.devices };
+  delete tmpDevices[action.deviceId];
+  return updateObject(state, {
+    error: action.response,
+    loading: false,
+    devices: tmpDevices,
+  });
+};
+
 const onTrailerDeleteSuccess = (state, action) => {
   const tmpTrailers = { ...state.trailers };
   delete tmpTrailers[action.trailerId];
@@ -200,6 +220,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.CREATE_TRAILER: return createTrailer(state, action);
     case actionTypes.DELETE_TRAILER: return onTrailerDeleteSuccess(state, action);
     case actionTypes.CREATE_USER: return createUser(state, action);
+    case actionTypes.DELETE_DEVICE: return onDeviceDeleteSuccess(state, action);
+    case actionTypes.CREATE_DEVICE: return createDevice(state, action);
     case actionTypes.GET_MOTOR_CARRIER_SUCCESS: return getMotorCarrierSuccess(state, action);
     case actionTypes.GET_MOTOR_CARRIER_FAIL: return getMotorCarrierFail(state, action);
     case actionTypes.GET_MOTOR_CARRIER_START: return getMotorCarrierStart(state, action);

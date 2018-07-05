@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const apiPath = 'https://eld-test.azurewebsites.net/api';
-const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
+const apiPath = 'https://eld-test.azurewebsites.net/api';
+// const apiPath = 'https://e2e-eld-test.herokuapp.com/api';
 
 
 // These are most of the API endpoints
@@ -70,6 +70,19 @@ export default {
     getTrackings: (vehicleId, token, conditions) =>
       axios.get(`${apiPath}/Vehicles/${vehicleId}/trackings?access_token=${token}`, { params: { filter: { where: conditions } } }),
   },
+  devices: {
+    getDevices: () =>
+      axios.get(`${apiPath}/Devices`),
+    getDevice: (deviceId, token) =>
+      axios.get(`${apiPath}/Devices/${deviceId}?access_token=${token}`),
+    deleteDevice: (deviceId, token) =>
+      axios.delete(`${apiPath}/Devices/${deviceId}?access_token=${token}`),
+    updateDevice: (deviceId, token, data) =>
+      axios.patch(`${apiPath}/Devices/${deviceId}?access_token=${token}`, data),
+    getDeviceMotorCarrier: deviceId =>
+      axios.get(`${apiPath}/Devices/${deviceId}/motorCarrier`),
+  },
+  // `MotorCarrier/{id}/devices/{id}`
   trailers: {
     getTrailers: () =>
       axios.get(`${apiPath}/Trailers`),
@@ -107,6 +120,14 @@ export default {
       axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/people?access_token=${token}`, user),
     countMotorCarrierPeople: motorCarrierId =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count`),
+    getMotorCarrierDevices: (motorCarrierId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`),
+    getMotorCarrierDevice: (motorCarrierId, deviceId, token) =>
+      axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`),
+    updateMotorCarrierDevice: (motorCarrierId, deviceId, token, data) =>
+      axios.put(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`, data),
+    deleteMotorCarrierDevice: (motorCarrierId, deviceId, token) =>
+      axios.delete(`${apiPath}/MotorCarriers/${motorCarrierId}/devices/${deviceId}?access_token=${token}`),
     getMotorCarrierVehicles: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehicles?access_token=${token}`),
     getMotorCarrierVehicle: (motorCarrierId, vehicleId) =>
@@ -142,6 +163,8 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/dutyStats?access_token=${token}`, { params: { span: `${span}` } }),
     getVehiclesDutyStats: (motorCarrierId, token, span) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/vehiclesDutyStats?access_token=${token}`, { params: { span: `${span}` } }),
+    createMotorCarrierDevice: (motorCarrierId, token, device) =>
+      axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`, device),
   },
   events: {
     getEvents: () =>
