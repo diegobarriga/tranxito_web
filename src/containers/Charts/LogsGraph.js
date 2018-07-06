@@ -46,19 +46,19 @@ class Graph extends React.Component {
     this.setState({ loading: true });
     api.people.getUserDutyStatusChange(this.props.id, this.props.token)
       .then((response) => {
-        console.log(response);
+
         const logs = Object.values(response.data.data[1]);
 
         logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
         const firstLog = response.data.data[0];
-        console.log(firstLog);
-        console.log(logs);
+
+
         this.setState({ loading: false, api_logs: logs, firstLog }, this.processData);
       })
       .catch((error) => {
         this.setState({ loading: false });
-        console.log(error.message);
+
       });
   }
 
@@ -67,21 +67,16 @@ class Graph extends React.Component {
     const logs = this.state.api_logs.reverse();
     const { t } = this.props;
     graphData.datasets[0].data = [];
-    console.log('FIRST LOG & API LOGS');
-    console.log(this.state.firstLog);
-    console.log(logs);
-    // Agregar el estado inicial
+
     graphData.datasets[0].data.push({
       x: 0,
       y: t(EVENT_CODES[1][this.state.firstLog.code]),
     });
-    console.log(graphData.datasets[0].data);
 
     logs.forEach((event) => {
       const hour = parseInt(moment(event.timestamp).format('H'), 10);
       const minutes = parseInt(moment(event.timestamp).format('m'), 10);
-      const tiempo = hour + (minutes / 60);
-      console.log(tiempo);
+
       graphData.datasets[0].data.push({
         x: (hour + (minutes / 60)),
         y: t(EVENT_CODES[1][event.code]),
@@ -100,8 +95,8 @@ class Graph extends React.Component {
       if (this.state.firstLog !== undefined) {
         const now = moment();
         const nownumber = now.hour() + (now.minute() / 60);
-        console.log(nownumber);
-        console.log(this.state.firstLog.code);
+
+
         graphData.datasets[0].data.push({
           x: nownumber,
           y: t(EVENT_CODES[1][this.state.firstLog.code]),

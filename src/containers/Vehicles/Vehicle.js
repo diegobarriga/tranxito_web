@@ -90,56 +90,58 @@ class Vehicle extends React.Component {
             </Col>
           </Row>
         </Container>
-        <Nav tabs>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '1' })}
-              onClick={() => { this.toggle('1'); }}
-            >
-              {t('General Information')}
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '2' })}
-              onClick={() => { this.toggle('2'); }}
-            >
-              {t('Heatmap')}
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '3' })}
-              onClick={() => { this.toggle('3'); }}
-            >
-              {t('Device')}
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">
-            <div className="tabDiv">
-              <Container>
-                <VehicleInfo id={id} />
-                <Logs id={id} type="vehicle" />
-              </Container>
-            </div>
-          </TabPane>
-          <TabPane tabId="2">
-            <div className="tabDiv">
-              <Container>
-                <Heatmap id={id} />
-              </Container>
-            </div>
-          </TabPane>
-          <TabPane tabId="3">
-            <div className="tabDiv">
-              <Container>
-                <Device id={id} />
-              </Container>
-            </div>
-          </TabPane>
-        </TabContent>
+        <Container>
+          <Nav tabs>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '1' })}
+                onClick={() => { this.toggle('1'); }}
+              >
+                {t('General Information')}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '2' })}
+                onClick={() => { this.toggle('2'); }}
+              >
+                {t('Heatmap')}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '3' })}
+                onClick={() => { this.toggle('3'); }}
+              >
+                {t('Device')}
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <TabContent activeTab={this.state.activeTab}>
+            <TabPane tabId="1">
+              <div className="tabDiv">
+                <Container>
+                  <VehicleInfo id={id} />
+                  <Logs id={id} type="vehicle" />
+                </Container>
+              </div>
+            </TabPane>
+            <TabPane tabId="2">
+              <div className="tabDiv">
+                <Container>
+                  <Heatmap id={id} />
+                </Container>
+              </div>
+            </TabPane>
+            <TabPane tabId="3">
+              <div className="tabDiv">
+                <Container>
+                  <Device id={id} />
+                </Container>
+              </div>
+            </TabPane>
+          </TabContent>
+        </Container>
       </Aux>
     );
   }

@@ -41,7 +41,7 @@ class TrailerForm extends React.Component {
     if (!this.props.isCreate) {
       this.getTrailerInfo().then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
+          
           const newData = {
             vin: response.data.vin,
             manufacturer: response.data.manufacturer,
@@ -52,7 +52,7 @@ class TrailerForm extends React.Component {
           };
           this.setState({ data: newData });
         } else {
-          console.log('Error loading Trailer info');
+          
         }
       });
     }
@@ -138,7 +138,7 @@ class TrailerForm extends React.Component {
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      console.log('submited');
+      
       try {
         await this.props.submit(this.state);
       } catch (error) {

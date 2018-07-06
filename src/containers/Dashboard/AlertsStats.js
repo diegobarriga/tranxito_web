@@ -50,7 +50,7 @@ class AlertsStats extends React.Component {
     this.setState({
       isMounted: true,
     })
-    console.log("didmount");
+
     this.getData();
   }
 
@@ -65,14 +65,13 @@ class AlertsStats extends React.Component {
   }
 
   getDataByFunction(method, trigger) {
-    console.log('using span', this.state.span);
+
     method(this.props.motorCarrierId, this.props.token, this.state.span)
       .then((response) => {
-        console.log(response);
+
         trigger(response.data);
       })
-      .catch((error) => {
-        console.log(error.message);
+      .catch(() => {
         if (this.state.isMounted) {
           this.setState({ loading: false });
         }
@@ -80,7 +79,7 @@ class AlertsStats extends React.Component {
   }
 
   setDriverAlerts(data) {
-    console.log('entro al trigger de alerts');
+
 
     const { dataAlertsSpeedStats, dataAlertsHoursStats } = this.state;
 
@@ -99,8 +98,8 @@ class AlertsStats extends React.Component {
       timeData.push(data.data.driversAlerts[id].timeLimit);
     });
 
-    console.log('speedLabels', speedLabels);
-    console.log('timeLabels', timeLabels);
+
+
 
     dataAlertsSpeedStats.datasets[0].data = speedData;
     dataAlertsHoursStats.datasets[0].data = timeData;
@@ -108,9 +107,9 @@ class AlertsStats extends React.Component {
     dataAlertsSpeedStats.labels = speedLabels;
     dataAlertsHoursStats.labels = timeLabels;
 
-    // console.log(dataAlertsStats.datasets[0].data);
+
     if (this.state.isMounted) {
-      console.log('entro al setstate stats');
+
       this.setState({
         alertsStats: data.data,
         loadingAlertsStats: false,
@@ -121,24 +120,16 @@ class AlertsStats extends React.Component {
   }
 
   async updateSpan(event) {
-    console.log('old span: ', this.state.span);
-    console.log('recieved span: ', event.target.value);
-    // this.state.span = event.target.value;
     await this.setState({ span: event.target.value, loadingAlertsStats: true });
-    console.log('new span: ', this.state.span);
+
     this.getData();
   }
 
   render() {
-    // console.log(dataAlertsStats);
-    console.log('loadingAlertsStats: ', this.state.loadingAlertsStats);
     if (this.props.activeTab !== '3') return <div />;
 
     else if (this.state.loadingAlertsStats) return <Loader />;
 
-    console.log(this.state.dataAlertsSpeedStats);
-    console.log(this.state.dataAlertsHoursStats);
-    console.log(this.state.alertsStats);
     const { t } = this.props;
     return (
       <div className="margin">

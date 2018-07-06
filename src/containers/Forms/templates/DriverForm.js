@@ -65,7 +65,7 @@ class DriverForm extends Component {
           };
           this.setState({ data: newData });
         } else {
-          console.log('Error loading user info');
+          
         }
       });
     }
@@ -205,7 +205,7 @@ class DriverForm extends Component {
   async submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidData()) {
-      console.log('antes de enviar----', this.state);
+      
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
       try {

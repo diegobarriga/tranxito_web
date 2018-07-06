@@ -34,13 +34,13 @@ class VehicleLogs extends React.Component {
   getData() {
     this.setState({ loading: true });
     api.vehicles.getLogs(this.props.id, this.props.token).then((response) => {
-      console.log(response.data);
+      
       const logs = response.data;
       this.setState({ logs }, this.reverseLogs);
     })
       .catch((error) => {
         this.setState({ loading: false });
-        console.log(error);
+        
       });
   }
 

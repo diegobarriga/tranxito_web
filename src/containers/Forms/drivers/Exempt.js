@@ -78,7 +78,7 @@ class Exempt extends Component {
       errors,
       data,
     } = this.state;
-    console.log('data--', data);
+    
     const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>

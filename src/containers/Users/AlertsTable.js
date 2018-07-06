@@ -4,9 +4,6 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Container, Table } from 'reactstrap';
 import { translate } from 'react-i18next';
 import * as funct from '../../utils/tableFunctions';
-// import Loader from '../../components/Loader/Loader';
-// import { DUTY_STATUS } from '../../utils/eventTypes';
-// import * as functions from './functions';
 import '../../assets/styles/buttons.css';
 import '../../assets/styles/tables.css';
 
@@ -202,8 +199,6 @@ class AlertsTable extends React.Component {
                                   {funct.roundToThree(alert.coordinates.lat)}
                                   {', '}
                                   {funct.roundToThree(alert.coordinates.lng)}
-                                  {/* {alert.coordinates.lat},
-                                  {alert.coordinates.lng} */}
                                 </td>
                                 <td style={styles.table}>
                                   {alert.speedLimitExceeded ? alertSpeedIcon : ''}

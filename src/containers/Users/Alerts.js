@@ -26,7 +26,6 @@ class Alerts extends React.Component {
             {
               lineTension: 0,
               data: [],
-              // label: 'My First dataset',
               fill: false,
               backgroundColor: 'rgba(107, 70, 156, 0.4)',
               borderColor: 'rgba(107, 70, 156, 1)',
@@ -52,7 +51,6 @@ class Alerts extends React.Component {
             {
               lineTension: 0,
               data: [],
-              // label: 'My First dataset',
               fill: false,
               backgroundColor: 'rgba(188, 214, 49, 0.4)',
               borderColor: 'rgba(188, 214, 49, 1)',
@@ -81,7 +79,7 @@ class Alerts extends React.Component {
 
   componentDidMount() {
     this.setState({ loading: true, isMounted: true });
-    console.log("didmount");
+
     this.getData();
   }
 
@@ -95,7 +93,7 @@ class Alerts extends React.Component {
     this.getTrackings()
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
+
           this.groupData(response.data);
         } else {
           if (this.state.isMounted) {
@@ -114,7 +112,7 @@ class Alerts extends React.Component {
       [{ timestamp: { gt: TODAY - nSpan } },
         { or: [{ speedLimitExceeded: true }, { driveTimeExceeded: true }] }],
     };
-    console.log('condition', condition);
+
     return api.people.getTrackings(this.props.id, this.props.token, condition);
   }
 
@@ -142,12 +140,8 @@ class Alerts extends React.Component {
     const alerts = [];
 
     const groupedSpeedResults = _.countBy(_.filter(data, ['speedLimitExceeded', true]), result => moment(result.timestamp).startOf('day'));
-    console.log(groupedSpeedResults);
     const groupedTimeResults = _.countBy(_.filter(data, ['driveTimeExceeded', true]), result => moment(result.timestamp).startOf('day'));
-    console.log(groupedTimeResults);
-
     const groupedAlerts = _.groupBy(data, result => moment(result.timestamp).startOf('day'));
-    console.log(groupedAlerts);
 
     Object.keys(groupedSpeedResults).forEach((key) => {
       const obj = {
@@ -155,7 +149,6 @@ class Alerts extends React.Component {
         y: groupedSpeedResults[key],
       };
       speedData.push(obj);
-      // dataStats.labels.push(new Date(key));
     });
 
     Object.keys(groupedTimeResults).forEach((key) => {
@@ -164,11 +157,9 @@ class Alerts extends React.Component {
         y: groupedTimeResults[key],
       };
       timeData.push(obj);
-      // dataStats.labels.push(new Date(key));
     });
 
     Object.keys(groupedAlerts).forEach((key) => {
-      console.log('keyy---', key);
       const obj = {
         key,
         timestamp: new Date(key),
@@ -176,15 +167,12 @@ class Alerts extends React.Component {
         timeLimit: _.sumBy(groupedAlerts[key], i => (i.driveTimeExceeded === true ? 1 : 0)),
       };
       alerts.push(obj);
-      // dataStats.labels.push(new Date(key));
     });
-    console.log('aleerts', alerts);
+
     const orderedSpeedData = _.sortBy(speedData, 'x');
     const orderedTimeData = _.sortBy(timeData, 'x');
-    // orderedData.unshift({ x: moment(Date.now() - this.getSpan()).format(), y: 0 });
     dataStats.speed.datasets[0].data = orderedSpeedData;
     dataStats.time.datasets[0].data = orderedTimeData;
-
 
     if (this.state.isMounted) {
       this.setState({
@@ -194,29 +182,13 @@ class Alerts extends React.Component {
         groupedAlerts,
       });
     }
-
-    // if (this.state.isMounted) {
-    //   console.log('entro al setstate stats');
-    //   this.setState({
-    //     alertsStats: data.data,
-    //     loadingAlertsStats: false,
-    //     dataAlertsSpeedStats,
-    //     dataAlertsHoursStats,
-    //   });
-    // }
   }
 
   async updateSpan(event) {
-    console.log('old span: ', this.state.span);
-    console.log('recieved span: ', event.target.value);
-    // this.state.span = event.target.value;
     await this.setState({ span: event.target.value, loading: true });
-    console.log('new span: ', this.state.span);
     this.getData();
   }
   render() {
-    // console.log(dataAlertsStats);
-    // console.log('loadingAlertsStats: ', this.state.loadingAlertsStats);
     if (this.props.activeTab !== '3') return <div />;
 
     else if (this.state.loading) return <Loader />;
@@ -224,7 +196,6 @@ class Alerts extends React.Component {
     const yMaxSpeed = Math.max(...this.state.dataStats.speed.datasets[0].data.map(o => o.y));
     const yMaxTime = Math.max(...this.state.dataStats.time.datasets[0].data.map(o => o.y));
 
-    console.log('alerts', this.state.alerts);
     const { t } = this.props;
     return (
       <div className="margin">
@@ -263,13 +234,10 @@ Alerts.propTypes = {
   token: PropTypes.string.isRequired,
   activeTab: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  // users: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  // users: state.auth.users,
   token: state.auth.token,
-  // motorCarrierId: state.auth.motorCarrierId,
 });
 const translateFunc = translate('translations')(Alerts);
 export default connect(mapStateToProps)(translateFunc);

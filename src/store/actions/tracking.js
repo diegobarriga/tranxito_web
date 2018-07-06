@@ -19,10 +19,10 @@ export const getTrackings = (token, motorCarrierId) => (dispatch) => {
   dispatch(getTrackingInfoStart());
   api.motorCarriers.getTrackingsMotorCarrier(motorCarrierId, token)
     .then((trackingResponse) => {
-      console.log(trackingResponse);
+      
       dispatch(getTrackingInfoSuccess(trackingResponse.data.data));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };

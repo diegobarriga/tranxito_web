@@ -6,7 +6,6 @@ import * as actions from '../../../../store/actions/index';
 
 class Logout extends Component {
   componentDidMount() {
-    // this.props.postLogout(this.props.token);
     this.props.deleteCrumbs();
     this.props.unmarkSidebar();
     this.props.onLogout();
@@ -21,8 +20,6 @@ Logout.propTypes = {
   onLogout: PropTypes.func.isRequired,
   deleteCrumbs: PropTypes.func.isRequired,
   unmarkSidebar: PropTypes.func.isRequired,
-  // postLogout: PropTypes.func.isRequired,
-  // token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

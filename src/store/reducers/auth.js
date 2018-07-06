@@ -28,18 +28,6 @@ const updateVehiclesStart = state => updateObject(state, { error: null, loading:
 
 const errorReset = state => updateObject(state, { error: null });
 
-// const createSuccess = (state, action) => {
-//   const newSupervisor = { ...state.supervisors };
-//   const newUser = action.response.data;
-//   newUser.accountStatus = true;
-//   newSupervisor[action.response.data.id] = newUser;
-//   return updateObject(state, {
-//     supervisors: newSupervisor,
-//     loading: false,
-//     error: action.response,
-//   });
-// };
-
 const authLogout = (state) => {
   localStorage.clear();
   return updateObject(state, {
@@ -119,12 +107,9 @@ const updateVehiclesSuccess = (state, action) => updateObject(state, {
 });
 
 
-const updateLastMod = (state, action) => {
-  console.log('entro a updateLastMod ---', action);
-  return updateObject(state, {
-    lastMod: action.response,
-  });
-};
+const updateLastMod = (state, action) => updateObject(state, {
+  lastMod: action.response,
+});
 
 const createTrailer = (state, action) => {
   const newTrailers = { ...state.trailers };
@@ -171,8 +156,6 @@ const updateVehiclesFail = (state, action) => updateObject(state, {
   loading: false,
 });
 
-
-/* Arreglar actualizar chunks */
 const onDeleteUserSuccess = (state, action) => {
   const usersCpy = { ...state.users };
   delete usersCpy[action.userId];
@@ -216,7 +199,6 @@ const onTrailerDeleteSuccess = (state, action) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START: return authStart(state);
-    // case actionTypes.CREATE_SUCCESS: return createSuccess(state, action);
     case actionTypes.ERROR_RESET: return errorReset(state);
     case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
     case actionTypes.AUTH_FAIL: return authFail(state, action);

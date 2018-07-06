@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Container, Table, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-// import Loader from '../../components/Loader/Loader';
 import { DUTY_STATUS } from '../../utils/eventTypes';
 import * as funct from '../../utils/tableFunctions';
 import '../../assets/styles/buttons.css';
@@ -71,9 +70,6 @@ class SimpleTable extends React.Component {
   }
 
   render() {
-    // Object.entries(this.state.stats).forEach(([key, value]) => {
-    //   console.log(key, value);
-    // });
     const { t } = this.props;
     return (
       <Container style={styles.container}>
@@ -191,27 +187,16 @@ class SimpleTable extends React.Component {
 }
 
 SimpleTable.propTypes = {
-  // getUserLogs: PropTypes.func.isRequired,
-  // token: PropTypes.string.isRequired,
-  // id: PropTypes.string.isRequired,
-  // logs: PropTypes.array,
   type: PropTypes.string.isRequired,
   stats: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired,
   vehicles: PropTypes.object.isRequired,
 };
 
-// UserLogs.defaultProps = {
-//   logs: null,
-// };
-
 const mapStateToProps = state => ({
   users: state.auth.users,
   vehicles: state.auth.vehicles,
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   getUserLogs: (token, UserId) => dispatch(actions.getUserLogs(token, UserId)),
-// });
 const translateFunc = translate('translations')(SimpleTable);
 export default connect(mapStateToProps)(translateFunc);

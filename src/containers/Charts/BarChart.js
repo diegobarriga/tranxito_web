@@ -1,7 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
-// import { EVENT_COLORS, DUTY_STATUS } from '../../utils/eventTypes';
 import '../../assets/styles/legend.css';
 
 class BarChart extends React.Component {
@@ -36,10 +35,8 @@ class BarChart extends React.Component {
   }
 
   render() {
-    // if (this.props.activeTab !== '2') return <div />;
     this.state.options.title.text = this.props.title;
-    console.log(this.props.title);
-    
+
     return (
       <div>
         <Bar

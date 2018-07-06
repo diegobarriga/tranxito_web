@@ -7,8 +7,6 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import Loader from '../../components/Loader/Loader';
 import VehicleDeviceForm from '../Forms/templates/VehicleDeviceForm';
 import '../../assets/styles/buttons.css';
-
-// import getLastMod from '../../utils/updateStoreFunctions';
 import syrusImg from './../../assets/images/syrus.png';
 import api from '../../services/api';
 import * as actions from '../../store/actions/index';
@@ -47,7 +45,7 @@ class Device extends React.Component {
     this.setState({ isLoading: true });
     try {
       const response = await this.linkVehicle(formData);
-      console.log('resp---', response.headers);
+
       if (response.status === 200) {
         this.setState({ type: 'success', message: t('We have linked the device to te vehicle.') });
         this.getVehicleDevice();
@@ -66,14 +64,13 @@ class Device extends React.Component {
     this.setState({ isLoading: true });
     try {
       const res = await api.vehicles.getVehicleDevice(this.props.id, this.props.token);
-      console.log(res);
+
       if (res.status === 200) {
         this.setState({ device: res.data, isLoading: false });
       } else {
         this.setState({ device: null, isLoading: false });
       }
     } catch (err) {
-      console.log(err);
       this.setState({ device: null, isLoading: false });
     }
   }
@@ -86,7 +83,6 @@ class Device extends React.Component {
     const { t } = this.props;
     this.setState({ isLoading: true });
     this.unlinkVehicle(this.state.device.id).then(async (response) => {
-      // console.log('resp---', response.headers);
       if (response.status === 200) {
         this.setState({ isLoading: false, device: null });
         this.setState({ type: 'success', message: t('We have unlinked the device to te vehicle.') });
@@ -130,7 +126,6 @@ class Device extends React.Component {
 
     const { t } = this.props;
 
-    // console.log(device);
     return (
       <Container>
         <Row>
@@ -181,8 +176,6 @@ class Device extends React.Component {
 Device.propTypes = {
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  // updateLastMod: PropTypes.func.isRequired,
-  // lastMod: PropTypes.object.isRequired,
 };
 
 

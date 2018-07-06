@@ -26,14 +26,14 @@ export const delVErrorReset = () => ({
 });
 
 export const onVehicleDelete = (vehicleId, token) => (dispatch) => {
-  console.log(vehicleId);
+  
   api.vehicles.deleteVehicle(vehicleId, token)
     .then((response) => {
-      console.log(response);
+      
       dispatch(onVehicleDeleteSuccess(vehicleId, response));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };
 
@@ -41,10 +41,10 @@ export const getVehicles = (token, motorCarrierId) => (dispatch) => {
   dispatch(getVehiclesStart());
   api.motorCarriers.getMotorCarrierVehicles(motorCarrierId, token)
     .then((vehicleResponse) => {
-      console.log(vehicleResponse);
+      
       dispatch(getVehiclesSuccess(vehicleResponse.data));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };

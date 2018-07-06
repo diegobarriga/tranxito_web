@@ -8,8 +8,6 @@ import classnames from 'classnames';
 import UserInfo from '../UserInfo';
 import '../../../assets/styles/tabs.css';
 import LogsTable from './LogsTable';
-// import * as actions from '../../../store/actions/index';
-
 
 class DriverProfile extends React.Component {
   constructor(props) {

@@ -48,7 +48,6 @@ class InfoWindowMarker extends Component {
   }
 
   render() {
-    // if (this.state.vehicleLoading === true || this.state.userLoading === true) return <div />;
     return (
       <Marker
         key={this.props.id}

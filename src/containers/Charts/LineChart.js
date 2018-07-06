@@ -1,7 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
-// import { EVENT_COLORS, DUTY_STATUS } from '../../utils/eventTypes';
 import '../../assets/styles/legend.css';
 
 class LineChart extends React.Component {
@@ -49,22 +48,13 @@ class LineChart extends React.Component {
             ticks: {
               autoSkip: false,
             },
-            // gridLines: {
-            //   display: true,
-            // },
           }],
-          // xAxes: [{
-          //   gridLines: {
-          //     offsetGridLines: true,
-          //   },
-          // }],
         },
       },
     };
   }
 
   render() {
-    // if (this.props.activeTab !== '2') return <div />;
     this.state.options.title.text = this.props.title;
 
     return (

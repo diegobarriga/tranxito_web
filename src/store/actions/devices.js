@@ -28,14 +28,14 @@ export const delVErrorReset = () => ({
 
 
 export const onDeviceDelete = (motorCarrierId, deviceId, token) => (dispatch) => {
-  console.log(deviceId);
+  
   api.motorCarriers.deleteMotorCarrierDevice(motorCarrierId, deviceId, token)
     .then((response) => {
-      console.log(response);
+      
       dispatch(onDeviceDeleteSuccess(motorCarrierId, deviceId, response));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };
 
@@ -43,10 +43,10 @@ export const getDevices = (token, motorCarrierId) => (dispatch) => {
   dispatch(getDevicesStart());
   api.motorCarriers.getMotorCarrierDevices(motorCarrierId, token)
     .then((deviceResponse) => {
-      console.log(deviceResponse);
+      
       dispatch(getDevicesSuccess(deviceResponse.data));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };

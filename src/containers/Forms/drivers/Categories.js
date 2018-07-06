@@ -56,7 +56,7 @@ class Categories extends Component {
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      console.log('sneding-----', this.state);
+
       try {
         await this.props.submit(this.state);
       } catch (error) {
@@ -74,7 +74,7 @@ class Categories extends Component {
       errors,
       data,
     } = this.state;
-    console.log('data----', data);
+
     const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>

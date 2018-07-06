@@ -56,13 +56,13 @@ class SimpleReactFileUpload extends React.Component {
   }
 
   onFormSubmit(e) {
-    console.log("entro al form submit");
+
     this.setState({ ...this.state, loading: true });
     e.preventDefault(); // Stop form submit
     const reader = new FileReader();
 
     if (this.state.file.name.split('.')[1] === 'csv') {
-      console.log("es un csv");
+
       reader.readAsText(this.state.file);
       reader.onload = this.loadHandler;
     } else if (this.state.file.name.split('.')[1] === 'xlsx') {
@@ -72,7 +72,7 @@ class SimpleReactFileUpload extends React.Component {
 
   onChange(e) {
     this.setState({ file: e.target.files[0] });
-    console.log(e.target.files[0]);
+
   }
 
   getUploadStatus() {
@@ -95,13 +95,13 @@ class SimpleReactFileUpload extends React.Component {
     };
 
     if (this.props.type === 'drivers') {
-      console.log('tipo: drivers');
+
       type = 'people';
     } else if (this.props.type === 'devices') {
-      console.log('tipo: devices');
+
       type = 'devices';
     } else if (this.props.type === 'trailers') {
-      console.log('tipo: trailers');
+
       type = 'trailers';
     }
     return api.file.csvFileUpload(
@@ -121,14 +121,12 @@ class SimpleReactFileUpload extends React.Component {
     }
   }
 
-
   loadHandler = (event) => {
     const { t } = this.props;
-    console.log('Dentro loadHandler');
+
     const csv = event.target.result;
     const arr = csv.split('\n');
-    console.log('CSV array');
-    console.log(arr);
+
     const drivers = [];
     if (arr[arr.length - 1] === '') {
       arr.pop();
@@ -154,21 +152,16 @@ class SimpleReactFileUpload extends React.Component {
 
     this.checkValid(drivers);
 
-    console.log('valid', this.state.isValid, this.state.loading);
-
     if (this.state.isValid === true && this.state.loading === true) {
-      console.log('valid');
+
       this.fileUpload(this.state.file).then((response) => {
-        console.log(response.data);
-        console.log(response.status);
+
         if (response.status === 200) {
           this.sleep(1000);
           this.getUploadStatus().then((res) => {
-            console.log('UPLOAD STATUS');
-            console.log(res);
+
             const { status } = res.data[0];
-            console.log('STATUS');
-            console.log(status);
+
             if (status === 'SUCCESS') {
               this.setState({ ...this.state, loading: false });
               this.setState({ type: 'success', message: t('We have created all the new ') + t(this.props.type) });
@@ -178,7 +171,7 @@ class SimpleReactFileUpload extends React.Component {
             } else {
               const { id } = res.data[0];
               this.getErrors(id).then((resp) => {
-                console.log(resp);
+
                 this.setState({ errors: resp.data });
                 this.setState({ ...this.state, loading: false });
                 this.setState({ type: 'danger', message: t('Sorry, there has been an error. Please try again later.') });
@@ -192,7 +185,7 @@ class SimpleReactFileUpload extends React.Component {
       });
     } else {
       this.setState({ ...this.state, loading: false });
-      console.log('invalid');
+
     }
     this.setState({ isValid: null });
   }
@@ -212,27 +205,16 @@ class SimpleReactFileUpload extends React.Component {
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
       /* Update state */
       this.setState({ data });
-      console.log(this.state.data);
 
-      // console.log("Valid: "+this.state.isValid)
       this.checkValid(this.state.file);
-      // console.log("Valid: "+this.state.isValid)
-
       dataString = this.state.data.map(d => `${d[0]},${d[1]},${d[2]},${d[3]},${d[4]},${d[5]},${d[6]},${d[7]},${d[8]}\n`).join('');
-      // console.log("String: ", dataString);
 
       const csv = new Blob([dataString], { type: 'text/csv' });
 
-      // console.log("STATE EXCEL: "+this.state.file)
-
       const reader1 = new FileReader();
       reader1.readAsText(csv);
-      // reader1.onload = (e) => {
-      // // console.log("CSV " + e.target.result)
-      // }
 
       this.setState({ file: csv });
-      // console.log("STATE CSV: "+this.state.file)
       reader1.onload = this.loadHandler;
     };
     if (rABS) reader.readAsBinaryString(this.state.file);
@@ -241,84 +223,81 @@ class SimpleReactFileUpload extends React.Component {
 
   checkValid(data) {
     if (this.props.type === 'drivers') {
-      console.log(data);
       for (let i = 0; i < data.length; i += 1) {
         if (data[i].firstName.length < 2 && data[i].firstName.length > 30) {
           this.setState({ isValid: false });
-          console.log('firstname');
+
           return;
         } else if (data[i].lastName.length < 2 && data[i].lastName.length > 30) {
           this.setState({ isValid: false });
-          console.log('lastname');
+
           return;
         } else if (data[i].email.length < 2 && data[i].email.length > 30) {
           this.setState({ isValid: false });
-          console.log('email');
+
           return;
         } else if (data[i].licenseIssuingState.length === 0) {
           this.setState({ isValid: false });
-          console.log('license');
+
           return;
         } else if (data[i].driverLicenseNumber.length === 0) {
           this.setState({ isValid: false });
-          console.log('driverlicensenumber');
+
           return;
         } else if (data[i].timeZoneOffsetUtc.length === 0) {
           this.setState({ isValid: false });
-          console.log('time');
+
           return;
         } else if (data[i].startingTime24HourPeriod.length === 0) {
           this.setState({ isValid: false });
-          console.log('24period');
+
           return;
         }
         this.setState({ isValid: true });
       }
     } else if (this.props.type === 'devices') {
-      console.log(data);
+
       for (let i = 0; i < data.length; i += 1) {
         if (data[i].bluetoothMac.length !== 17) {
           this.setState({ idValid: false });
           return;
         } else if (data[i].imei.length !== 15) {
           this.setState({ idValid: false });
-          console.log('arregladisimo');
+
           return;
         }
       }
       this.setState({ isValid: true });
     } else if (this.props.type === 'trailers') {
-      console.log(data);
       for (let i = 0; i < data.length; i += 1) {
         if (data[i].vin.length < 17 && data[i].vin.length > 18) {
           this.setState({ isValid: false });
-          console.log('firstname');
+
           return;
         } else if (data[i].manufacturer.length === 0) {
           this.setState({ isValid: false });
           return;
         } else if (data[i].number.lenght > 10) {
           this.setState({ isValid: false });
-          console.log('lastname');
+
           return;
         } else if (data[i].model.length === 0) {
           this.setState({ isValid: false });
-          console.log('driverlicensenumber');
+
           return;
         } else if (data[i].year.length === 0) {
           this.setState({ isValid: false });
-          console.log('time');
+
           return;
         } else if (data[i].gvw.length === 0) {
           this.setState({ isValid: false });
-          console.log('24period');
+
           return;
         }
       }
       this.setState({ isValid: true });
     } else {
       // Vehicles validation
-      console.log(data);
       for (let i = 0; i < data.length; i += 1) {
         if ((data[i].vin.length > 18 || data[i].vin.length < 17)) {
           this.setState({ idValid: false });

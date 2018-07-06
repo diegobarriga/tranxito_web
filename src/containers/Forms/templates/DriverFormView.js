@@ -47,7 +47,7 @@ class DriverFormView extends React.Component {
             ...formData.data,
             image: imgResponse.data.result.files.file[0].name,
           };
-          console.log(submitData);
+          
           // Si estamos creando un usuario
           if (this.props.isCreate) {
             this.postData(submitData).then(async (response) => {
@@ -72,7 +72,7 @@ class DriverFormView extends React.Component {
           // Si estamos editando un usuario
           } else {
             this.patchData(submitData).then(async (response) => {
-              console.log('resp---', response.headers);
+              
               if (response.status === 200) {
                 this.props.createUser(response.data);
 
@@ -121,7 +121,7 @@ class DriverFormView extends React.Component {
       // Si estamos editando un usuario
       } else {
         this.patchData(formData.data).then(async (response) => {
-          console.log('resp---', response.headers);
+          
           if (response.status === 200) {
             this.props.createUser(response.data);
 

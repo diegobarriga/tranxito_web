@@ -46,15 +46,15 @@ class DeviceForm extends React.Component {
           };
           this.setState({ data: newData });
         } else {
-          console.log('Error loading device info');
+          
         }
       });
     }
   }
 
   onChange(event) {
-    console.log('onChange');
-    console.log(this.state);
+    
+    
     this.setState({
       ...this.state,
       data: { ...this.state.data, [event.target.name]: event.target.value },
@@ -62,7 +62,7 @@ class DeviceForm extends React.Component {
   }
 
   getDeviceInfo() {
-    console.log('GET DEVICE INFO');
+    
     return api.motorCarriers.getMotorCarrierDevice(
       this.props.motorCarrierId,
       this.props.match.params.id,
@@ -89,7 +89,7 @@ class DeviceForm extends React.Component {
     }
     if (_.isEmpty(String(data.imei))) {
       errors.imei = t('This field is required');
-      console.log(errors.imei);
+      
     } else if (_.isEmpty(String(data.imei.trim()))) {
       errors.imei = t("This field can't be blank");
     }
@@ -110,19 +110,19 @@ class DeviceForm extends React.Component {
   }
 
   async submitHandler(event) {
-    console.log('submitHandler');
+    
     event.preventDefault(); // prevents reload of the page
-    console.log(this.isValidData());
+    
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      console.log('submited');
-      console.log(this.state);
+      
+      
       try {
-        console.log(this.props.submit(this.state));
+        
         await this.props.submit(this.state);
       } catch (error) {
-        console.log(error);
+        
         this.setState({ errors: error, isLoading: false });
       }
     }

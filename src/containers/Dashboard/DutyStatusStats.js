@@ -43,15 +43,10 @@ class DutyStatusStats extends React.Component {
       loadingDutyStats: false,
       type: 'Driver',
     };
-    console.log('HOLAAAA');
+
     dataDutyStats.labels = [
       t(DUTY_STATUS_LONG[1]), t(DUTY_STATUS_LONG[2]), t(DUTY_STATUS_LONG[3]), t(DUTY_STATUS_LONG[4]),
     ];
-    console.log(t(DUTY_STATUS_LONG[1]));
-    console.log(t(DUTY_STATUS_LONG[2]));
-    console.log(DUTY_STATUS_LONG[3]);
-    console.log(DUTY_STATUS_LONG[4]);
-    console.log('CHAOOOOOoooo');
 
     this.setDutyStats = this.setDutyStats.bind(this);
     this.setDriversDutyStats = this.setDriversDutyStats.bind(this);
@@ -64,7 +59,7 @@ class DutyStatusStats extends React.Component {
     this.setState({
       isMounted: true,
     });
-    // console.log("didmount");
+
     this.getData();
   }
 
@@ -82,25 +77,20 @@ class DutyStatusStats extends React.Component {
 
   getTableData() {
     if (this.state.type === 'Driver') {
-      // console.log("entro al getTableData de drivers");
       this.setState({ loadingStats: true });
       this.getDataByFunction(api.motorCarriers.getDriversDutyStats, this.setDriversDutyStats);
     } else {
-      // console.log("entro al getTableData de vehiculos");
       this.setState({ loadingStats: true });
       this.getDataByFunction(api.motorCarriers.getVehiclesDutyStats, this.setVehiclesDutyStats);
     }
   }
 
-
   getDataByFunction(method, trigger) {
     method(this.props.motorCarrierId, this.props.token, this.state.span)
       .then((response) => {
-        console.log(response);
         trigger(response.data);
       })
-      .catch((error) => {
-        console.log(error.message);
+      .catch(() => {
         if (this.state.isMounted) {
           this.setState({ loadingStats: false });
         }
@@ -108,74 +98,56 @@ class DutyStatusStats extends React.Component {
   }
 
   setVehiclesDutyStats(data) {
-    // console.log("entro al trigger de drvier");
-    // console.log("datavehiculo", data);
     if (this.state.isMounted) {
-      // console.log("vehicle is mounted");
       this.setState({ vehiclesDutyStats: data.data, loadingStats: false });
     }
   }
 
   setDriversDutyStats(data) {
-    // console.log("entro al trigger de drvier");
     if (this.state.isMounted) {
-      console.log('entro al setstate drviers');
       this.setState({ driversDutyStats: data.data, loadingStats: false });
     }
   }
 
   setDutyStats(data) {
-    // console.log("entro al trigger de duty");
     dataDutyStats.datasets[0].data = [
       functions.round(data.data[1]),
       functions.round(data.data[2]),
       functions.round(data.data[3]),
       functions.round(data.data[4]),
     ];
-    console.log(dataDutyStats.datasets[0].data);
+
     if (this.state.isMounted) {
-      console.log('entro al setstate stats');
       this.setState({ loadingDutyStats: false });
     }
   }
 
   async updateSpan(event) {
-    // console.log('old span: ', this.state.span);
-    // console.log('recieved span: ', event.target.value);
-    // this.state.span = event.target.value;
     await this.setState({
       span: event.target.value,
       loadingStats: true,
       loadingDutyStats: true,
     });
-    // console.log('new span: ', this.state.span);
+
     this.getData();
   }
 
   async updateType(event) {
-    // console.log('old type: ', this.state.type);
-    // console.log('recieved type: ', event.target.value);
-    // this.state.span = event.target.value;
     await this.setState({
       type: event.target.value,
       loadingStats: true,
-      // loadingDutyStats: true,
     });
-    // console.log('new type: ', this.state.type);
+
     this.getTableData();
   }
 
   render() {
-    // console.log(dataDutyStats);
     if (this.props.activeTab !== '2') return <div />;
 
     else if (
       this.state.loadingStats ||
       this.state.loadingDutyStats
     ) return <Loader />;
-
-    // console.log(dataDutyStats);
-    // console.log('driversDutyStats', this.state.driversDutyStats);
 
     let data = [];
 
@@ -184,7 +156,7 @@ class DutyStatusStats extends React.Component {
     } else {
       data = this.state.vehiclesDutyStats;
     }
-    // console.log('data1', data);
+
     const { t } = this.props;
     return (
       <div className="margin">

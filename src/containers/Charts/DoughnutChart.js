@@ -1,7 +1,6 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
-// import { EVENT_COLORS, DUTY_STATUS } from '../../utils/eventTypes';
 import '../../assets/styles/legend.css';
 
 const options = {
@@ -22,9 +21,8 @@ const options = {
 
 class DoughnutChart extends React.Component {
   render() {
-    // if (this.props.activeTab !== '2') return <div />;
     options.title.text = this.props.title;
-    console.log('options', options);
+
     return (
       <div>
         <Doughnut

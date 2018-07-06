@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import validator from 'validator';
 import { Label, FormGroup, FormFeedback, Input } from 'reactstrap';
 import { translate } from 'react-i18next';
 import api from '../../../services/api';
@@ -23,7 +22,6 @@ class MotorCarrierForm extends Component {
       isLoading: false,
       redirectTo: false,
     };
-    // this.isValidCreate = this.isValidCreate.bind(this);
     this.onChange = this.onChange.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
@@ -35,7 +33,6 @@ class MotorCarrierForm extends Component {
     if (!this.props.isCreate) {
       this.getMotorCarrierInfo().then((response) => {
         if (response.status === 200) {
-          console.log(response);
           const newData = {
             name: response.data.name,
             usdotNumber: response.data.usdotNumber,
@@ -43,8 +40,6 @@ class MotorCarrierForm extends Component {
             createDevices: response.data.createDevices,
           };
           this.setState({ ...this.state, data: newData });
-        } else {
-          console.log('Error loading mcinfo info');
         }
       });
     }
@@ -69,7 +64,6 @@ class MotorCarrierForm extends Component {
     } else if (_.isEmpty(String(data.name.trim()))) {
       errors.name = t("This field can't be blank");
     } else if (String(data.name.trim()).length > 120 || String(data.name.trim()).length < 4) {
-      // i18n
       errors.name = 'Name must be between 4-120 characters long';
     }
     /* NEED FIX */
@@ -93,7 +87,6 @@ class MotorCarrierForm extends Component {
   submitHandler(event) {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidCreate()) {
-      console.log('entro al submit', this.state.data);
       this.setState({ errors: {}, isLoading: true });
       this.props.submit(this.state.data);
     }
@@ -114,7 +107,6 @@ class MotorCarrierForm extends Component {
     const { t } = this.props;
     return (
       <form className="ui form" onSubmit={this.submitHandler}>
-
         <div className="field">
           <Label>{t('Name')}</Label>
           <FormGroup>

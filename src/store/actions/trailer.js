@@ -24,8 +24,8 @@ export const getTrailer = (token, trailerId) => (dispatch) => {
   dispatch(getTrailerStart());
   api.trailers.getTrailer(trailerId, token)
     .then((response) => {
-      console.log(response);
-      console.log('get trailer response');
+      
+      
       try {
         const trailer = response.data;
         dispatch(getTrailerSuccess(trailer));

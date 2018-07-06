@@ -22,12 +22,12 @@ export const createVehicle = vehicle => ({
 
 
 export const getVehicle = (token, vehicleId) => (dispatch) => {
-  console.log('entor a getvehicle');
+  
   dispatch(getVehicleStart());
   api.vehicles.getVehicle(vehicleId, token)
     .then((response) => {
-      console.log(response);
-      console.log('get vehicle response');
+      
+      
       try {
         const vehicle = response.data;
         dispatch(getVehicleSuccess(vehicle));

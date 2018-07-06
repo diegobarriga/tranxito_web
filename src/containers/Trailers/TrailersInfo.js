@@ -41,7 +41,7 @@ class TrailersInfo extends React.Component {
       trailer.manufacturer.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
       trailer.number.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1));
 
-    console.log(filteredTrailers);
+    
     const totalTrailers = filteredTrailers.length;
     const { t } = this.props;
 

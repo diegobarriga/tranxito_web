@@ -50,7 +50,7 @@ class DeviceFormView extends React.Component {
       });
     // Si estamos editando un usuario
     } else {
-      console.log(formData.data)
+      
       this.patchData(formData.data).then((response) => {
         if (response.status === 200) {
           this.props.createDevice(response.data);

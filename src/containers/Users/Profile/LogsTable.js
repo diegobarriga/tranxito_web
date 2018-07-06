@@ -96,20 +96,18 @@ class Logs extends React.Component {
     const mess = 'I hereby certify that my data entries and my record of duty status for this 24-hour period are true and correct.';
     this.setState({ message: mess });
     const filter = '{"where": {"and": [ {"recordStatus": "1"}, { "or": [{"type": "1"},{"type": "2"},{"type": "3"},{"type": "5"},{"type": "6"},{"type": "7"}]}  ]}}';
-    // const filter = '{"where": {"recordStatus": "1"}}';
+
     apiCall(this.props.id, this.props.token, filter)
       .then((response) => {
         try {
           const logs = response.data.filter(log => (
             log.certified === false
           ));
-          console.log(logs);
+
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
           const objectLogs = functions.arrayToObjectLogs(logs);
-          // console.log(objectLogs);
           this.setState({ logs: objectLogs, filterLogs: logs, loading: false });
         } catch (error) {
-          console.log('errror');
           this.setState({ loading: false });
         }
       });
@@ -127,14 +125,10 @@ class Logs extends React.Component {
             log.driverId === null &&
             log.recordStatus !== 2
           ));
-          console.log('inf');
-          console.log(logs);
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
           const objectLogs = functions.arrayToObjectLogs(logs);
-          // console.log(objectLogs);
           this.setState({ logs: objectLogs, filterLogs: logs, loading: false });
         } catch (error) {
-          console.log('errror');
           this.setState({ loading: false });
         }
       });
@@ -207,15 +201,11 @@ class Logs extends React.Component {
   }
 
   deleteLogs(idsArray) {
-    console.log('deleteLogs');
-    console.log(this.state.logs);
     const auxLogs = { ...this.state.logs };
-    console.log(auxLogs);
 
     idsArray.forEach((id) => {
       delete auxLogs[id];
     });
-    console.log(auxLogs);
     const filteredLogs = this.state.filterLogs.filter(log => (
       !idsArray.includes(log.id)
     ));
@@ -224,7 +214,6 @@ class Logs extends React.Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    // this.state.logs.reverse();
     let button;
     if (this.state.selectedSortId === null) {
       button = (
@@ -285,7 +274,11 @@ class Logs extends React.Component {
                 {this.state.filterLogs.map(event => (
                   <Table.Row key={event.id}>
                     <Table.Cell style={styles.head} collapsing>
-                      <Checkbox checked={this.state.logs[event.id][1]} onClick={() => this.handleCheck(event.id)} value={event.id} />
+                      <Checkbox
+                        checked={this.state.logs[event.id][1]}
+                        onClick={() => this.handleCheck(event.id)}
+                        value={event.id}
+                      />
                     </Table.Cell>
                     <Table.Cell style={styles.table}>{event.type === 1 &&
                       <Badge className={`event${event.code}`} style={styles.badge}>

@@ -60,7 +60,7 @@ class VehiclesInfo extends React.Component {
 
     const totalVehicles = filteredVehicles.length;
     const { t } = this.props;
-    console.log(filteredVehicles);
+    
 
     return (
       <div>

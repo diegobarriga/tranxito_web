@@ -24,8 +24,8 @@ const MapWithAMarkerClusterer = compose(
   withHandlers({
     onMarkerClustererClick: () => (markerClusterer) => {
       const clickedMarkers = markerClusterer.getMarkers();
-      console.log(`Current clicked markers length: ${clickedMarkers.length}`);
-      console.log(clickedMarkers);
+
+
     },
   }),
   withGoogleMap,
@@ -75,7 +75,7 @@ class Map extends React.Component {
   }
 
   getDefaultPosition() {
-    console.log();
+
     const bound = new google.maps.LatLngBounds();
     let i;
     const trackingArray = Object.values(this.props.trackings);
@@ -86,11 +86,11 @@ class Map extends React.Component {
           trackingArray[i].coordinates.lng,
         ));
       }
-      // console.log(trackingArray[i].coordinates.lat, trackingArray[i].coordinates.lng);
+    
     }
     const lat = bound.getCenter().lat();
     const lng = bound.getCenter().lng();
-    console.log(lat, lng);
+
     this.setState({ center_cords: { lat, lng }, loading_cords: false });
   }
 

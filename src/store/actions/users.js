@@ -25,11 +25,11 @@ export const onDeleteUserSuccess = (userId, response) => ({
 export const onDelete = (userId, token) => (dispatch) => {
   api.people.deleteUser(userId, token)
     .then((response) => {
-      console.log(response);
+      
       dispatch(onDeleteUserSuccess(userId, response));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };
 
@@ -43,12 +43,12 @@ export const getUsers = (token, motorCarrierId) => (dispatch) => {
 
   api.motorCarriers.getMotorCarrierPeople(motorCarrierId, token)
     .then((userResponse) => {
-      console.log(userResponse.data);
+      
       const userObject = functions.arrayToObject(userResponse.data);
-      console.log(userObject);
+      
       dispatch(getUsersSuccess(userObject));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };

@@ -75,19 +75,13 @@ class LoginForm extends Component {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
       this.props.login(this.state.data.email, this.state.data.password);
-      // .catch(
-      //   (err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-      // );
     }
   }
   render() {
     const {
       errors, showPassword,
     } = this.state;
-    // if (redirectTo) {
-    //   this.setState({redirectTo: false});
-    //   return <Redirect to='/dashboard'/>;
-    // }
+
     const { t } = this.props;
     return (
       <Form onSubmit={this.submitHandler}>

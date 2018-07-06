@@ -92,7 +92,6 @@ export default {
     unlinkVehicle: (deviceId, token) =>
       axios.post(`${apiPath}/Devices/${deviceId}/unlink?access_token=${token}`),
   },
-  // `MotorCarrier/{id}/devices/{id}`
   trailers: {
     getTrailers: () =>
       axios.get(`${apiPath}/Trailers`),
@@ -162,7 +161,6 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/events/count`),
     getTrackingsMotorCarrier: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/tracking?access_token=${token}`),
-    // axios.get(`http://private-5faa9-elde2e.apiary-mock.com/MotorCarriers/${motorCarrierId}/tracking`),
     countMotorCarrierSP: (motorCarrierId, token) =>
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/people/count?access_token=${token}`, { params: { where: { accountType: 'S' } } }),
     getDriverAlerts: (motorCarrierId, token, span) =>
@@ -177,7 +175,6 @@ export default {
       axios.get(`${apiPath}/MotorCarriers/${motorCarrierId}/nonAuthEvents?access_token=${token}`, { params: { filter: filters } }),
     createMotorCarrierDevice: (motorCarrierId, token, device) =>
       axios.post(`${apiPath}/MotorCarriers/${motorCarrierId}/devices?access_token=${token}`, device),
-
   },
   events: {
     getEvents: () =>

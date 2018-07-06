@@ -50,11 +50,9 @@ class Logs extends React.Component {
       .then((response) => {
         try {
           const logs = response.data;
-          console.log(logs);
           logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
           this.setState({ logs, filteredLogs: logs, loading: false });
         } catch (error) {
-          console.log('errror');
           this.setState({ loading: false });
         }
       });
@@ -80,7 +78,7 @@ class Logs extends React.Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    // this.state.logs.reverse();
+
     let button;
     if (this.state.selectedSortId === null || this.state.selectedSortId !== '1') {
       button = (

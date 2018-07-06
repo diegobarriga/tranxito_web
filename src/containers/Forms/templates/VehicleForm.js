@@ -48,7 +48,7 @@ class VehicleForm extends React.Component {
           };
           this.setState({ data: newData });
         } else {
-          console.log('Error loading vehicle info');
+          
         }
       });
     }
@@ -135,9 +135,9 @@ class VehicleForm extends React.Component {
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
       // verify credentials
-      console.log('submited');
+      
       try {
-        console.log(this.state);
+        
         await this.props.submit(this.state);
       } catch (error) {
         this.setState({ errors: error.response.data.errors, isLoading: false });

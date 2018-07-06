@@ -65,7 +65,7 @@ class VehicleDeviceForm extends React.Component {
     event.preventDefault(); // prevents reload of the page
     if (this.isValidData()) {
       this.setState({ errors: {}, isLoading: true });
-      console.log(this.state.data);
+      
       try {
         this.props.submit(this.state.data);
       } catch (error) {

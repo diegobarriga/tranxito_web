@@ -6,9 +6,6 @@ import { Container, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import * as funct from '../../utils/tableFunctions';
-// import Loader from '../../components/Loader/Loader';
-// import { DUTY_STATUS } from '../../utils/eventTypes';
-// import * as functions from './functions';
 import '../../assets/styles/buttons.css';
 
 
@@ -53,7 +50,7 @@ class AlertsTable extends React.Component {
 
   render() {
     Object.entries(this.props.stats.driversAlerts).forEach(([key, value]) => {
-      console.log(key, value);
+
     });
     const { t } = this.props;
     return (

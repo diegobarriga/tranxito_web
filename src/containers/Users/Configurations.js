@@ -25,16 +25,11 @@ class Configurations extends React.Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
-  componentDidMount() {
-    // this.props.getUserLogs(this.props.token, this.props.id);
-  }
-
   onFormSubmit(formData) {
     const { t } = this.props;
     this.setState({ isLoading: true });
 
     this.patchData(formData.data).then(async (response) => {
-      // console.log('resp---', response.headers);
       if (response.status === 200) {
         this.props.createUser(response.data);
 
@@ -116,7 +111,6 @@ Configurations.propTypes = {
   createUser: PropTypes.func.isRequired,
   updateLastMod: PropTypes.func.isRequired,
   lastMod: PropTypes.object.isRequired,
-  motorCarrierId: PropTypes.number.isRequired,
 };
 
 

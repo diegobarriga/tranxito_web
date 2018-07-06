@@ -12,7 +12,7 @@ import UserView from './UserView';
 
 class sidebar extends Component {
   componentDidMount() {
-    console.log('sidebarMounted');
+    
   }
 
   changeColor(name) {

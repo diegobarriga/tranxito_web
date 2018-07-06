@@ -34,20 +34,20 @@ export const deleteMotorCarrier = (mCarrierId, token) => (dispatch) => {
       dispatch(onDeleteSuccess(mCarrierId, response));
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };
 
 export const initMCarriers = token => (dispatch) => {
   api.motorCarriers.getMotorCarriers(token)
     .then((response) => {
-      console.log(response.data);
+      
       const mCarrierObject = functions.arrayToObject(response.data);
-      console.log(mCarrierObject);
+      
       dispatch(setMotorCarriers(mCarrierObject));
     })
     .catch((error) => {
-      console.log(error);
+      
     });
 };
 
@@ -58,21 +58,21 @@ export const carrierRegister = (data, token, isCreate, id) => (dispatch) => {
   if (isCreate) {
     api.motorCarriers.createMotorCarrier(data, token)
       .then((response) => {
-        console.log(response);
+        
         dispatch(createMCSuccess(data, response));
       })
       .catch((error) => {
-        console.log(error);
+        
         dispatch(createMCFail(error));
       });
   } else {
     api.motorCarriers.updateMotorCarrier(id, data, token)
       .then((response) => {
-        console.log(response);
+        
         dispatch(createMCSuccess(data, response));
       })
       .catch((error) => {
-        console.log(error);
+        
         dispatch(createMCFail(error));
       });
   }

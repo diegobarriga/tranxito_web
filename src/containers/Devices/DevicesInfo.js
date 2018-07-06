@@ -13,9 +13,8 @@ import api from '../../services/api';
 import Loader from '../../components/Loader/Loader';
 
 class DevicesInfo extends React.Component {
-  constructor(props) { // Acá ya llega devices a las props
+  constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
       search: '',
       pages: '5',
@@ -126,7 +125,7 @@ DevicesInfo.propTypes = {
 
 const mapStateToProps = state => ({
   isLoading: state.devices.loading,
-  devices: state.auth.devices, // De acá saca los dvices
+  devices: state.auth.devices,
   motorCarrierId: state.auth.motorCarrierId,
   token: state.auth.token,
 });

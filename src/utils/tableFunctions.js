@@ -7,7 +7,6 @@ export function objToArr(stats) {
     obj.key = key;
     statsArray.push(obj);
   });
-  // console.log(statsArray);
   return statsArray;
 }
 

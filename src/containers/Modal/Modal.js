@@ -67,7 +67,6 @@ class ConfirmModal extends React.Component {
 
   handleOpenModal() {
     if (this.props.logs.length === 0) {
-      console.log('logs cant be blank');
     } else {
       this.setState({ showModal: true });
     }
@@ -79,22 +78,17 @@ class ConfirmModal extends React.Component {
   }
 
   handleSubmit() {
-    console.log(this.props.logs);
     if (this.props.isCerti) {
-      console.log('notcertified');
       api.people.userCertifyEvents(
         this.props.id,
         this.props.token,
-        // this.props.logs,
       ).then((response) => {
-        console.log(response);
         if (response.status === 200) {
           this.handleCloseModal();
           this.props.delLogs(this.props.logs);
         }
       });
     } else {
-      console.log('unusigned');
       const data = {
         data: {
           driverId: this.props.id,
@@ -102,8 +96,8 @@ class ConfirmModal extends React.Component {
           annotation: 'Auto assignation',
         },
       };
-      console.log(data);
-      console.log(this.props.logs);
+
+
       this.props.logs.forEach((log) => {
         api.events.patchEvent(
           log,
@@ -111,7 +105,6 @@ class ConfirmModal extends React.Component {
           data,
         ).then((response) => {
           if (response.status === 200) {
-            console.log(response);
             this.handleCloseModal();
             this.props.delLogs(this.props.logs);
           }
@@ -149,7 +142,7 @@ class ConfirmModal extends React.Component {
             <div style={Styles.actionn}>
               <button style={Styles.button1} onClick={this.handleSubmit} className="ui green button">
                 <i aria-hidden="true" className="checkmark icon" />
-                 {t('Yes')}
+                {t('Yes')}
               </button>
               <button style={Styles.button2} onClick={this.handleCloseModal} className="ui red button">
                 <i aria-hidden="true" className="remove icon" />
@@ -166,7 +159,6 @@ class ConfirmModal extends React.Component {
 
 
 ConfirmModal.propTypes = {
-  // show: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,

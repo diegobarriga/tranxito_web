@@ -121,10 +121,10 @@ export const logout = () => ({
 export const logoutToken = (token) => {
   api.people.logout(token)
     .then((response) => {
-      console.log(response);
+      
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };
 
@@ -139,17 +139,17 @@ export const signup = data => (dispatch) => {
     accountType: data.accountType,
     accountStatus: true,
   };
-  console.log(data);
-  console.log(authData);
+  
+  
 
   api.motorCarriers.createMotorCarrierPeople(data.motorCarrierId, data.token, authData)
     .then((response) => {
-      console.log(response);
+      
       dispatch(createUser(response));
-      console.log(response);
+      
     })
     .catch((err) => {
-      console.log(err);
+      
     });
 };
 
@@ -163,7 +163,7 @@ export const login = (email, password) => async (dispatch) => {
   try {
     const response = await api.people.login(authData);
     const userResponse = await api.people.getUser(response.data.userId, response.data.id);
-    console.log(userResponse.data);
+    
 
     if (userResponse.data.motorCarrierId && userResponse.data.accountType !== 'D') {
       const devicesResponse = await api.motorCarriers.getMotorCarrierDevices(
@@ -241,14 +241,14 @@ export const login = (email, password) => async (dispatch) => {
       ));
     }
   } catch (err) {
-    console.log(err.response);
+    
     dispatch(authFail(err));
   }
 };
 
 export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => async (dispatch) => {
   dispatch(getMotorCarrierStart());
-  console.log(motorCarrierId);
+  
   const vehiclesResponse = await api.motorCarriers.getMotorCarrierVehicles(motorCarrierId, token);
   const trailersResponse = await api.motorCarriers.getMotorCarrierTrailers(motorCarrierId, token);
   const filter = '{"where": {"accountStatus": "true"}}';
@@ -283,7 +283,7 @@ export const getMotorCarrier = (motorCarrierId, token, motorCarrierName) => asyn
 };
 
 export const updateUsers = (motorCarrierId, token) => (dispatch) => {
-  console.log('entro a updateUsers ---');
+  
   dispatch(updateUsersStart());
 
   const filter = '{"where": {"accountStatus": "true"}}';
@@ -295,13 +295,13 @@ export const updateUsers = (motorCarrierId, token) => (dispatch) => {
     const usersObject = functions.arrayToObject(peopleResponse.data);
     dispatch(updateUsersSuccess(usersObject));
   }).catch((err) => {
-    console.log(err.response);
+    
     dispatch(updateUsersFail(err));
   });
 };
 
 export const updateVehicles = (motorCarrierId, token) => (dispatch) => {
-  console.log('entro a updateVehicles ---');
+  
   dispatch(updateVehiclesStart());
 
   api.motorCarriers.getMotorCarrierVehicles(
@@ -311,7 +311,7 @@ export const updateVehicles = (motorCarrierId, token) => (dispatch) => {
     const vehiclesObject = functions.arrayToObject(vehiclesResponse.data);
     dispatch(updateVehiclesSuccess(vehiclesObject));
   }).catch((err) => {
-    console.log(err.response);
+    
     dispatch(updateVehiclesFail(err));
   });
 };

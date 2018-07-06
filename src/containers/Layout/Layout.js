@@ -11,7 +11,7 @@ import '../../assets/styles/layout.css';
 
 class Layout extends Component {
   componentDidMount() {
-    console.log(this.props.showSidebar);
+    
   }
 
   render() {

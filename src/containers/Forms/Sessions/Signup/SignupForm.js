@@ -52,7 +52,7 @@ class SignupForm extends Component {
           };
           this.setState({ data: newData });
         } else {
-          console.log('Error loading user info');
+          
         }
       });
     }
@@ -77,7 +77,7 @@ class SignupForm extends Component {
   validateInput(data) {
     const errors = {};
     const { t } = this.props;
-    console.log(data);
+    
     if (_.isEmpty(String(data.firstName))) {
       errors.firstName = t('This field is required');
     } else if (_.isEmpty(String(data.firstName.trim()))) {

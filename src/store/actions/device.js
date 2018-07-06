@@ -21,12 +21,12 @@ export const createDevice = device => ({
 });
 
 export const getDevice = (token, deviceId) => (dispatch) => {
-  console.log('entor a getdevice');
+  
   dispatch(getDeviceStart());
   api.devices.getDevice(deviceId, token)
     .then((response) => {
-      console.log(response);
-      console.log('get device response');
+      
+      
       try {
         const device = response.data;
         dispatch(getDeviceSuccess(device));
