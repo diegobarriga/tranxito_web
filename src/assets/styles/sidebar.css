@@ -1,0 +1,35 @@
+.sidebar {
+  background: #f6f7f8;
+  height: 100%;
+  position: fixed;
+  width: 220px; }
+
+.nav-button:hover {
+  background-color: black; }
+
+.disabledCursor {
+  cursor: default;
+  background-color: #dadee1; }
+
+.disabledCursor:hover {
+  background-color: #dadee1; }
+
+.sidebarBtn {
+  border-radius: 0px; }
+
+.sidebarBtn:hover {
+  background-color: #dedede; }
+
+.userWrapper {
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+@media (max-width: 800px) {
+  .sidebar {
+    width: 150px; } }
+
+@media (max-width: 680px) {
+  .sidebar {
+    width: 116px;
+    flex: 0 1 50px;
+    position: relative; } }

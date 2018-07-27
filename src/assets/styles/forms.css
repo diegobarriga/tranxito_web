@@ -1,0 +1,117 @@
+.file {
+  color: #c7d41e; }
+
+.file:hover {
+  color: #737b11 !important;
+  text-decoration: none !important; }
+
+.cards {
+  display: flex;
+  justify-content: center;
+  height: 250px; }
+
+.aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; }
+
+.aligner-item {
+  flex: 1; }
+
+.upload-form {
+  padding: 50px;
+  margin: 30px auto;
+  background-color: #e8ebed; }
+
+.center-item {
+  display: block !important;
+  margin: 0 auto; }
+
+.green {
+  background-color: #c7d41e;
+  border-color: #c7d41e;
+  color: white; }
+
+.green:hover {
+  background-color: #889115;
+  color: white; }
+
+.buttons {
+  margin: 0 0 20px 0;
+  display: flex;
+  justify-content: flex-end; }
+
+.spacing {
+  margin-right: 10px; }
+
+input[type=file] {
+  width: 100%;
+  /* Full width */
+  padding: 12px;
+  /* Some padding */
+  border: 1px solid #d2d7db;
+  /* Gray border */
+  border-radius: 2px;
+  /* Rounded borders */
+  box-sizing: border-box;
+  /* Make sure that padding and width stays in place */
+  margin-top: 6px;
+  /* Add a top margin */
+  margin-bottom: 16px;
+  /* Bottom margin */
+  resize: vertical; }
+
+.inlineBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+
+.inlineBoxRight {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; }
+
+.inlineBoxRight .content {
+  padding: 5px;
+  border-width: 1px;
+  border-style: hidden hidden solid hidden;
+  border-color: #dee2e6;
+  border-radius: 2px;
+  /* Rounded borders */ }
+
+.paddingBottom {
+  padding-bottom: 10px; }
+
+.inlineBoxRight span {
+  padding: 5px; }
+
+.inlineBox .customInput {
+  margin: 0 15px 20px 0;
+  border-width: 0 0 2px 0;
+  border-color: #c7d41e;
+  width: 100%; }
+
+.inlineBox .customInput:focus {
+  outline: none; }
+
+.inlineBox .customIcon {
+  color: #c7d41e;
+  font-size: 1.3em;
+  margin-top: 5px;
+  margin-right: 5px; }
+
+.padding {
+  padding-top: 10px; }
+
+.margin {
+  margin-bottom: 20px; }
+
+.padding-csv a {
+  margin-left: 10px; }
+
+.padding-csv {
+  padding-top: 20px; }
+
+.capitalize {
+  text-transform: capitalize; }

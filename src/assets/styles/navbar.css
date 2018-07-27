@@ -1,0 +1,33 @@
+.navbar {
+  background-color: #3d464c;
+  color: white;
+  height: 60px; }
+
+.logo {
+  height: 55px;
+  width: auto; }
+
+div .flags button {
+  padding-right: 0px !important;
+  background: transparent;
+  border: none; }
+
+div .flags button:focus {
+  outline: 0 !important; }
+
+.selected-flag {
+  border: 2px solid white;
+  border-radius: 2px; }
+
+.flags {
+  padding-right: 15px; }
+
+.nav-left {
+  display: flex;
+  justify-content: flex-start; }
+
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 5px !important;
+  flex: 1 1; }

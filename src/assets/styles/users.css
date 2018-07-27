@@ -1,0 +1,51 @@
+.user_content {
+  display: flex; }
+
+.user_wrapper {
+  display: flex;
+  flex-grow: 1; }
+
+.left {
+  padding-left: 15px;
+  flex: 0 0 13%; }
+
+.right {
+  padding-top: 14px;
+  flex: 1; }
+
+.rounded {
+  border-radius: 50%; }
+
+.user_wrapper li {
+  list-style: none; }
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #6b757c;
+  border-color: #6a757b; }
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #6b757c;
+  background-color: #fff;
+  border: 1px solid #dee2e6; }
+
+.no-padding {
+  padding-bottom: 0px !important; }
+
+.user-card {
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  margin-bottom: 15px; }
+
+.profile-image {
+  padding-right: 10px;
+  border-right: 1px solid #dee2e6; }
+
+.btn-pad {
+  margin-right: 3px; }

@@ -1,0 +1,22 @@
+.tabDiv {
+  margin-top: 20px; }
+
+.ui.breadcrumb:last-child {
+  margin-bottom: 1.5rem; }
+
+.breadcrumb {
+  flex-wrap: wrap;
+  padding: .75rem 0rem;
+  list-style: none;
+  border-radius: .25rem; }
+
+.ui.breadcrumb {
+  font-size: 1.1rem;
+  background-color: white; }
+
+.capitalize {
+  text-transform: capitalize; }
+
+.driver-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem; }

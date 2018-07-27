@@ -1,0 +1,30 @@
+.truck_wrapper {
+  display: flex;
+  flex-grow: 1; }
+
+.left {
+  flex: 0 0 13%; }
+
+.right {
+  flex: 1; }
+
+.truck_wrapper li {
+  list-style: none; }
+
+.no-padding {
+  padding-bottom: 0px !important; }
+
+.vehicle-card {
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  margin-bottom: 15px; }
+
+.profile-image {
+  padding-right: 10px;
+  border-right: 1px solid #dee2e6; }
+  .profile-image img {
+    height: 100px;
+    width: auto; }
+
+.vehicle-card p {
+  margin-bottom: 5px; }

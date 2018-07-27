@@ -1,0 +1,15 @@
+.inner-table {
+  background-color: white !important; }
+  .inner-table tr:hover {
+    background-color: inherit !important; }
+  .inner-table tbody {
+    height: auto !important;
+    max-height: 150px !important;
+    overflow-y: auto;
+    display: block; }
+
+.row-with-table {
+  padding-bottom: 4px; }
+
+.active-row {
+  background-color: #ececec !important; }
